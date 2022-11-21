@@ -1,0 +1,248 @@
+
+
+\section{The regular functions}
+\label{sec:reg-char}
+The two constructions in Theorems~\ref{thm:all-functions} and~\ref{thm:reco-reflecting-functions} were rather straightforward, and amounted to little more than symbol pushing. In this section, we present a characterization of the regular functions, i.e.~string-to-string functions recognized by streaming string transducers and their equivalent models. In the characterization, we require that the functor is finiteness preserving, i.e.~it maps finite semigroups to finite semigroups. It turns out that the naturality of the output mechanism interacts with the condition that 
+the functor is finiteness preserving; resulting in a strong restriction on the expressive power. To see this interaction, consider the following example
+
+\begin{myexample}
+    Consider the powerset functor $\powerset A$ from Example~\ref{ex:functors}. This is a finiteness preserving functor, since the powerset of a finite set is also finite. One could imagine that using the powerset functor we could construct some transducer semigroup which recognizes functions that are not regular, e.g.~because they have exponential growth. It turns out that this is impossible, because there is no possible output mechanism, i.e.~no natural transformation 
+    \[
+    \begin{tikzcd}
+    \powerset A 
+    \ar[r,"\outfun_A"]
+    &
+    A.
+    \end{tikzcd}
+    \]
+    There reason why there is no such natural transformation is that it require some kind of choice, which would contradict naturality. More formally, let $A$ be a semigroup with two elements, with a trivial semigroup operation defined by $xy=x$. The output mechanism needs to choose some element $a \in A$ to the full set $A \in \powerset A$. However, none of the two choices is right, because if we take any semigroup homomorphism $f : A \to A$ such that $f(A)=A$, then  naturality of the output mechanism implies that $a=f(a)$. If $f$ is the homomorphism that swaps the two elements, then we get a contradiction.
+\end{myexample}
+
+
+We now state the main theorem of this paper. Unlike the previous characterizations, the statement is stated in terms of functions between free semigroups $\Sigma^+$ and $\Gamma^+$, because the models defining regular functions are defined for string-to-string functions, and not transformations of abstract semigroups. (Some of the models, such as streaming string transducers or two-way automata, easily make sense when the output is an abstract semigroup, but the string structure of the input semigroup seems to be essential for all the models.) 
+
+% Among the functors described in Example~\ref{ex:functors},  ``reverse'' and ``powerset''  are finiteness preserving, in the sense that if they are applied to a finite semigroup, then the result is also a finite semigroup. The ``tuple'' functor $A^n$ is finiteness preserving if and only if the exponent $n$ is finite. The ``list'' functor $A^+$ is not finiteness preserving. 
+
+
+\begin{theorem}\label{thm:regular-functions}
+    Let  $\Sigma$ and $\Gamma$  be finite alphabets. The following conditions are equivalent for a function $f : \Sigma^+ \to \Gamma^+$, which is not necessarily a semigroup homomorphism:
+    \begin{enumerate}
+        \item \label{it:regular} $f$ is  a regular function, as defined in  Section~\ref{sec:easy}. 
+        \item \label{it:trans-semig-regular}$f$ is recognized by a transducer semigroup  such that for every finite semigroup $A$, the semigroup $\functor A$ is also finite. 
+    \end{enumerate}
+\end{theorem}
+
+
+Before proceeding with the proof, we comment on the role of empty strings. Regular functions are usually defined for possibly empty strings, i.e.~functions of type $\Sigma^* \to \Gamma^*$. We use nonempty strings, because it will be more convenient to work with semigroups, and the free semigroup construction produces nonempty strings. To extend the construction to functions that can output possibly empty strings, while still working with semigroups, we could modify the type of the output mechanism to be 
+\begin{align*}
+\outfun_A : \functor A \to \myunderbrace{A + 1}{disjoint union of underlying set of $A$ \\ with one extra element representing the empty word},
+\end{align*}
+under this modification the same proof as presented below would give us exactly the regular functions with possibly empty outputs. The empty string as an input is less important, since we can always  extend  the source code of a transducer that inputs nonempty strings with an extra line which says how to handle an empty input string. 
+
+
+The left-to-right implication is relatively straightforward, and presented in Section~\ref{sec:easy}, together with the definition of streaming string transducers. The main part of the proof  is devoted to the right-to-left implication. The proof is presented in a way which, if sometimes slightly verbose, makes it easier to see how it can be adapted to other algebraic structures instead of semigroups (such as forest algebras).
+
+\input{easy}
+
+\input{polynomial-functors}
+
+\subsection{Proof}
+
+We now present proof of the right-to-left implication in Theorem~\ref{thm:regular-functions}. Consider some transducer semigroup, with the functor being $\functor$ and the output transformation being $\outfun$. We will show that for every finite alphabet $\Sigma$, every semigroup $A$ (not necessarily a free semigroup $\Gamma^+$), the composition 
+\[
+    \begin{tikzcd}
+    \Sigma^+ 
+    \ar[r,"h"]
+    &
+    \functor A
+    \ar[r,"\outfun_A"]
+    &
+    A
+    \end{tikzcd}
+    \]
+is recognized by a functorial \sst.
+
+
+We begin by introducing some notation, which allows us to track which parts of an output come from which parts of an input.
+%  Let us extend the output mechanism from semigroups to co-products of semigroups. This is done as follows, for semigroups $A_1,\ldots,A_n$, define the corresponding output mechanism to be the composition of the following functions 
+% \[
+% \begin{tikzcd}
+% \functor A_1 \oplus \cdots \oplus \functor A_n
+% \ar[d, "\functor \iota_1 \oplus \cdots \oplus \functor \iota_n"]\\
+% \functor (A_1 \oplus \cdots \oplus A_n) \oplus \cdots \oplus \functor (A_1 \oplus \cdots \oplus A_n)
+% \ar[d, "\outfun_{A_1} \oplus \cdots \oplus \outfun_{A_n}"]\\
+% A_1 \oplus \cdots \oplus A_n
+% \end{tikzcd}
+% \]
+% We use the name \emph{co-product output mechanism} for the function described above. 
+For semigroups $A_1,\ldots,A_n$, define the \emph{factorized output function} to be the 
+function of type 
+\begin{align*}
+\functor A_1 \times \cdots \times \functor A_n \to A_1 \oplus \cdots \oplus A_n
+\end{align*}
+that is obtained by composing the  four functions described below
+\[
+\begin{tikzcd}
+\functor A_1 \times \cdots \times \functor A_n
+\ar[d,"\text{co-projection} \times \cdots \times \text{co-projection}"]
+\\
+(\functor A_1 \oplus \cdots \oplus \functor A_n)
+\times
+\cdots
+\times 
+(\functor A_1 \oplus \cdots \oplus \functor A_n)
+\ar[d,"\text{semigroup operation in the co-product}"]
+\\
+\functor A_1 \oplus \cdots \oplus \functor A_n
+\ar[d, "\functor (\text{co-projection}) \oplus \cdots \oplus \functor (\text{co-projection}) "]\\
+\functor (A_1 \oplus \cdots \oplus A_n) \oplus \cdots \oplus \functor (A_1 \oplus \cdots \oplus A_n)
+\ar[d, "\outfun_{A_1} \oplus \cdots \oplus \outfun_{A_n}"]\\ 
+A_1 \oplus \cdots \oplus A_n.
+\end{tikzcd}
+\]
+If we fix $n$, then the factorized output function is a natural in the sense that the following diagram commutes 
+\[
+\begin{tikzcd}
+    [column sep=2cm]
+\functor A_1 \times \cdots \times \functor A_n
+\ar[r,"\text{factorized output}"]
+\ar[d,"\functor h_1 \times \cdots \times \functor h_n"']
+&
+A_1 \oplus \cdots \oplus A_n
+\ar[d,"h_1 \oplus \cdots \oplus h_n"]
+\\
+\functor B_1 \times \cdots \times \functor B_n
+\ar[r,"\text{factorized output}"']
+&
+B_1 \oplus \cdots \oplus B_n
+\end{tikzcd}
+\]
+for every semigroup homomorphisms $h_i : A_i \to B_i$. In other words, the factorized output function is a natural 
+transformation of type 
+\[\begin{tikzcd}
+    [column sep=1cm]
+    {\text{Semigroups}^n} && {\text{Sets}}
+    \arrow[""{name=0, anchor=center}, "{(A_1,\ldots,A_n)} \mapsto \text{underlying set of } \functor A_1 \times \cdots \times \functor A_n", curve={height=-18pt}, from=1-1, to=1-3]
+    \arrow[""{name=1, anchor=center, inner sep=0}, "{(A_1,\ldots,A_n)} \mapsto \text{underlying set of } A_1 \oplus \cdots \oplus A_n"', curve={height=18pt}, from=1-1, to=1-3]
+    \arrow[ shorten <=5pt, shorten >=5pt, Rightarrow, from=0, to=1]
+\end{tikzcd}\]
+The reason for naturality is that each of the four steps in the definition of the factorized output is itself a natural transformation, and natural transformations compose. 
+
+
+By abuse of notation, we allow some -- but not all -- of the arguments in the factorized output to be empty; in this case the empty arguments are ignored, but the output type is still a co-product of $n$ semigroups.
+For possibly empty input strings $w_1,\ldots,w_n \in \Sigma^*$, such that at least one of the strings is nonempty,  let use write 
+\begin{align*}
+\tuple{w_1| \cdots | w_n} \in \myunderbrace{A \oplus \cdots \oplus A}{$n$ times}
+\end{align*}
+to be the result of first applying $h$ to all the strings, and then applying the factorized output function. We also use a similar notation but with some strings underlined; in the underlined case, to the non-underlined strings we apply $h$, and to the underlined strings we apply 
+\[
+\begin{tikzcd}
+\Sigma^+ 
+\ar[r,"h"]
+&
+\functor A 
+\ar[r,"\functor !"]
+&
+\functor 1.
+\end{tikzcd}
+\]
+For example 
+\begin{align*}
+\tuple{\underline {w_1}|w_2|\underline {w_3}} \in 1 \oplus A \oplus 1
+\end{align*}
+is the result of applying the factorized output function to the triple 
+\begin{align*}
+((h; \functor !)(w_1), h(w_2), (h; \functor !)(w_3)).
+\end{align*}
+
+The following lemma is the key part of our construction. The lemma speaks of a copyless natural transformation of type 
+\begin{align*}
+    (1 \oplus A) \times (1 \oplus A) \times (1 \oplus 1) \to 1 \oplus A.
+\end{align*}
+By copyless we mean that the natural transformation is copyless if its input and outputs are seen as polynomial functors, in the sense that is  explained in Example~\ref{ex:copyless-on-co-products}.
+
+\begin{lemma}\label{lem:compute-next-configuration}
+    There exists a  copyless natural transformation 
+    \begin{align*}
+    \delta : (1 \oplus A) \times (1 \oplus A) \times (1 \oplus 1) \to 1 \oplus A
+    \end{align*} 
+    and some function 
+    \begin{align*}
+    o : \Sigma^* \times \Sigma \times \Sigma^*  \to  (1 \oplus A) \times (1 \oplus 1)
+    \end{align*}
+    which is recognizable in the sense that was defined in Section~\ref{sec:functorial-sst}, such that  for every strings $w,v \in \Sigma^*$ and every letter $a \in \Sigma$ we have 
+    \begin{align*}
+    \tuple{wa|\underline v}  = u( \tuple{w|\underline{av}}, g(w,a,v)).
+    \end{align*}
+\end{lemma}
+\begin{proof}
+    We begin with the following claim, which shows that there is no difference if we merge parts before or after applying the factorized output operation.
+    \begin{claim}\label{claim:merge-factorized-output}
+        The following diagram commutes 
+        \[
+        \begin{tikzcd}
+            [column sep=3cm]
+        \Sigma^* \times \Sigma \times \Sigma^* 
+        \ar[r,"{(w,a,v) \mapsto \tuple{w|a|\underline v}}"]
+        \ar[d,"{(w,a,v) \mapsto (wa,v)}"']
+        &
+        A \oplus A \oplus 1
+        \ar[d,"\text{merge first two coordinates}"]
+        \\
+        \Sigma^+ \times \Sigma^* 
+        \ar[r,"{(wa,v) \mapsto \tuple{wa|\underline v}}"']
+        &
+        A  \oplus 1
+        \end{tikzcd}
+        \]
+    \end{claim}
+
+    Thanks to the above claim, we know that  the desired value $\tuple{wa|\underline v}$ is obtained from  $\tuple{w|a| \underline v}$
+    by applying a copyless natural transformation, namely merging the first two coordinates. 
+     By Lemma~\ref{lem:views}, we know that $\tuple{w|a| \underline v}$ is obtained by applying some copyless natural transformation to its three views 
+     \begin{align*}
+     \myunderbrace{\view_1(\tuple{w|a| \underline v}) }{in $1 \oplus A$}
+    \qquad
+    \myunderbrace{\view_2(\tuple{w|a| \underline v}) }{in $1 \oplus A$}
+     \qquad 
+     \myunderbrace{\view_3(\tuple{w|a| \underline v}) }{in $1 \oplus 1$}.
+    \end{align*}
+    By the same argument as in Claim~\ref{claim:merge-factorized-output}, the three views above are equal to, respectively
+    \begin{align}
+        \label{eq:three-views-after-post-processing}
+       \tuple{w|\underline a \underline v}
+       \qquad
+\myunderbrace{\mathrm{merge}(\tuple{\underline w| a| \underline v}) }{here merging is the operation \\ 
+that merges the two copies of $1$}
+       \qquad 
+        \tuple{\underline {wa}| \underline v}.
+    \end{align}
+    Summing up, we have shown that the desired value $\tuple{wa| \underline v}$ is obtained by applying some copyless natural transformation to the three values in~\eqref{eq:three-views-after-post-processing}. To complete the proof of the lemma, we  observe that  second and third values in~\eqref{eq:three-views-after-post-processing} depend only on the letter $a$ and the images of $w$ and $v$ under $h;\functor !$ and therefore can be obtained from $(w,a,v)$ in a recognizable way.
+\end{proof}
+
+
+Thanks to the above lemma, we can construct a device which is almost a functorial \sst as described in Section~\ref{sec:functorial-sst} and which recognizes our desired function $w \mapsto \tuple{w}$. We say ``almost'', because the device will use register and update functors that are  infinite polynomial functors; this construction will be later improved so that it becomes finite.  The register and update functors are 
+\begin{align*}
+\functorr A  = 1 \oplus A \qquad \functors A = (1 \oplus A) \times (1 \oplus 1).
+\end{align*}
+As mentioned above, these are  not a finite polynomial functors; we will resolve this problem shortly. Beyond that, there construction is immediate: if we take the register update term $\delta$ and the oracle $o$ as in the above lemma, and we define the initial register value to be 
+\begin{align*}
+\myunderbrace{\tuple{\varepsilon | \underline{a_1 \cdots a_n}}}{this does not depend on the input string $a_1 \cdots a_n$, \\ it is equal to the unique element of $1 \oplus A$ that does not use $A$}
+\end{align*}
+then the resulting machine will have the property that  if the input string is $a_1 \cdots a_n$, then its $i$-th configuration is 
+\begin{align*}
+\tuple{a_1 \cdots a_{i}| \underline{a_{i+1} \cdots a_n}}.
+\end{align*}
+In particular, the last configuration is $\tuple{a_1 \cdots a_n | \varepsilon}$, which is the same as the output when viewed as an element of $A \oplus 1$. Therefore, to get the output, we should apply the partial copyless natural transformation of type $A \oplus 1 \to A$ which is the one-sided inverse of the embedding of $A$ in $A \oplus 1$.  
+
+The only remaining issue with our construction is that the two functors, i.e.~the register functor and the update functors, are not finite polynomial functors. This problem is overcome by observing that not all of $1 \oplus A$ need be used for the register values, only a small part of it, and likewise for the update functor. More formally, 
+consider the natural isomorphism
+\begin{align*}
+1 \oplus A  \quad \simeq \quad 
+\myunderbrace{\coprod_{q \in 1 \oplus 1}  A^{\dim q}}{call this the \emph{register representation} of $1 \oplus A$}
+\end{align*}
+that was discussed in Example~\ref{ex:co-product-as-polynomial-functor}. If we apply this isomorphism to an element of the form 
+\begin{align*}
+\tuple{w|\underline {v}} \in A \oplus 1,
+\end{align*}
+then the corresponding component will be $\tuple {\underline w | \underline v}$. Since the latter depends only  on $\underline w$ and $\underline v$, and these take values in the finite semigroup $\functor 1$, it follows that there are only finitely many components of $1 \oplus A$ that will be used to represent values from of the form $\tuple {w | \underline v}$. Therefore, instead of using $\functorr A$ to be all of $A \oplus 1$, we can restrict it to those finitely many components, giving thus a finite polynomial functor. The same argument can be applied to the update functor $\functors A$.

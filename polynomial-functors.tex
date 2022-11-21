@@ -1,0 +1,233 @@
+
+
+\subsection{Term operations and natural transformations}
+We now begin the proof of the right-to-left implication in Theorem~\ref{thm:regular-functions}. We begin by introducing some terminology that will be used in the proof, concerning  polynomial functors, and copyless operations between them. Polynomial functors will be used as the register structure for an \sst in our proof. 
+
+\subsubsection{Polynomial functors}
+The kinds of polynomial functors that we use in the proof are functors from semigroups to sets.
+Define a \emph{polynomial functor} to be a functor from the category of semigroups to the category of sets, which is of the form
+\begin{align*}
+A \quad \mapsto \quad \coprod_{q \in Q} A^{\text{dimension of } q},
+\end{align*}
+where $Q$ is some possibly infinite set, called the \emph{components}, with each  component having an associated \emph{dimension} in $\set{0,1,\ldots}$. On morphisms, the functor works in the expected way, i.e.~coordinate-wise.  A \emph{finite polynomial functor} is one that has finitely many components. 
+
+\begin{myexample}\label{ex:co-product-as-polynomial-functor}
+    The main example of a polynomial functor that we will use is the functor
+    \begin{align*}
+    1 \oplus A
+    \end{align*}
+    that describes co-products with the trivial semigroup. 
+    
+    Let us begin with some notation. We write $1$ for the semigroup that has exactly one element; this semigroup admits a unique homomorphism from every other semigroup. This unique homomorphism will be denoted by $! : A \to 1$, the notation has no connection with the factorial function on numbers. Another semigroup construction that will be used heavily in the proof is the co-product of two semigroups $A$ and $B$, which is denoted by $A \oplus B$. This is semigroup which consists of words over an alphabet that consists of the disjoint union of $A$ and $B$, restricted to words which are alternating in the sense that two consecutive elements cannot belong to the same semigroup. The semigroup operation is defined in the expected way. This construction has the following universal property of a co-products: for every semigroup homomorphisms 
+    \begin{align*}
+    f : A \to C \qquad \text{and} \qquad g : B \to C
+    \end{align*}
+    there is a unique semigroup homomorphism
+    \[
+    \begin{tikzcd}
+    f \text{ or } g : A \oplus B \to C
+    \end{tikzcd}
+    \]
+    which makes the expected diagram commute. 
+    
+    A crucial property of co-products that will be used in the proof is that the functor which returns the co-product with the trivial semigroup is in fact a polynomial functor (but not a finite polynomial functor).  This is because for every semigroup $A$ there is a bijective correspondence 
+    \begin{align}\label{eq:polynomial-representation-of-coproduct}
+    1 \oplus A \quad \simeq \quad \coprod_{q \in 1 \oplus 1} A^{\text{dimension of $q$}},
+    \end{align}
+    where the dimension of $q$ is defined to be the number of times that the second copy of $1$ appears in $q$. Furthermore, the bijective correspondence in~\eqref{eq:polynomial-representation-of-coproduct} is natural in $A$, and therefore there is a natural bijection between the functor $1 \oplus A$ and some polynomial functor. Also, if two polynomial functors are connected by a natural bijection, then they are the same, up to renaming of the components, and therefore the representation in~\eqref{eq:polynomial-representation-of-coproduct} is unique up to renaming of components. By uniqueness, we will simply speak of $1 \oplus A$ as being a polynomial functor. 
+\end{myexample}
+
+
+
+
+\subsubsection{Copyless natural transformations.}  Among all natural  transformations between polynomial functors, we will be interested mainly in those that are  \emph{copyless}. To define this notion, we will first observe that  every natural transformation between polynomial functors  arises from some syntactic description, and within this syntactic description, the  the copyless restriction can easily be phrased. 
+
+We begin with \emph{monomial functors}, i.e.~polynomial functors with one component. 
+Consider two monomial functors 
+\begin{align*}
+\functor A = A^k \qquad 
+\functorg A = A^\ell \qquad \text{where $k,\ell \in \set{0,1,\ldots}$.}
+\end{align*}
+What is the possible form of a natural transformation between these functors? One way to create such a natural transformation is to take a  function  of type 
+\begin{align*}
+\set{1,\ldots,\ell} \to \set{1,\ldots,k}^+,
+\end{align*}
+which will be called the \emph{syntactic description} of the natural transformation, 
+and to define the natural transformation as follows: for a semigroup $A$ the natural transformations gives the function  that inputs $\bar a \in A^k$ and outputs the following tuple $A^\ell$:
+\[
+\begin{tikzcd}
+    [column sep=2.3cm]
+\set{1,\ldots,\ell}
+\arrow[r, "\text{syntactic description}"]
+&
+\set{1,\ldots,k}^+ 
+\ar[r,"\text{substitute $\bar a$}"]
+& 
+A^+
+\ar[r,"\text{semigroup operation}"]
+&
+A.
+\end{tikzcd}
+\]
+Every natural transformations between monomial functors arises this way. To see this, the syntactic description is recovered by using the natural transformation for the free semigroup $A=\set{1,\ldots,k}^+$, and applying it for the identity valuation 
+\begin{align*}
+x \in \set{1,\ldots,k} \quad \mapsto \quad [x] \in \set{1,\ldots,k}^+.
+\end{align*}
+
+
+The advantage of the syntactic description, which is unique, is that it allows us to define the  \emph{copyless restriction}:  (*)   we say that a  syntactic description
+\begin{align*}
+    \alpha: \set{1,\ldots,\ell} \to \set{1,\ldots,k}^+
+    \end{align*}
+is copyless if  every letter  from $\set{1,\ldots,k}$ appears in at most one word $\alpha(x)$, and in that word it appears at most once. An equivalent condition can be phrased semantically: (**) if we use the natural transformation in the semigroup $A = \Nat$, then the corresponding function $\Nat^k \to \Nat^\ell$ is non-increasing, where the norm of a vector is the sum of its coordinates. 
+
+We now define what it means to be copyless for a natural transformation between arbitrary polynomial functors 
+\begin{align*}
+\functor A = \coprod_{q \in Q} A^{\dim q} \qquad 
+\functorg A = \coprod_{p \in P} A^{\dim p},
+\end{align*}
+which are not necessarily monomial. Such natural transformations also admit syntactic description: for every input component $q$, there is some designated output component $p$, and a natural transformation $A^{\dim q} \to A^{\dim p}$.  The set of possible syntactic descriptions is
+\begin{align*}
+\prod_{q \in Q} \coprod_{p \in P} \dim p \to (\dim q)^+.
+\end{align*}
+Again, one can show that all natural transformations arise this way. The natural transformation is called copyless if for every $q$, the corresponding natural transformation between monomial functors is copyless. 
+
+
+\begin{myexample}\label{ex:copyless-on-co-products}
+    Consider the functor $1 \oplus A$ that was discussed in Example~\ref{ex:co-product-as-polynomial-functor}, and shown to be a polynomial functor. Consider the natural transformation 
+    \begin{align*}
+    (1 \oplus A)\times (1 \oplus A) \to 1 \oplus A
+    \end{align*}
+    which describes the semigroup operation in the co-product semigroup $1 \oplus A$. This natural transformation is copyless.
+\end{myexample}
+
+
+\subsubsection{Views}
+\label{sec:views}
+We now describe a crucial property of the co-product of semigroups, which is behind the proof of Theorem~\ref{thm:regular-functions}. The idea is that an element of a co-product can be uniquely defined from its views onto the individual coordinates, as defined below. 
+For semigroups $A_1,\ldots,A_n$ and an index $i \in \set{1,\ldots,n}$, define the \emph{$i$-th view} operation to be the function 
+\begin{align*}
+A_1 \oplus \cdots \oplus A_n \to 1 \oplus A_i
+\end{align*}
+ obtained by applying the cases construction to the following  homomorphisms:
+\[
+    \begin{tabular}{cc}
+\begin{tikzcd}
+    [column sep=1.5cm]
+    A_i 
+    \ar[r,"\text{co-projection}"] 
+    &
+    1 \oplus A_i
+    \end{tikzcd}
+&
+\begin{tikzcd}
+    [column sep=1.5cm]
+A_j 
+\ar[r,"!"]
+&
+1
+\ar[r,"\text{co-projection}"] 
+&
+1 \oplus A_i.
+\end{tikzcd}\\
+\text{homomorphism for $i$}
+&
+\text{homomorphism for $j\neq i$}
+\end{tabular}
+\]
+For fixed $n$ and $i$, this is  as a natural transformation. The important property of views is that they give complete information about the co-product, i.e.~if we have all views then we can reconstruct an element of the co-product; furthermore this reconstruction is copyless. This is stated in the following lemma. 
+
+\newcommand{\combine}{\mathrm{combine}}
+\newcommand{\view}{\mathrm{view}}
+\begin{lemma}
+\label{lem:views}
+    For every $n \in \set{1,2,\ldots}$ there is a natural transformation $\combine$, which is copyless, such that for every semigroups $A_1,\ldots,A_n$, the following diagram commutes 
+\[
+\begin{tikzcd}
+    [column sep=2.5cm]
+A_1 \oplus \cdots \oplus A_n 
+\ar[d,equal]
+\ar[r,"\view_1 \times \cdots \times \view_n"]
+&
+(1 \oplus A_1) \times \cdots \times (1 \oplus A_n)
+\ar[dl,"\combine"]
+\\
+A_1 \oplus \cdots \oplus A_n.
+\end{tikzcd}
+\]
+\end{lemma}
+\begin{proof}
+    Straightforward.
+\end{proof}
+
+This lemma seems to contain the essential property of semigroups that makes the construction work. Our theorem will also be true for other algebraic structures in the lemma is true, such as forest algebras. However, the lemma seems to fail for certain algebraic structures, such as groups, even if we allow $1$ to be replaced by some fixed finite group. Another example where the lemma seems to fail is the monad of weighted sums of words (i.e.~this monad corresponds to weighted automata).
+
+\subsubsection{Functorial streaming string transducers}
+\label{sec:functorial-sst}
+We now describe the last ingredient in our proof, which is a more abstract variant  of streaming string transducers (\sst) that is described in Definition~\ref{def:functorial-sst}. 
+
+Before presenting the abstract definition, we discuss how it differs  from the usual of \sst. The first difference, which is least important, there is some abstract output semigroup $A$ instead of a free semigroup $\Gamma^+$; this generalization is only meant to have cleaner notation. The second, and more important, difference is that, instead of having a fixed number of registers, we allow the register structure to be a finite polynomial functor such as 
+\begin{align*}
+\functorr A = A^3 + A^2 + A^2 + A + 1.
+\end{align*}
+The idea is that the register structure already contains the states; with the states corresponding to components in the disjoint union, and with  different states using different numbers of registers. The final difference is that the transducer is allowed to have a look at regular properties of the string on both sides of the head:  when the head is over some position in the input string, then the way in which the registers are is decided based on  some recognizable property of 
+\begin{align*}
+\myunderbrace{\Sigma^*}{before \\ head } \times 
+\myunderbrace{\Sigma}{under \\ head } \times 
+\myunderbrace{\Sigma^*}{after \\ head }.
+\end{align*}
+(As usual, the register update must be copyless.)
+By a recognizable property of the above we mean a function that inputs elements of the above set of triples  and outputs elements of some set $X$, which can be be decomposed as 
+\[
+\begin{tikzcd}
+    \Sigma^* \times \Sigma \times \Sigma^* 
+    \ar[r,"h \times \id \times h"] 
+    &
+    M \times \Sigma \times M
+\ar[r,"f"]
+& 
+X
+\end{tikzcd}
+\] 
+for some homomorphism $h$ into a finite monoid and some function $f$. In a sense, this model has two features that replace states: the disjoint unions in the register structure, and the recognizable property. Each of these features alone would be enough, but for our intended application having both features will give a cleaner construction.
+
+Here is the formal definition of our \sst model.
+
+\begin{definition}\label{def:functorial-sst}
+    An functorial \sst is defined by: 
+    \begin{itemize}
+    \item a finite  input alphabet $\Sigma$;
+    \item a (not necessarily finite) output semigroup $A$;
+    \item two a finite  polynomial functor $\functorr A, \functors A$ , called the \emph{register functor} and the \emph{update functors}, along with  three copyless natural transformations \begin{align*}
+    \vdash: 1 \to \functorr A \qquad \delta : \functorr A \times \functors A \to \functorr A \qquad \myunderbrace{\dashv : \functorr A \to A}{can be partial}
+    \end{align*}
+    \item an \emph{oracle}, which is a recognizable function 
+    \begin{align*}
+    o : \Sigma^* \times \Sigma \times \Sigma^* \to \functors A.
+    \end{align*}
+    
+    \end{itemize}
+\end{definition}
+
+The function computed by a functorial \sst is the partial function of type 
+\begin{align*}
+\Sigma^+ \to A
+\end{align*}
+that is defined as follows. Consider some input string in $\Sigma^+$. The machine moves its head along all input positions, and computes for each one a register valuation in $\functorr A$. In the initial register valuation corresponding to $i=0$, when no positions were processed yet, the register valuation  is obtained by applying $\vdash$ to the unique element $1$. For $i > 0$, the $i$-th register valuation is obtained by applying $\delta$ to the pair which consists of the $(i-1)$-st register valuation and the result of applying the oracle to input string with the $i$-th position distinguished. Finally, the output of the \sst is obtained by applying the output term operation $\dashv$ to the last  register valuation.
+
+\begin{lemma}\label{lem:functorial-sst-complete}
+    A function of type $\Sigma^+ \to A$ is regular, in the standard sense, if and only if it is computed by a functorial \sst. 
+\end{lemma}
+\begin{proof}
+    A normal \sst with states $Q$ and $k$ registers can be seen as a functorial \sst with a register functor of the form 
+    \begin{align*}
+    \functorr A = \coprod_{q \in Q} (A + 1)^k.
+    \end{align*}
+    The oracle function does not look at any properties of the input string (all appropriate information is remembered in the implicit state from the register functor), and it simply outputs all elements of the output semigroup that might potentially be used in an update, with sufficient copies 
+    \begin{align*}
+    \functors A = A^\ell
+    \end{align*}
+    to make the function $\delta$ copyless. 
+
+    Consider now the other implication in the lemma, which is the one that we use in this proof. In the case when the register functor is $A^k$ for some $k$,  a functorial \sst is a special case of an \sst with regular lookahead; and regular lookahead can be eliminated~\cite[Lemma 13.6]{bojanczyk_automata_2018}. To accommodate more general polynomial functors as register functors, we observe that the component in a polynomial functor can be stored in the state of an \sst, and the register values can be stored in $A^k$ for sufficiently large $k$. 
+\end{proof}

@@ -1,0 +1,150 @@
+
+We will be using automata that are deterministic, but not necessarily finite, and with outputs that are an arbitrary set instead of just yes/no. 
+
+\begin{definition}
+    An \emph{automaton} is a tuple 
+    \begin{align*}
+    \myunderbrace{Q}{states}
+    \qquad 
+    \myunderbrace{q_0 \in Q}{initial state}
+    \qquad 
+    \myunderbrace{\Sigma}{alphabet}
+    \qquad 
+    \myunderbrace{\set{\delta_a : Q \to Q}_{a \in \Sigma}}{transitions}
+    \qquad 
+    \myunderbrace{X}{output set}
+    \qquad 
+    \myunderbrace{out : Q \to X}{output function}.
+    \end{align*}
+    We do not require that any of the components are finite. We do require that every state is reachable from the initial state (i.e.~can be reached after reading some finite word).
+\end{definition}
+
+An automaton is called finite if all of the sets, i.e.~the input alphabet, the states and the output set, are finite. The function recognized by an automaton is the function of type $\Sigma^* \to X$ that is defined in the natural way: run the automaton, and apply the output function to the state at the end.
+
+An automaton can be seen as an algebra, in the sense of universal algebra, which has two sorts (states and output elements), a constant for the initial state, and unary functions for the transitions and the output function. The signature of this algebra (i.e.~the names and arities of the operations) is determined by the input alphabet.  A homomorphism between two automata over the same input alphabet is defined to be a homomorphism of such algebras, in the sense of universal algebra. We do not consider homomorphisms between automata that have different input alphabets. 
+
+\newcommand{\autcat}[1]{\mathrm{Aut}#1}
+\newcommand{\moncat}{\mathrm{Mon}}
+\begin{definition}
+    For a finite set $\Sigma$, define $\autcat \Sigma$ to be the category where the objects are automata (not necessarily finite) with input alphabet $\Sigma$, and where the morphisms are homomorphisms of automata.
+\end{definition}
+
+In the category of automata over input alphabet $\Sigma$, there is an \emph{initial automaton}, i.e.~an automaton which admits a unique homomorphism to every other automaton. In the initial automaton, the states and output elements are the same, namely $\Sigma^*$, the initial state is the empty word, the transduction function $\delta_a$ appends the letter $a$, and the output function is the identity. 
+
+
+\begin{theorem}
+    Let $\Sigma$ and $\Gamma$ be finite alphabets. The following conditions are equivalent for a function $f : \Sigma^* \to \Gamma^*$: 
+    \begin{enumerate}
+        \item \label{it:f-is-regular}$f$ is regular, i.e.~computed by a copyless SST; 
+        \item \label{it:automata-functor} there is a functor 
+        \begin{align*}
+        \functor : \autcat \Gamma \to \autcat \Sigma
+        \end{align*}
+        which is finiteness preserving (i.e.~finite automata are mapped to finite automata) and such that $f$ is the function recognized by the automaton that is obtained by  applying $\functor$ to the initial automaton over $\Gamma$.
+        \item \label{it:monoid-functor} there is a functor 
+        \begin{align*}
+        \functor : \moncat \to \moncat  
+        \end{align*}
+        that is finiteness preserving (i.e.~finite monoids are mapped to finite monoids)
+        together with family of \emph{output functions}
+            \begin{align*}
+            \set{\myunderbrace{out_M : \functor M \to M}{a function, not necessarily a monoid homomorphism}}_{M \text{ is a monoid}}
+            \end{align*}
+            such that the family is a natural transformation, and the function $f$ can be decomposed as 
+            \[
+            \begin{tikzcd}
+            \Sigma^* 
+            \ar[r,"h"] 
+            &
+            \functor \Gamma^* 
+            \ar[r,"out_{\Gamma^*}"]
+            &
+            \Gamma^*
+            \end{tikzcd}
+            \]
+            for some monoid homomorphism $h$.
+    \end{enumerate}
+\end{theorem}
+
+
+
+\subsection{From automata functors to monoid functors (\ref{it:automata-functor} $\Rightarrow$ \ref{it:monoid-functor})}
+From automata functors to monoid functors. Suppose that we have an automaton functor $\functor$ as in item~\ref{it:automata-functor} of the theorem. To define the monoid functor in item~\ref{it:monoid-functor} of the theorem, we will compose three functors
+\[
+\begin{tikzcd}
+\moncat 
+\ar[r,"\functor_1"]
+&
+\autcat \Gamma 
+\ar[r,"\functor"]
+&
+\autcat \Sigma 
+\ar[r,"\functor_2"]
+&
+\moncat
+\end{tikzcd}
+\]
+All of them will be finiteness preserving (i.e.~finite automata/monoids are mapped to finite automata/monoids), and therefore their composition, call it $\functorg$, will be a finiteness preserving functor. 
+
+
+\begin{enumerate}
+    \item For every monoid homomorphism $g : \Gamma^* \to M$, we define an automaton $\Aa_g$ over input alphabet $\Gamma$ as follows. The states are $M$, the output set is is $M$ and the output function is the identity, and the initial state and transition functions are defined so that after reading a word $w \in \Gamma^*$, the state is $g(w)$. This transformation is functorial in the following sense: if
+    \begin{align*}
+    h : M \to N
+    \end{align*}
+    is a monoid homomorphism, then applying $h$ to both states and output elements is an automaton homomorphism from $\Aa_g$ to $\Aa_{g;h}$.
+
+    For a monoid homomorphism $g : \Gamma^* \to M$, define a monoid $M_g$ as follows take the automaton $\Aa_g$, apply the functor $\functor$, and take its transition monoid. In other words 
+    \begin{align*}
+    M_g 
+    \quad \eqdef \quad 
+    \functort \functor (\Aa_g)
+    \end{align*}
+    
+    We now define the monoid functor $\functor G$. On objects, i.e.~on monoids, the functor is defined by 
+    \begin{align*}
+    \functorg M 
+    \quad \eqdef \quad 
+    \myunderbrace{\text{(monoid homomorphisms $\Gamma^* \to M$)}}{viewed as a trivial monoid, \\ with monoid product $xy=x$} \times \prod_{g : \Gamma^* \to M} 
+    \functort \functor (\Aa_g)
+    \end{align*}
+    where the product ranges over monoid homomorphisms. This construction is finiteness preserving, because there are finitely many homomorphisms from $\Gamma^*$ to a finite monoid. For a monoid homomorphism
+    \begin{align*}
+    h : M \to N
+    \end{align*}
+    the functor is defined as follows.  On the first coordinate, i.e.~the part which stores a monoid homomorphism, we simply post-compose the homomorphism with $h$.  On the second part, return a tuple 
+\end{enumerate}
+
+\paragraph*{Transition monoids.} 
+For an automaton $\Aa$, define its \emph{transition monoid}, denoted by $\functort  \Aa$,  to be the set of state transformations induced by all possible input strings, equipped with function composition. This construction can be extended to a functor, i.e.~if we have an automaton homomorphism 
+\begin{align*}
+h : \Aa \to \Bb,
+\end{align*}
+then we can map it to a monoid homomorphism between the two transition monoids
+\begin{align*}
+\functort h : \functort \Aa \to \functort \Bb
+\end{align*}
+as follows. For each  state transformation 
+\begin{align*}
+\delta : Q_\Aa \to Q_\Aa
+\end{align*}
+we need to define new state transformation 
+\begin{align*}
+(\functort h)(\delta) : Q_\Bb \to Q_\Bb.
+\end{align*}
+The new state transformation is defined as follows: given a state $q_\Bb \in Q_{\Bb}$, choose some state in  $h^{-1}(q_\Bb)$, apply $\delta$ to it, and then apply $h$ to the result. We now argue that this definition is well formed. First, there is at least one choice, because a homomorphism of automata must be surjective on states by the assumption that all states are reachable.  Second, the output of the new state transformation does not depend on the choice, because 
+\begin{align*}
+h(q_1) = h(q_2) 
+\quad \text{implies} \quad 
+h(\delta(q_1))= h(\delta(q_2))
+\end{align*}
+by the definition of automata homomorphisms.
+
+
+Suppose that we are given a monoid $M$, not necessarily finite. For a function 
+\begin{align*}
+g : \Sigma \to M,
+\end{align*}
+we define an automaton $\Aa_g$ with input alphabet $\Sigma$ as follows. The states are the monoid elements, the initial state is the monoid identity, the output set is the monoid, the output function is the identity function, and the transition function is defined by $(m,a) \mapsto m \cdot g(a)$. 
+
+If $\Aa_1$ and $\Aa_2$ are two automata, not necessarily finite, over the same input alphabet, then a \emph{homomorphism} is a function that maps: states of $\Aa_1$ to states of $\Aa_2$, and output elements of $\Aa_1$ to output elements of $\Aa_2$, and which commutes with the transition functions and the output function in the natural way. 

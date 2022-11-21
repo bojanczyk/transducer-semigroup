@@ -1,0 +1,148 @@
+
+A function 
+\begin{align*}
+f : \Sigma^* \to \Gamma^*
+\end{align*}
+is called \emph{regularity reflecting} if for every regular language 
+\begin{align*}
+    L : \Gamma^* \to \set{\text{yes, no}}
+    \end{align*}
+over the output alphabet, the language $f;L$ over the input alphabet is also regular. We will characterize regularity reflecting functions using functors and natural transformations. Later on, also using functors and natural transformations, we will characterize a subclass of the regularity reflecting functions, namely the regular functions.
+
+In our characterization, the category of interest will be homomorphisms from words over a fixed alphabet to (not necessarily finite) monoids.
+For an alphabet $\Sigma$, consider the category $\moncat \Sigma^*$ defined as follows: objects are monoid homomorphisms 
+\begin{align*}
+h : \Sigma^* \to M
+\end{align*}
+and a homomorphism between two such objects is a monoid homomorphism between the co-domains  which makes the obvious diagram commute. In other words, this is the co-slice category of the category of monoids with the selected object $\Sigma^*$. This category makes sense for selected objects that are not free monoids, but we will not use that. 
+
+
+\begin{theorem}
+    Let $\Sigma$ and $\Gamma$ be finite alphabets. A function 
+    \begin{align*}
+     f : \Sigma^* \to \Gamma^*
+    \end{align*}
+    is regularity reflecting if and only if it satisfies the following condition.
+    \begin{itemize}
+    \item There is a functor 
+    \begin{align*}
+    \functor : \moncat \Gamma^* \to \moncat \Sigma^* 
+    \end{align*}
+    which preserves finiteness (i.e.~homomorphisms  into finite monoids are mapped to homomorphisms into finite monoids) and a natural transformation 
+    \begin{align*}
+    \myunderbrace{out : \functoru \functorc \functor \Rightarrow \functoru \functorc }{here $\functorc$ is the functor from homomorphisms to monoids which returns the co-domain \\
+    and $\functoru$ is the functor from monoids to sets which returns the underlying set\\ 
+    (formally speaking, there are two versions of  $\functorc$, one on each side)}
+    \end{align*}
+    such that $f$ is equal to the composition of the following two functions, where $\id$ is the identity homomorphism on $\Gamma^*$: 
+    \[
+    \begin{tikzcd}
+    \Sigma^* 
+    \ar[r,"\functoru \functorc \functor(\id)"]
+    &
+    \functoru\functorc \functor(\id)
+    \ar[r,"out_\id"]
+    &
+    \Gamma^* = \functoru \functorc(\id).
+    \end{tikzcd}
+    \]
+    \end{itemize}
+\end{theorem}
+\begin{proof}
+    The proof is symbol pushing.  
+    
+    \paragraph*{From a regularity preserving function to a functor.}
+    We begin with the bottom-up direction. Suppose that $f$ satisfies the condition from the lemma, as witnessed by a functor $\functor$ and a natural transformation $out$. Consider some regular language 
+    \begin{align*}
+    L : \Gamma^* \to \set{\text{yes, no}}.
+    \end{align*}
+    We need to show that $f;L$ is also regular. Take some monoid homomorphism 
+    \begin{align*}
+    h : \Gamma^* \to M
+    \end{align*}
+    that recognizes the language $L$. To prove regularity of $L$, we will show that $f;h$ factors through a homomorphism from $\Sigma^*$ to some finite monoids. Apply the functor $\functor$, yielding some monoid homomorphism $\functor h$. We can also view $h$ as a morphism
+    \begin{align*}
+    H : \id \to h
+    \end{align*}
+    in the category $\moncat \Gamma^*$. (Applying $\functorc$ to this morphism gives us $h$.)
+    Consider the following diagram:
+    \[
+    \begin{tikzcd}
+    \Sigma^*
+    \ar[d," \functoru \functorc \functor  (\id)"'] 
+    % \ar[dr,"\text{a monoid homomorphism}"']
+    \ar[dr, "f"] 
+    \\
+    \functoru \functorc \functor (\id) 
+    \ar[r,"out_\id"]
+    \ar[d,"\functoru \functorc \functor H"']
+    & 
+    \Gamma^* 
+    \ar[d,"h=\functoru \functorc H"]
+    \\
+    \functoru \functorc \functor (h) 
+    \ar[r,"out_h"]
+    &
+    M 
+    \end{tikzcd}
+    \]
+    The triangular face commutes by assumption on $f$, and the rectangular face  commutes by naturality. Therefore, the  path that begins in $\Sigma^*$ and  goes  down-down-right  is equal to $f;h$. The first two steps on this path describe  a  monoid homomorphism into the finite monoid $\functorc \functor h$, and therefore $f;h$ is a regular language.
+    
+    \paragraph*{From a functor to a regularity preserving function.}
+    Let 
+    \begin{align*}
+    f : \Sigma^* \to \Gamma^*
+    \end{align*}
+    be a regularity reflecting function. 
+    We define a functor 
+    \begin{align*}
+    \functor : \moncat \Gamma^* \to \moncat \Sigma^* 
+    \end{align*}
+    as follows. On objects, the functor maps an object 
+    \begin{align*}
+    h : \Gamma^* \to M
+    \end{align*}
+    to the syntactic monoid homomorphism of the composition of the  two functions
+    \[
+    \begin{tikzcd}
+    \Sigma^* 
+    \ar[r,"f"] 
+    & 
+    \Gamma^* 
+    \ar[r,"h"]
+    & 
+    M.
+    \end{tikzcd}
+    \]
+    Since $f$ is regularity preserving,  the functor $\functor$ is finiteness preserving. On  morphisms, the functor $\functor$ is defined as follows. Suppose that we are given a morphism 
+    \[
+    \begin{tikzcd}
+    &
+    \Gamma^* 
+    \ar[dl,"h_1"']
+    \ar[dr,"h_2"]
+    \\
+    M_1 
+    \ar[rr,"h"]
+    &&
+    M_2
+    \end{tikzcd}
+    \]
+    Since the function $f;h_2$ factors through the function $f;h_1$, it follows that the syntactic homomorphism of the first function factors through the syntactic homomorphism of the second one. The factoring function is defined to be the output of the functor $\functor$.  
+    
+    It remains to define the output natural transformation. 
+    For a homomorphism 
+    \begin{align*}
+    h : \Gamma^* \to M
+    \end{align*}
+    we need to define a function 
+    \[
+    \begin{tikzcd}
+        \myunderbrace{\functoru \functorc \functor h}{syntactic\\ monoid\\ of $f;h$}
+    \ar[r,"out_h"]
+    & 
+    \myunderbrace{\functoru \functorc h}{$M$}
+    \end{tikzcd}
+    \]
+    An element of the syntactic monoid of $f;h$ is an equivalence class of words in $\Sigma^*$, with respect to the two-sided congruence of the function $f;h$. To each such equivalence class we can easily associate an output in $M$, namely the output of $f;h$ in the empty environment. One can easily check naturality. 
+\end{proof}
