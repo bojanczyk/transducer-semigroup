@@ -63,7 +63,18 @@ We now present proof of the right-to-left implication in Theorem~\ref{thm:regula
 is recognized by a functorial \sst.
 
 
-We begin by introducing some notation, which allows us to track which parts of an output come from which parts of an input.
+We begin by introducing some notation, which allows us to track which parts of an output come from which parts of an input. The new notation will be explained using the running example of the duplicating function 
+\begin{align*}
+f : \set{a,b}^+ \to \set{a,b}^+
+\end{align*}
+which is recognized by the 
+transducer semigroup 
+in which the functor $\functor$ is the identity, the output mechanism is duplication, and the homomorphism 
+\begin{align*}
+h : \set{a,b}^+ \to \functor \set{a,b}^+ = \set{a,b}^+
+\end{align*}
+is the identity.
+
 %  Let us extend the output mechanism from semigroups to co-products of semigroups. This is done as follows, for semigroups $A_1,\ldots,A_n$, define the corresponding output mechanism to be the composition of the following functions 
 % \[
 % \begin{tikzcd}
@@ -100,6 +111,20 @@ that is obtained by composing the  four functions described below
 A_1 \oplus \cdots \oplus A_n.
 \end{tikzcd}
 \]
+
+Let us illustrate the factorized output function on our running example, with 
+\begin{align*}
+A_1 = 1 \qquad A_2 = \set{a,b}^+.
+\end{align*}
+If we apply the factorized output function to 
+\begin{align*}
+(1, abbb)  \in \functor A_1 \times \functor A_2 = A_1 \times A_2
+\end{align*}
+then the output will be 
+\begin{align*}
+1 abbb 1 abbb.
+\end{align*}
+
 If we fix $n$, then the factorized output function is a natural in the sense that the following diagram commutes 
 \[
 \begin{tikzcd}
@@ -129,12 +154,31 @@ transformation of type
 The reason for naturality is that each of the four steps in the definition of the factorized output is itself a natural transformation, and natural transformations compose. 
 
 
-By abuse of notation, we allow some -- but not all -- of the arguments in the factorized output to be empty; in this case the empty arguments are ignored, but the output type is still a co-product of $n$ semigroups.
-For possibly empty input strings $w_1,\ldots,w_n \in \Sigma^*$, such that at least one of the strings is nonempty,  let use write 
+% By abuse of notation, we allow some -- but not all -- of the arguments in the factorized output to be empty; in this case the empty arguments are ignored, but the output type is still a co-product of $n$ semigroups. For example, if the input to the factorized output function is 
+% \begin{align*}
+% (1, \varepsilon) \in 1 \oplus \set{a,b}^+
+% \end{align*}
+% then the factorized  output is  
+% \begin{align*}
+% 1 1     \in 1 \oplus \set{a,b}^+.
+% \end{align*}
+    
+
+For  input strings $w_1,\ldots,w_n \in \Sigma^+$ let use write 
 \begin{align*}
 \tuple{w_1| \cdots | w_n} \in \myunderbrace{A \oplus \cdots \oplus A}{$n$ times}
 \end{align*}
-to be the result of first applying $h$ to all the strings, and then applying the factorized output function. We also use a similar notation but with some strings underlined; in the underlined case, to the non-underlined strings we apply $h$, and to the underlined strings we apply 
+to be the result of first applying $h$ to all the strings, and then applying the factorized output function. By abuse of notation, we allow some, but not all of the input strings to be empty, in which case the appropriate values in the co-product are ignored, but the output type is not changed. In our running example, we have 
+\begin{align*}
+    \tuple{abbbbb | \varepsilon | bbabaaa} =  
+    \myunderbrace{abbbbb}{in first \\ copy of \\ $\set{a,b}^+$}
+     \myunderbrace{bbabaaa}{in third \\ copy of \\ $\set{a,b}^+$}
+     \myunderbrace{abbbbb}{in first \\ copy of \\ $\set{a,b}^+$}
+     \myunderbrace{bbabaaa}{in third \\ copy of \\ $\set{a,b}^+$}.
+    \end{align*}
+
+
+We also use a similar notation but with some strings underlined; in the underlined case, to the non-underlined strings we apply $h$, and to the underlined strings we apply 
 \[
 \begin{tikzcd}
 \Sigma^+ 
@@ -146,14 +190,8 @@ to be the result of first applying $h$ to all the strings, and then applying the
 \functor 1.
 \end{tikzcd}
 \]
-For example 
-\begin{align*}
-\tuple{\underline {w_1}|w_2|\underline {w_3}} \in 1 \oplus A \oplus 1
-\end{align*}
-is the result of applying the factorized output function to the triple 
-\begin{align*}
-((h; \functor !)(w_1), h(w_2), (h; \functor !)(w_3)).
-\end{align*}
+
+
 
 The following lemma is the key part of our construction. The lemma speaks of a copyless natural transformation of type 
 \begin{align*}
