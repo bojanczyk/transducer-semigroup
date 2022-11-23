@@ -2,7 +2,7 @@
 We use some basic notions from category theory, such as functors or natural transformations. 
 We do not assume that the reader has a background in category theory, beyond the two most basic notions: category (objects together with morphisms between them, such that morphisms can be composed) and functor (a map between two categories, which maps objects of the first category to objects of the second category, and likewise for morphisms, which is consistent with composition of morphisms). In this paper, we will be working mainly with two categories: 
 \begin{description}
-    \item[Sets.] Objects are sets,  morphisms are functions between them
+    \item[Sets.] Objects are sets,  morphisms are functions between them.
     \item[Semigroups.] Objects are semigroups,  morphisms are semigroup homomorphisms.
 \end{description}
 
@@ -13,8 +13,8 @@ One example of a functor is the \emph{forgetful functor} from the category of se
     \begin{itemize}
         \item {\bf Tuples.} The functor maps a semigroup $A$ to its square $A^2$, with the semigroup operation being defined coordinate-wise. The functor extends to morphisms in the expected way. This functor also makes sense for higher powers, including infinite powers, such as $A^\omega$.
         \item {\bf Reverse. } The functor maps a semigroup $A$ to the semigroup where the underlying set is the same, but the multiplication is reversed, i.e.~the product of $a$ and $b$ in the new semigroup is the product of $b$ and $a$ in the old semigroup. Morphisms are not changed by the functor; it is easy to see that they retain the homomorphism property despite the change in the multiplication operation.
-        \item {\bf Lists.} The functor maps a semigroup $A$ to the free semigroup $A^+$ which consists of strings over alphabet $A$  equipped with string concatenation. On morphisms, the functor is defined coordinate-wise. 
-        \item {\bf Powerset.} The (co-variant) powerset functor maps a semigroup $A$ to the powerset semigroup $\powerset A$, where the underlying set is the family of all subsets of $A$, and the semigroup operation is defined by 
+        \item {\bf Lists.} The functor maps a semigroup $A$ to the free semigroup $A^+$ which consists of non-empty strings over the alphabet $A$  equipped with string concatenation. On morphisms, the functor is defined coordinate-wise. 
+        \item {\bf Powerset.} The (covariant) powerset functor maps a semigroup $A$ to the powerset semigroup $\powerset A$, where the underlying set is the family of all subsets of $A$, and the semigroup operation is defined by 
         \begin{align*}
         (A_1,A_2) \quad \mapsto \quad \setbuild{a_1 a_2}{$a_1 \in A_1$ and $a_2 \in A_2$}.
         \end{align*}
@@ -46,7 +46,7 @@ One example of a functor is the \emph{forgetful functor} from the category of se
     \begin{align*}
     \myunderbrace{\outfun_A : \functor A \to A,}{a function between two sets, that \\ is not necessarily a semigroup homomorphism}
     \end{align*}
-    which is natural in the sense that the following diagram commutes for every semigroup homomorphism $h$: 
+    and this family of functions is natural in the sense that the following diagram commutes for every semigroup homomorphism $h$: 
     \[
     \begin{tikzcd}
     \functor A 
@@ -56,7 +56,7 @@ One example of a functor is the \emph{forgetful functor} from the category of se
     \functor B
     \ar[d,"\outfun_B"]
     \\
-    A 
+    A which
     \ar[r,"h"']
     &
     B
@@ -186,14 +186,14 @@ We begin with two simple theorems that describe two classes of string-to-string 
 \begin{proof}
     Consider some semigroup $A$. Based on this semigroup we will define a transducer semigroup which will recognize all functions from $A$ to some other semigroup. Define  a functor as follows:
 \begin{align*}
-\functor B = A \times \myunderbrace{A \to B}{the set of all  functions, viewed as semigroup \\ 
+\functor B = A \times \myunderbrace{(A \to B)}{the set of all  functions, viewed as a semigroup \\ 
 with the trivial semigroup operation $xy = x$}.
 \end{align*}
 The functor is defined on morphisms
 as follows: the first coordinate, corresponding to $A$, is not changed, and the second coordinate, corresponding to the set of functions, is transformed   coordinate-wise, when viewed as a tuple indexed by $A$. (This is similar to the tuple construction in Example~\ref{ex:functors}, except that the semigroup structure of $A \to B$ is not defined coordinate-wise.)  This is easily seen to be a functor. 
 The output mechanism, which is easily seen to be natural, is function application i.e.
 \begin{align*}
-    (a,g) \mapsto f(a).
+    (a,f) \mapsto f(a).
 \end{align*}
 The transducer semigroup defined above recognizes the function $f : A \to B$. The appropriate homomorphism  is 
 \begin{align*}
@@ -210,7 +210,7 @@ A
 \set{\text{yes, no}}
 \end{tikzcd}
 \]
-is called \emph{recognizable} if it factors through a homomorphism from $A$ to some finite semigroup.  More generally, recognizability is defined for multivalued languages, i.e.~languages from the semigroup to some set, not necessarily with two elements, which factor through some homomorphism into a finite semigroup. A function is called recognizability reflecting if  
+is called \emph{recognizable} if it factors through a homomorphism from $A$ to some \emph{finite} semigroup.  More generally, recognizable maps from the semigroup $A$ to some set, not necessarily with two elements, are those that factor through some homomorphism into a finite semigroup. A function is called \emph{recognizability reflecting} if  
 inverse images of recognizable languages are also recognizable. The following example shows that there are a lot of recognizability reflecting functions.
 
 \begin{myexample}
@@ -221,9 +221,9 @@ inverse images of recognizable languages are also recognizable. The following ex
     \end{align*}
     and define $f$ to be the composition of $g$ with the factorial operation
     \begin{align*}
-    n \mapsto g(n)!
+    f : n \mapsto g(n)!
     \end{align*}
-    The property of the factorial operation is that every ultimately periodic subset of $\Nat$ contains all or no factorials, up to finitely many exceptions. Therefore, the inverse image of any ultimately periodic set under $g(n)!$ will be either finite or co-finite, and therefore also ultimately periodic.
+    The property of the factorial operation is that every ultimately periodic subset of $\Nat$ contains all or no factorials, up to finitely many exceptions. Therefore, the inverse image of any ultimately periodic set under $f$ will be either finite or co-finite, and therefore also ultimately periodic.
 \end{myexample}
 
 
@@ -253,14 +253,14 @@ B
     For the implication \ref{it:reco-refl} $\Rightarrow$ \ref{it:trans-semig-reco} we  use a similar construction as in the proof of Theorem~\ref{thm:all-functions}.
     Consider some function $f : A \to B$, which is recognizability reflecting. Define  a functor as follows:
     \begin{align*}
-    \functor C = A \times \myunderbrace{\mathrm{Hom}(B \to  C)}{all  semigroup  homomorphisms, viewed \\ as semigroup 
+    \functor C = A \times \myunderbrace{\mathrm{Hom}(B,C)}{the set of all  semigroup  homomorphisms, viewed \\ as a semigroup 
     with the trivial semigroup operation $xy = x$}.
     \end{align*}
     On morphisms, the functor is defined as in the proof of Theorem~\ref{thm:all-functions}, and the output mechanism  is function application with $f$ inserted as an interface i.e.
     \begin{align*}
-        (a,g) \mapsto (f;g)(a).
+        \outfun : (a,g) \mapsto g(f(a)).
     \end{align*}
-    By the assumption that $f$ is recognizability reflecting, the output mechanism is recognizable.
+    By the assumption that $f$ is recognizability reflecting, the output mechanism $\outfun_C$ is recognizable for finite $C$ [\textbf{(Tito) not sure this holds when $B$ isn't finitely generated?}].
     The transducer semigroup defined above recognizes the function $f$ via the homomorphism 
     \begin{align*}
     a \in A  \mapsto  (a,\id).
