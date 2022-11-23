@@ -3,7 +3,7 @@
 \section{The regular functions}
 \label{sec:reg-char}
 The two constructions in Theorems~\ref{thm:all-functions} and~\ref{thm:reco-reflecting-functions} were rather straightforward, and amounted to little more than symbol pushing. In this section, we present a more advanced  characterization, which concerns  the regular functions, i.e.~string-to-string functions recognized by streaming string transducers and their equivalent models. In the characterization, we require that the functor is finiteness preserving, i.e.~it maps finite semigroups to finite semigroups. It turns out that the naturality of the output mechanism interacts with the condition that 
-the functor is finiteness preserving; resulting in a strong restriction on the expressive power. To see this interaction, consider the following example
+the functor is finiteness preserving, resulting in a strong restriction on the expressive power.
 
 \begin{myexample}
     Consider the powerset functor $\powerset A$ from Example~\ref{ex:functors}. This is a finiteness preserving functor, since the powerset of a finite set is also finite. One could imagine that using the powerset functor we could construct some transducer semigroup which recognizes functions that are not regular, e.g.~because they have exponential growth. It turns out that this is impossible, because there is no possible output mechanism, i.e.~no natural transformation 
@@ -28,7 +28,7 @@ We now state the main theorem of this paper. Unlike the previous characterizatio
     Let  $\Sigma$ and $\Gamma$  be finite alphabets. The following conditions are equivalent for a function $f : \Sigma^+ \to \Gamma^+$, which is not necessarily a semigroup homomorphism:
     \begin{enumerate}
         \item \label{it:regular} $f$ is  a regular function, as defined in  Section~\ref{sec:easy}. 
-        \item \label{it:trans-semig-regular}$f$ is recognized by a transducer semigroup  such that for every finite semigroup $A$, the semigroup $\functor A$ is also finite. 
+        \item \label{it:trans-semig-regular}$f$ is recognized by a transducer semigroup $(\functor,\outfun)$ such that for every finite semigroup $A$, the semigroup $\functor A$ is also finite. 
     \end{enumerate}
 \end{theorem}
 
@@ -107,7 +107,7 @@ that is obtained by composing the  four functions described below
 \functor A_1 \oplus \cdots \oplus \functor A_n
 \ar[d, "\functor (\text{co-projection}) \oplus \cdots \oplus \functor (\text{co-projection}) "]\\
 \functor (A_1 \oplus \cdots \oplus A_n) \oplus \cdots \oplus \functor (A_1 \oplus \cdots \oplus A_n)
-\ar[d, "\outfun_{A_1} \oplus \cdots \oplus \outfun_{A_n}"]\\ 
+\ar[d, "\outfun_{A_1 \oplus \cdots \oplus A_n}\ \text{or}\ \dots\ \text{or}\ \outfun_{A_1 \oplus \cdots \oplus A_n}"]\\ 
 A_1 \oplus \cdots \oplus A_n.
 \end{tikzcd}
 \]

@@ -1,36 +1,36 @@
 
 
 \subsection{Term operations and natural transformations}
-We now begin the proof of the right-to-left implication in Theorem~\ref{thm:regular-functions}. We begin by introducing some terminology that will be used in the proof, concerning  polynomial functors, and copyless operations between them. Polynomial functors will be used as the register structure for an \sst in our proof. 
+We now turn to proving the right-to-left implication in Theorem~\ref{thm:regular-functions}.
+
+Let us begin with some notation. We write $1$ for the semigroup that has exactly one element; it is a \emph{terminal object}, that is, it admits a unique homomorphism from every other semigroup $A$, which will be denoted by $! : A \to 1$ (the notation has no connection with the factorial function on numbers). Another construction that will be used heavily in the proof is the \emph{coproduct} of two semigroups $A$ and $B$, which is denoted by $A \oplus B$. This is a semigroup which consists of words over an alphabet that is the disjoint union of $A$ and $B$, restricted to words which are nonempty and alternating in the sense that two consecutive elements cannot belong to the same semigroup. The semigroup operation is defined in the expected way. The coproduct deserves its name due to the following universal property: for every pair of semigroup homomorphisms
+\begin{align*}
+f : A \to C \qquad \text{and} \qquad g : B \to C
+\end{align*}
+there is a unique semigroup homomorphism
+\[
+\begin{tikzcd}
+f \text{ or } g : A \oplus B \to C
+\end{tikzcd}
+\]
+that coincides with $f$ (resp.\ $g$) on the subsemigroup of $A \oplus B$ consisting of words with a single letter from $A$ (resp.\ $B$).
+
+Next, we introduce some terminology that will be used in the proof, concerning  polynomial functors, and copyless operations between them. They will be used as the register structure for an \sst in our proof. 
 
 \subsubsection{Polynomial functors}
-The kinds of polynomial functors that we use in the proof are functors from semigroups to sets.
+%The kinds of polynomial functors that we use in the proof are functors from semigroups to sets.
 Define a \emph{polynomial functor} to be a functor from the category of semigroups to the category of sets, which is of the form
 \begin{align*}
 A \quad \mapsto \quad \coprod_{q \in Q} A^{\text{dimension of } q},
 \end{align*}
 where $Q$ is some possibly infinite set, called the \emph{components}, with each  component having an associated \emph{dimension} in $\set{0,1,\ldots}$. On morphisms, the functor works in the expected way, i.e.~coordinate-wise.  A \emph{finite polynomial functor} is one that has finitely many components. 
 
-\begin{myexample}\label{ex:co-product-as-polynomial-functor}
-    The main example of a polynomial functor that we will use is the functor
+\begin{myexample}\label{ex:coproduct-as-polynomial-functor}
+    A crucial property that will be used in our proof is that the functor
     \begin{align*}
-    1 \oplus A
+    A \mapsto \text{underlying set of}\ \myunderbrace{1 \oplus A}{\text{coproduct with the trivial semigroup}}
     \end{align*}
-    that describes co-products with the trivial semigroup. 
-    
-    Let us begin with some notation. We write $1$ for the semigroup that has exactly one element; this semigroup admits a unique homomorphism from every other semigroup. This unique homomorphism will be denoted by $! : A \to 1$, the notation has no connection with the factorial function on numbers. Another semigroup construction that will be used heavily in the proof is the co-product of two semigroups $A$ and $B$, which is denoted by $A \oplus B$. This is semigroup which consists of words over an alphabet that consists of the disjoint union of $A$ and $B$, restricted to words which are alternating in the sense that two consecutive elements cannot belong to the same semigroup. The semigroup operation is defined in the expected way. This construction has the following universal property of a co-products: for every semigroup homomorphisms 
-    \begin{align*}
-    f : A \to C \qquad \text{and} \qquad g : B \to C
-    \end{align*}
-    there is a unique semigroup homomorphism
-    \[
-    \begin{tikzcd}
-    f \text{ or } g : A \oplus B \to C
-    \end{tikzcd}
-    \]
-    which makes the expected diagram commute. 
-    
-    A crucial property of co-products that will be used in the proof is that the functor which returns the co-product with the trivial semigroup is in fact a polynomial functor (but not a finite polynomial functor).  This is because for every semigroup $A$ there is a bijective correspondence 
+    is in fact a polynomial functor (but not a finite polynomial functor).  This is because for every semigroup $A$ there is a bijective correspondence 
     \begin{align}\label{eq:polynomial-representation-of-coproduct}
     1 \oplus A \quad \simeq \quad \coprod_{q \in 1 \oplus 1} A^{\text{dimension of $q$}},
     \end{align}
@@ -40,7 +40,7 @@ where $Q$ is some possibly infinite set, called the \emph{components}, with each
 
 
 
-\subsubsection{Copyless natural transformations.}  Among all natural  transformations between polynomial functors, we will be interested mainly in those that are  \emph{copyless}. To define this notion, we will first observe that  every natural transformation between polynomial functors  arises from some syntactic description, and within this syntactic description, the  the copyless restriction can easily be phrased. 
+\subsubsection{Copyless natural transformations.}  Among all natural  transformations between polynomial functors, we will be interested mainly in those that are  \emph{copyless}. To define this notion, we will first observe that  every natural transformation between polynomial functors  arises from some syntactic description, and within this syntactic description, the copyless restriction can easily be phrased. 
 
 We begin with \emph{monomial functors}, i.e.~polynomial functors with one component. 
 Consider two monomial functors 
@@ -69,7 +69,7 @@ A^+
 A.
 \end{tikzcd}
 \]
-Every natural transformations between monomial functors arises this way. To see this, the syntactic description is recovered by using the natural transformation for the free semigroup $A=\set{1,\ldots,k}^+$, and applying it for the identity valuation 
+Every natural transformation between monomial functors arises this way. To see this, the syntactic description is recovered by using the natural transformation for the free semigroup $A=\set{1,\ldots,k}^+$, and applying it for the identity valuation 
 \begin{align*}
 x \in \set{1,\ldots,k} \quad \mapsto \quad [x] \in \set{1,\ldots,k}^+.
 \end{align*}
@@ -79,32 +79,32 @@ The advantage of the syntactic description, which is unique, is that it allows u
 \begin{align*}
     \alpha: \set{1,\ldots,\ell} \to \set{1,\ldots,k}^+
     \end{align*}
-is copyless if  every letter  from $\set{1,\ldots,k}$ appears in at most one word $\alpha(x)$, and in that word it appears at most once. An equivalent condition can be phrased semantically: (**) if we use the natural transformation in the semigroup $A = \Nat$, then the corresponding function $\Nat^k \to \Nat^\ell$ is non-increasing, where the norm of a vector is the sum of its coordinates. 
+is copyless if  every letter  from $\set{1,\ldots,k}$ appears in at most one word $\alpha(x)$, and in that word it appears at most once. An equivalent condition can be phrased semantically: (**) if we use the natural transformation in the semigroup $A = \Nat$, then the corresponding function $\Nat^k \to \Nat^\ell$ is non-expansive, i.e.\ the norm of its output is at most the norm of its input, where the norm of a vector is the sum of its coordinates. 
 
 We now define what it means to be copyless for a natural transformation between arbitrary polynomial functors 
 \begin{align*}
 \functor A = \coprod_{q \in Q} A^{\dim q} \qquad 
 \functorg A = \coprod_{p \in P} A^{\dim p},
 \end{align*}
-which are not necessarily monomial. Such natural transformations also admit syntactic description: for every input component $q$, there is some designated output component $p$, and a natural transformation $A^{\dim q} \to A^{\dim p}$.  The set of possible syntactic descriptions is
+which are not necessarily monomial. Such natural transformations also admit syntactic descriptions: for every input component $q$, there is some designated output component $p$, and a natural transformation $A^{\dim q} \to A^{\dim p}$.  The set of possible syntactic descriptions is
 \begin{align*}
 \prod_{q \in Q} \coprod_{p \in P} \dim p \to (\dim q)^+.
 \end{align*}
 Again, one can show that all natural transformations arise this way. The natural transformation is called copyless if for every $q$, the corresponding natural transformation between monomial functors is copyless. 
 
 
-\begin{myexample}\label{ex:copyless-on-co-products}
-    Consider the functor $1 \oplus A$ that was discussed in Example~\ref{ex:co-product-as-polynomial-functor}, and shown to be a polynomial functor. Consider the natural transformation 
+\begin{myexample}\label{ex:copyless-on-coproducts}
+    Consider the functor $1 \oplus A$ that was discussed in Example~\ref{ex:coproduct-as-polynomial-functor}, and shown to be a polynomial functor. Consider the natural transformation 
     \begin{align*}
     (1 \oplus A)\times (1 \oplus A) \to 1 \oplus A
     \end{align*}
-    which describes the semigroup operation in the co-product semigroup $1 \oplus A$. This natural transformation is copyless.
+    which describes the semigroup operation in the coproduct semigroup $1 \oplus A$. This natural transformation is copyless.
 \end{myexample}
 
 
 \subsubsection{Views}
 \label{sec:views}
-We now describe a crucial property of the co-product of semigroups, which is behind the proof of Theorem~\ref{thm:regular-functions}. The idea is that an element of a co-product can be uniquely defined from its views onto the individual coordinates, as defined below. 
+We now describe a crucial property of the coproduct of semigroups, which is behind the proof of Theorem~\ref{thm:regular-functions}. The idea is that an element of a coproduct can be uniquely defined from its views onto the individual coordinates, as defined below. 
 For semigroups $A_1,\ldots,A_n$ and an index $i \in \set{1,\ldots,n}$, define the \emph{$i$-th view} operation to be the function 
 \begin{align*}
 A_1 \oplus \cdots \oplus A_n \to 1 \oplus A_i
@@ -135,7 +135,7 @@ A_j
 \text{homomorphism for $j\neq i$}
 \end{tabular}
 \]
-For fixed $n$ and $i$, this is  as a natural transformation. The important property of views is that they give complete information about the co-product, i.e.~if we have all views then we can reconstruct an element of the co-product; furthermore this reconstruction is copyless. This is stated in the following lemma. 
+For fixed $n$ and $i$, this is  as a natural transformation. The important property of views is that they give complete information about the coproduct, i.e.~if we have all views then we can reconstruct an element of the coproduct; furthermore this reconstruction is copyless. This is stated in the following lemma. 
 
 \newcommand{\combine}{\mathrm{combine}}
 \newcommand{\view}{\mathrm{view}}
@@ -157,7 +157,7 @@ A_1 \oplus \cdots \oplus A_n.
 \]
 \end{lemma}
 \begin{proof}
-    Straightforward.
+    Straightforward. \textbf{TODO: wrong (except $n=2$); formulate a suitable corrected version}
 \end{proof}
 
 This lemma seems to contain the essential property of semigroups that makes the construction work. Our theorem will also be true for other algebraic structures in the lemma is true, such as forest algebras. However, the lemma seems to fail for certain algebraic structures, such as groups, even if we allow $1$ to be replaced by some fixed finite group. Another example where the lemma seems to fail is the monad of weighted sums of words (i.e.~this monad corresponds to weighted automata).
