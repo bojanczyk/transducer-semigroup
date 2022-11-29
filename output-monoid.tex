@@ -243,7 +243,7 @@ The following lemma is the key part of our construction. We consider $A \mapsto 
     
     To conclude, by setting
     \[ \delta_A = (\text{merge two $A$s in $A \oplus A \oplus 1$}) \circ \rho_A \qquad o(w,a,v) = \tuple{\underline w| a| \underline v} \]
-    we satisfy the equation in the lemma statement. It remains to check that the map $o$ is recognizable. This is the case because $\tuple{\underline w| a| \underline v}$ depends only on the letter $a$ and the images of $w$ and $v$ under the homomorphism $\functor ! \circ h$, which has finite codomain.
+    we satisfy the equation in the lemma statement. It remains to check that the map $o$ is recognizable. This is the case because $\tuple{\underline w| a| \underline v}$ depends only on the letter $a$ and the images of $w$ and $v$ under the homomorphism $\functor ! \circ h$, which has finite codomain. This last step is crucial: this is where we use the assumption that $\functor 1$ is finite.
 \end{proof}
 
 
@@ -254,7 +254,7 @@ Thanks to the above lemma, we can construct a device which is almost a functoria
 As mentioned above, these are  not a finite polynomial functors; we will resolve this problem shortly. Beyond that, the construction is immediate: if we take the register update term $\delta$ and the oracle $o$ as in the above lemma, and we define the initial register value to be 
 \begin{align*}
 \myunderbrace{\tuple{\varepsilon | \underline{a_1 \cdots a_n}}}{this does not depend on the input string $a_1 \cdots a_n$, \\ it is equal to the unique element of $1 \oplus A$ that does not use $A$}
-\end{align*}
+\end{align*}).
 then the resulting machine will have the property that  if the input string is $a_1 \cdots a_n$, then its $i$-th configuration is 
 \begin{align*}
 \tuple{a_1 \cdots a_{i}| \underline{a_{i+1} \cdots a_n}}.
