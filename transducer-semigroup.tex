@@ -56,7 +56,7 @@ One example of a functor is the \emph{forgetful functor} from the category of se
     \functor B
     \ar[d,"\outfun_B"]
     \\
-    A which
+    A
     \ar[r,"h"']
     &
     B
@@ -260,7 +260,8 @@ B
     \begin{align*}
         \outfun : (a,g) \mapsto g(f(a)).
     \end{align*}
-    By the assumption that $f$ is recognizability reflecting, the output mechanism $\outfun_C$ is recognizable for finite $C$ [\textbf{(Tito) not sure this holds when $B$ isn't finitely generated?}].
+    By the assumption that $f$ is recognizability reflecting, the output mechanism $\outfun_C$ is recognizable for finite $C$.
+    \tito{not sure this holds when $B$ isn't finitely generated?}
     The transducer semigroup defined above recognizes the function $f$ via the homomorphism 
     \begin{align*}
     a \in A  \mapsto  (a,\id).
