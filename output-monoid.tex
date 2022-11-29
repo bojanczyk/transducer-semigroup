@@ -204,7 +204,7 @@ The following lemma is the key part of our construction. We consider $A \mapsto 
     \end{align*}
     which is recognizable in the sense that was defined in Section~\ref{sec:functorial-sst}, such that  for every strings $w,v \in \Sigma^*$ and every letter $a \in \Sigma$ we have 
     \begin{align*}
-    \tuple{wa|\underline v}  = \delta_A(\tuple{w|\underline{av}}, g(w,a,v)).
+    \tuple{wa|\underline v}  = \delta_A(\tuple{w|\underline{av}}, o(w,a,v)).
     \end{align*}
 \end{lemma}
 \begin{proof}
@@ -232,37 +232,26 @@ The following lemma is the key part of our construction. We consider $A \mapsto 
 
     Thanks to the above claim, we know that  the desired value $\tuple{wa|\underline v}$ is obtained from  $\tuple{w|a| \underline v}$
     by applying a copyless natural transformation, namely merging the first two coordinates. 
-    Using Lemma~\ref{lem:views}, we have a natural bijection of polynomial functors
-    \[ ((A \oplus A) + \functorj A) \oplus 1 \cong ((A \oplus 1) \times (1 \oplus A)) \oplus 1 \]
-    \tito{TODO}
-
-     By Lemma~\ref{lem:views}, we know that $\tuple{w|a| \underline v}$ is obtained by applying some copyless natural transformation to its three views 
-     \begin{align*}
-     \myunderbrace{\view_1(\tuple{w|a| \underline v}) }{in $1 \oplus A$}
-    \qquad
-    \myunderbrace{\view_2(\tuple{w|a| \underline v}) }{in $1 \oplus A$}
-     \qquad 
-     \myunderbrace{\view_3(\tuple{w|a| \underline v}) }{in $1 \oplus 1$}.
-    \end{align*}
-    By the same argument as in Claim~\ref{claim:merge-factorized-output}, the three views above are equal to, respectively
-    \begin{align}
-        \label{eq:three-views-after-post-processing}
-       \tuple{w|\underline a \underline v}
-       \qquad
-\myunderbrace{\mathrm{merge}(\tuple{\underline w| a| \underline v}) }{here merging is the operation \\ 
-that merges the two copies of $1$}
-       \qquad 
-        \tuple{\underline {wa}| \underline v}.
-    \end{align}
-    Summing up, we have shown that the desired value $\tuple{wa| \underline v}$ is obtained by applying some copyless natural transformation to the three values in~\eqref{eq:three-views-after-post-processing}. To complete the proof of the lemma, we  observe that  second and third values in~\eqref{eq:three-views-after-post-processing} depend only on the letter $a$ and the images of $w$ and $v$ under $\functor ! \circ h$, a homomorphism with finite codomain, and therefore can be obtained from $(w,a,v)$ in a recognizable way.
+     Lemma~\ref{lem:views} gives us a natural injection
+    \[ \iota_A : A \oplus (A \oplus 1) \xrightarrow{\;\text{pairing of $\view_A$ and $\view_{A \oplus 1}$}\;} (A \oplus 1) \times (1 \oplus A \oplus 1) \]
+    and, using again the naturality of the components in the factorized output function, we have
+    \[ \iota(\tuple{w|a| \underline v}) = (\tuple{w|\underline{av}},\tuple{\underline w| a| \underline v}) \]
+    The inverse of $\iota_A$, which is partial, can be extended to a total function
+    \[ \rho_A : (A \oplus 1) \times (1 \oplus A \oplus 1) \to A \oplus (A \oplus 1) \]
+    by mapping all elements outside the range of $\iota$ to the unique element of $A \oplus (A \oplus 1)$ that does not involve $A$. This is natural in $A$ and copyless.
+        \tito{TODO justify natural and copyless}
+    
+    To conclude, by setting
+    \[ \delta_A = (\text{merge two $A$s in $A \oplus A \oplus 1$}) \circ \rho_A \qquad o(w,a,v) = \tuple{\underline w| a| \underline v} \]
+    we satisfy the equation in the lemma statement. It remains to check that the map $o$ is recognizable. This is the case because $\tuple{\underline w| a| \underline v}$ depends only on the letter $a$ and the images of $w$ and $v$ under the homomorphism $\functor ! \circ h$, which has finite codomain.
 \end{proof}
 
 
 Thanks to the above lemma, we can construct a device which is almost a functorial \sst as described in Section~\ref{sec:functorial-sst} and which recognizes our desired function $w \mapsto \tuple{w}$. We say ``almost'', because the device will use register and update functors that are  infinite polynomial functors; this construction will be later improved so that it becomes finite.  The register and update functors are 
 \begin{align*}
-\functorr A  = 1 \oplus A \qquad \functors A = (1 \oplus A) \times (1 \oplus 1).
+\functorr A  = A \oplus 1 \qquad \functors A = 1 \oplus A \oplus 1
 \end{align*}
-As mentioned above, these are  not a finite polynomial functors; we will resolve this problem shortly. Beyond that, there construction is immediate: if we take the register update term $\delta$ and the oracle $o$ as in the above lemma, and we define the initial register value to be 
+As mentioned above, these are  not a finite polynomial functors; we will resolve this problem shortly. Beyond that, the construction is immediate: if we take the register update term $\delta$ and the oracle $o$ as in the above lemma, and we define the initial register value to be 
 \begin{align*}
 \myunderbrace{\tuple{\varepsilon | \underline{a_1 \cdots a_n}}}{this does not depend on the input string $a_1 \cdots a_n$, \\ it is equal to the unique element of $1 \oplus A$ that does not use $A$}
 \end{align*}
@@ -271,15 +260,16 @@ then the resulting machine will have the property that  if the input string is $
 \tuple{a_1 \cdots a_{i}| \underline{a_{i+1} \cdots a_n}}.
 \end{align*}
 In particular, the last configuration is $\tuple{a_1 \cdots a_n | \varepsilon}$, which is the same as the output when viewed as an element of $A \oplus 1$. Therefore, to get the output, we should apply the partial copyless natural transformation of type $A \oplus 1 \to A$ which is the one-sided inverse of the embedding of $A$ in $A \oplus 1$.  
+\tito{It's a bit inelegant since our categorical definition yields total functions}
 
 The only remaining issue with our construction is that the two functors, i.e.~the register functor and the update functors, are not finite polynomial functors. This problem is overcome by observing that not all of $1 \oplus A$ need be used for the register values, only a small part of it, and likewise for the update functor. More formally, 
-consider the natural isomorphism
+consider the natural bijection
 \begin{align*}
-1 \oplus A  \quad \simeq \quad 
-\myunderbrace{\coprod_{q \in 1 \oplus 1}  A^{\dim q}}{call this the \emph{register representation} of $1 \oplus A$}
+A \oplus 1  \quad \cong \quad 
+\myunderbrace{\coprod_{q \in 1 \oplus 1}  A^{\dim q}}{call this the \emph{register representation} of $A \oplus 1$}
 \end{align*}
-that was discussed in Example~\ref{ex:coproduct-as-polynomial-functor}. If we apply this isomorphism to an element of the form
+that was discussed in Example~\ref{ex:coproduct-as-polynomial-functor}. If we apply it to an element of the form
 \begin{align*}
 \tuple{w|\underline {v}} \in A \oplus 1,
 \end{align*}
-then the corresponding component will be $\tuple {\underline w | \underline v}$. Since the latter depends only  on $\underline w$ and $\underline v$, and these take values in the finite semigroup $\functor 1$, it follows that there are only finitely many components of $1 \oplus A$ that will be used to represent values from of the form $\tuple {w | \underline v}$. Therefore, instead of using $\functorr A$ to be all of $A \oplus 1$, we can restrict it to those finitely many components, giving thus a finite polynomial functor. The same argument can be applied to the update functor $\functors A$.
+then the corresponding component will be $\tuple {\underline w | \underline v}$. Since the latter depends only  on $\underline w$ and $\underline v$, and these take values in the finite semigroup $\functor 1$, it follows that there are only finitely many components of $A \oplus 1$ that will be used to represent values from of the form $\tuple {w | \underline v}$. Therefore, instead of using $\functorr A$ to be all of $A \oplus 1$, we can restrict it to those finitely many components, giving thus a finite polynomial functor. The same argument can be applied to the update functor $\functors A$.

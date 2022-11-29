@@ -99,11 +99,11 @@ Again, one can show that all natural transformations arise this way. The natural
 
 
 \begin{myexample}\label{ex:copyless-on-coproducts}
-    Consider the functor $1 \oplus A$ that was discussed in Example~\ref{ex:coproduct-as-polynomial-functor}, and shown to be a polynomial functor. Consider the natural transformation 
+    Consider the functor \enquote{underlying set of $A \oplus 1$} that was discussed in Example~\ref{ex:coproduct-as-polynomial-functor}, and shown to be a polynomial functor. The natural transformation 
     \begin{align*}
-    (A \oplus 1)\times (A \oplus A) \to A \oplus 1
+    (A \oplus 1)\times (A \oplus 1) \to A \oplus 1
     \end{align*}
-    which describes the semigroup operation in the coproduct semigroup $1 \oplus A$. This natural transformation is copyless.
+    which describes the semigroup operation in the coproduct $A \oplus 1$ is copyless.
 \end{myexample}
 
 
@@ -125,14 +125,12 @@ This is stated in the following lemma.
 
 \begin{lemma}
 \label{lem:views}
-The map $A \oplus B \to (A \oplus 1) \times (1 \oplus B)$ obtained by pairing $\view_A$ and $\view_B$ is \emph{injective} and natural in $A$ and $B$. Moreover, there exist a polynomial functor $\functorj$ and a natural bijection in $A$
-\[ (A \oplus A) + \functorj A \cong (A \oplus 1) \times (1 \oplus A) \]
-where $+$ is the disjoint union of sets.
+The map $A \oplus B \to (A \oplus 1) \times (1 \oplus B)$ obtained by pairing $\view_A$ and $\view_B$ is \emph{injective} and natural in $A$ and $B$.
 \end{lemma}
 \begin{proof}
     Straightforward.
 \end{proof}
-\tito{Fixed. The correct generalization to $n=3$ is certainly something like $(A \oplus 1 \oplus 1) \times (1 \oplus B \oplus 1) \times (1 \oplus 1 \oplus C)$. The statement is restricted to avoid having to talk about polynomial functors in several variables.}
+\tito{Fixed. The correct generalization to $n=3$ is certainly something like $(A \oplus 1 \oplus 1) \times (1 \oplus B \oplus 1) \times (1 \oplus 1 \oplus C)$. The statement doesn't include a copyless partial inverse something to avoid having to talk about polynomial functors in several variables.}
 
 This lemma seems to contain the essential property of semigroups that makes the construction work. Our theorem will also be true for other algebraic structures in the lemma is true, such as forest algebras. However, the lemma seems to fail for certain algebraic structures, such as groups, even if we allow $1$ to be replaced by some fixed finite group. Another example where the lemma seems to fail is the monad of weighted sums of words (i.e.~this monad corresponds to weighted automata).
 \tito{I wonder if the important thing is not more simply that $A \oplus B$ is a polynomial bifunctor}
