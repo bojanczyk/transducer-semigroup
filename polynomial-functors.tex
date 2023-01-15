@@ -25,7 +25,7 @@ A \quad \mapsto \quad \coprod_{q \in Q} A^{\text{dimension of } q},
 \end{align*}
 where $Q$ is some possibly infinite set, called the \emph{components}, with each  component having an associated \emph{dimension} in $\set{0,1,\ldots}$. On morphisms, the functor works in the expected way, i.e.~coordinate-wise.  A \emph{finite polynomial functor} is one that has finitely many components. 
 
-\begin{myexample}\label{ex:coproduct-as-polynomial-functor}
+\begin{example}\label{ex:coproduct-as-polynomial-functor}
     A crucial property that will be used in our proof is that the functor
     \begin{align*}
     A \mapsto \text{underlying set of}\ \myunderbrace{A \oplus 1}{\text{coproduct with the singleton semigroup}}
@@ -40,7 +40,7 @@ where $Q$ is some possibly infinite set, called the \emph{components}, with each
     A \oplus 1 \quad \simeq \quad \coprod_{q \in 1 \oplus 1} A^{\text{dimension of $q$}},
     \end{align}
     where the dimension of $q$ is defined to be the number of times that the first copy of $1$ appears in $q$. Furthermore, the bijective correspondence in~\eqref{eq:polynomial-representation-of-coproduct} is natural in $A$, and therefore there is a natural bijection between the functor $A \oplus 1$ and some polynomial functor. Also, if two polynomial functors are connected by a natural bijection, then they are the same, up to renaming of the components, and therefore the representation in~\eqref{eq:polynomial-representation-of-coproduct} is unique up to renaming of components. By uniqueness, we will simply speak of $A \oplus 1$ as being a polynomial functor. 
-\end{myexample}
+\end{example}
 
 
 
@@ -98,13 +98,13 @@ which are not necessarily monomial. Such natural transformations also admit synt
 Again, one can show that all natural transformations arise this way. The natural transformation is called copyless if for every $q$, the corresponding natural transformation between monomial functors is copyless. 
 
 
-\begin{myexample}\label{ex:copyless-on-coproducts}
+\begin{example}\label{ex:copyless-on-coproducts}
     Consider the functor \enquote{underlying set of $A \oplus 1$} that was discussed in Example~\ref{ex:coproduct-as-polynomial-functor}, and shown to be a polynomial functor. The natural transformation 
     \begin{align*}
     (A \oplus 1)\times (A \oplus 1) \to A \oplus 1
     \end{align*}
     which describes the semigroup operation in the coproduct $A \oplus 1$ is copyless.
-\end{myexample}
+\end{example}
 
 
 \subsubsection{Views}

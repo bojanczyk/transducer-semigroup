@@ -1,0 +1,48 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{theorem}
+\usepackage{proof}
+\usepackage{graphicx}
+\usepackage{xspace}
+\usepackage{color} 
+\usepackage{xy}
+\usepackage{tikz-cd}
+\usepackage[colorlinks]{hyperref}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{alltt}
+\usepackage[shortlabels]{enumitem}
+\usepackage{libertine}
+\usepackage{macros}
+\usepackage[T1]{fontenc}
+\usepackage{quiver}
+\usepackage{csquotes}
+\usepackage{todonotes}
+\newcommand{\tito}[1]{\todo[inline,color=green!40]{Tito --- #1}}
+
+\begin{document}
+
+\title{A categorical perspective on regular functions}
+\author{Miko{\l}aj Boja\'nczyk, L{\^{e}} Th{\`{a}}nh D{\~u}ng Nguy{\~{\^e}}n}
+\maketitle 
+\begin{abstract}
+    We consider regular string-to-string functions, i.e.~functions that are recognized by copyless streaming string transducers, or  any of their equivalent models, such as deterministic two-way automata. We give yet another characterization: functors from the  category of semigroups together to itself, together with a certain output function that is a natural transformation. 
+\end{abstract}
+
+
+\newcommand{\moncat}{\mathrm{Mon}}
+\newcommand{\semcat}{\mathrm{Sem}}
+
+\input{intro}
+\input{transducer-semigroup}
+
+
+\input{output-monoid}
+
+
+\bibliographystyle{alphaurl}
+\bibliography{bib}
+
+
+
+\end{document}

@@ -8,7 +8,7 @@ We do not assume that the reader has a background in category theory, beyond the
 
 One example of a functor is the \emph{forgetful functor} from the category of semigroups to the category of sets, which maps a semigroup to its underlying set, and a semigroup homomorphism to the corresponding function on sets. 
 
- \begin{myexample}\label{ex:functors}
+ \begin{example}\label{ex:functors}
     In this paper, we will mainly be studying functors from the category of semigroups to itself; such functors can be seen as semigroup constructions.  Several such constructions are listed in the following example. 
     \begin{itemize}
         \item {\bf Tuples.} The functor maps a semigroup $A$ to its square $A^2$, with the semigroup operation being defined coordinate-wise. The functor extends to morphisms in the expected way. This functor also makes sense for higher powers, including infinite powers, such as $A^\omega$.
@@ -21,7 +21,7 @@ One example of a functor is the \emph{forgetful functor} from the category of se
         There are several variants of this construction: we could, for example,  require the subsets to be nonempty, or finite, or both.
         % \item Fix some semigroup $C$, and consider the functor which maps a semigroup $A$ to the sub-semigroup of the semigroup $A^C$, as in the first item, which consists only of those tuples $A^C$ that describe semigroup homomorphisms $C \to A$. For morphisms, the functor is defined coordinate-wise, as in the first item.
     \end{itemize}
- \end{myexample}
+ \end{example}
 
 %  \begin{myexample}
 %     Here is a non-example of a functor from the category of semigroups to itself. Suppose that, on objects,  we want to map each semigroup $A$ to the set of all functions $A \to A$, with the semigroup operation being function composition. The problem with this construction is that it is not clear how to extend it to morphisms, i.e.~how to map a semigroup homomorphism $f : A \to B$ to some semigroup homomorphism
@@ -86,22 +86,22 @@ In the language of category theory, the naturality condition from the above defi
     \arrow[ shorten <=5pt, shorten >=5pt, Rightarrow, from=0, to=1]
 \end{tikzcd}\]
 
-\begin{myexample}
+\begin{example}
     Consider the transducer semigroup in which the functor is the identity, and the output mechanism is also the identity. The functions of type $A \to B$ that are recognized by this transducer semigroup are exactly the semigroup homomorphisms.
-\end{myexample}
+\end{example}
 
-\begin{myexample}\label{ex:duplicator}
+\begin{example}\label{ex:duplicator}
     Consider the transducer semigroup in which the functor is the identity, and the output mechanism is the function 
     \begin{align*}
     A & \to A\\
     a & \mapsto aa.
     \end{align*}
     The functions of type $A \to B$ that are recognized by this transducer semigroup are exactly the functions of the form $a \mapsto h(a)h(a)$ where $h$ is some  semigroup homomorphism. In particular, if $h$ is the identity on $\Sigma^+$, then we get the duplicating function on strings over alphabet $\Sigma$.
-\end{myexample}
+\end{example}
 
 
 
-\begin{myexample}
+\begin{example}
     Consider the reversing functor, which maps a semigroup $A$ to the semigroup $\functor A$ in which the underlying set is the same, the identity is the same, but the semigroup operation is reversed:
     \begin{align*}
     \myunderbrace{ab}{in $\functor A$} 
@@ -109,9 +109,9 @@ In the language of category theory, the naturality condition from the above defi
     \myunderbrace{ba}{in $A$}.
     \end{align*}
     This is easily seen to be a functor, with semigroup homomorphisms being mapped to the same functions. Define the output function to be the identity. Using this transducer semigroup, we can recognize the reversing function $f : \Sigma^+ \to \Sigma^+$. More generally, the functions recognized by this transducer semigroup are of the form: reverse, followed by some semigroup homomorphism.
-\end{myexample}
+\end{example}
 
-\begin{myexample}\label{ex:squaring}
+\begin{example}\label{ex:squaring}
     Consider the list functor $A \mapsto A^+$ described in Example~\ref{ex:functors}. The output semigroup is the free semigroup with generators $A$, and the functor is defined coordinate-wise on morphisms. Consider the following output mechanism 
     \begin{align*}
     A^+ & \to A\\
@@ -121,9 +121,9 @@ In the language of category theory, the naturality condition from the above defi
     \begin{align*}
     123 \mapsto 123123123.
     \end{align*}
-\end{myexample}
+\end{example}
 
-\begin{myexample}\label{ex:squaring-generalized}
+\begin{example}\label{ex:squaring-generalized}
     Here is a generalization of the previous example. The functor continues to be $A^+$. The output mechanism $A^+ \to A$ is given by a sequence of strings 
     \begin{align*}
     w_1 \in \set{1}^+, \quad w_2 \in \set{1,2}^+, \quad w_3 \in \set{1,2,3}^+, \quad \ldots.
@@ -141,7 +141,7 @@ In the language of category theory, the naturality condition from the above defi
         A.
         \end{tikzcd}
         \]
-\end{myexample}
+\end{example}
 
 % \begin{myexample} This example is more challenging than the previous ones, and it is meant to describe copyful \sst.
 %     In this example, we use a slightly different setup: we assume that the output mechanism is a partial function, but still natural. For some finite set $R$ of \emph{register names} with a designated \emph{output register}. Define a functor where  
@@ -213,7 +213,7 @@ A
 is called \emph{recognizable} if it factors through a homomorphism from $A$ to some \emph{finite} semigroup.  More generally, recognizable maps from the semigroup $A$ to some set, not necessarily with two elements, are those that factor through some homomorphism into a finite semigroup. A function is called \emph{recognizability reflecting} if  
 inverse images of recognizable languages are also recognizable. The following example shows that there are a lot of recognizability reflecting functions.
 
-\begin{myexample}
+\begin{example}
     Consider the semigroup $\Nat$ of natural numbers with addition. In this semigroup, the recognizable languages are ultimately periodic subsets.  We will show that there are uncountably many recognizability preserving functions of type $\Nat \to \Nat$.
     To see this, consider any  non-decreasing function 
     \begin{align*}
@@ -224,7 +224,7 @@ inverse images of recognizable languages are also recognizable. The following ex
     f : n \mapsto g(n)!
     \end{align*}
     The property of the factorial operation is that every ultimately periodic subset of $\Nat$ contains all or no factorials, up to finitely many exceptions. Therefore, the inverse image of any ultimately periodic set under $f$ will be either finite or co-finite, and therefore also ultimately periodic.
-\end{myexample}
+\end{example}
 
 
 We now present a second characterization, which concerns functions between semigroups that are recognizability reflecting.

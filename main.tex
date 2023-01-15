@@ -1,48 +1,112 @@
-\documentclass{article}
-\usepackage{amsmath}
-\usepackage{theorem}
-\usepackage{proof}
-\usepackage{graphicx}
-\usepackage{xspace}
-\usepackage{color} 
-\usepackage{xy}
-\usepackage{tikz-cd}
-\usepackage[colorlinks]{hyperref}
-\usepackage{mathtools}
-\usepackage{mathrsfs}
-\usepackage{alltt}
-\usepackage[shortlabels]{enumitem}
-\usepackage{libertine}
-\usepackage{macros}
-\usepackage[T1]{fontenc}
-\usepackage{quiver}
+
+\documentclass[a4paper,UKenglish,cleveref, autoref, thm-restate, numberwithinsect]{lipics-v2021}
+%This is a template for producing LIPIcs articles. 
+%See lipics-v2021-authors-guidelines.pdf for further information.
+%for A4 paper format use option "a4paper", for US-letter use option "letterpaper"
+%for british hyphenation rules use option "UKenglish", for american hyphenation rules use option "USenglish"
+%for section-numbered lemmas etc., use "numberwithinsect"
+%for enabling cleveref support, use "cleveref"
+%for enabling autoref support, use "autoref"
+%for anonymousing the authors (e.g. for double-blind review), add "anonymous"
+%for enabling thm-restate support, use "thm-restate"
+%for enabling a two-column layout for the author/affilation part (only applicable for > 6 authors), use "authorcolumns"
+%for producing a PDF according the PDF/A standard, add "pdfa"
+
+\pdfoutput=1 %uncomment to ensure pdflatex processing (mandatatory e.g. to submit to arXiv)
+\hideLIPIcs  %uncomment to remove references to LIPIcs series (logo, DOI, ...), e.g. when preparing a pre-final version to be uploaded to arXiv or another public repository
+
+%\graphicspath{{./graphics/}}%helpful if your graphic files are in another directory
+
+\bibliographystyle{plainurl}% the mandatory bibstyle
+
+\title{A categorical perspective on regular functions} %TODO Please add
+
+%\titlerunning{Dummy short title} %TODO optional, please use if title is longer than one line
+
+\author{Mikołaj Bojańczyk}{Institute of Informatics, University of Warsaw, Poland \and \url{https://www.mimuw.edu.pl/~bojan/}}{bojan@mimuw.edu.pl}{}{(Optional) author-specific funding acknowledgements}%TODO mandatory, please use full name; only 1 author per \author macro; first two parameters are mandatory, other parameters can be empty. Please provide at least the name of the affiliation and the country. The full address is optional. Use additional curly braces to indicate the correct name splitting when the last name consists of multiple name parts.
+
+\author{Lê Thành Dũng (Tito) Nguy\~{\^e}n}{École normale supérieure de Lyon, France \and \url{https://nguyentito.eu/}}{nltd@nguyentito.eu}{https://orcid.org/0000-0002-6900-5577}{Supported by the LABEX MILYON (ANR-10-LABX-0070) of Université de Lyon, within the program \enquote{Investissements d'Avenir} (ANR-11-IDEX-0007) operated by the French National Research Agency (ANR).}
+
+\authorrunning{M.~Bojańczyk and L.~T.~D.~Nguy\~{\^e}n} %TODO mandatory. First: Use abbreviated first/middle names. Second (only in severe cases): Use first author plus 'et al.'
+
+\Copyright{Mikołaj Bojańczyk and Lê Thành Dũng Nguy\~{\^e}n} %TODO mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
+
+\ccsdesc[500]{Theory of computation~Transducers} %TODO mandatory: Please choose ACM 2012 classifications from https://dl.acm.org/ccs/ccs_flat.cfm 
+
+
+\keywords{Dummy keyword} %TODO mandatory; please add comma-separated list of keywords
+
+\category{} %optional, e.g. invited paper
+
+\relatedversion{} %optional, e.g. full version hosted on arXiv, HAL, or other respository/website
+%\relatedversiondetails[linktext={opt. text shown instead of the URL}, cite=DBLP:books/mk/GrayR93]{Classification (e.g. Full Version, Extended Version, Previous Version}{URL to related version} %linktext and cite are optional
+
+%\supplement{}%optional, e.g. related research data, source code, ... hosted on a repository like zenodo, figshare, GitHub, ...
+%\supplementdetails[linktext={opt. text shown instead of the URL}, cite=DBLP:books/mk/GrayR93, subcategory={Description, Subcategory}, swhid={Software Heritage Identifier}]{General Classification (e.g. Software, Dataset, Model, ...)}{URL to related version} %linktext, cite, and subcategory are optional
+
+%\funding{(Optional) general funding statement \dots}%optional, to capture a funding statement, which applies to all authors. Please enter author specific funding statements as fifth argument of the \author macro.
+
+\acknowledgements{I want to thank \dots}%optional
+
+%\nolinenumbers %uncomment to disable line numbering
+
+
+
+%Editor-only macros:: begin (do not touch as author)%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\EventEditors{John Q. Open and Joan R. Access}
+\EventNoEds{2}
+\EventLongTitle{42nd Conference on Very Important Topics (CVIT 2016)}
+\EventShortTitle{CVIT 2016}
+\EventAcronym{CVIT}
+\EventYear{2016}
+\EventDate{December 24--27, 2016}
+\EventLocation{Little Whinging, United Kingdom}
+\EventLogo{}
+\SeriesVolume{42}
+\ArticleNo{23}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \usepackage{csquotes}
+\usepackage{mathtools}
+\usepackage{quiver}
+\usepackage{tikz-cd}
+\usepackage{xspace}
+
 \usepackage{todonotes}
 \newcommand{\tito}[1]{\todo[inline,color=green!40]{Tito --- #1}}
+\usepackage{macros}
+
 
 \begin{document}
 
-\title{A categorical perspective on regular functions}
-\author{Miko{\l}aj Boja\'nczyk, L{\^{e}} Th{\`{a}}nh D{\~u}ng Nguy{\~{\^e}}n}
-\maketitle 
-\begin{abstract}
-    We consider regular string-to-string functions, i.e.~functions that are recognized by copyless streaming string transducers, or  any of their equivalent models, such as deterministic two-way automata. We give yet another characterization: functors from the  category of semigroups together to itself, together with a certain output function that is a natural transformation. 
-\end{abstract}
+\maketitle
 
+%TODO mandatory: add short abstract of the document
+\begin{abstract}
+    We consider regular string-to-string functions, i.e.~functions that are recognized by copyless streaming string transducers, or  any of their equivalent models, such as deterministic two-way automata. We give yet another characterization: functors from the  category of semigroups together to itself, together with a certain output function that is a natural transformation.
+\end{abstract}
 
 \newcommand{\moncat}{\mathrm{Mon}}
 \newcommand{\semcat}{\mathrm{Sem}}
 
 \input{intro}
 \input{transducer-semigroup}
-
-
 \input{output-monoid}
 
 
-\bibliographystyle{alpha}
+
+%%
+%% Bibliography
+%%
+
+%% Please use bibtex, 
+
 \bibliography{bib}
 
+\appendix
 
+\section{Proof of something}
+
+\tito{do we want to use thm-restate?}
 
 \end{document}

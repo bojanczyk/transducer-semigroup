@@ -5,7 +5,7 @@
 The two constructions in Theorems~\ref{thm:all-functions} and~\ref{thm:reco-reflecting-functions} were rather straightforward, and amounted to little more than symbol pushing. In this section, we present a more advanced  characterization, which concerns  the regular functions, i.e.~string-to-string functions recognized by streaming string transducers and their equivalent models. In the characterization, we require that the functor is finiteness preserving, i.e.~it maps finite semigroups to finite semigroups. It turns out that the naturality of the output mechanism interacts with the condition that 
 the functor is finiteness preserving, resulting in a strong restriction on the expressive power.
 
-\begin{myexample}
+\begin{example}
     Consider the powerset functor $\powerset A$ from Example~\ref{ex:functors}. This is a finiteness preserving functor, since the powerset of a finite set is also finite. One could imagine that using the powerset functor we could construct some transducer semigroup which recognizes functions that are not regular, e.g.~because they have exponential growth. It turns out that this is impossible, because there is no possible output mechanism, i.e.~no natural transformation 
     \[
     \begin{tikzcd}
@@ -16,7 +16,7 @@ the functor is finiteness preserving, resulting in a strong restriction on the e
     \end{tikzcd}
     \]
     There reason why there is no such natural transformation is that it require some kind of choice, which would contradict naturality. More formally, let $A$ be a semigroup with two elements, with a trivial semigroup operation defined by $xy=x$. The output mechanism needs to choose some element $a \in A$ to the full set $A \in \powerset A$. However, none of the two choices is right, because if we take any semigroup homomorphism $f : A \to A$ such that $f(A)=A$, then  naturality of the output mechanism implies that $a=f(a)$. If $f$ is the homomorphism that swaps the two elements, then we get a contradiction.
-\end{myexample}
+\end{example}
 
 
 We now state the main theorem of this paper. Unlike the previous characterizations, the statement is stated in terms of functions between free semigroups $\Sigma^+$ and $\Gamma^+$, because the models defining regular functions are defined for string-to-string functions, and not transformations of abstract semigroups. (Some of the models, such as streaming string transducers or two-way automata, easily make sense when the output is an abstract semigroup, but the string structure of the input semigroup seems to be essential for all the models.) 
@@ -254,7 +254,7 @@ Thanks to the above lemma, we can construct a device which is almost a functoria
 As mentioned above, these are  not a finite polynomial functors; we will resolve this problem shortly. Beyond that, the construction is immediate: if we take the register update term $\delta$ and the oracle $o$ as in the above lemma, and we define the initial register value to be 
 \begin{align*}
 \myunderbrace{\tuple{\varepsilon | \underline{a_1 \cdots a_n}}}{this does not depend on the input string $a_1 \cdots a_n$, \\ it is equal to the unique element of $1 \oplus A$ that does not use $A$}
-\end{align*}).
+\end{align*}
 then the resulting machine will have the property that  if the input string is $a_1 \cdots a_n$, then its $i$-th configuration is 
 \begin{align*}
 \tuple{a_1 \cdots a_{i}| \underline{a_{i+1} \cdots a_n}}.

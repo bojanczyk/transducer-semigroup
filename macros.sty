@@ -4,35 +4,16 @@
 \RequirePackage{ifthen}
 
 
-%% theorem environments for amsthm
-\newcommand\@thmheadfont{\bfseries}
-%\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{conjecture}[theorem]{Conjecture}
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{corollary}[theorem]{Corollary}
-\newtheorem{fact}[theorem]{Fact}
-\newtheorem{claim}[theorem]{Claim}
-\newtheorem{exampl}[theorem]{Example}
-\newtheorem{observation}[theorem]{Observation}
-\newtheorem{sublemma}{Lemma}[theorem]
-\newtheorem{definition}[theorem]{Definition}
 
-\newcommand{\myunderbrace}[2]{\underbrace{#1}_{\mathclap{\text{\scriptsize 
+\newcommand{\myunderbrace}[2]{\underbrace{#1}_{\mathclap{\text{\scriptsize
 \begin{tabular}{c}
 	#2
 \end{tabular} }}}}
-\newcommand{\myoverbrace}[2]{\overbrace{#1}^{\mathclap{\text{\scriptsize 
+\newcommand{\myoverbrace}[2]{\overbrace{#1}^{\mathclap{\text{\scriptsize
 \begin{tabular}{c}
 	#2
 \end{tabular} }}}}
 
-
-
-
-\newenvironment{example}{{\@thmheadfont Example:}}{~$\square$}
-\newenvironment{remark}{{\@thmheadfont Remark:}}{}
 
 
 \RequirePackage{ifthen}
@@ -115,7 +96,7 @@
 
 
 
-%% various text 
+%% various text
 \newcommand{\Var}{\ensuremath{\mathit{Var}}}
 \newcommand{\Val}{\ensuremath{\mathit{Val}}}
 
@@ -135,36 +116,10 @@
 
 
 
-\newcommand{\koniec}{$\Box$}
- \newenvironment{proof}[1][!*!,!]%
- {\noindent{\@thmheadfont Proof%
-     \ifthenelse{\equal{#1}{!*!,!}}{}{%
-       \normalfont\ (#1)}\\}}%
- {\koniec\medskip}
-
-\newcommand{\comment}[1]{\marginpar{\footnotesize #1}}
-
 \newcommand{\ctlstar}{CTL$^*$ }
 \newcommand{\tuple}[1]{\langle #1 \rangle}
 
 \newcommand{\ign}[1]{}
-
-\newcounter{ourexamplecounter}
-\newenvironment{myexample}{
-\medskip
-
-\refstepcounter{ourexamplecounter}
-\smallskip\noindent{\textbf{{Example \arabic{ourexamplecounter}. }}}}{
-$\Box$ \smallskip 
-}
-
-\newenvironment{note}{
-\medskip
-
-\refstepcounter{ourexamplecounter}
-\smallskip\noindent{\textbf{{Note \arabic{ourexamplecounter}. }}}}{
-$\Box$ \smallskip 
-}
 
 
 \ProcessOptions
@@ -216,16 +171,16 @@ $\Box$ \smallskip
 
 \newcommand{\equibounded}[3]
 {
-	#1 
-	\quad \sim \quad 
-	#2 
+	#1
+	\quad \sim \quad
+	#2
 	\qquad \text{ for }#3
 }
 \newcommand{\bounded}[3]
 {
-	#1 
-	\quad \le \quad 
-	#2 
+	#1
+	\quad \le \quad
+	#2
 	\qquad \text{ for }#3
 }
 
@@ -249,7 +204,7 @@ $\Box$ \smallskip
 \newcommand{\queryalg}[1]{\mathsf P_{#1}}
 \newcommand{\varlabel}[2]{\stackrel{#1}{#2}}
 
-\newcommand{\setbuild}[2]{\set{#1 \ | 
+\newcommand{\setbuild}[2]{\set{#1 \ |
 \begin{tabular}{l}
 	#2
 \end{tabular}}}
