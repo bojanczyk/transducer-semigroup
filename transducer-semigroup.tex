@@ -64,7 +64,7 @@ One example of a functor is the \emph{forgetful functor} from the category of se
     B
     \end{tikzcd}
     \]
-    A function between two semigroups $f : A \to B$, not necessarily a homomorphism, is  \emph{recognized} by a transducer semigroup if it can be decomposed for some homomorphism $h$ as
+    A function between two semigroups $f : A \to B$, not necessarily a homomorphism, is  \emph{recognized} by a transducer semigroup if it can be decomposed for some semigroup homomorphism $h$ as
     \[
         \begin{tikzcd}
         A 
@@ -91,7 +91,7 @@ In the language of category theory, the naturality condition from the above defi
 \end{example}
 
 \begin{example}\label{ex:duplicator}
-    Consider the transducer semigroup in which the functor is the identity, and the output mechanism is the function $a \in a \mapsto aa \in A$.
+    Consider the transducer semigroup in which the functor is the identity, and the output mechanism is the function $a \in A \mapsto aa \in A$.
     %\begin{align*}
     %A & \to A\\
     %a & \mapsto aa.
@@ -112,10 +112,7 @@ In the language of category theory, the naturality condition from the above defi
     A^+ & \to A\\
     [a_1,\ldots,a_n] & \mapsto \myunderbrace{(a_1 \cdots a_n) \cdots (a_1 \cdots a_n)}{$n$ times}.
     \end{align*}
-    This transducer semigroup recognizes the squaring function $\Sigma^+ \to \Sigma^+$ that is illustrated in the following example 
-    \begin{align*}
-    123 \mapsto 123123123.
-    \end{align*}
+    This transducer semigroup recognizes the squaring function $w \in \Sigma^+ \mapsto w^{|w|} \in \Sigma^+$ that is illustrated in the following example: $\mathtt{123 \mapsto 123123123}$.
 \end{example}
 
 \begin{example}\label{ex:squaring-generalized}
@@ -171,131 +168,121 @@ In the language of category theory, the naturality condition from the above defi
 
 
 \subsection{Two simple characterizations}
-We begin with two simple theorems that describe two classes of string-to-string functions in terms of the transducer semigroups that can be used to recognize them: all functions (Theorem~\ref{thm:all-functions}) and functions that reflect recognizability (Theorem~\ref{thm:reco-reflecting-functions}). These two theorems have simple proofs. In the next Section~\ref{sec:reg-char} we present a third, more  interesting, theorem about  regular functions.
+We begin with two theorems, with simple proofs, that describe two classes of string-to-string functions in terms of the transducer semigroups that can be used to recognize them: all functions (Theorem~\ref{thm:all-functions}) and functions that reflect recognizability (Theorem~\ref{thm:reco-reflecting-functions}).
+%These two theorems have simple proofs.
+In the next Section~\ref{sec:reg-char} we present a third, more  interesting, theorem about  regular functions.
 
-\paragraph*{All functions.} The first theorem shows that every function between two semigroups is recognized by some transducer semigroup.
+\subparagraph{All functions.} The first theorem shows that every function between two semigroups is recognized by some transducer semigroup.
 
 \begin{theorem}\label{thm:all-functions} 
      Every function    between two semigroups, not necessarily a semigroup homomorphism, is recognized  by some transducer semigroup.
 \end{theorem}
 \begin{proof}
-    Consider some semigroup $A$. Based on this semigroup we will define a transducer semigroup which will recognize all functions from $A$ to some other semigroup. Define  a functor as follows:
-\begin{align*}
-\functor B = A \times \myunderbrace{(A \to B)}{the set of all  functions, viewed as a semigroup \\ 
-with the trivial semigroup operation $xy = x$}.
-\end{align*}
+    Consider some semigroup $A$. Based on this semigroup we will define a transducer semigroup which will recognize all functions from $A$ to some other semigroup. Define  a functor as follows: $\functor B = A \times \displaystyle\myunderbrace{(A \to B)}{the set of all  functions, viewed as a semigroup \\ 
+with the trivial semigroup operation $xy = x$}$.
+
 The functor is defined on morphisms
-as follows: the first coordinate, corresponding to $A$, is not changed, and the second coordinate, corresponding to the set of functions, is transformed   coordinate-wise, when viewed as a tuple indexed by $A$. (This is similar to the tuple construction in Example~\ref{ex:functors}, except that the semigroup structure of $A \to B$ is not defined coordinate-wise.)  This is easily seen to be a functor. 
-The output mechanism, which is easily seen to be natural, is function application i.e.
-\begin{align*}
-    (a,f) \mapsto f(a).
-\end{align*}
-The transducer semigroup defined above recognizes the function $f : A \to B$. The appropriate homomorphism  is 
-\begin{align*}
-a \in A  \mapsto  (a,f).
-\end{align*} 
+as follows: the first coordinate, corresponding to~$A$, is not changed, and the second coordinate, corresponding to the set of functions, is transformed   coordinate-wise, when viewed as a tuple indexed by~$A$. (This is similar to the tuple construction in Example~\ref{ex:functors}, except that the semigroup structure of $A \to B$ is not defined coordinate-wise.)  This is easily seen to be a functor. The output mechanism, which is easily seen to be natural, is function application i.e.~$(a,f) \mapsto f(a)$.
+
+The transducer semigroup defined above recognizes the function $f : A \to B$. The appropriate homomorphism  is~$a \in A  \mapsto  (a,f)$.
 \end{proof}
 
-\paragraph*{Recognizability reflecting functions.} Recall that a language 
-\[
-\begin{tikzcd}
-A 
-\ar[r,"L"]
-&
-\set{\text{yes, no}}
-\end{tikzcd}
-\]
-is called \emph{recognizable} if it factors through a homomorphism from $A$ to some \emph{finite} semigroup.  More generally, recognizable maps from the semigroup $A$ to some set, not necessarily with two elements, are those that factor through some homomorphism into a finite semigroup. A function is called \emph{recognizability reflecting} if  
-inverse images of recognizable languages are also recognizable. The following example shows that there are a lot of recognizability reflecting functions.
-
+\subparagraph{Recognizability reflecting functions.} Recall that a language $A \xrightarrow{\;L\;} \set{\text{yes, no}}$
+%\[
+%\begin{tikzcd}
+%A 
+%\ar[r,"L"]
+%&
+%\set{\text{yes, no}}
+%\end{tikzcd}
+%\]
+is called \emph{recognizable} if it factors through a homomorphism from $A$ to some \emph{finite} semigroup.  More generally, recognizable maps from the semigroup $A$ to some set, not necessarily with two elements, are those that factor through some homomorphism into a finite semigroup.
+\begin{definition}
+    A function is called \emph{recognizability reflecting} when
+    inverse images of recognizable languages are also recognizable.
+\end{definition}
+%There are a lot of recognizability reflecting functions:
 \begin{example}
-    Consider the semigroup $\Nat$ of natural numbers with addition. In this semigroup, the recognizable languages are ultimately periodic subsets.  We will show that there are uncountably many recognizability preserving functions of type $\Nat \to \Nat$.
-    To see this, consider any  non-decreasing function 
-    \begin{align*}
-    g : \Nat \to \Nat,
-    \end{align*}
-    and define $f$ to be the composition of $g$ with the factorial operation
-    \begin{align*}
-    f : n \mapsto g(n)!
-    \end{align*}
-    The property of the factorial operation is that every ultimately periodic subset of $\Nat$ contains all or no factorials, up to finitely many exceptions. Therefore, the inverse image of any ultimately periodic set under $f$ will be either finite or co-finite, and therefore also ultimately periodic.
+    Consider the semigroup $\Nat$ of natural numbers with addition. In this semigroup, the recognizable languages are ultimately periodic subsets. Consider
+    \[ f : n \mapsto g(n)! \qquad\text{for any non-decreasing}\quad g : \Nat \to \Nat \]
+    A property of the factorial operation $(-)!$ is that every ultimately periodic subset of $\Nat$ contains all or no factorials, up to finitely many exceptions. Therefore, the inverse image of any ultimately periodic set under $f$ will be either finite or co-finite, and therefore also ultimately periodic.
+    
+    Thus, there are uncountably many recognizability preserving functions of type $\Nat \to \Nat$.
 \end{example}
-
-
-We now present a second characterization, which concerns functions between semigroups that are recognizability reflecting.
+% We now present a second characterization, which concerns functions between semigroups that are recognizability reflecting.
 
 \begin{theorem}\label{thm:reco-reflecting-functions}
      The following conditions are equivalent for a function $f : A \to B$, which is not necessarily a semigroup homomorphism:
     \begin{enumerate}
-        \item \label{it:reco-refl} $f$ is recognizability reflecting, which means for every recognizable language 
-        \[
-\begin{tikzcd}
-B 
-\ar[r,"L"]
-&
-\set{\text{yes, no}}
-\end{tikzcd}
-\]
-        the language $f;L$ is also recognizable.
+        \item \label{it:reco-refl} $f$ is recognizability reflecting.
+        %, which means for every recognizable language 
+        %\[
+%\begin{tikzcd}
+%B 
+%\ar[r,"L"]
+%&
+%\set{\text{yes, no}}
+%\end{tikzcd}
+%\]
+        %the language $f;L$ is also recognizable.
         \item \label{it:trans-semig-reco}$f$ is recognized by a transducer semigroup  such that the output mechanism 
-        \begin{align*}
-        \outfun_B : \functor B \to B
-        \end{align*}
+        $\outfun_B : \functor B \to B$
         is recognizable for every finite semigroup $B$.
     \end{enumerate}
 \end{theorem}
 \begin{proof}
-    For the implication \ref{it:reco-refl} $\Rightarrow$ \ref{it:trans-semig-reco} we  use a similar construction as in the proof of Theorem~\ref{thm:all-functions}.
+    For the implication (\ref{it:reco-refl}) $\Rightarrow$ (\ref{it:trans-semig-reco}) we  use a similar construction as in the proof of Theorem~\ref{thm:all-functions}.
     Consider some function $f : A \to B$, which is recognizability reflecting. Define  a functor as follows:
-    \begin{align*}
-    \functor C = A \times \myunderbrace{\mathrm{Hom}(B,C)}{the set of all  semigroup  homomorphisms, viewed \\ as a semigroup 
-    with the trivial semigroup operation $xy = x$}.
-    \end{align*}
-    On morphisms, the functor is defined as in the proof of Theorem~\ref{thm:all-functions}, and the output mechanism  is function application with $f$ inserted as an interface i.e.
-    \begin{align*}
-        \outfun : (a,g) \mapsto g(f(a)).
-    \end{align*}
-    By the assumption that $f$ is recognizability reflecting, the output mechanism $\outfun_C$ is recognizable for finite $C$.
-    \tito{not sure this holds when $B$ isn't finitely generated?}
-    The transducer semigroup defined above recognizes the function $f$ via the homomorphism 
-    \begin{align*}
-    a \in A  \mapsto  (a,\id).
-    \end{align*} 
+    $\functor C = A \times \displaystyle\myunderbrace{\mathrm{Hom}(B,C)}{the set of all semigroup homomorphisms, endowed\\
+    with the trivial semigroup operation $xy = x$}$.
+
+    On morphisms, the functor is defined as in the proof of Theorem~\ref{thm:all-functions}, and the output mechanism  is function application with $f$ inserted as an interface i.e.~$\outfun : (a,g) \mapsto g(f(a))$.
+
+    By the assumption that $f$ is recognizability reflecting, the output mechanism $\outfun_C$ is recognizable for finite $C$. The transducer semigroup defined above recognizes the function $f$ via the homomorphism $a \in A  \mapsto  (a,\id)$.
+    \tito{not sure $\outfun_C$ recognizable holds when $B$ isn't finitely generated?}
     
-Consider now the converse implication \ref{it:reco-refl} $\Leftarrow$ \ref{it:trans-semig-reco}. Take a function $f : A \to B$ between two semigroups that satisfies~\ref{it:trans-semig-reco}, i.e.~it is a composition 
-\[\begin{tikzcd}
-    [column sep=2cm]
-	A & {\functor B} & B 
-	\arrow["h", from=1-1, to=1-2]
-	\arrow["\outfun_{B}", from=1-2, to=1-3]
-\end{tikzcd}\]
-where $h$ is some homomorphism. We want to show that $f$ is recognizability reflecting. To prove this, consider some recognizable language over the output semigroup, i.e.~a composition of some homomorphism from $B$ into a finite semigroup, followed by an arbitrary boolean-valued function
-\[
-\begin{tikzcd}
-    [column sep=2cm]
-B 
-\ar[r,"g"']
-&
-C
-\ar[r,"\text{accepting set}"']
-&
-\set{\text{yes,no}}
-\end{tikzcd}
-\]
+    
+Consider now the converse implication (\ref{it:reco-refl}) $\Leftarrow$ (\ref{it:trans-semig-reco}). Take a function $f : A \to B$ that satisfies~(\ref{it:trans-semig-reco}), i.e.~it is a composition $A \xrightarrow[\;h\;]{} \functor B \xrightarrow[\;\outfun_B\;]{} B$
+%\[\begin{tikzcd}
+%    [column sep=2cm]
+%	A & {\functor B} & B 
+%	\arrow["h", from=1-1, to=1-2]
+%	\arrow["\outfun_{B}", from=1-2, to=1-3]
+%\end{tikzcd}\]
+where $h$ is some homomorphism.
+
+We want to show that $f$ is recognizability reflecting. To prove this, let us consider some recognizable language over the output semigroup, i.e.\ for some finite semigroup $C$, a composition $B \xrightarrow[\;g\;]{} C \xrightarrow[\;\text{accepting set}\;]{} \set{\text{yes, no}}$.
+%~a composition of some homomorphism from $B$ into a finite semigroup, followed by an arbitrary boolean-valued function
+%\[
+%\begin{tikzcd}
+%    [column sep=2cm]
+%B 
+%\ar[r,"g"']
+%&
+%C
+%\ar[r,"\text{accepting set}"']
+%&
+%\set{\text{yes,no}}
+%\end{tikzcd}
+%\]
+
 We want to show that is inverse image of the language under $f$ is also recognizable. Consider the following diagram. 
 \[\begin{tikzcd}
     [column sep=2cm]
-	A & {\functor B} & B \\
-	& {\functor C} & C & \set{\text{yes, no}}
+	A & {\functor B} & & B \\
+	& {\functor C} & & C & \set{\text{yes, no}}\\
+    & & D
 	\arrow["h", from=1-1, to=1-2]
-	\arrow["\outfun_B", from=1-2, to=1-3]
+	\arrow["\outfun_B", from=1-2, to=1-4]
 	\arrow["{\functor g}"', from=1-2, to=2-2]
-	\arrow["\outfun_A"', from=2-2, to=2-3]
-	\arrow["g", from=1-3, to=2-3]
-	\arrow["\text{accepting set}"', from=2-3, to=2-4]
+	\arrow["\outfun_C"', from=2-2, to=2-4]
+	\arrow["g", from=1-4, to=2-4]
+	\arrow["\text{accepting set}"', from=2-4, to=2-5]
+    \arrow["\text{some homomorphism}"', from=2-2, to=3-3]
+    \arrow["\text{some function}"', from=3-3, to=2-4]
 \end{tikzcd}\]
 The upper path from $A$ to $\set{\text{yes, no}}$ describes the inverse image under $f$. 
- The middle rectangle commutes by naturality of the output mechanism, and therefore the upper path describes the same function as the lower path. The lower path is a recognizable function, since the first three arrows on it are semigroup homomorphisms.
+ The top-middle rectangle commutes by naturality of the output mechanism, and therefore the upper path describes the same function as the lower path. The existence of a bottom-middle commuting triangle, with $D$ \emph{finite}, is exactly the assumption that $\outfun_C$ is recognizable (since $C$ is finite). Finally, the lower path is a recognizable function, since the first three arrows on it are semigroup homomorphisms and $D$ is finite.
 \end{proof}
 
 % The straightforward construction in the above proof could be extended to characterization functions which reflect other properties of languages, such as being context-free or decidable. 
