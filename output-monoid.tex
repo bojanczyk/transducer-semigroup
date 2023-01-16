@@ -26,7 +26,7 @@ We now state the main theorem of this paper. Unlike the previous characterizatio
 \end{theorem}
 \begin{remark}\label{rem:composition}
     One advantage of this characterization is that the \emph{closure under composition} of regular functions can be quickly observed. (This contrasts with the non-triviality of composition for other models, such as two-way transducers~\cite{ChytilJ77} or copyless \sst~\cite{composingSST}.)
-    Indeed, it suffices to consider the following diagram with a commuting naturality square, where the upper path describes the composition of two functions recognized respectively by $(\functor,\outfun)$ and $(\functor',\outfun')$, while the lower path describes a function recognized by $(\functor\functor',\outfun'\circ\outfun)$:
+    Indeed, it suffices to consider the following diagram with a commuting naturality square, where the upper path describes the composition of two functions recognized respectively by $(\functor,\outfun)$ and $(\functor',\outfun')$, while the lower path is recognized by $(\functor\functor',\outfun'\circ\outfun_{F'(-)})$:
     \[
     \begin{tikzcd}
         [column sep=2cm]
