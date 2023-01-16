@@ -4,21 +4,21 @@
 The purpose of this paper is to give a characterization of the regular string-to-string functions. This is a fundamental class of functions, which has many equivalent descriptions: deterministic two-way automata~\cite[Note~4]{shepherdson1959reduction}, copyless streaming string transducers (\sst)~\cite[Section~3]{alurExpressivenessStreamingString2010}, \mso transductions~\cite[Theorem~13]{engelfrietMSODefinableString2001}, combinators~\cite[Section~2]{alur2014regular}, a functional programming language~\cite[Section~6]{bojanczykRegularFirstOrderList2018}, decompositions \textit{à la} Krohn--Rhodes~\cite[Theorem~18, item~4]{bojanczykstefanski2020}\ldots
 
 
-The present paper adds a new characterization to the list, which uses minimal syntax, and refers only to basic concepts, such as semigroups and natural transformations. We prove that a string-to-string function of type $\Sigma^+ \to \Gamma^+$ is regular
+The present paper adds a new characterization to the list, which uses minimal syntax, and refers only to basic concepts from algebra and category theory. We prove that a string-to-string function of type $\Sigma^* \to \Gamma^*$ is regular
 %, in the sense that it is recognized by any of the equivalent models described in the previous paragraph,
 if and only if it can be decomposed as 
 \[
 \begin{tikzcd}
-    \Sigma^+ 
+    \Sigma^* 
     \ar[r,"h"]
     & 
-    \functor(\Gamma^+)
-    \ar[r,"\outfun_{\Gamma^+}"]
+    \functor(\Gamma^*)
+    \ar[r,"\outfun_{\Gamma^*}"]
     &
-    \Gamma^+
+    \Gamma^*
 \end{tikzcd}
 \]
-where $\functor$ is some finiteness-preserving functor from the category of semigroups to itself, $h$~is some semigroup homomorphism, and the output function $\outfun_{\Gamma^+}$ is a natural transformation.
+where $\functor$ is some finiteness-preserving functor from the category of semigroups to itself, $h$~is some semigroup homomorphism, and the output function $\outfun_{\Gamma^*}$ is a natural transformation.
 %Here, a finiteness-preserving functor is one that maps finite semigroups to finite semigroups. 
 %\tito{I figure this is explicited anyways in the dedicated section}
 

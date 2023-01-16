@@ -4,7 +4,7 @@
 \label{sec:reg-char}
 The two constructions in Theorems~\ref{thm:all-functions} and~\ref{thm:reco-reflecting-functions} were rather straightforward, and amounted to little more than symbol pushing. In this section, we present a more advanced  characterization, which concerns  the regular functions mentioned in the introduction.
 %, i.e.~string-to-string functions recognized by streaming string transducers and their equivalent models.
-In the characterization, we require that the functor is finiteness preserving, i.e.~it maps finite semigroups to finite semigroups. It turns out that the naturality of the output mechanism interacts with the condition that 
+It requires that the functor is finiteness preserving, i.e.~it maps finite semigroups to finite semigroups. As it turns out, the naturality of the output mechanism interacts with the condition that 
 the functor is finiteness preserving, resulting in a strong restriction on the expressive power.
 
 \begin{example}
@@ -13,29 +13,43 @@ the functor is finiteness preserving, resulting in a strong restriction on the e
     The reason why is that it require some kind of choice, which would contradict naturality. More formally, let $A$ be a semigroup with two elements, with a trivial semigroup operation defined by $xy=x$. Then $\outfun_A$ would need to choose some element $a \in A$ for the full set $A \in \powerset A$. However, none of the two choices is right, because if we take any semigroup homomorphism $f : A \to A$ such that $f(A)=A$, then  naturality of the output mechanism implies that $a=f(a)$. If $f$ swaps the two elements, then we get a contradiction.
 \end{example}
 
-
-We now state the main theorem of this paper. Unlike the previous characterizations, the statement is stated in terms of functions between free semigroups $\Sigma^+$ and $\Gamma^+$, because the models defining regular functions are defined for string-to-string functions, and not transformations of abstract semigroups. (Some of the models, such as streaming string transducers or two-way automata, easily make sense when the output is an abstract semigroup, but the string structure of the input semigroup seems to be essential for all the models.) 
+We now state the main theorem of this paper. Unlike the previous characterizations, it concerns the functions from a free monoid $\Sigma^*$ over a finite alphabet to a semigroup $A$, because the models defining regular functions operate on strings, and not on abstract semigroups. Some of the models, such as streaming string transducers (\sst) or two-way automata, easily make sense when the output is an abstract semigroup, but the string structure of the input seems to be essential for all the models. 
 
 % Among the functors described in Example~\ref{ex:functors},  ``reverse'' and ``powerset''  are finiteness preserving, in the sense that if they are applied to a finite semigroup, then the result is also a finite semigroup. The ``tuple'' functor $A^n$ is finiteness preserving if and only if the exponent $n$ is finite. The ``list'' functor $A^+$ is not finiteness preserving. 
 
-
 \begin{theorem}\label{thm:regular-functions}
-    Let  $\Sigma$ and $\Gamma$  be finite alphabets. The following conditions are equivalent for a function $f : \Sigma^+ \to \Gamma^+$, which is not necessarily a semigroup homomorphism:
+    Let $\Sigma$ be a finite alphabet and $A$ be a semigroup. For a function $f : \Sigma^* \to A$, the following conditions are equivalent:
     \begin{enumerate}
-        \item \label{it:regular} $f$ is  a regular function, as defined in  Section~\ref{sec:easy}. 
+        \item \label{it:regular} $f$ is  a regular string-to-semigroup function, as defined in Section~\ref{sec:easy}. (When $A = \Gamma^*$ for some finite $\Gamma$, this corresponds by definition to the usual regular string functions.)
         \item \label{it:trans-semig-regular}$f$ is recognized by a transducer semigroup $(\functor,\outfun)$ such that for every finite semigroup $A$, the semigroup $\functor A$ is also finite. 
     \end{enumerate}
 \end{theorem}
+\begin{remark}\label{rem:composition}
+    One advantage of this characterization is that the \emph{closure under composition} of regular functions can be quickly observed. (This contrasts with the non-triviality of composition for other models, such as two-way transducers~\cite{ChytilJ77} or copyless \sst~\cite{composingSST}.)
+    Indeed, it suffices to consider the following diagram with a commuting naturality square, where the upper path describes the composition of two functions recognized respectively by $(\functor,\outfun)$ and $(\functor',\outfun')$, while the lower path describes a function recognized by $(\functor\functor',\outfun'\circ\outfun)$:
+    \[
+    \begin{tikzcd}
+        [column sep=2cm]
+        \Sigma^* 
+        \ar[r,"h"]
+        & 
+        \functor(\Gamma^*)
+        \ar[r,"\outfun_{\Gamma^*}"]
+        \ar[d,"\functor h'"]
+        &
+        \Gamma^* \ar[d,"h'"]\\
+        &
+        \functor\functor'A \ar[r,"\outfun_{\functor'A}"]
+        & 
+        \functor'A
+        \ar[r,"\outfun'_A"]
+        &
+        \Pi^*
+    \end{tikzcd}
+    \]
+\end{remark}
 
-
-Before proceeding with the proof, we comment on the role of empty strings. Regular functions are usually defined for possibly empty strings, i.e.~functions of type $\Sigma^* \to \Gamma^*$. We use nonempty strings, because it will be more convenient to work with semigroups, and the free semigroup construction produces nonempty strings. To extend the construction to functions that can output possibly empty strings, while still working with semigroups, we could modify the type of the output mechanism to be 
-\begin{align*}
-\outfun_A : \functor A \to \myunderbrace{A + 1}{disjoint union of underlying set of $A$ \\ with one extra element representing the empty word},
-\end{align*}
-under this modification the same proof as presented below would give us exactly the regular functions with possibly empty outputs. The empty string as an input is less important, since we can always  extend  the source code of a transducer that inputs nonempty strings with an extra line which says how to handle an empty input string. 
-
-
-The left-to-right implication is relatively straightforward, and presented in Section~\ref{sec:easy}, together with the definition of streaming string transducers. The main part of the proof  is devoted to the right-to-left implication. The proof is presented in a way which, if sometimes slightly verbose, makes it easier to see how it can be adapted to other algebraic structures instead of semigroups (such as forest algebras).
+The implication $(\ref{it:regular}) \Rightarrow (\ref{it:trans-semig-regular})$ in \Cref{thm:regular-functions} is relatively straightforward, and presented in Section~\ref{sec:easy}, together with the definition of streaming string transducers. The main part of the proof  is devoted to the converse implication. The proof is presented in a way which, if sometimes slightly verbose, makes it easier to see how it can be adapted to other algebraic structures instead of semigroups (such as forest algebras).
 
 \input{easy}
 
@@ -43,7 +57,7 @@ The left-to-right implication is relatively straightforward, and presented in Se
 
 \subsection{Proof}
 
-We now present proof of the right-to-left implication in Theorem~\ref{thm:regular-functions}. Consider some transducer semigroup, with the functor being $\functor$ and the output transformation being $\outfun$. We will show that for every finite alphabet $\Sigma$, every semigroup $A$ (not necessarily a free semigroup $\Gamma^+$), the composition 
+We now prove the implication $(\ref{it:trans-semig-regular}) \Rightarrow (\ref{it:regular})$ in Theorem~\ref{thm:regular-functions}. Consider some transducer semigroup, with the functor being $\functor$ and the output mechanism being $\outfun$. We will show that for every finite alphabet $\Sigma$ and every semigroup $A$, some functorial \sst recognizes the composition
 \[
     \begin{tikzcd}
     \Sigma^+ 
@@ -55,20 +69,7 @@ We now present proof of the right-to-left implication in Theorem~\ref{thm:regula
     A
     \end{tikzcd}
     \]
-is recognized by a functorial \sst.
-
-
-We begin by introducing some notation, which allows us to track which parts of an output come from which parts of an input. The new notation will be explained using the running example of the duplicating function 
-\begin{align*}
-f : \set{a,b}^+ \to \set{a,b}^+
-\end{align*}
-which is recognized by the 
-transducer semigroup 
-in which the functor $\functor$ is the identity, the output mechanism is duplication, and the homomorphism 
-\begin{align*}
-h : \set{a,b}^+ \to \functor \set{a,b}^+ = \set{a,b}^+
-\end{align*}
-is the identity.
+We begin by introducing some notation, which allows us to track which parts of an output come from which parts of an input. The new notation will be explained using the running example of the duplicating function, with the transducer semigroup of \Cref{ex:duplicator}.
 
 %  Let us extend the output mechanism from semigroups to co-products of semigroups. This is done as follows, for semigroups $A_1,\ldots,A_n$, define the corresponding output mechanism to be the composition of the following functions 
 % \[
@@ -82,9 +83,9 @@ is the identity.
 % \]
 % We use the name \emph{co-product output mechanism} for the function described above. 
 For semigroups $A_1,\ldots,A_n$, define the \emph{factorized output function} to be the 
-function of type 
+function% of type 
 \begin{align*}
-\functor A_1 \times \cdots \times \functor A_n \to A_1 \oplus \cdots \oplus A_n
+\qquad\functor A_1 \times \cdots \times \functor A_n \longrightarrow A_1 \oplus \cdots \oplus A_n
 \end{align*}
 that is obtained by composing the three functions described below
 \tito{I believe the previous def was wrong (not consistent with the example), I've changed it to a non-equivalent one that looks like it does what we want}

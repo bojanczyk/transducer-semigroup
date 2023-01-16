@@ -1,20 +1,18 @@
 
 
 \subsection{Term operations and natural transformations}
-We now turn to proving the right-to-left implication in Theorem~\ref{thm:regular-functions}.
+We now turn to proving the implication $(\ref{it:trans-semig-regular}) \Rightarrow (\ref{it:regular})$ in Theorem~\ref{thm:regular-functions}.
 
 Let us begin with some notation. We write $1$ for the singleton semigroup; it is a \emph{terminal object}, that is, it admits a unique homomorphism from every other semigroup $A$, which will be denoted by $! : A \to 1$ (the notation has no connection with the factorial function on numbers). Another construction that will be used heavily in the proof is the \emph{coproduct} of two semigroups $A$ and $B$, which is denoted by $A \oplus B$. This is a semigroup which consists of words over an alphabet that is the disjoint union of $A$ and $B$, restricted to words which are nonempty and alternating in the sense that two consecutive elements cannot belong to the same semigroup. The semigroup operation is defined in the expected way. The coproduct deserves its name due to the following universal property: for every pair of semigroup homomorphisms
 \begin{align*}
 f : A \to C \qquad \text{and} \qquad g : B \to C
 \end{align*}
-there is a unique semigroup homomorphism
+there is a unique homomorphism with domain $A\oplus B$ that coincides with $f$ (resp.~$g$) on the subsemigroup of $A \oplus B$ consisting of words with a single letter from $A$ (resp.~$B$):
 \[
 \begin{tikzcd}
 f \text{ or } g : A \oplus B \to C
 \end{tikzcd}
 \]
-that coincides with $f$ (resp.\ $g$) on the subsemigroup of $A \oplus B$ consisting of words with a single letter from $A$ (resp.\ $B$).
-
 Next, we introduce some terminology that will be used in the proof, concerning  polynomial functors, and copyless operations between them. They will be used as the register structure for an \sst in our proof. 
 
 \subsubsection{Polynomial functors}
@@ -30,38 +28,30 @@ where $Q$ is some possibly infinite set, called the \emph{components}, with each
     \begin{align*}
     A \mapsto \text{underlying set of}\ \myunderbrace{A \oplus 1}{\text{coproduct with the singleton semigroup}}
     \end{align*}
-    is in fact a polynomial functor (but not a finite polynomial functor). Noting that $\oplus$ makes sense as an operation on sets without a semigroup structure, we have more generally that, if $\functor$ is a polynomial functor, then so is
-    \begin{align*}
-        A \mapsto \myunderbrace{\functor A \oplus 1}{\text{set of alternating sequences between $\functor A$ and $1$}}
-    \end{align*}
-    
-    This is because for every semigroup $A$ there is a bijective correspondence 
+    is in fact a polynomial functor (but not a finite polynomial functor). Noting that $\oplus$ makes sense as an operation on sets without a semigroup structure (it builds a set of nonempty alternating sequences), we have more generally that, if $\functor$ is a polynomial functor, then so is $A \mapsto \functor A \oplus 1$. This is because for every semigroup $A$ there is a bijective correspondence 
     \begin{align}\label{eq:polynomial-representation-of-coproduct}
     A \oplus 1 \quad \simeq \quad \coprod_{q \in 1 \oplus 1} A^{\text{dimension of $q$}},
     \end{align}
-    where the dimension of $q$ is defined to be the number of times that the first copy of $1$ appears in $q$. Furthermore, the bijective correspondence in~\eqref{eq:polynomial-representation-of-coproduct} is natural in $A$, and therefore there is a natural bijection between the functor $A \oplus 1$ and some polynomial functor. Also, if two polynomial functors are connected by a natural bijection, then they are the same, up to renaming of the components, and therefore the representation in~\eqref{eq:polynomial-representation-of-coproduct} is unique up to renaming of components. By uniqueness, we will simply speak of $A \oplus 1$ as being a polynomial functor. 
+    where the dimension of $q$ is defined to be the number of times that the first copy of $1$ appears in $q$. Furthermore, the bijection in~\eqref{eq:polynomial-representation-of-coproduct} is natural in $A$, and therefore there is a natural bijection between the functor $(-) \oplus 1$ and some polynomial functor. Also, if two polynomial functors are connected by a natural bijection, then they are the same, up to renaming of the components, and therefore the representation in~\eqref{eq:polynomial-representation-of-coproduct} is unique up to renaming of components. By uniqueness, we will simply speak of $A \oplus 1$ as being a polynomial functor. 
 \end{example}
 
 
 
 
-\subsubsection{Copyless natural transformations.}  Among all natural  transformations between polynomial functors, we will be interested mainly in those that are  \emph{copyless}. To define this notion, we will first observe that  every natural transformation between polynomial functors  arises from some syntactic description, and within this syntactic description, the copyless restriction can easily be phrased. 
+\subsubsection{Copyless natural transformations}  Among all natural  transformations between polynomial functors, we will be interested mainly in those that are  \emph{copyless}. To define this notion, we will first observe that  every natural transformation between polynomial functors  arises from some syntactic description, and within this syntactic description, the copyless restriction can easily be phrased. 
 
 We begin with \emph{monomial functors}, i.e.~polynomial functors with one component. 
 Consider two monomial functors 
 \begin{align*}
 \functor A = A^k \qquad 
-\functorg A = A^\ell \qquad \text{where $k,\ell \in \set{0,1,\ldots}$.}
+\functorg A = A^\ell \qquad \text{where $k,\ell \in \mathbb{N} = \set{0,1,\ldots}$.}
 \end{align*}
-What is the possible form of a natural transformation between these functors? One way to create such a natural transformation is to take a  function  of type 
-\begin{align*}
-\set{1,\ldots,\ell} \to \set{1,\ldots,k}^+,
-\end{align*}
-which will be called the \emph{syntactic description} of the natural transformation, 
-and to define the natural transformation as follows: for a semigroup $A$ the natural transformations gives the function  that inputs $\bar a \in A^k$ and outputs the following tuple $A^\ell$:
+What is the possible form of a natural transformation between these functors? Given a \emph{syntactic description} by a map of type
+$\set{1,\ldots,\ell} \to \set{1,\ldots,k}^+$,
+we can define a natural transformation as follows: for a semigroup $A$, it gives the function  that inputs $\bar a \in A^k$ and outputs the tuple in $A^\ell$ defined by
 \[
 \begin{tikzcd}
-    [column sep=2.3cm]
+    [column sep=2.8cm]
 \set{1,\ldots,\ell}
 \arrow[r, "\text{syntactic description}"]
 &
@@ -99,9 +89,9 @@ Again, one can show that all natural transformations arise this way. The natural
 
 
 \begin{example}\label{ex:copyless-on-coproducts}
-    Consider the functor \enquote{underlying set of $A \oplus 1$} that was discussed in Example~\ref{ex:coproduct-as-polynomial-functor}, and shown to be a polynomial functor. The natural transformation 
+    Consider the functor \enquote{$A\mapsto$ underlying set of $A \oplus 1$} from Example~\ref{ex:coproduct-as-polynomial-functor}, which was shown to be a polynomial functor. The natural transformation in $A$
     \begin{align*}
-    (A \oplus 1)\times (A \oplus 1) \to A \oplus 1
+    (A \oplus 1)\times (A \oplus 1) \longrightarrow A \oplus 1
     \end{align*}
     which describes the semigroup operation in the coproduct $A \oplus 1$ is copyless.
 \end{example}
@@ -190,7 +180,7 @@ The function computed by a functorial \sst is the partial function of type
 that is defined as follows. Consider some input string in $\Sigma^+$. The machine moves its head along all input positions, and computes for each one a register valuation in $\functorr A$. In the initial register valuation corresponding to $i=0$, when no positions were processed yet, the register valuation  is obtained by applying $\vdash$ to the unique element $1$. For $i > 0$, the $i$-th register valuation is obtained by applying $\delta$ to the pair which consists of the $(i-1)$-st register valuation and the result of applying the oracle to input string with the $i$-th position distinguished. Finally, the output of the \sst is obtained by applying the output term operation $\dashv$ to the last  register valuation.
 
 \begin{lemma}\label{lem:functorial-sst-complete}
-    A function of type $\Sigma^+ \to A$ is regular, in the standard sense, if and only if it is computed by a functorial \sst. 
+    A function of type $\Sigma^* \to A$ is regular, in the standard sense, if and only if it is computed by a functorial \sst. 
 \end{lemma}
 \begin{proof}
     A normal \sst with states $Q$ and $k$ registers can be seen as a functorial \sst with a register functor of the form 
