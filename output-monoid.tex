@@ -2,20 +2,15 @@
 
 \section{The regular functions}
 \label{sec:reg-char}
-The two constructions in Theorems~\ref{thm:all-functions} and~\ref{thm:reco-reflecting-functions} were rather straightforward, and amounted to little more than symbol pushing. In this section, we present a more advanced  characterization, which concerns  the regular functions, i.e.~string-to-string functions recognized by streaming string transducers and their equivalent models. In the characterization, we require that the functor is finiteness preserving, i.e.~it maps finite semigroups to finite semigroups. It turns out that the naturality of the output mechanism interacts with the condition that 
+The two constructions in Theorems~\ref{thm:all-functions} and~\ref{thm:reco-reflecting-functions} were rather straightforward, and amounted to little more than symbol pushing. In this section, we present a more advanced  characterization, which concerns  the regular functions mentioned in the introduction.
+%, i.e.~string-to-string functions recognized by streaming string transducers and their equivalent models.
+In the characterization, we require that the functor is finiteness preserving, i.e.~it maps finite semigroups to finite semigroups. It turns out that the naturality of the output mechanism interacts with the condition that 
 the functor is finiteness preserving, resulting in a strong restriction on the expressive power.
 
 \begin{example}
-    Consider the powerset functor $\powerset A$ from Example~\ref{ex:functors}. This is a finiteness preserving functor, since the powerset of a finite set is also finite. One could imagine that using the powerset functor we could construct some transducer semigroup which recognizes functions that are not regular, e.g.~because they have exponential growth. It turns out that this is impossible, because there is no possible output mechanism, i.e.~no natural transformation 
-    \[
-    \begin{tikzcd}
-    \powerset A 
-    \ar[r,"\outfun_A"]
-    &
-    A.
-    \end{tikzcd}
-    \]
-    There reason why there is no such natural transformation is that it require some kind of choice, which would contradict naturality. More formally, let $A$ be a semigroup with two elements, with a trivial semigroup operation defined by $xy=x$. The output mechanism needs to choose some element $a \in A$ to the full set $A \in \powerset A$. However, none of the two choices is right, because if we take any semigroup homomorphism $f : A \to A$ such that $f(A)=A$, then  naturality of the output mechanism implies that $a=f(a)$. If $f$ is the homomorphism that swaps the two elements, then we get a contradiction.
+    Consider the powerset functor $\powerset A$ from Example~\ref{ex:functors}. This is a finiteness preserving functor, since the powerset of a finite set is also finite. One could imagine that using the powerset functor we could construct some transducer semigroup which recognizes functions that are not regular, e.g.~because they have exponential growth (whereas for a regular function, the output length grows at most linearly in the input length). It turns out that this is impossible, because there is no possible output mechanism, i.e.~no natural transformation $\powerset A \xrightarrow[\;\outfun_A\;]{} A$.
+
+    The reason why is that it require some kind of choice, which would contradict naturality. More formally, let $A$ be a semigroup with two elements, with a trivial semigroup operation defined by $xy=x$. Then $\outfun_A$ would need to choose some element $a \in A$ for the full set $A \in \powerset A$. However, none of the two choices is right, because if we take any semigroup homomorphism $f : A \to A$ such that $f(A)=A$, then  naturality of the output mechanism implies that $a=f(a)$. If $f$ swaps the two elements, then we get a contradiction.
 \end{example}
 
 

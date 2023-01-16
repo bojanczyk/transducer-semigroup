@@ -13,14 +13,15 @@ if and only if it can be decomposed as
     \ar[r,"h"]
     & 
     \functor(\Gamma^+)
-    \ar[r,"\outfun"]
+    \ar[r,"\outfun_{\Gamma^+}"]
     &
     \Gamma^+
 \end{tikzcd}
 \]
-where $\functor$ is some finiteness-preserving functor from the category of semigroups to itself, $h$~is some semigroup homomorphism, and the output function $\outfun$ is a natural transformation. Here, a finiteness-preserving functor is one that maps finite semigroups to finite semigroups. 
+where $\functor$ is some finiteness-preserving functor from the category of semigroups to itself, $h$~is some semigroup homomorphism, and the output function $\outfun_{\Gamma^+}$ is a natural transformation.
+%Here, a finiteness-preserving functor is one that maps finite semigroups to finite semigroups. 
+%\tito{I figure this is explicited anyways in the dedicated section}
 
-
-The theorem also extends to some other algebraic structures, such as trees modelled via forest algebra. However, our proof uses properties of the underlying algebraic structure which seem to fail for some structures such as groups or algebras corresponding to weighted automata; we do not know if our proof can be extended to  these structures, or even if the theorem itself is true.
+This result (\Cref{thm:regular-functions}) also extends to some other algebraic structures, such as trees modelled via forest algebra. However, our proof uses properties of the underlying algebraic structure which seem to fail for some structures such as groups or algebras corresponding to weighted automata; we do not know if our proof can be extended to  these structures, or even if the theorem itself is true.
 
 %  this means that functors such as $A \mapsto A^2$ are allowed, but not $A \mapsto A^+$. 
