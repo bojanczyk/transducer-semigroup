@@ -1,10 +1,12 @@
 \section{Introduction}
 \label{sec:intro}
 
-The purpose of this paper is to give a characterization of the (linear) regular string-to-string functions. This is a fundamental class of functions, which has many equivalent descriptions, including deterministic two-way automata~\cite[Note~4]{shepherdson1959reduction}, copyless streaming string transducers (\sst)~\cite[Section~3]{alurExpressivenessStreamingString2010}, \mso transductions~\cite[Theorem~13]{engelfrietMSODefinableString2001}, combinators~\cite[Section~2]{alur2014regular}, a functional programming language~\cite[Section~6]{bojanczykRegularFirstOrderList2018} or decompositions \textit{à la} Krohn--Rhodes~\cite[Theorem~18, item~4]{bojanczykstefanski2020}.
+The purpose of this paper is to give a characterization of the regular string-to-string functions. This is a fundamental class of functions, which has many equivalent descriptions: deterministic two-way automata~\cite[Note~4]{shepherdson1959reduction}, copyless streaming string transducers (\sst)~\cite[Section~3]{alurExpressivenessStreamingString2010}, \mso transductions~\cite[Theorem~13]{engelfrietMSODefinableString2001}, combinators~\cite[Section~2]{alur2014regular}, a functional programming language~\cite[Section~6]{bojanczykRegularFirstOrderList2018}, decompositions \textit{à la} Krohn--Rhodes~\cite[Theorem~18, item~4]{bojanczykstefanski2020}\ldots
 
 
-The present paper adds a new characterization to the list, which uses minimal syntax, and refers only to basic concepts, such as semigroups and natural transformations. We prove that a string-to-string function of type $\Sigma^+ \to \Gamma^+$ is regular, in the sense that it is recognized by any of the equivalent models described in the previous paragraph, if and only if it can be decomposed as 
+The present paper adds a new characterization to the list, which uses minimal syntax, and refers only to basic concepts, such as semigroups and natural transformations. We prove that a string-to-string function of type $\Sigma^+ \to \Gamma^+$ is regular
+%, in the sense that it is recognized by any of the equivalent models described in the previous paragraph,
+if and only if it can be decomposed as 
 \[
 \begin{tikzcd}
     \Sigma^+ 
@@ -16,7 +18,7 @@ The present paper adds a new characterization to the list, which uses minimal sy
     \Gamma^+
 \end{tikzcd}
 \]
-where $\functor$ is some finiteness preserving functor from the category of semigroups to itself, $h$ is some semigroup homomorphism, and the output function $\outfun$ is natural in the sense of natural transformations. Here, a finiteness preserving functor is one that maps finite semigroups to finite semigroups. 
+where $\functor$ is some finiteness-preserving functor from the category of semigroups to itself, $h$~is some semigroup homomorphism, and the output function $\outfun$ is a natural transformation. Here, a finiteness-preserving functor is one that maps finite semigroups to finite semigroups. 
 
 
 The theorem also extends to some other algebraic structures, such as trees modelled via forest algebra. However, our proof uses properties of the underlying algebraic structure which seem to fail for some structures such as groups or algebras corresponding to weighted automata; we do not know if our proof can be extended to  these structures, or even if the theorem itself is true.
