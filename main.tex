@@ -98,15 +98,95 @@
 %%
 %% Bibliography
 %%
-
+pp
 %% Please use bibtex, 
 
 \bibliography{bib}
 
 \appendix
 
-\section{Proof of something}
+\section{Regular functions over arbitrary semigroups}
 
-\tito{do we want to use thm-restate?}
+Instead of just \enquote{transducer semigroups} we're going to prepend the adjective \enquote{functorial}, to distinguish them from the new \enquote{register transducer semigroups}. The notion of regular semigroup-to-semigroup function that we consider is closed under composition (\Cref{rem:composition}) and when the codomain is finite, it coincides with recognizable functions.
+
+\subsection{Register transducer semigroups}
+
+\tito{Probably in the final paper it would be nice to introduce these things without invoking categories at first, to make the paper more welcoming}
+
+\begin{definition}
+    A \emph{finitary semigroup with registers} consists of a finite semigroup $S$, a family $(R_s){s\in S}$ of finite nonempty sets, and a dependent function
+    \[ (s_1, s_2 : S) \to R_{s_1 s_2} \to (R_{s_1} + R_{s_2})^+ \]
+    such that blah blah\ldots{} It induces the finite polynomial functor from semigroups to sets
+    \[ A \mapsto \sum_{s\in S} A^{R_s} \]
+    which can be turned into a functor from semigroups to semigroups thanks to the dependent function above.
+\end{definition}
+
+Equivalently, consider the following symmetric monoidal category:
+\begin{description}
+    \item[Objects:] finite polynomial functors (in one variable).
+    \item[Morphisms:] natural transformations.
+    \item[Monoidal product:] pointwise cartesian product of sets.
+\end{description}
+A finitary semigroup with registers is the same thing as a \enquote{semigroup object} (defined by removing the unit requirement from monoid objects) in this monoidal category of finite polynomial functors.
+
+\begin{definition}
+    A \emph{register transducer semigroup} is a finitary semigroup with registers, plus a dependent function
+    \[ (s : S) \to (R_s)^+ \]
+\end{definition}
+
+This is equivalent to specifying a natural transformation from our polynomial functor to the forgetful functor, so it induces a functorial transducer semigroup in the expected way.
+
+\begin{definition}
+    A \emph{regular function} from $A$ to $B$ (both semigroups) is one that is recognized by the functorial transducer semigroup induced by some 
+\end{definition}
+
+\begin{theorem}
+    When $A$ and $B$ are free monoids, this coincides with the usual notion.
+\end{theorem}
+\begin{proof}[Proof idea]
+    Easy direction: take the substitution transition monoid~\cite{AperiodicSST} of a bounded-copy SST. (This requires some care to handle the output letters produced not by a transition but by the final output function; they can be stored in specific constant registers that are initialized in the image of all words, including the empty word -- for this, it is important that we can use a morphism of semigroups that is not necessarily a morphism of monoids.)
+    
+    Conversely, from a register transducer semigroup one can define an SST, and thanks to associativity(!) turns out that it's automatically bounded-copy.
+\end{proof}
+
+\begin{remark}
+This should also work if we have a single finite nonempty set of registers $R$ for all semigroup elements instead of a family $(R_s)_{s\in S}$ though the equivalence proof is slightly less immediate for semigroups than for monoids (you need to use the output function to produce \enquote{default} elements with which to fill unused registers). Note that the \enquote{substitution transition monoid} operation \enquote{naturally} produces something with a varying register set.
+\end{remark}
+
+\subsection{Equivalence with functorial transducer semigroups}
+
+It is immediate that every regular function is recognized by a finiteness-preserving functorial transducer semigroup, because finite polynomial functors are finiteness-preserving. We shall therefore focus on the converse.
+
+\begin{theorem}
+  For every finiteness-preserving functorial transducer semigroup $(\functor, \outfun)$, there is another one $(\functor',\outfun')$
+  \begin{itemize}
+    \item which is induced by some register transducer semigroup,
+    \item and which admits a natural transformation $\eta : \functor \Rightarrow \functor'$ such that $\outfun = \outfun' \circ \eta$.
+  \end{itemize}
+  Hence every function recognized by $(\functor,\outfun)$ is also recognized by $(\functor',\outfun')$ (by the second item) and thus is regular (by the first item).
+\end{theorem}
+\begin{proof}
+    Let $(\functor,\outfun)$ be a functorial transducer semigroup, and suppose $\functor$ preserves finiteness, so $\functor1$ is finite. We first build a finitary semigroup with registers that doesn't entirely fulfill our objectives, but still contains the core mechanism: $S = \functor1$, and for $s\in S$,
+    \[ R_s = \sum_{l,r \in F(1)} \{\text{occurrences of}\ \mathtt{m}\ \text{in}\ (\text{factorized output of}\ (l,s,r)) \in 1\oplus1\oplus1 \cong \{\mathtt{l,m,r}\}^+\} \]
+    For $s_1,s_2\in S$ we must now define a map $R_{s_1 s_2} \to (R_{s_1} + R_{s_2})^+$ describing the register recombination during a product. We derive it from the correspondence between
+    \begin{itemize}
+        \item the occurrences of $\mathtt{m}$ in the factorized output of $l \cdot (s_1 s_2)\cdot r$
+        \item and the maximal factors in $\{\mathtt{m_1,m_2}\}^+$ inside
+        \[ (\text{factorized output of}\ (l,s_1,s_2,r)) \in 1\oplus1\oplus1\oplus1 \cong \{\mathtt{l,m_1,m_2,r}\}^+ \]
+    \end{itemize}
+    Indeed, the morphism $1\oplus\mathop{!}\oplus1$ where $! : 1\oplus1 \to 1$ is the terminal morphism sends the maximal factors in $\{\mathtt{m_1,m_2}\}^+$ to $\mathtt{m}$ and is the identity on $\mathtt{l,r}$. To see that applying this to the factorized output of $(l,s_1,s_2,r)$ indeed yields the factorized output of $(l,s,r)$, we need to use naturality in some way
+    \tito{TODO above}
+
+    We must also check that this operation is \enquote{associative}. For this, consider the factorized output of $(l,s_1,s_2,s_3,r)$ \ldots{}
+
+    Finally we define $\widehat\eta : \functor \Rightarrow \functorg$ where $\functorg$ is the functor induced by our semigroup with registers. For any $x \in \functor A$, apply $\functor! : \functor A \to \functor 1$ to get some $s \in S$. Then look at the factorized output of $(l,x,r)$ in $1\oplus A \oplus 1$ for each $(l,r)\in (\functor1)^2$ to get register values in $A^{R_s}$.
+
+    The issue is that the output function for $\functor$ may not factor through $\widehat\eta$. To remediate that, we consider instead another semigroup with registers, inducing the functor $\functor'$, with the same underlying semigroup $S=\functor1$ and bigger register sets
+    \[ R'_s = \{\bullet\} + R^{\mathrm{left}}_s + R^{\mathrm{right}}_s + R_s \quad\text{for}\ s\in S\]
+    where $R^{\mathrm{left}}_s$ is the sum over $r \in \functor1$ of the sets of occurrences of $\mathtt{l}$ in the factorized output of $(s,r)$ which is in $1\oplus1\cong\{\mathtt{l,r}\}^+$, etc. Thus
+    \[ \functor'A \cong \sum_{s\in S} A \times A^{R^{\mathrm{left}}_s} \times \dots \cong A \times \sum_{s\in S} A^{R^{\mathrm{left}}_s} \times \dots \]
+    and we have then: $\outfun_A = (\text{left projection on}\ A) \circ \eta$ for the definition of $\eta$ extending $\widehat\eta$ in the obvious way.
+\end{proof}
+
 
 \end{document}
