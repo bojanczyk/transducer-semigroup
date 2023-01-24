@@ -223,17 +223,17 @@ It is immediate that every regular function is recognized by a finiteness-preser
         \ar[r,"\functor A \times (\text{semigroup op}) \times \functor C"]
         &
         \functor A \times \functor B \times \functor C
-        \ar[dd,"\functor(\text{co-projection})^3"]
+        \ar[d,"\functor(\text{co-projection})^3"]
         \\
         \functor(A \oplus B \oplus B \oplus C)^4
         \ar[d,"\text{multiply middle two together}"']
+        &
+        \functor(A \oplus B \oplus C)^3
+        \ar[dd,""]
         \\
         \functor(A \oplus B \oplus B \oplus C)^3
         \ar[d,"\text{semigroup operation}"']
-        \ar[r,"F(A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C)^3"]
-        &
-        \functor(A \oplus B \oplus C)^3
-        \ar[d,""]
+        \ar[ru,"F(A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C)^3"']
         \\
         \functor(A \oplus B \oplus B \oplus C)
         \ar[d, "\outfun_{A \oplus B \oplus B \oplus C}"']
@@ -247,7 +247,7 @@ It is immediate that every regular function is recognized by a finiteness-preser
         &
         A \oplus B \oplus C
     \end{tikzcd}\]
-    The lower rectangle commutes by naturality of the output function. The middle rectangle commutes because of the homomorphism property of $F(A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C)$. Concerning the upper rectangle, it can be decomposed as the functor $(\cdots \times \cdots \times \cdots)$ applied to three diagrams that we can analyze independently. The first of those is
+    The lower rectangle commutes by naturality of the output function. The middle trapeze commutes because of the homomorphism property of $F(A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C)$. Concerning the upper trapeze, it can be decomposed as the functor $(\cdots \times \cdots \times \cdots)$ applied to three diagrams that we can analyze independently. The first of those is
     \[\begin{tikzcd}
         [column sep=4cm]
         \functor A
@@ -255,15 +255,15 @@ It is immediate that every regular function is recognized by a finiteness-preser
         \ar[r,"\mathrm{id}_A"]
         &
         \functor A
-        \ar[dd,"\functor(\text{co-projection})"]
+        \ar[d,"\functor(\text{co-projection})"]
         \\
         \functor(A \oplus B \oplus B \oplus C)
         \ar[d,"\mathrm{id}"']
-        \\
-        \functor(A \oplus B \oplus B \oplus C)
-            \ar[r,"F(A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C)"]
         &
         \functor(A \oplus B \oplus C)
+        \\
+        \functor(A \oplus B \oplus B \oplus C)
+            \ar[ru,"F(A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C)"']
     \end{tikzcd}\]
     By functoriality of $\functor$, the commutativity of this diagram reduces to
     \[ (\mathrm{id}_A \oplus \dots) \circ (\text{co-projection of}\ A\ \text{into}\ A\oplus(B\oplus B\oplus C)) = \text{co-projection of}\ A\ \text{into}\ A\oplus(B\oplus C) \]
@@ -278,22 +278,21 @@ It is immediate that every regular function is recognized by a finiteness-preser
         &
         &
         \functor B
-        \ar[dd,"\functor(\text{co-proj})"]
+        \ar[d,"\functor(\text{co-proj})"]
         \\
         \functor(A \oplus B \oplus B \oplus C)^2
         \ar[d,"\text{semigroup op}"']
         \ar[r,"h\times h"']
         &
         \functor(A \oplus B \oplus C)^2
-        \ar[dr,"\text{semigroup op}"]
-        \\
-        \functor(A \oplus B \oplus B \oplus C)
-            \ar[rr,"h = F(A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C)"]
-        &
+        \ar[r,"\text{semigroup op}"]
         &
         \functor(A \oplus B \oplus C)
+        \\
+        \functor(A \oplus B \oplus B \oplus C)
+            \ar[rru,"h = F(A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C)"']
     \end{tikzcd}\]
-    The large upper right triangle commutes because $\functor$ applied to the co-projection of $B$ into $A\oplus B\oplus C$ is a homomorphism. The trapeze commutes because $h$ is a homomorphism. Finally, the small upper left triangle can be shown to commute using the functoriality of $\functor$ followed by properties of the coproduct.
+    The upper right trapeze commutes because $\functor$ applied to the co-projection of $B$ into $A\oplus B\oplus C$ is a homomorphism. The lower triangle commutes because $h$ is a homomorphism. Finally, the small upper left triangle can be shown to commute using the functoriality of $\functor$ followed by properties of the coproduct.
 \end{proof}
 
 \end{document}
