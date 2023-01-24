@@ -114,27 +114,33 @@ Instead of just \enquote{transducer semigroups} we're going to prepend the adjec
 \tito{Probably in the final paper it would be nice to introduce these things without invoking categories at first, to make the paper more welcoming}
 
 \begin{definition}
-    A \emph{finitary semigroup with registers} consists of a finite semigroup $S$, a family $(R_s){s\in S}$ of finite nonempty sets, and a dependent function
-    \[ (s_1, s_2 : S) \to R_{s_1 s_2} \to (R_{s_1} + R_{s_2})^+ \]
-    such that blah blah\ldots{} It induces the finite polynomial functor from semigroups to sets
+    A \emph{finitary semigroup with registers} consists of a finite semigroup $S$, a family $(R_s)_{s\in S}$ of finite nonempty sets, and a family of functions
+    \[ \mu_{s_1, s_2} : R_{s_1 s_2} \to (R_{s_1} + R_{s_2})^+ \quad\text{for}\ s_1, s_2 \in S\]
+    satisfying the following associativity property: for $s_1, s_2, s_3 \in S$, the two maps
+    \[ R_{s_1 s_2 s_3} \xrightarrow{\;\mu_{s_1s_2,s_3}\;} (R_{s_1 s_2} + R_{s_3})^+ \xrightarrow{\;(\mu_{s_1,s_2}+\mathrm{id})^+\;} ((R_{s_1}+R_{s_2})+R_{s_3})^+ \]
+    \[ R_{s_1 s_2 s_3} \xrightarrow{\;\mu_{s_1,s_2s_3}\;} (R_{s_1} + R_{s_2 s_3})^+ \xrightarrow{\;(\mathrm{id}+\mu_{s_2,s_3})^+\;} (R_{s_1}+(R_{s_2}+R_{s_3}))^+ \]
+    are equal modulo the canonical associativity isomorphism for $+$ between the codomains.
+    
+    This data induces the finite polynomial functor from semigroups to sets
     \[ A \mapsto \sum_{s\in S} A^{R_s} \]
-    which can be turned into a functor from semigroups to semigroups thanks to the dependent function above.
+    which can be turned into a functor from semigroups to semigroups thanks to $\mu$.
 \end{definition}
 
-Equivalently, consider the following symmetric monoidal category:
-\begin{description}
-    \item[Objects:] finite polynomial functors (in one variable).
-    \item[Morphisms:] natural transformations.
-    \item[Monoidal product:] pointwise cartesian product of sets.
-\end{description}
-A finitary semigroup with registers is the same thing as a \enquote{semigroup object} (defined by removing the unit requirement from monoid objects) in this monoidal category of finite polynomial functors.
+\begin{remark}
+    Equivalently, consider the following symmetric monoidal category:
+    \begin{description}
+        \item[Objects:] finite polynomial functors (in one variable).
+        \item[Morphisms:] natural transformations.
+        \item[Monoidal product:] pointwise cartesian product of sets.
+    \end{description}
+    A finitary semigroup with registers is the same thing as a \enquote{semigroup object} (defined by removing the unit requirement from monoid objects) in this monoidal category of finite polynomial functors.
+\end{remark}
 
 \begin{definition}
-    A \emph{register transducer semigroup} is a finitary semigroup with registers, plus a dependent function
-    \[ (s : S) \to (R_s)^+ \]
+    A \emph{register transducer semigroup} is a finitary semigroup with registers $(S, (R_s)_{s\in S},(\mu_{s_1,s_2})_{s_1,s_2\in S})$, plus a family of strings $\omega_s \in (R_s)^+$ for $s\in S$.
 \end{definition}
 
-This is equivalent to specifying a natural transformation from our polynomial functor to the forgetful functor, so it induces a functorial transducer semigroup in the expected way.
+This is equivalent to specifying a natural transformation from the associated polynomial functor to the forgetful functor from semigroups to sets, so it induces a functorial transducer semigroup in the expected way.
 
 \begin{definition}
     A \emph{regular function} from $A$ to $B$ (both semigroups) is one that is recognized by the functorial transducer semigroup induced by some 
@@ -151,6 +157,8 @@ This is equivalent to specifying a natural transformation from our polynomial fu
 
 \begin{remark}
 This should also work if we have a single finite nonempty set of registers $R$ for all semigroup elements instead of a family $(R_s)_{s\in S}$ though the equivalence proof is slightly less immediate for semigroups than for monoids (you need to use the output function to produce \enquote{default} elements with which to fill unused registers). Note that the \enquote{substitution transition monoid} operation \enquote{naturally} produces something with a varying register set.
+
+Another possible variation on the definition is to have a choice of output register for each element of the control semigroup: $r_s \in R_s$ for $s\in S$ instead of $\omega_s \in (R_s)^+$. This does not decrease the expressivity of the model.
 \end{remark}
 
 \subsection{Equivalence with functorial transducer semigroups}
@@ -174,10 +182,10 @@ It is immediate that every regular function is recognized by a finiteness-preser
         \item and the maximal factors in $\{\mathtt{m_1,m_2}\}^+$ inside
         \[ (\text{factorized output of}\ (l,s_1,s_2,r)) \in 1\oplus1\oplus1\oplus1 \cong \{\mathtt{l,m_1,m_2,r}\}^+ \]
     \end{itemize}
-    Indeed, the morphism $1\oplus\mathop{!}\oplus1$ where $! : 1\oplus1 \to 1$ is the terminal morphism sends the maximal factors in $\{\mathtt{m_1,m_2}\}^+$ to $\mathtt{m}$ and is the identity on $\mathtt{l,r}$. To see that applying this to the factorized output of $(l,s_1,s_2,r)$ indeed yields the factorized output of $(l,s,r)$, we need to use naturality in some way
-    \tito{TODO above}
+    Indeed, the morphism $1\oplus\mathop{!}\oplus1$ where $! : 1\oplus1 \to 1$ is the terminal morphism sends the maximal factors in $\{\mathtt{m_1,m_2}\}^+$ to $\mathtt{m}$ and is the identity on $\mathtt{l,r}$. To see that applying this to the factorized output of $(l,s_1,s_2,r)$ indeed yields the factorized output of $(l,s_1s_2,r)$, apply \Cref{lem:merge-middle} to $A=B=C=1$.
 
     We must also check that this operation is \enquote{associative}. For this, consider the factorized output of $(l,s_1,s_2,s_3,r)$ \ldots{}
+    \tito{TODO above}
 
     Finally we define $\widehat\eta : \functor \Rightarrow \functorg$ where $\functorg$ is the functor induced by our semigroup with registers. For any $x \in \functor A$, apply $\functor! : \functor A \to \functor 1$ to get some $s \in S$. Then look at the factorized output of $(l,x,r)$ in $1\oplus A \oplus 1$ for each $(l,r)\in (\functor1)^2$ to get register values in $A^{R_s}$.
 
@@ -188,5 +196,104 @@ It is immediate that every regular function is recognized by a finiteness-preser
     and we have then: $\outfun_A = (\text{left projection on}\ A) \circ \eta$ for the definition of $\eta$ extending $\widehat\eta$ in the obvious way.
 \end{proof}
 
+\begin{lemma}\label{lem:merge-middle}
+    Let $A,B,C$ be semigroups. The following diagram commutes:
+    \[\begin{tikzcd}
+        [column sep=3cm]
+        \functor A \times \functor B\times \functor B \times \functor C
+        \ar[r,"\text{factorized output}"]
+        \ar[d,"\functor A \times (\text{semigroup operation}) \times \functor C"']
+        &
+        A \oplus B \oplus B \oplus C
+        \ar[d,"A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C"]
+        \\
+        \functor A \times \functor B \times \functor C
+        \ar[r,"\text{factorized output}"]
+        &
+        A \oplus B \oplus C
+    \end{tikzcd}\]
+\end{lemma}
+\tito{similar to \Cref{claim:merge-factorized-output}}
+\begin{proof}
+    By rotating the above diagram, we see that it corresponds to the outer rectangle in the following diagram (where we have expanded the definition of the factorized output functions, and used the associativity of 4-fold multiplication):
+    \[\begin{tikzcd}
+        [column sep=4cm]
+        \functor A \times \functor B\times \functor B \times \functor C
+        \ar[d,"\functor(\text{co-projection})^4"']
+        \ar[r,"\functor A \times (\text{semigroup op}) \times \functor C"]
+        &
+        \functor A \times \functor B \times \functor C
+        \ar[dd,"\functor(\text{co-projection})^3"]
+        \\
+        \functor(A \oplus B \oplus B \oplus C)^4
+        \ar[d,"\text{multiply middle two together}"']
+        \\
+        \functor(A \oplus B \oplus B \oplus C)^3
+        \ar[d,"\text{semigroup operation}"']
+        \ar[r,"F(A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C)^3"]
+        &
+        \functor(A \oplus B \oplus C)^3
+        \ar[d,""]
+        \\
+        \functor(A \oplus B \oplus B \oplus C)
+        \ar[d, "\outfun_{A \oplus B \oplus B \oplus C}"']
+        \ar[r,"F(A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C)"]
+        &
+        \functor(A \oplus B \oplus C)
+        \ar[d, ""]
+        \\ 
+        A \oplus B \oplus B \oplus C
+        \ar[r,"A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C"]
+        &
+        A \oplus B \oplus C
+    \end{tikzcd}\]
+    The lower rectangle commutes by naturality of the output function. The middle rectangle commutes because of the homomorphism property of $F(A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C)$. Concerning the upper rectangle, it can be decomposed as the functor $(\cdots \times \cdots \times \cdots)$ applied to three diagrams that we can analyze independently. The first of those is
+    \[\begin{tikzcd}
+        [column sep=4cm]
+        \functor A
+        \ar[d,"\functor(\text{co-projection})"']
+        \ar[r,"\mathrm{id}_A"]
+        &
+        \functor A
+        \ar[dd,"\functor(\text{co-projection})"]
+        \\
+        \functor(A \oplus B \oplus B \oplus C)
+        \ar[d,"\mathrm{id}"']
+        \\
+        \functor(A \oplus B \oplus B \oplus C)
+            \ar[r,"F(A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C)"]
+        &
+        \functor(A \oplus B \oplus C)
+    \end{tikzcd}\]
+    By functoriality of $\functor$, the commutativity of this diagram reduces to
+    \[ (\mathrm{id}_A \oplus \dots) \circ (\text{co-projection of}\ A\ \text{into}\ A\oplus(B\oplus B\oplus C)) = \text{co-projection of}\ A\ \text{into}\ A\oplus(B\oplus C) \]
+    which is an elementary property of the coproduct $\oplus$ (indeed the bifunctor structure of $\oplus$ is built using a coparing, which \enquote{cancels out} with the coprojection).
+    Among the 3 diagrams that were combined by a 3-fold cartesian product, another one is identical to the above, with $C$ replacing $A$. There remains this one, in which we have added some parts in the middle:
+    \[\begin{tikzcd}
+        [column sep=2.5cm]
+        \functor B\times \functor B
+        \ar[d,"\functor(\text{co-proj})^2"']
+        \ar[dr,"\functor(\text{co-proj})^2"]
+        \ar[rr,"\text{semigroup operation}"]
+        &
+        &
+        \functor B
+        \ar[dd,"\functor(\text{co-proj})"]
+        \\
+        \functor(A \oplus B \oplus B \oplus C)^2
+        \ar[d,"\text{semigroup op}"']
+        \ar[r,"h\times h"']
+        &
+        \functor(A \oplus B \oplus C)^2
+        \ar[dr,"\text{semigroup op}"]
+        \\
+        \functor(A \oplus B \oplus B \oplus C)
+            \ar[rr,"h = F(A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C)"]
+        &
+        &
+        \functor(A \oplus B \oplus C)
+    \end{tikzcd}\]
+    The large upper right triangle commutes because $\functor$ applied to the co-projection of $B$ into $A\oplus B\oplus C$ is a homomorphism. The trapeze commutes because $h$ is a homomorphism. Finally, the small upper left triangle can be shown to commute using the functoriality of $\functor$ followed by properties of the coproduct.
+\end{proof}
 
 \end{document}
