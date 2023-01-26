@@ -98,7 +98,6 @@
 %%
 %% Bibliography
 %%
-pp
 %% Please use bibtex, 
 
 \bibliography{bib}
@@ -107,7 +106,32 @@ pp
 
 \section{Regular functions over arbitrary semigroups}
 
-Instead of just \enquote{transducer semigroups} we're going to prepend the adjective \enquote{functorial}, to distinguish them from the new \enquote{register transducer semigroups}. The notion of regular semigroup-to-semigroup function that we consider is closed under composition (\Cref{rem:composition}) and when the codomain is finite, it coincides with recognizable functions.
+\tito{Instead of just \enquote{transducer semigroups} we're going to prepend the adjective \enquote{functorial}, to distinguish them from the new \enquote{register transducer semigroups}. The notion of regular semigroup-to-semigroup function that we consider is closed under composition (\Cref{rem:composition}) and when the codomain is finite, it coincides with recognizable functions.}
+
+\subsection{Attempt at an alternative introduction}
+
+The starting point of this paper is the fundamental class of regular string-to-string functions. It has many equivalent descriptions: [\ldots]
+
+Some generalizations of this class are well understood. For instance, MSO transductions, streaming string transducers\footnote{The suitable generalization of the copyless streaming string transducer is the \emph{single use restricted macro tree transducer}~\cite{MacroMSO} which predates SSTs by two decades while being very similar.} and the formalisms based on the linear $\lambda$-calculus\footnote{The results of~\cite{LambdaTransducer} applies \enquote{out of the box} to trees. As for the \enquote{implicit automata in typed $\lambda$-calculi} approach~\cite{IATLC,titoPhD}, its extension to trees requires the use of the \emph{additive connectives} of linear logic.} admit extensions to tree-to-tree functions that are still equivalent, leading to a robust notion of regular tree functions for which functional combinators can also be designed~\cite{FOTree}.
+
+The present paper is concerned with a different and new generalization of the string-to-string case: we propose a notion of regular functions \emph{between arbitrary semigroups}, which coincides with the regular string-to-string functions when the semigroups under consideration are free monoids. Some of the aforementioned models, such as two-way automata or streaming string transducers, make sense when the output belongs to an arbitrary semigroup; however, all of them depend on the string structure of the input. This is why we introduce two new devices operating over any semigroup, which we prove to be equivalent in expressive power, and whose specialization to free monoids adds two new characterizations of the regular string-to-string functions to the above list.
+\begin{itemize}
+    \item \emph{Register transducer semigroups} are to streaming string transducers what monoids or semigroups are to deterministic finite automata. An SST basically consists of a DFA plus some string-valued registers, while a register transducer semigroup consists of a finite control semigroup plus some registers with values in the output semigroup. A significant difference made by replacing the DFA by a semigroup is that we do not need any \enquote{copyless} or \enquote{bounded-copy} condition anymore to capture precisely the regular functions.
+    \item \emph{Functorial transducer semigroups} use minimal syntax, and refer only to basic concepts from algebra and category theory. The characterization is concise enough to be fully stated here: a regular function $A\to B$ is one that can be decomposed as
+    \[
+        \begin{tikzcd}
+            A
+            \ar[r,"h"]
+            & 
+            \functor B
+            \ar[r,"\outfun_B"]
+            &
+            B
+        \end{tikzcd}
+    \]
+    where $\functor$ is some finiteness-preserving functor from the category of semigroups to itself, $h$~is some semigroup homomorphism, and the output function $\outfun_{B}$ is a natural transformation. From this category-theoretic definition, it is easy to show that regular semigroup-to-semigroup functions are \emph{closed under composition}.
+    \tito{refer to difficulties with 2DFT / SST composition here? (as in \Cref{rem:composition})}
+\end{itemize}
 
 \subsection{Register transducer semigroups}
 
