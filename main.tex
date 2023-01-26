@@ -116,11 +116,27 @@ Instead of just \enquote{transducer semigroups} we're going to prepend the adjec
 \begin{definition}
     A \emph{finitary semigroup with registers} consists of a finite semigroup $S$, a family $(R_s)_{s\in S}$ of finite nonempty sets, and a family of functions
     \[ \mu_{s_1, s_2} : R_{s_1 s_2} \to (R_{s_1} + R_{s_2})^+ \quad\text{for}\ s_1, s_2 \in S\]
-    satisfying the following associativity property: for $s_1, s_2, s_3 \in S$, the two maps
-    \[ R_{s_1 s_2 s_3} \xrightarrow{\;\mu_{s_1s_2,s_3}\;} (R_{s_1 s_2} + R_{s_3})^+ \xrightarrow{\;(\mu_{s_1,s_2}+\mathrm{id})^+\;} ((R_{s_1}+R_{s_2})+R_{s_3})^+ \]
-    \[ R_{s_1 s_2 s_3} \xrightarrow{\;\mu_{s_1,s_2s_3}\;} (R_{s_1} + R_{s_2 s_3})^+ \xrightarrow{\;(\mathrm{id}+\mu_{s_2,s_3})^+\;} (R_{s_1}+(R_{s_2}+R_{s_3}))^+ \]
-    are equal modulo the canonical associativity isomorphism for $+$ between the codomains.
-    
+    such that for all $s_1, s_2, s_3 \in S$, the following associativity diagram
+    commutes:
+    \[\begin{tikzcd}
+        [column sep=2.5cm]
+        &
+        (R_{s_1 s_2} + R_{s_3})^+
+        \ar[r,"(\mu_{s_1,s_2}+\mathrm{id})^+"]
+        &
+        ((R_{s_1}+R_{s_2})+R_{s_3})^+
+        \ar[dd,"\text{assoc.\ of}\ +"]
+        \\
+        R_{s_1 s_2 s_3}
+        \ar[ur,"\mu_{s_1s_2,s_3}"]
+        \ar[dr,"\mu_{s_1,s_2s_3}"']
+        \\
+        &
+        (R_{s_1} + R_{s_2 s_3})^+
+        \ar[r,"(\mathrm{id}+\mu_{s_2,s_3})^+"]
+        &
+        (R_{s_1}+(R_{s_2}+R_{s_3}))^+
+      \end{tikzcd}\]
     This data induces the finite polynomial functor from semigroups to sets
     \[ A \mapsto \sum_{s\in S} A^{R_s} \]
     which can be turned into a functor from semigroups to semigroups thanks to $\mu$.
