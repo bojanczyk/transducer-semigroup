@@ -1,4 +1,3 @@
-
 \documentclass[a4paper,UKenglish,cleveref, autoref, thm-restate, numberwithinsect]{lipics-v2021}
 %This is a template for producing LIPIcs articles. 
 %See lipics-v2021-authors-guidelines.pdf for further information.
@@ -104,6 +103,8 @@
 
 \appendix
 
+\newpage
+
 \tito{Regular functions over arbitrary semigroups!\\
   Instead of just \enquote{transducer semigroups} we're going to prepend the adjective \enquote{functorial}, to distinguish them from the new \enquote{register transducer semigroups}. The notion of regular semigroup-to-semigroup function that we consider is closed under composition (\Cref{rem:composition}) and when the codomain is finite, it coincides with recognizable functions.}
 
@@ -115,10 +116,21 @@ string-to-string functions. It has many equivalent descriptions: {\color{red}\bf
 
 Some generalizations of this class are well understood. For instance, MSO transductions, streaming string transducers\footnote{The suitable generalization of the copyless streaming string transducer is the \emph{single use restricted macro tree transducer}~\cite{MacroMSO} which predates SSTs by two decades while being very similar.} and the formalisms based on the linear $\lambda$-calculus\footnote{The results of~\cite{LambdaTransducer} applies \enquote{out of the box} to trees. As for the \enquote{implicit automata in typed $\lambda$-calculi} approach~\cite{IATLC,titoPhD}, its extension to trees requires the use of the \emph{additive connectives} of linear logic.} admit extensions to tree-to-tree functions that are still equivalent, leading to a robust notion of regular tree functions for which functional combinators can also be designed~\cite{FOTree}.
 
-The present paper is concerned with a different and new generalization of the string-to-string case: we propose a notion of regular functions \emph{between arbitrary semigroups}, which coincides with the regular string-to-string functions when the semigroups under consideration are free monoids. Some of the aforementioned models, such as two-way automata or streaming string transducers, make sense when the output belongs to an arbitrary semigroup; however, all of them depend on the string structure of the input. This is why we introduce two new devices operating over any semigroup, which we prove to be equivalent in expressive power, and whose specialization to free monoids adds two new characterizations of the regular string-to-string functions to the above list.
-\begin{itemize}
-    \item \emph{Register transducer semigroups} are to streaming string transducers what monoids or semigroups are to deterministic finite automata. An SST basically consists of a DFA plus some string-valued registers, while a register transducer semigroup consists of a finite control semigroup plus some registers with values in the output semigroup. A significant difference made by replacing the DFA by a semigroup is that we do not need any \enquote{copyless} or \enquote{bounded-copy} condition anymore to capture precisely the regular functions.
-    \item \emph{Functorial transducer semigroups} use minimal syntax, and refer only to basic concepts from algebra and category theory. The characterization is concise enough to be fully stated here: a regular function $A\to B$ is one that can be decomposed as
+The present paper is concerned with a different and new generalization of the
+string-to-string case: we propose a notion of regular functions \emph{between
+  arbitrary semigroups}, which coincides with the regular string-to-string
+functions when the semigroups under consideration are free monoids. Some of the
+aforementioned models, such as two-way automata or streaming string transducers,
+make sense when the output belongs to an arbitrary semigroup; however, all of
+them depend on the string structure of the input. This is why we introduce two
+new devices that can operate over any semigroup, which we prove to be equivalent
+in expressive power to argue for the robustness of our definition. Their
+specialization to free monoids adds two new characterizations of the regular
+string-to-string functions to the above list.
+\begin{description}
+\item[Register transducer semigroups] are to streaming string transducers what
+  semigroups or monoids are to deterministic finite automata. An SST basically consists of a DFA plus some string-valued registers, while a register transducer semigroup consists of a finite control semigroup plus some registers with values in the output semigroup. A significant difference made by replacing the DFA by a semigroup is that we do not need any \enquote{copyless} or \enquote{bounded-copy} condition anymore to capture precisely the regular functions.
+    \item[Functorial transducer semigroups] use minimal syntax, and refer only to basic concepts from algebra and category theory. The characterization is concise enough to be fully stated here: a regular function $A\to B$ is one that can be decomposed as
     \[
         \begin{tikzcd}
             A
@@ -132,11 +144,12 @@ The present paper is concerned with a different and new generalization of the st
     \]
     where $\functor$ is some finiteness-preserving functor from the category of semigroups to itself, $h$~is some semigroup homomorphism, and the output function $\outfun_{B}$ is a natural transformation. From this category-theoretic definition, it is easy to show that regular semigroup-to-semigroup functions are \emph{closed under composition}.
     \tito{refer to difficulties with 2DFT / SST composition here? (as in \Cref{rem:composition})}
-\end{itemize}
+\end{description}
 
 \section{Preliminaries: streaming string transducers}
 
-\tito{Taken from comparison-free paper with Cécilia}
+\tito{Taken from comparison-free paper with Cécilia. We might want to rephrase
+  some things to avoid leaking the authors' identity}
 
 \newcommand{\rmst}{\mathrm{st}}
 \newcommand{\rmreg}{\mathrm{reg}}
@@ -147,10 +160,27 @@ The present paper is concerned with a different and new generalization of the st
 \newcommand{\ttout}{\mathtt{out}}
 \newcommand{\ttreverse}{\mathtt{reverse}}
 
+\begin{definition}
+  \label{def:register-substitution}
+  Fix a finite alphabet $\Sigma$. Let $R$ and $S$ be two finite sets
+  \emph{disjoint from $\Sigma$}; we shall consider their elements to be
+  \enquote{register variables}.
+
+  For any word $\omega \in (\Sigma \cup R)^*$, we write
+  $\omega^\dagger : (\Sigma^*)^R \to \Sigma^*$ for the map that sends
+  $(u_r)_{r \in R}$ to $\omega$ in which every occurrence of a register variable
+  $r \in R$ is replaced by $u_r$ -- formally, we apply to $\omega$ the morphism
+  $(\Sigma \cup R)^* \to \Sigma^*$ that maps $c \in \Sigma$ to itself and
+  $r \in R$ to $u_r$.
+
+  A \emph{register substitution}\footnote{The name can be found in e.g.~\cite{AlurFT12,AperiodicSST}.} $\alpha$ from $R$ to $S$ (over $\Sigma$) is a map
+  $\alpha : S \to (\Sigma \cup R)^*$. It induces the action $\alpha^\dagger :
+  \vec{u} \in (\Sigma^*)^R \mapsto (\alpha(s)^\dagger(\vec{u}))_{s \in S} \in
+  (\Sigma^*)^S$ (which indeed goes \enquote{from $R$ to $S$}).
+\end{definition}
 
 \begin{definition}[\cite{CopyfulSST}]
   \label{def:sst}
-  % let $\Sigma$ and $\Gamma$ be finite alphabets.
   A (deterministic copyful) \emph{streaming string transducer} (SST) with input
   alphabet $\Gamma$ and output alphabet $\Sigma$ is a tuple $\mathcal{T} = (Q, q_0, R,
   \delta, \vec{u}_I, F)$ where
@@ -169,9 +199,9 @@ The present paper is concerned with a different and new generalization of the st
 \end{itemize}
 % To elucidate the last item, observe that $(\Sigma \cup R)^*$ is in canonical
 % bijection with the set $\{\ttout\} \to (\Sigma \cup R)^*$ of register
-% assignments from $R$ to a singleton set $\{\ttout\}$. This means that for
+% substitutions from $R$ to a singleton set $\{\ttout\}$. This means that for
 % all $q \in Q$, $F(q)$ induces a map $F(q)^\dagger : (\Sigma^*)^R \to \Sigma^*$,
-% consistently with the $(-)^\dagger$ notation for assignments (with $\Sigma^*
+% consistently with the $(-)^\dagger$ notation for substitutions (with $\Sigma^*
 % \cong (\Sigma^*)^{\{\mathrm{out}\}}$).
 % tout ce paragraphe est économisé grâce au choix de notation \omega^\dagger
 The function $\Gamma^* \to \Sigma^*$ computed by $\mathcal{T}$ is
@@ -183,14 +213,14 @@ starting from the fixed initial state $q_0$, by $q_i = \deltast(q_{i-1},w_i)$.
 \end{definition}
 
 \begin{definition}[Alur and {\v{C}}ern{\'{y}}~{\cite{alurExpressivenessStreamingString2010}}]
-  A register assignment $\alpha : S \to (\Sigma \cup R)^*$ from $R$ to $S$ is
+  A register substitution $\alpha : S \to (\Sigma \cup R)^*$ from $R$ to $S$ is
   said to be \emph{copyless} when each $r \in R$ \emph{occurs at most once among
     all the strings $\alpha(s)$ for $s \in S$}, i.e.\ it does not occur at least
   twice in some $\alpha(s)$, nor at least once in $\alpha(s)$ and at least once
   in $\alpha(s')$ for some $s \neq s'$. (This restriction does not apply to the
   letters in $\Sigma$.)
   
-  A streaming string transducer is \emph{copyless} if all the assignments in the
+  A streaming string transducer is \emph{copyless} if all the substitutions in the
   image of its transition function are copyless. In this paper, we take
   computability by copyless SSTs as the definition of \emph{regular functions}.
 \end{definition}
@@ -208,7 +238,7 @@ starting from the fixed initial state $q_0$, by $q_i = \deltast(q_{i-1},w_i)$.
   $u_1\#\ldots\#u_n$ to $\ttreverse(u_1)\#\ldots\#\ttreverse(u_n)$.
 \end{example}
 
-
+\tito{Finite coyping~\cite{MacroMSO} = bounded-copy~\cite{AlurFT12} (TODO: check)}
 
 \section{Register transducer semigroups}
 
