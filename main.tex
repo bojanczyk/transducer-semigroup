@@ -104,13 +104,14 @@
 
 \appendix
 
-\section{Regular functions over arbitrary semigroups}
+\tito{Regular functions over arbitrary semigroups!\\
+  Instead of just \enquote{transducer semigroups} we're going to prepend the adjective \enquote{functorial}, to distinguish them from the new \enquote{register transducer semigroups}. The notion of regular semigroup-to-semigroup function that we consider is closed under composition (\Cref{rem:composition}) and when the codomain is finite, it coincides with recognizable functions.}
 
-\tito{Instead of just \enquote{transducer semigroups} we're going to prepend the adjective \enquote{functorial}, to distinguish them from the new \enquote{register transducer semigroups}. The notion of regular semigroup-to-semigroup function that we consider is closed under composition (\Cref{rem:composition}) and when the codomain is finite, it coincides with recognizable functions.}
+\section{(Attempt at an alternative) Introduction}
 
-\subsection{Attempt at an alternative introduction}
-
-The starting point of this paper is the fundamental class of regular string-to-string functions. It has many equivalent descriptions: [\ldots]
+The starting point of this paper is the fundamental class of regular
+string-to-string functions. It has many equivalent descriptions: {\color{red}\bf
+  [\ldots]}
 
 Some generalizations of this class are well understood. For instance, MSO transductions, streaming string transducers\footnote{The suitable generalization of the copyless streaming string transducer is the \emph{single use restricted macro tree transducer}~\cite{MacroMSO} which predates SSTs by two decades while being very similar.} and the formalisms based on the linear $\lambda$-calculus\footnote{The results of~\cite{LambdaTransducer} applies \enquote{out of the box} to trees. As for the \enquote{implicit automata in typed $\lambda$-calculi} approach~\cite{IATLC,titoPhD}, its extension to trees requires the use of the \emph{additive connectives} of linear logic.} admit extensions to tree-to-tree functions that are still equivalent, leading to a robust notion of regular tree functions for which functional combinators can also be designed~\cite{FOTree}.
 
@@ -133,7 +134,83 @@ The present paper is concerned with a different and new generalization of the st
     \tito{refer to difficulties with 2DFT / SST composition here? (as in \Cref{rem:composition})}
 \end{itemize}
 
-\subsection{Register transducer semigroups}
+\section{Preliminaries: streaming string transducers}
+
+\tito{Taken from comparison-free paper with Cécilia}
+
+\newcommand{\rmst}{\mathrm{st}}
+\newcommand{\rmreg}{\mathrm{reg}}
+\newcommand{\rmout}{\mathrm{out}}
+\newcommand{\deltast}{\delta_\rmst}
+\newcommand{\deltareg}{\delta_\rmreg}
+\newcommand{\deltaout}{\delta_\rmout}
+\newcommand{\ttout}{\mathtt{out}}
+\newcommand{\ttreverse}{\mathtt{reverse}}
+
+
+\begin{definition}[\cite{CopyfulSST}]
+  \label{def:sst}
+  % let $\Sigma$ and $\Gamma$ be finite alphabets.
+  A (deterministic copyful) \emph{streaming string transducer} (SST) with input
+  alphabet $\Gamma$ and output alphabet $\Sigma$ is a tuple $\mathcal{T} = (Q, q_0, R,
+  \delta, \vec{u}_I, F)$ where
+\begin{itemize}
+\item $Q$ is a finite set of \emph{states} and $q_0 \in Q$ is the \emph{initial
+    state};
+\item $R$ is a finite set of \emph{register variables}, that we require to be
+  \emph{disjoint from $\Sigma$};
+\item $\delta : Q \times \Gamma \to Q \times (R \to (\Sigma \cup R)^*)$ is the
+  \emph{transition function} -- we abbreviate $\deltast = \pi_1 \circ \delta$
+  and $\deltareg = \pi_2 \circ \delta$, where $\pi_i$ is the projection from
+  $X_1 \times X_2$ to its $i$-th component $X_i$;
+\item $\vec{u}_I \in (\Sigma^*)^R$ describes the \emph{initial register values};
+\item $F : Q \to (\Sigma \cup R)^*$ describes how to recombine the final values
+  of the registers, depending on the final state, to produce the output.
+\end{itemize}
+% To elucidate the last item, observe that $(\Sigma \cup R)^*$ is in canonical
+% bijection with the set $\{\ttout\} \to (\Sigma \cup R)^*$ of register
+% assignments from $R$ to a singleton set $\{\ttout\}$. This means that for
+% all $q \in Q$, $F(q)$ induces a map $F(q)^\dagger : (\Sigma^*)^R \to \Sigma^*$,
+% consistently with the $(-)^\dagger$ notation for assignments (with $\Sigma^*
+% \cong (\Sigma^*)^{\{\mathrm{out}\}}$).
+% tout ce paragraphe est économisé grâce au choix de notation \omega^\dagger
+The function $\Gamma^* \to \Sigma^*$ computed by $\mathcal{T}$ is
+\[ w_1 \ldots w_n ~~ \mapsto ~~ F(q_n)^\dagger \circ \deltareg(q_{n-1},
+  w_n)^\dagger \circ \ldots \circ \deltareg(q_0, w_1)^\dagger(\vec{u}_I) \]
+where the sequence of states $(q_i)_{0 \leq i \leq n}$ (sometimes called the
+\emph{run} of the transducer over the input word) is inductively defined,
+starting from the fixed initial state $q_0$, by $q_i = \deltast(q_{i-1},w_i)$.
+\end{definition}
+
+\begin{definition}[Alur and {\v{C}}ern{\'{y}}~{\cite{alurExpressivenessStreamingString2010}}]
+  A register assignment $\alpha : S \to (\Sigma \cup R)^*$ from $R$ to $S$ is
+  said to be \emph{copyless} when each $r \in R$ \emph{occurs at most once among
+    all the strings $\alpha(s)$ for $s \in S$}, i.e.\ it does not occur at least
+  twice in some $\alpha(s)$, nor at least once in $\alpha(s)$ and at least once
+  in $\alpha(s')$ for some $s \neq s'$. (This restriction does not apply to the
+  letters in $\Sigma$.)
+  
+  A streaming string transducer is \emph{copyless} if all the assignments in the
+  image of its transition function are copyless. In this paper, we take
+  computability by copyless SSTs as the definition of \emph{regular functions}.
+\end{definition}
+
+
+\begin{example}[Iterated reverse]
+  \label{ex:iterated-reverse}
+  The following single-state SST is copyless:
+  \[ \Gamma = \Sigma\ \text{with}\ \# \in \Sigma \qquad Q = \{q\} \qquad R =
+    \{X,Y\} \qquad \vec{u}_I = (\varepsilon)_{r \in R} \qquad F(q) = XY\]
+  \[ \delta(q,\#) = (q,\, (X \mapsto XY\#,\, Y \mapsto \varepsilon)) \qquad
+    \forall c \in \Sigma \setminus \{\#\},\; \delta(q,c) = (q,\, (X \mapsto X,\,
+    Y \mapsto cY)) \]
+  For $u_1,\ldots,u_n \in (\Sigma \setminus \{\#\})^*$, it maps
+  $u_1\#\ldots\#u_n$ to $\ttreverse(u_1)\#\ldots\#\ttreverse(u_n)$.
+\end{example}
+
+
+
+\section{Register transducer semigroups}
 
 \tito{Probably in the final paper it would be nice to introduce these things without invoking categories at first, to make the paper more welcoming}
 
@@ -201,7 +278,7 @@ This should also work if we have a single finite nonempty set of registers $R$ f
 Another possible variation on the definition is to have a choice of output register for each element of the control semigroup: $r_s \in R_s$ for $s\in S$ instead of $\omega_s \in (R_s)^+$. This does not decrease the expressivity of the model.
 \end{remark}
 
-\subsection{Equivalence with functorial transducer semigroups}
+\section{Equivalence with functorial transducer semigroups}
 
 It is immediate that every regular function is recognized by a finiteness-preserving functorial transducer semigroup, because finite polynomial functors are finiteness-preserving. We shall therefore focus on the converse.
 
@@ -307,7 +384,7 @@ It is immediate that every regular function is recognized by a finiteness-preser
     \end{tikzcd}\]
     By functoriality of $\functor$, the commutativity of this diagram reduces to
     \[ (\mathrm{id}_A \oplus \dots) \circ (\text{co-projection of}\ A\ \text{into}\ A\oplus(B\oplus B\oplus C)) = \text{co-projection of}\ A\ \text{into}\ A\oplus(B\oplus C) \]
-    which is an elementary property of the coproduct $\oplus$ (indeed the bifunctor structure of $\oplus$ is built using a coparing, which \enquote{cancels out} with the coprojection).
+    which is an elementary property of the coproduct $\oplus$ in any category (indeed the bifunctor structure of $\oplus$ is built using a coparing, which \enquote{cancels out} with the coprojection).
     Among the 3 diagrams that were combined by a 3-fold cartesian product, another one is identical to the above, with $C$ replacing $A$. There remains this one, in which we have added some parts in the middle:
     \[\begin{tikzcd}
         [column sep=2.5cm]
@@ -334,5 +411,6 @@ It is immediate that every regular function is recognized by a finiteness-preser
     \end{tikzcd}\]
     The upper right trapeze commutes because $\functor$ applied to the co-projection of $B$ into $A\oplus B\oplus C$ is a homomorphism. The lower triangle commutes because $h$ is a homomorphism. Finally, the small upper left triangle can be shown to commute using the functoriality of $\functor$ followed by properties of the coproduct.
 \end{proof}
+
 
 \end{document}
