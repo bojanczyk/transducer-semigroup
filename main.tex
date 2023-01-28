@@ -65,6 +65,18 @@
 \ArticleNo{23}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{decorations.shapes}
+\usetikzlibrary{matrix}
+\usetikzlibrary{positioning}
+\usetikzlibrary{fit}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\usetikzlibrary{decorations.markings}
+
 \usepackage{csquotes}
 \usepackage{mathtools}
 \usepackage{quiver}
@@ -114,11 +126,11 @@ The starting point of this paper is the fundamental class of regular
 string-to-string functions. It has many equivalent descriptions: {\color{red}\bf
   [\ldots]}
 
-Some generalizations of this class are well understood. For instance, MSO transductions, streaming string transducers\footnote{The suitable generalization of the copyless streaming string transducer is the \emph{single use restricted macro tree transducer}~\cite{MacroMSO} which predates SSTs by two decades while being very similar.} and the formalisms based on the linear $\lambda$-calculus\footnote{The results of~\cite{LambdaTransducer} applies \enquote{out of the box} to trees. As for the \enquote{implicit automata in typed $\lambda$-calculi} approach~\cite{IATLC,titoPhD}, its extension to trees requires the use of the \emph{additive connectives} of linear logic.} admit extensions to tree-to-tree functions that are still equivalent, leading to a robust notion of regular tree functions for which functional combinators can also be designed~\cite{FOTree}.
+Some generalizations of this class are well understood. For instance, MSO transductions, streaming string transducers\footnote{The suitable generalization of the copyless streaming string transducer is the \emph{single use restricted macro tree transducer}~\cite{MacroMSO} which predates SSTs by two decades while being very similar. A more recent variant, the \emph{register tree transducer}, appears in~\cite[Section~4]{FOTree}.} and the formalisms based on the linear $\lambda$-calculus\footnote{The results of~\cite{LambdaTransducer} applies \enquote{out of the box} to trees. As for the \enquote{implicit automata in typed $\lambda$-calculi} approach~\cite{IATLC,titoPhD}, its extension to trees requires the use of the \emph{additive connectives} of linear logic.} admit extensions to tree-to-tree functions that are still equivalent, leading to a robust notion of regular tree functions for which functional combinators can also be designed~\cite{FOTree}.
 
 The present paper is concerned with a different and new generalization of the
 string-to-string case: we propose a notion of regular functions \emph{between
-  arbitrary semigroups}, which coincides with the regular string-to-string
+  arbitrary semigroups}, which coincides with the regular string
 functions when the semigroups under consideration are free monoids. Some of the
 aforementioned models, such as two-way automata or streaming string transducers,
 make sense when the output belongs to an arbitrary semigroup; however, all of
@@ -148,9 +160,6 @@ string-to-string functions to the above list.
 
 \section{Preliminaries: streaming string transducers}
 
-\tito{Taken from comparison-free paper with Cécilia. We might want to rephrase
-  some things to avoid leaking the authors' identity}
-
 \newcommand{\rmst}{\mathrm{st}}
 \newcommand{\rmreg}{\mathrm{reg}}
 \newcommand{\rmout}{\mathrm{out}}
@@ -158,87 +167,112 @@ string-to-string functions to the above list.
 \newcommand{\deltareg}{\delta_\rmreg}
 \newcommand{\deltaout}{\delta_\rmout}
 \newcommand{\ttout}{\mathtt{out}}
-\newcommand{\ttreverse}{\mathtt{reverse}}
+\newcommand{\ttreverse}{\mathtt{rev}}
+\newcommand{\tterase}{\mathtt{erase}}
+\newcommand{\SubsTrans}{\mathrm{SubsTrans}}
+\newcommand{\substcomp}{\odot}
+\newcommand{\regassign}{\mathbin{:=}}
+
+Before formally defining streaming string transducers, let us start with an example:
+\begin{example}\label{ex:cecilia}
+  The transducer below is a deterministic finite automaton with two states over the alphabet $\Sigma\cup\{\#\}$ (with $\#\notin\Sigma$), enriched with two \emph{registers} $X$ and $Y$.  
+\begin{center}
+  \begin{tikzpicture}[->,node distance=1.5cm]
+    %[->,node distance=3.5cm,transform canvas={scale=1}]
+    %every text node part/.style={font=\footnotesize}]
+    \node[state] (A) {0} ;
+    \node (D) [right of=A] {};
+    \node (E) [right of=D] {};
+    \node[state] (B) [right of=E] {1};
+    \node (I) [below of=A] {};
+    \node (OA) [above of=A] {};
+    \node (OB) [above of=B] {};
+  
+  \path
+    (I) edge node[left, style={font=\footnotesize}]
+   {$\begin{array}{l@{~}c@{~}l} X &\regassign& \varepsilon \\ Y &\regassign& \varepsilon \end{array}$} (A) ;
+  \path
+    (A) edge node[left, style={font=\footnotesize}]
+   {$Y$} (OA) ;
+  \path
+    (B) edge node[right, style={font=\footnotesize}]
+   {$\varepsilon$} (OB) ;
+  \path
+    (A) edge [bend left] node[above, style={font=\footnotesize}]
+   {$\#\left| \begin{array}{l@{~}c@{~}l} X &\regassign& \varepsilon \\ Y &\regassign& YX \end{array} \right.$} (B) ;
+  \path (B) edge [loop right] node[right,style={font=\footnotesize}]
+  {$a \in \Sigma \left| \begin{array}{l@{~}c@{~}l} X &\regassign& aX \\ Y &\regassign& Y \end{array} \right.$}
+  (A) ;
+  \path (B) edge [bend left] node[below,style={font=\footnotesize}]
+   {$\#\left| \begin{array}{l@{~}c@{~}l} X &\regassign& \varepsilon \\ Y &\regassign& XY \end{array} \right.$}
+  (A) ;
+  \path (A) edge [loop left] node[left,style={font=\footnotesize}]
+  {$a \in \Sigma \left| \begin{array}{l@{~}c@{~}l} X &\regassign& Xa \\ Y &\regassign& Y \end{array} \right.$}
+  (A) ;
+  \end{tikzpicture}
+\end{center}
+It starts out in the initial state $0$, with the initial values of $X$ and $Y$ both set to $\varepsilon$. At each transition, the new values of the registers are computed from the old ones by a parallel assignment. So for example, after reading $aab\#bbc$ (for $a,b,c\in\Sigma$), we are in state $1$ with the register contents $X = cbb$ and $Y = aab$. Finally, if the final state is $0$, the transducer outputs the final value of the register $Y$; if the final state is $1$, it outputs the empty word. Thus, the computed string-to-string function is:
+  \[
+  \begin{array}{rcl!{\hspace{7em}} l}
+  (\Sigma \sqcup \{ {\#} \})^* &\to& \Sigma^*
+  & {(w_i \in \Sigma^*,\; (\Sigma \sqcup \{\#\})^* \cong \Sigma^*(\#\Sigma^*)^*)}\\
+  w_0\#\ldots\#w_{2k} &\mapsto& \varepsilon \\
+  w_0\#\ldots\#w_{2k+1} &\mapsto&
+  \multicolumn{2}{l}{
+  \ttreverse(w_{2k-1})
+  \ttreverse(w_{2k-3})
+  \ldots
+  \ttreverse(w_1)
+  w_0
+  w_2
+  \ldots
+  w_{2k-2}}
+  \end{array}
+  \]
+\end{example}
+
+Formally, a \emph{substitution}\footnote{The name can be found in e.g.~\cite{AlurFT12,AperiodicSST}.} for the register set $R$ over the alphabet $\Gamma$, assuming that $R \cap \Gamma = \varnothing$, is a map $\sigma : R \to (\Gamma \cup R)^*$. Typically, we would have $\sigma(X) = Xa$ and $\sigma(Y) = Y$ for the leftmost register update in the state diagram of \Cref{ex:cecilia}. Substitutions \emph{compose}:
+\[ \sigma \substcomp \tau = (\text{the extension of}\ \sigma\ \text{to a monoid endomorphism of}\ (\Gamma \cup R)^*\ \text{fixing}\ \Gamma) \circ \tau \]
+for $\sigma,\tau : R \to (\Gamma \cup R)^*$. There is some \enquote{contravariance} going on in this definition: even though we use $f \circ g$ to mean \enquote{apply $g$ then $f$} as usual, the register update specified by $\sigma\substcomp\tau$ corresponds to the update given by $\sigma$ followed by the one given by $\tau$. In other words, if we write $\sigma^\dagger : (\Gamma^*)^R \to (\Gamma^*)^R$ for the map between register values specified by $\sigma$ -- so in the above example, $\sigma^\dagger(\rho) = (X \mapsto \rho(X)\cdot a \mid Y \mapsto \rho(Y))$ -- then $(\sigma\substcomp\tau)^\dagger = \tau^\dagger \circ \sigma^\dagger$.
+
+To take into account the finite-state control, we consider the notion of \emph{substransition}: a map $\alpha : Q \to Q \times (R \to (\Gamma \cup R))^*$ where $Q$ is a set of states. Substransitions also compose (this is an instance of the wreath product construction):
+\[ \text{for}\ q\in Q,\quad (\alpha\substcomp\beta)(q) = (q'',\sigma\substcomp\tau)\ \text{where}\ \alpha(q) = (q',\sigma)\ \text{and}\ \beta(q') = (q'',\tau) \]
+\begin{definition}
+  We write $\SubsTrans(Q,R,\Gamma)$ for the monoid of all substransitions over the set of states $Q$, the set of registers $R$ and the alphabet $\Gamma$, equipped with $\substcomp$.
+\end{definition}
+We first introduce \emph{copyful} streaming string transducers, which compute a strict superclass of the regular string functions~\cite{CopyfulSST}. Then we introduce the \emph{bounded-copy} restriction, which brings the computational power down to precisely the regular functions. Syntactically, this is a more permissive discipline than the \enquote{copyless} condition mentioned in the introduction; the equivalence between copyless and bounded-copy SSTs was established in\footnote{\tito{Finite coyping~\cite{MacroMSO} = bounded-copy~\cite{AlurFT12} (TODO: check)}
+}~\cite[Section~IV.A]{AlurFT12}.
 
 \begin{definition}
-  \label{def:register-substitution}
-  Fix a finite alphabet $\Sigma$. Let $R$ and $S$ be two finite sets
-  \emph{disjoint from $\Sigma$}; we shall consider their elements to be
-  \enquote{register variables}.
-
-  For any word $\omega \in (\Sigma \cup R)^*$, we write
-  $\omega^\dagger : (\Sigma^*)^R \to \Sigma^*$ for the map that sends
-  $(u_r)_{r \in R}$ to $\omega$ in which every occurrence of a register variable
-  $r \in R$ is replaced by $u_r$ -- formally, we apply to $\omega$ the morphism
-  $(\Sigma \cup R)^* \to \Sigma^*$ that maps $c \in \Sigma$ to itself and
-  $r \in R$ to $u_r$.
-
-  A \emph{register substitution}\footnote{The name can be found in e.g.~\cite{AlurFT12,AperiodicSST}.} $\alpha$ from $R$ to $S$ (over $\Sigma$) is a map
-  $\alpha : S \to (\Sigma \cup R)^*$. It induces the action $\alpha^\dagger :
-  \vec{u} \in (\Sigma^*)^R \mapsto (\alpha(s)^\dagger(\vec{u}))_{s \in S} \in
-  (\Sigma^*)^S$ (which indeed goes \enquote{from $R$ to $S$}).
-\end{definition}
-
-\begin{definition}[\cite{CopyfulSST}]
   \label{def:sst}
-  A (deterministic copyful) \emph{streaming string transducer} (SST) with input
-  alphabet $\Gamma$ and output alphabet $\Sigma$ is a tuple $\mathcal{T} = (Q, q_0, R,
+  A (deterministic copyful) \emph{streaming string transducer (SST)} with input
+  alphabet $\Sigma$ and output alphabet $\Gamma$ is a tuple $\mathcal{T} = (Q, q_0, R,
   \delta, \vec{u}_I, F)$ where
 \begin{itemize}
 \item $Q$ is a finite set of \emph{states} and $q_0 \in Q$ is the \emph{initial
     state};
-\item $R$ is a finite set of \emph{register variables}, that we require to be
-  \emph{disjoint from $\Sigma$};
-\item $\delta : Q \times \Gamma \to Q \times (R \to (\Sigma \cup R)^*)$ is the
-  \emph{transition function} -- we abbreviate $\deltast = \pi_1 \circ \delta$
-  and $\deltareg = \pi_2 \circ \delta$, where $\pi_i$ is the projection from
-  $X_1 \times X_2$ to its $i$-th component $X_i$;
+\item $R$ is a finite set of \emph{register names}, that we require to be
+  disjoint from $\Gamma$;
+\item $\delta : \Sigma \to \SubsTrans(Q,R,\Gamma)$ is the \emph{transition function};
 \item $\vec{u}_I \in (\Sigma^*)^R$ describes the \emph{initial register values};
-\item $F : Q \to (\Sigma \cup R)^*$ describes how to recombine the final values
-  of the registers, depending on the final state, to produce the output.
+\item $F : Q \to (\Gamma \cup R)^*$ is the \emph{final output function}.
 \end{itemize}
-% To elucidate the last item, observe that $(\Sigma \cup R)^*$ is in canonical
-% bijection with the set $\{\ttout\} \to (\Sigma \cup R)^*$ of register
-% substitutions from $R$ to a singleton set $\{\ttout\}$. This means that for
-% all $q \in Q$, $F(q)$ induces a map $F(q)^\dagger : (\Sigma^*)^R \to \Sigma^*$,
-% consistently with the $(-)^\dagger$ notation for substitutions (with $\Sigma^*
-% \cong (\Sigma^*)^{\{\mathrm{out}\}}$).
-% tout ce paragraphe est économisé grâce au choix de notation \omega^\dagger
-The function $\Gamma^* \to \Sigma^*$ computed by $\mathcal{T}$ is
-\[ w_1 \ldots w_n ~~ \mapsto ~~ F(q_n)^\dagger \circ \deltareg(q_{n-1},
-  w_n)^\dagger \circ \ldots \circ \deltareg(q_0, w_1)^\dagger(\vec{u}_I) \]
-where the sequence of states $(q_i)_{0 \leq i \leq n}$ (sometimes called the
-\emph{run} of the transducer over the input word) is inductively defined,
-starting from the fixed initial state $q_0$, by $q_i = \deltast(q_{i-1},w_i)$.
+For an input word $w \in \Sigma^*$, the output of $\mathcal{T}$ is determined as follows. Let $(q,\sigma) = \delta^*(w)(q_0)$ where $\delta^*$ is the unique extension of $\delta$ to a monoid homomorphism $\Sigma^* \to \SubsTrans(Q,R,\Gamma)$. Apply $\sigma^\dagger : (\Gamma^*)^R \to (\Gamma^*)^R$ to $\vec{u}_I$ to get a tuple $\vec{v} = (v_X)_{X\in R}$ of final register values. Finally, replace each occurrence in $F(q)$ of a register name $X\in R$ by the corresponding value $v_X \in \Gamma^*$ to obtain an output string in $\Gamma^*$.
 \end{definition}
-
-\begin{definition}[Alur and {\v{C}}ern{\'{y}}~{\cite{alurExpressivenessStreamingString2010}}]
-  A register substitution $\alpha : S \to (\Sigma \cup R)^*$ from $R$ to $S$ is
-  said to be \emph{copyless} when each $r \in R$ \emph{occurs at most once among
-    all the strings $\alpha(s)$ for $s \in S$}, i.e.\ it does not occur at least
-  twice in some $\alpha(s)$, nor at least once in $\alpha(s)$ and at least once
-  in $\alpha(s')$ for some $s \neq s'$. (This restriction does not apply to the
-  letters in $\Sigma$.)
-  
-  A streaming string transducer is \emph{copyless} if all the substitutions in the
-  image of its transition function are copyless. In this paper, we take
-  computability by copyless SSTs as the definition of \emph{regular functions}.
+\begin{definition}[see e.g.~{\cite{AlurFT12,AperiodicSST}}]
+  A streaming string transducer whose transition function is $\delta : \Sigma \to \SubsTrans(Q,R,\Gamma)$ is \emph{bounded-copy} when there is some bound $k\in\mathbb{N}$ such that for every $q\in Q$, $w \in \Gamma^*$ and $X,Y\in R$, the string $\sigma(X)$ where $\delta^*(w)(q) = (q',\sigma)$ contains at most $k$ occurrences of~$Y$.
+  In this paper, we take computability by bounded-copy SSTs as the definition of \emph{regular string-to-string functions}.
 \end{definition}
+The SST of \Cref{ex:cecilia} is bounded-copy. An example which is \emph{not} bounded-copy would be an SST with a single state $q$, a single register $X$ and which performs $X \regassign XX$ for each letter. For the initial value $X = a$ and final output function $F(q) = X$, we get the function $w \mapsto a\dots(2^{|w|}\ \text{times})\dots a$ which is not regular since regular functions have linear growth.
 
+The notion of bounded-copy SST can be rephrased using the monoid homomorphism $\tterase_\Gamma : \SubsTrans(Q,R,\Gamma) \to \SubsTrans(Q,R,\varnothing)$ which \enquote{erases all letters from $\Gamma$}, built by lifting the homomorphism $w \in \Gamma^* \mapsto \varepsilon \in \varnothing^*$ in the unique sensible way. 
+\begin{proposition}
+  An SST with transition function $\delta : \Sigma \to \SubsTrans(Q,R,\Gamma)$ is bounded-copy if and only if $\tterase_\Gamma(\delta^*(\Sigma^*))$ is a \emph{finite} submonoid of $\SubsTrans(Q,R,\varnothing)$. 
+\end{proposition}
+\begin{remark}
+  This monoid $\tterase_\Gamma(\delta^*(\Sigma^*))$ is called the \emph{substitution transition monoid} of the given SST in~\cite[Section~3]{AperiodicSST}.
+\end{remark}
 
-\begin{example}[Iterated reverse]
-  \label{ex:iterated-reverse}
-  The following single-state SST is copyless:
-  \[ \Gamma = \Sigma\ \text{with}\ \# \in \Sigma \qquad Q = \{q\} \qquad R =
-    \{X,Y\} \qquad \vec{u}_I = (\varepsilon)_{r \in R} \qquad F(q) = XY\]
-  \[ \delta(q,\#) = (q,\, (X \mapsto XY\#,\, Y \mapsto \varepsilon)) \qquad
-    \forall c \in \Sigma \setminus \{\#\},\; \delta(q,c) = (q,\, (X \mapsto X,\,
-    Y \mapsto cY)) \]
-  For $u_1,\ldots,u_n \in (\Sigma \setminus \{\#\})^*$, it maps
-  $u_1\#\ldots\#u_n$ to $\ttreverse(u_1)\#\ldots\#\ttreverse(u_n)$.
-\end{example}
-
-\tito{Finite coyping~\cite{MacroMSO} = bounded-copy~\cite{AlurFT12} (TODO: check)}
 
 \section{Register transducer semigroups}
 
