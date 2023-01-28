@@ -126,7 +126,7 @@ The starting point of this paper is the fundamental class of regular
 string-to-string functions. It has many equivalent descriptions: {\color{red}\bf
   [\ldots]}
 
-Some generalizations of this class are well understood. For instance, MSO transductions, streaming string transducers\footnote{The suitable generalization of the copyless streaming string transducer is the \emph{single use restricted macro tree transducer}~\cite{MacroMSO} which predates SSTs by two decades while being very similar. A more recent variant, the \emph{register tree transducer}, appears in~\cite[Section~4]{FOTree}.} and the formalisms based on the linear $\lambda$-calculus\footnote{The results of~\cite{LambdaTransducer} applies \enquote{out of the box} to trees. As for the \enquote{implicit automata in typed $\lambda$-calculi} approach~\cite{IATLC,titoPhD}, its extension to trees requires the use of the \emph{additive connectives} of linear logic.} admit extensions to tree-to-tree functions that are still equivalent, leading to a robust notion of regular tree functions for which functional combinators can also be designed~\cite{FOTree}.
+Some generalizations of this class are well understood. For instance, MSO transductions, streaming string transducers\footnote{The suitable generalization of the copyless streaming string transducer is the \emph{single use restricted macro tree transducer}~\cite{MacroMSO} which predates SSTs by two decades while being very similar. A more recent variant, the \emph{register tree transducer}, appears in~\cite[Section~4]{FOTree}.\tito{sur vs copyless + amina's thing is actually copyless but uses fo-relabeling}} and the formalisms based on the linear $\lambda$-calculus\footnote{The results of~\cite{LambdaTransducer} applies \enquote{out of the box} to trees. As for the \enquote{implicit automata in typed $\lambda$-calculi} approach~\cite{IATLC,titoPhD}, its extension to trees requires the use of the \emph{additive connectives} of linear logic.} admit extensions to tree-to-tree functions that are still equivalent, leading to a robust notion of regular tree functions for which functional combinators can also be designed~\cite{FOTree}.
 
 The present paper is concerned with a different and new generalization of the
 string-to-string case: we propose a notion of regular functions \emph{between
@@ -143,20 +143,11 @@ string-to-string functions to the above list.
 \item[Register transducer semigroups] are to streaming string transducers what
   semigroups or monoids are to deterministic finite automata. An SST basically consists of a DFA plus some string-valued registers, while a register transducer semigroup consists of a finite control semigroup plus some registers with values in the output semigroup. A significant difference made by replacing the DFA by a semigroup is that we do not need any \enquote{copyless} or \enquote{bounded-copy} condition anymore to capture precisely the regular functions.
     \item[Functorial transducer semigroups] use minimal syntax, and refer only to basic concepts from algebra and category theory. The characterization is concise enough to be fully stated here: a regular function $A\to B$ is one that can be decomposed as
-    \[
-        \begin{tikzcd}
-            A
-            \ar[r,"h"]
-            & 
-            \functor B
-            \ar[r,"\outfun_B"]
-            &
-            B
-        \end{tikzcd}
-    \]
-    where $\functor$ is some finiteness-preserving functor from the category of semigroups to itself, $h$~is some semigroup homomorphism, and the output function $\outfun_{B}$ is a natural transformation. From this category-theoretic definition, it is easy to show that regular semigroup-to-semigroup functions are \emph{closed under composition}.
-    \tito{refer to difficulties with 2DFT / SST composition here? (as in \Cref{rem:composition})}
+    \[ A \xrightarrow{\;\text{some semigroup homomorphism}\;} \functor B \xrightarrow{\;\outfun_B\;} B \]
+    where $\functor$ is some finiteness-preserving functor from the category of semigroups to itself and the output function $\outfun_{B}$ is a natural transformation from $\mathsf{U}\functor$ to $\mathsf{U}$ -- here $\mathsf{U}$ is the forgetful functor from semigroups to sets (so $\mathsf{U}B = B$ on objects).
 \end{description}
+From the category-theoretic definition, it is easy to show that regular semigroup-to-semigroup functions are \emph{closed under composition}.
+\tito{refer to difficulties with 2DFT / SST composition here? (as in \Cref{rem:composition})}
 
 \section{Preliminaries: streaming string transducers}
 
@@ -173,9 +164,9 @@ string-to-string functions to the above list.
 \newcommand{\substcomp}{\odot}
 \newcommand{\regassign}{\mathbin{:=}}
 
-Before formally defining streaming string transducers, let us start with an example:
+Before formally defining streaming string transducers (SSTs), let us start with an example:
 \begin{example}\label{ex:cecilia}
-  The transducer below is a deterministic finite automaton with two states over the alphabet $\Sigma\cup\{\#\}$ (with $\#\notin\Sigma$), enriched with two \emph{registers} $X$ and $Y$.  
+  The transducer below is a deterministic finite automaton with two states over the alphabet $\Sigma = \Gamma\cup\{\#\}$ (with $\#\notin\Gamma$), enriched with two \emph{registers} $X$ and $Y$.  
 \begin{center}
   \begin{tikzpicture}[->,node distance=1.5cm]
     %[->,node distance=3.5cm,transform canvas={scale=1}]
@@ -193,7 +184,7 @@ Before formally defining streaming string transducers, let us start with an exam
    {$\begin{array}{l@{~}c@{~}l} X &\regassign& \varepsilon \\ Y &\regassign& \varepsilon \end{array}$} (A) ;
   \path
     (A) edge node[left, style={font=\footnotesize}]
-   {$Y$} (OA) ;
+   {$YX$} (OA) ;
   \path
     (B) edge node[right, style={font=\footnotesize}]
    {$\varepsilon$} (OB) ;
@@ -201,41 +192,41 @@ Before formally defining streaming string transducers, let us start with an exam
     (A) edge [bend left] node[above, style={font=\footnotesize}]
    {$\#\left| \begin{array}{l@{~}c@{~}l} X &\regassign& \varepsilon \\ Y &\regassign& YX \end{array} \right.$} (B) ;
   \path (B) edge [loop right] node[right,style={font=\footnotesize}]
-  {$a \in \Sigma \left| \begin{array}{l@{~}c@{~}l} X &\regassign& aX \\ Y &\regassign& Y \end{array} \right.$}
+  {$a \in \Gamma \left| \begin{array}{l@{~}c@{~}l} X &\regassign& aX \\ Y &\regassign& Y \end{array} \right.$}
   (A) ;
   \path (B) edge [bend left] node[below,style={font=\footnotesize}]
    {$\#\left| \begin{array}{l@{~}c@{~}l} X &\regassign& \varepsilon \\ Y &\regassign& XY \end{array} \right.$}
   (A) ;
   \path (A) edge [loop left] node[left,style={font=\footnotesize}]
-  {$a \in \Sigma \left| \begin{array}{l@{~}c@{~}l} X &\regassign& Xa \\ Y &\regassign& Y \end{array} \right.$}
+  {$a \in \Gamma \left| \begin{array}{l@{~}c@{~}l} X &\regassign& Xa \\ Y &\regassign& Y \end{array} \right.$}
   (A) ;
   \end{tikzpicture}
 \end{center}
-It starts out in the initial state $0$, with the initial values of $X$ and $Y$ both set to $\varepsilon$. At each transition, the new values of the registers are computed from the old ones by a parallel assignment. So for example, after reading $aab\#bbc$ (for $a,b,c\in\Sigma$), we are in state $1$ with the register contents $X = cbb$ and $Y = aab$. Finally, if the final state is $0$, the transducer outputs the final value of the register $Y$; if the final state is $1$, it outputs the empty word. Thus, the computed string-to-string function is:
+It computes the string-to-string function:
   \[
   \begin{array}{rcl!{\hspace{7em}} l}
-  (\Sigma \sqcup \{ {\#} \})^* &\to& \Sigma^*
-  & {(w_i \in \Sigma^*,\; (\Sigma \sqcup \{\#\})^* \cong \Sigma^*(\#\Sigma^*)^*)}\\
-  w_0\#\ldots\#w_{2k} &\mapsto& \varepsilon \\
-  w_0\#\ldots\#w_{2k+1} &\mapsto&
-  \multicolumn{2}{l}{
-  \ttreverse(w_{2k-1})
-  \ttreverse(w_{2k-3})
-  \ldots
-  \ttreverse(w_1)
-  w_0
-  w_2
-  \ldots
-  w_{2k-2}}
+  (\Gamma \sqcup \{ {\#} \})^* &\to& \Gamma^*
+  & {(w_i \in \Gamma^*,\; (\Gamma \sqcup \{\#\})^* \cong \Gamma^*(\#\Gamma^*)^*)}\\
+  w_0\#\ldots\#w_{2k} &\mapsto& \multicolumn{2}{l}{
+    \ttreverse(w_{2k-1})
+    \ttreverse(w_{2k-3})
+    \ldots
+    \ttreverse(w_1)
+    w_0
+    w_2
+    \ldots
+    w_{2k}} \\
+  w_0\#\ldots\#w_{2k+1} &\mapsto& \varepsilon
   \end{array}
   \]
+The SST starts out in the initial state $0$, with the initial values of $X$ and $Y$ both set to $\varepsilon$. At each transition, the new values of the registers are computed from the old ones by a parallel assignment. So for example, after reading $aab\#bbc$ (for $a,b,c\in\Gamma$), we are in state $1$ with the register contents $X = cbb$ and $Y = aab$. Finally, if the final state is $0$, the transducer outputs $(\text{final value of}\ Y)\cdot(\text{final value of}\ X)$; if the final state is $1$, it outputs the empty word.
 \end{example}
 
-Formally, a \emph{substitution}\footnote{The name can be found in e.g.~\cite{AlurFT12,AperiodicSST}.} for the register set $R$ over the alphabet $\Gamma$, assuming that $R \cap \Gamma = \varnothing$, is a map $\sigma : R \to (\Gamma \cup R)^*$. Typically, we would have $\sigma(X) = Xa$ and $\sigma(Y) = Y$ for the leftmost register update in the state diagram of \Cref{ex:cecilia}. Substitutions \emph{compose}:
+Formally, a \emph{substitution} for the register set $R$ over the alphabet $\Gamma$ is a map $\sigma\colon R \to (\Gamma \cup R)^*$ (assuming that $R \cap \Gamma = \varnothing$). Typically, we have $\sigma(X) = Xa$ and $\sigma(Y) = Y$ for the leftmost register update in the state diagram of \Cref{ex:cecilia}. Substitutions \emph{compose}: define
 \[ \sigma \substcomp \tau = (\text{the extension of}\ \sigma\ \text{to a monoid endomorphism of}\ (\Gamma \cup R)^*\ \text{fixing}\ \Gamma) \circ \tau \]
-for $\sigma,\tau : R \to (\Gamma \cup R)^*$. There is some \enquote{contravariance} going on in this definition: even though we use $f \circ g$ to mean \enquote{apply $g$ then $f$} as usual, the register update specified by $\sigma\substcomp\tau$ corresponds to the update given by $\sigma$ followed by the one given by $\tau$. In other words, if we write $\sigma^\dagger : (\Gamma^*)^R \to (\Gamma^*)^R$ for the map between register values specified by $\sigma$ -- so in the above example, $\sigma^\dagger(\rho) = (X \mapsto \rho(X)\cdot a \mid Y \mapsto \rho(Y))$ -- then $(\sigma\substcomp\tau)^\dagger = \tau^\dagger \circ \sigma^\dagger$.
+for $\sigma,\tau \colon R \to (\Gamma \cup R)^*$. There is some \enquote{contravariance} going on in this definition: even though we use $f \circ g$ to mean \enquote{apply $g$ then $f$} as usual, the register update specified by $\sigma\substcomp\tau$ corresponds to the update given by $\sigma$ followed by the one given by $\tau$. In other words, if we write $\sigma^\dagger \colon (\Gamma^*)^R \to (\Gamma^*)^R$ for the map between register values specified by $\sigma$ -- so in the above example, $\sigma^\dagger(\rho)(X) = \rho(X)\cdot a$ and $\sigma^\dagger(\rho)(Y) = \rho(Y)$ -- then $(\sigma\substcomp\tau)^\dagger = \tau^\dagger \circ \sigma^\dagger$.
 
-To take into account the finite-state control, we consider the notion of \emph{substransition}: a map $\alpha : Q \to Q \times (R \to (\Gamma \cup R))^*$ where $Q$ is a set of states. Substransitions also compose (this is an instance of the wreath product construction):
+To take into account the finite-state control, we consider the notion of \emph{substransition}: a map $\alpha \colon Q \to Q \times (R \to (\Gamma \cup R))^*$ where $Q$ is a set of states. Substransitions also compose (this is an instance of the wreath product construction):
 \[ \text{for}\ q\in Q,\quad (\alpha\substcomp\beta)(q) = (q'',\sigma\substcomp\tau)\ \text{where}\ \alpha(q) = (q',\sigma)\ \text{and}\ \beta(q') = (q'',\tau) \]
 \begin{definition}
   We write $\SubsTrans(Q,R,\Gamma)$ for the monoid of all substransitions over the set of states $Q$, the set of registers $R$ and the alphabet $\Gamma$, equipped with $\substcomp$.
@@ -253,34 +244,60 @@ We first introduce \emph{copyful} streaming string transducers, which compute a 
     state};
 \item $R$ is a finite set of \emph{register names}, that we require to be
   disjoint from $\Gamma$;
-\item $\delta : \Sigma \to \SubsTrans(Q,R,\Gamma)$ is the \emph{transition function};
+\item $\delta \colon \Sigma \to \SubsTrans(Q,R,\Gamma)$ is the \emph{transition function};
 \item $\vec{u}_I \in (\Sigma^*)^R$ describes the \emph{initial register values};
-\item $F : Q \to (\Gamma \cup R)^*$ is the \emph{final output function}.
+\item $F \colon Q \to (\Gamma \cup R)^*$ is the \emph{final output function}.
 \end{itemize}
-For an input word $w \in \Sigma^*$, the output of $\mathcal{T}$ is determined as follows. Let $(q,\sigma) = \delta^*(w)(q_0)$ where $\delta^*$ is the unique extension of $\delta$ to a monoid homomorphism $\Sigma^* \to \SubsTrans(Q,R,\Gamma)$. Apply $\sigma^\dagger : (\Gamma^*)^R \to (\Gamma^*)^R$ to $\vec{u}_I$ to get a tuple $\vec{v} = (v_X)_{X\in R}$ of final register values. Finally, replace each occurrence in $F(q)$ of a register name $X\in R$ by the corresponding value $v_X \in \Gamma^*$ to obtain an output string in $\Gamma^*$.
+For an input word $w \in \Sigma^*$, the output of $\mathcal{T}$ is determined as follows. Let $(q,\sigma) = \delta^*(w)(q_0)$ where $\delta^*$ is the unique extension of $\delta$ to a monoid homomorphism $\Sigma^* \to \SubsTrans(Q,R,\Gamma)$. Apply $\sigma^\dagger \colon (\Gamma^*)^R \to (\Gamma^*)^R$ to $\vec{u}_I$ to get a tuple $\vec{v} = (v_X)_{X\in R}$ of final register values. Finally, replace each occurrence in $F(q)$ of a register name $X\in R$ by the corresponding value $v_X \in \Gamma^*$ to obtain an output string in $\Gamma^*$.
 \end{definition}
 \begin{definition}[see e.g.~{\cite{AlurFT12,AperiodicSST}}]
-  A streaming string transducer whose transition function is $\delta : \Sigma \to \SubsTrans(Q,R,\Gamma)$ is \emph{bounded-copy} when there is some bound $k\in\mathbb{N}$ such that for every $q\in Q$, $w \in \Gamma^*$ and $X,Y\in R$, the string $\sigma(X)$ where $\delta^*(w)(q) = (q',\sigma)$ contains at most $k$ occurrences of~$Y$.
+  A streaming string transducer whose transition function is $\delta \colon \Sigma \to \SubsTrans(Q,R,\Gamma)$ is \emph{bounded-copy} when there is some bound $k\in\mathbb{N}$ such that for every $q\in Q$, $w \in \Gamma^*$ and $X,Y\in R$, the string $\sigma(X)$ where $\delta^*(w)(q) = (q',\sigma)$ contains at most $k$ occurrences of~$Y$.
   In this paper, we take computability by bounded-copy SSTs as the definition of \emph{regular string-to-string functions}.
 \end{definition}
-The SST of \Cref{ex:cecilia} is bounded-copy. An example which is \emph{not} bounded-copy would be an SST with a single state $q$, a single register $X$ and which performs $X \regassign XX$ for each letter. For the initial value $X = a$ and final output function $F(q) = X$, we get the function $w \mapsto a\dots(2^{|w|}\ \text{times})\dots a$ which is not regular since regular functions have linear growth.
+The SST of \Cref{ex:cecilia} is bounded-copy (see \Cref{ex:cecilia-monoid} below). The following example of streaming string transducer is \emph{not} bounded-copy: it has a single state $q$ and a single register $X$; it performs $X \regassign XX$ for each input letter; the initial value is $X = a$ and the final output function is $F(q) = X$. This SST computes the function is $w \mapsto a\dots(2^{|w|}\ \text{times})\dots a$ which is not a regular function since its growth is not linearly bounded. Observe that the substitution $\sigma$ corresponding to an input factor $w$ is $\sigma \colon X \mapsto X\dots(2^{|w|}\ \text{times})\dots X$ -- this violates the bounded-copy condition.
 
-The notion of bounded-copy SST can be rephrased using the monoid homomorphism $\tterase_\Gamma : \SubsTrans(Q,R,\Gamma) \to \SubsTrans(Q,R,\varnothing)$ which \enquote{erases all letters from $\Gamma$}, built by lifting the homomorphism $w \in \Gamma^* \mapsto \varepsilon \in \varnothing^*$ in the unique sensible way. 
+The notion of bounded-copy SST can be rephrased using the monoid homomorphism $\tterase_\Gamma \colon \SubsTrans(Q,R,\Gamma) \to \SubsTrans(Q,R,\varnothing)$ which \enquote{erases all letters from $\Gamma$}, built by lifting the homomorphism $w \in \Gamma^* \mapsto \varepsilon \in \varnothing^*$ in the unique sensible way. 
 \begin{proposition}
-  An SST with transition function $\delta : \Sigma \to \SubsTrans(Q,R,\Gamma)$ is bounded-copy if and only if $\tterase_\Gamma(\delta^*(\Sigma^*))$ is a \emph{finite} submonoid of $\SubsTrans(Q,R,\varnothing)$. 
+  An SST with transition function $\delta \colon \Sigma \to \SubsTrans(Q,R,\Gamma)$ is bounded-copy if and only if $\tterase_\Gamma(\delta^*(\Sigma^*))$ is a \emph{finite} submonoid of $\SubsTrans(Q,R,\varnothing)$. 
 \end{proposition}
 \begin{remark}
   This monoid $\tterase_\Gamma(\delta^*(\Sigma^*))$ is called the \emph{substitution transition monoid} of the given SST in~\cite[Section~3]{AperiodicSST}.
 \end{remark}
+\begin{example}\label{ex:cecilia-monoid}
+  For the streaming string transducer of \Cref{ex:cecilia} (recall that its input alphabet is $\Gamma\cup\{\#\}$), we have (abbreviating $\ttreverse(w)$ by $\widetilde{w}$):
+  \begin{align*}
+    \text{for}\ w\in\Gamma^*,\; \delta^*(w) &= \begin{cases}
+      0 \mapsto (0, (X \mapsto Xw \mid Y \mapsto Y))\\
+      1 \mapsto (1, (X \mapsto \widetilde{w}X \mid Y \mapsto Y))
+    \end{cases}\\
+    \delta^*(w_0 \# \dots \# w_{2k+1}) &= \begin{cases}
+      0 \mapsto (1, (X \mapsto \widetilde{w_{2k+1}} \mid Y \mapsto \widetilde{w_{2k-1}} \dots \widetilde{w_1} YX w_0 \dots w_{2k}))\\
+      1 \mapsto (0, (X \mapsto w_{2k+1} \mid Y \mapsto \widetilde{w_{2k}} \dots \widetilde{w_0}XY w_1 \dots w_{2k-1}))
+    \end{cases}\\
+    \delta^*(w_0 \# \dots \# w_{2k+2}) &= \begin{cases}
+      0 \mapsto (0, (X \mapsto w_{2k+2} \mid Y \mapsto \widetilde{w_{2k+1}} \dots \widetilde{w_1}YX w_0 \dots w_{2k}))\\
+      1 \mapsto (1, (X \mapsto \widetilde{w_{2k+2}} \mid Y \mapsto \widetilde{w_{2k}} \dots \widetilde{w_0} XY w_1 \dots w_{2k+1}))
+    \end{cases}
+  \end{align*}
+  By erasing the parts in $\Gamma^*$ of the right-hand sides, we see that the substitution transition monoid has three elements: the identity (which is the image of all words without $\#$) and
+  \[ \begin{cases}
+    0 \mapsto (1, (X \mapsto \varepsilon \mid Y \mapsto YX))\\
+    1 \mapsto (0, (X \mapsto \varepsilon \mid Y \mapsto XY))
+  \end{cases} \qquad\quad \begin{cases}
+    0 \mapsto (0, (X \mapsto \varepsilon \mid Y \mapsto YX))\\
+    1 \mapsto (1, (X \mapsto \varepsilon \mid Y \mapsto XY))
+  \end{cases} \]
+  Hence, since $3 < \infty$, the SST of \Cref{ex:cecilia} is bounded-copy.
+\end{example}
 
 
 \section{Register transducer semigroups}
 
-\tito{Probably in the final paper it would be nice to introduce these things without invoking categories at first, to make the paper more welcoming}
+We now introduce our first definition of regular semigroup-to-semigroup functions. In the definition below, the maps $\mu_{s_1,s_2}$ should be understood as analogous to the substitutions in streaming string transducers. At the same time, the whole definition itself can be seen at first as an abstraction of the monoid denoted by $\delta^*(\Sigma^*)$ in the previous section -- though we will see that even for string-to-string functions, we have good reasons to work with semigroups rather than monoids.
 
 \begin{definition}
-    A \emph{finitary semigroup with registers} consists of a finite semigroup $S$, a family $(R_s)_{s\in S}$ of finite nonempty sets, and a family of functions
-    \[ \mu_{s_1, s_2} : R_{s_1 s_2} \to (R_{s_1} + R_{s_2})^+ \quad\text{for}\ s_1, s_2 \in S\]
+    A \emph{finitary semigroup with registers} $\mathcal{S}$ consists of a finite semigroup $S$, a family $(R_s)_{s\in S}$ of finite nonempty sets, and a family of functions
+    \[ \mu_{s_1, s_2}\colon R_{s_1 s_2} \to (R_{s_1} + R_{s_2})^+ \quad\text{for}\ s_1, s_2 \in S\]
     such that for all $s_1, s_2, s_3 \in S$, the following associativity diagram
     commutes:
     \[\begin{tikzcd}
@@ -302,31 +319,22 @@ The notion of bounded-copy SST can be rephrased using the monoid homomorphism $\
         &
         (R_{s_1}+(R_{s_2}+R_{s_3}))^+
       \end{tikzcd}\]
-    This data induces the finite polynomial functor from semigroups to sets
-    \[ A \mapsto \sum_{s\in S} A^{R_s} \]
-    which can be turned into a functor from semigroups to semigroups thanks to $\mu$.
+    For any semigroup $A$, we define $\mathcal{S}[A] = \displaystyle\bigcup_{s\in S} \{s\} \times G^{R_s}$
+    endowed with the binary operation
+    \[ (s_1,(a_{1,X})_{X\in R_{s_1}}) \cdot (s_2,(a_{2,Y})_{Y\in R_{s_2}}) = (s_1 s_2,\, (\overbrace{\mathrm{flatten}}^{\mathclap{A^+ \to A\ \text{using the semigroup operation in}\ A}} \circ \underbrace{\mathrm{substitute}}_{\mathclap{\text{replace each}\ X \in R_{s_1}\ \text{(resp.\ $Y \in R_{s_2}$) by}\ a_{1,X}\ \text{(resp.\ $a_{2,Y}$)}}} \circ \mu_{s_1 s_2}(Z))_{Z\in R_{s_1 s_2}}) \]
 \end{definition}
-
-\begin{remark}
-    Equivalently, consider the following symmetric monoidal category:
-    \begin{description}
-        \item[Objects:] finite polynomial functors (in one variable).
-        \item[Morphisms:] natural transformations.
-        \item[Monoidal product:] pointwise cartesian product of sets.
-    \end{description}
-    A finitary semigroup with registers is the same thing as a \enquote{semigroup object} (defined by removing the unit requirement from monoid objects) in this monoidal category of finite polynomial functors.
-\end{remark}
+\begin{proposition}
+  For any finitary semigroup with registers $\mathcal{S}$ and any semigroup $A$, the binary operation on $\mathcal{S}[A]$ is associative: $\mathcal{S}[A]$ is a semigroup.
+\end{proposition}
 
 \begin{definition}
-    A \emph{register transducer semigroup} is a finitary semigroup with registers $(S, (R_s)_{s\in S},(\mu_{s_1,s_2})_{s_1,s_2\in S})$, plus a family of strings $\omega_s \in (R_s)^+$ for $s\in S$.
+    A \emph{register transducer semigroup} consists of a finitary semigroup with registers $\mathcal{S} = (S,R,\mu)$ together with a family of strings $\omega_s \in (R_s)^+$ for $s\in S$.
+
+    A function $f\colon A \to B$ between semigroups is said to be \emph{recognized} by $(\mathcal{S}, \omega)$ if it admits a decomposition $f = \outfun_B \circ h$ where $h \colon A \to \mathcal{S}[B]$ is some semigroup homomorphism and
+    \[ \outfun_B(s,(b_X)_{X \in R_s}) = \mathrm{flatten}(\text{replace each}\ X\in R_s\ \text{in}\ \omega_s\ \text{by}\ b_X) \]
+    $f$ is called \emph{regular} when there exists a register transducer semigroup that recognizes it.
 \end{definition}
-
-This is equivalent to specifying a natural transformation from the associated polynomial functor to the forgetful functor from semigroups to sets, so it induces a functorial transducer semigroup in the expected way.
-
-\begin{definition}
-    A \emph{regular function} from $A$ to $B$ (both semigroups) is one that is recognized by the functorial transducer semigroup induced by some 
-\end{definition}
-
+\tito{todo}
 \begin{theorem}
     When $A$ and $B$ are free monoids, this coincides with the usual notion.
 \end{theorem}
@@ -336,11 +344,34 @@ This is equivalent to specifying a natural transformation from the associated po
     Conversely, from a register transducer semigroup one can define an SST, and thanks to associativity(!) turns out that it's automatically bounded-copy.
 \end{proof}
 
+
+\tito{Probably in the final paper it would be nice to introduce these things without invoking categories at first, to make the paper more welcoming}
+
+
+\begin{remark}
+  This data induces the finite polynomial functor from semigroups to sets BLAH  
+  which can be turned into a functor from semigroups to semigroups thanks to $\mu$.
+
+
+    Equivalently, consider the following symmetric monoidal category:
+    \begin{description}
+        \item[Objects:] finite polynomial functors (in one variable).
+        \item[Morphisms:] natural transformations.
+        \item[Monoidal product:] pointwise cartesian product of sets.
+    \end{description}
+    A finitary semigroup with registers is the same thing as a \enquote{semigroup object} (defined by removing the unit requirement from monoid objects) in this monoidal category of finite polynomial functors.
+
+    \tito{Blah is equivalent to specifying a natural transformation from the associated polynomial functor to the forgetful functor from semigroups to sets, so it induces a functorial transducer semigroup in the expected way.}
+\end{remark}
+
+
 \begin{remark}
 This should also work if we have a single finite nonempty set of registers $R$ for all semigroup elements instead of a family $(R_s)_{s\in S}$ though the equivalence proof is slightly less immediate for semigroups than for monoids (you need to use the output function to produce \enquote{default} elements with which to fill unused registers). Note that the \enquote{substitution transition monoid} operation \enquote{naturally} produces something with a varying register set.
 
 Another possible variation on the definition is to have a choice of output register for each element of the control semigroup: $r_s \in R_s$ for $s\in S$ instead of $\omega_s \in (R_s)^+$. This does not decrease the expressivity of the model.
 \end{remark}
+
+
 
 \section{Equivalence with functorial transducer semigroups}
 
@@ -350,7 +381,7 @@ It is immediate that every regular function is recognized by a finiteness-preser
   For every finiteness-preserving functorial transducer semigroup $(\functor, \outfun)$, there is another one $(\functor',\outfun')$
   \begin{itemize}
     \item which is induced by some register transducer semigroup,
-    \item and which admits a natural transformation $\eta : \functor \Rightarrow \functor'$ such that $\outfun = \outfun' \circ \eta$.
+    \item and which admits a natural transformation $\eta \colon \functor \Rightarrow \functor'$ such that $\outfun = \outfun' \circ \eta$.
   \end{itemize}
   Hence every function recognized by $(\functor,\outfun)$ is also recognized by $(\functor',\outfun')$ (by the second item) and thus is regular (by the first item).
 \end{theorem}
@@ -363,12 +394,12 @@ It is immediate that every regular function is recognized by a finiteness-preser
         \item and the maximal factors in $\{\mathtt{m_1,m_2}\}^+$ inside
         \[ (\text{factorized output of}\ (l,s_1,s_2,r)) \in 1\oplus1\oplus1\oplus1 \cong \{\mathtt{l,m_1,m_2,r}\}^+ \]
     \end{itemize}
-    Indeed, the morphism $1\oplus\mathop{!}\oplus1$ where $! : 1\oplus1 \to 1$ is the terminal morphism sends the maximal factors in $\{\mathtt{m_1,m_2}\}^+$ to $\mathtt{m}$ and is the identity on $\mathtt{l,r}$. To see that applying this to the factorized output of $(l,s_1,s_2,r)$ indeed yields the factorized output of $(l,s_1s_2,r)$, apply \Cref{lem:merge-middle} to $A=B=C=1$.
+    Indeed, the morphism $1\oplus\mathop{!}\oplus1$ where $! \colon 1\oplus1 \to 1$ is the terminal morphism sends the maximal factors in $\{\mathtt{m_1,m_2}\}^+$ to $\mathtt{m}$ and is the identity on $\mathtt{l,r}$. To see that applying this to the factorized output of $(l,s_1,s_2,r)$ indeed yields the factorized output of $(l,s_1s_2,r)$, apply \Cref{lem:merge-middle} to $A=B=C=1$.
 
     We must also check that this operation is \enquote{associative}. For this, consider the factorized output of $(l,s_1,s_2,s_3,r)$ \ldots{}
     \tito{TODO above}
 
-    Finally we define $\widehat\eta : \functor \Rightarrow \functorg$ where $\functorg$ is the functor induced by our semigroup with registers. For any $x \in \functor A$, apply $\functor! : \functor A \to \functor 1$ to get some $s \in S$. Then look at the factorized output of $(l,x,r)$ in $1\oplus A \oplus 1$ for each $(l,r)\in (\functor1)^2$ to get register values in $A^{R_s}$.
+    Finally we define $\widehat\eta \colon \functor \Rightarrow \functorg$ where $\functorg$ is the functor induced by our semigroup with registers. For any $x \in \functor A$, apply $\functor! \colon \functor A \to \functor 1$ to get some $s \in S$. Then look at the factorized output of $(l,x,r)$ in $1\oplus A \oplus 1$ for each $(l,r)\in (\functor1)^2$ to get register values in $A^{R_s}$.
 
     The issue is that the output function for $\functor$ may not factor through $\widehat\eta$. To remediate that, we consider instead another semigroup with registers, inducing the functor $\functor'$, with the same underlying semigroup $S=\functor1$ and bigger register sets
     \[ R'_s = \{\bullet\} + R^{\mathrm{left}}_s + R^{\mathrm{right}}_s + R_s \quad\text{for}\ s\in S\]
