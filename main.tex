@@ -24,7 +24,7 @@
 
 \author{Mikołaj Bojańczyk}{Institute of Informatics, University of Warsaw, Poland \and \url{https://www.mimuw.edu.pl/~bojan/}}{bojan@mimuw.edu.pl}{}{{\color{red}(Optional) author-specific funding acknowledgements}}%TODO mandatory, please use full name; only 1 author per \author macro; first two parameters are mandatory, other parameters can be empty. Please provide at least the name of the affiliation and the country. The full address is optional. Use additional curly braces to indicate the correct name splitting when the last name consists of multiple name parts.
 
-\author{Lê Thành Dũng (Tito) Nguy\~{\^e}n}{École normale supérieure de Lyon, France \and \url{https://nguyentito.eu/}}{nltd@nguyentito.eu}{https://orcid.org/0000-0002-6900-5577}{Supported by the LABEX MILYON (ANR-10-LABX-0070) of Université de Lyon, within the program \enquote{Investissements d'Avenir} (ANR-11-IDEX-0007) operated by the French National Research Agency (ANR).}
+\author{Lê Thành Dũng (Tito) Nguy\~{\^e}n}{Laboratoire de l'informatique du parallélisme (LIP), École normale supérieure de Lyon, France \and \url{https://nguyentito.eu/}}{nltd@nguyentito.eu}{https://orcid.org/0000-0002-6900-5577}{Supported by the LABEX MILYON (ANR-10-LABX-0070) of Université de Lyon, within the program \enquote{Investissements d'Avenir} (ANR-11-IDEX-0007) operated by the French National Research Agency (ANR).}
 
 \authorrunning{M.~Bojańczyk and L.~T.~D.~Nguy\~{\^e}n} %TODO mandatory. First: Use abbreviated first/middle names. Second (only in severe cases): Use first author plus 'et al.'
 
@@ -257,7 +257,7 @@ For an input word $w \in \Sigma^*$, the output of $\mathcal{T}$ is determined as
 The SST of \Cref{ex:cecilia} is bounded-copy (see \Cref{ex:cecilia-monoid} below). The following example of streaming string transducer is \emph{not} bounded-copy: it has a single state $q$ and a single register $X$; it performs $X \regassign XX$ for each input letter; the initial value is $X = a$ and the final output function is $F(q) = X$. This SST computes the function is $w \mapsto a\dots(2^{|w|}\ \text{times})\dots a$ which is not a regular function since its growth is not linearly bounded. Observe that the substitution $\sigma$ corresponding to an input factor $w$ is $\sigma \colon X \mapsto X\dots(2^{|w|}\ \text{times})\dots X$ -- this violates the bounded-copy condition.
 
 The notion of bounded-copy SST can be rephrased using the monoid homomorphism $\tterase_\Gamma \colon \SubsTrans(Q,R,\Gamma) \to \SubsTrans(Q,R,\varnothing)$ which \enquote{erases all letters from $\Gamma$}, built by lifting the homomorphism $w \in \Gamma^* \mapsto \varepsilon \in \varnothing^*$ in the unique sensible way. 
-\begin{proposition}
+\begin{proposition}\label{prop:bounded-copy-finiteness}
   An SST with transition function $\delta \colon \Sigma \to \SubsTrans(Q,R,\Gamma)$ is bounded-copy if and only if $\tterase_\Gamma(\delta^*(\Sigma^*))$ is a \emph{finite} submonoid of $\SubsTrans(Q,R,\varnothing)$. 
 \end{proposition}
 \begin{remark}
@@ -293,7 +293,7 @@ The notion of bounded-copy SST can be rephrased using the monoid homomorphism $\
 
 \section{Register transducer semigroups}
 
-We now introduce our first definition of regular semigroup-to-semigroup functions. In the definition below, the maps $\mu_{s_1,s_2}$ should be understood as analogous to the substitutions in streaming string transducers. At the same time, the whole definition itself can be seen at first as an abstraction of the monoid denoted by $\delta^*(\Sigma^*)$ in the previous section -- though we will see that even for string-to-string functions, we have good reasons to work with semigroups rather than monoids.
+We now introduce our first definition of regular semigroup-to-semigroup functions, heavily inspired by streaming string transducers. In the definition below, the maps $\mu_{s_1,s_2}$ should be understood as analogous to the substitutions in SSTs. At the same time, the whole definition itself can be seen at first as an abstraction of the monoid denoted by $\delta^*(\Sigma^*)$ in the previous section -- though we will see that even for string-to-string functions, we have good reasons to work with semigroups rather than monoids.
 
 \begin{definition}
     A \emph{finitary semigroup with registers} $\mathcal{S}$ consists of a finite semigroup $S$, a family $(R_s)_{s\in S}$ of finite nonempty sets, and a family of functions
@@ -319,31 +319,67 @@ We now introduce our first definition of regular semigroup-to-semigroup function
         &
         (R_{s_1}+(R_{s_2}+R_{s_3}))^+
       \end{tikzcd}\]
-    For any semigroup $A$, we define $\mathcal{S}[A] = \displaystyle\bigcup_{s\in S} \{s\} \times G^{R_s}$
+    For any semigroup $A$, we define $\mathcal{S}[A] = \displaystyle\bigcup_{s\in S} \{s\} \times A^{R_s}$
     endowed with the binary operation
     \[ (s_1,(a_{1,X})_{X\in R_{s_1}}) \cdot (s_2,(a_{2,Y})_{Y\in R_{s_2}}) = (s_1 s_2,\, (\overbrace{\mathrm{flatten}}^{\mathclap{A^+ \to A\ \text{using the semigroup operation in}\ A}} \circ \underbrace{\mathrm{substitute}}_{\mathclap{\text{replace each}\ X \in R_{s_1}\ \text{(resp.\ $Y \in R_{s_2}$) by}\ a_{1,X}\ \text{(resp.\ $a_{2,Y}$)}}} \circ \mu_{s_1 s_2}(Z))_{Z\in R_{s_1 s_2}}) \]
 \end{definition}
 \begin{proposition}
   For any finitary semigroup with registers $\mathcal{S}$ and any semigroup $A$, the binary operation on $\mathcal{S}[A]$ is associative: $\mathcal{S}[A]$ is a semigroup.
 \end{proposition}
+\begin{example}\label{ex:fsr-simple}
+  Let $S = \{0,1\}$ with usual multiplication and $R_0 = R_1 = \{X,Y\}$. Let us write $\{X,Y\}+\{X,Y\}=\{X_{\mathrm{l}}, X_{\mathrm{r}}, Y_{\mathrm{l}}, Y_{\mathrm{r}}\}$ with $X_{\mathrm{l}}$ (resp.~$X_{\mathrm{r}}$) referring to the left (resp.~right) copy of $X$. The following definition of $\mu$ satisfies the associativity condition:
+  \[ \forall i,j \in \{0,1\}, \qquad \mu_{i,j}(X) = X_{\mathrm{l}} X_{\mathrm{r}} \qquad \mu_{i,0}(Y) = X_{\mathrm{l}} Y_{\mathrm{r}} \qquad \mu_{i,1}(Y) = Y_{\mathrm{l}} Y_{\mathrm{r}} \]
+  So $\mathcal{S} = (S,R,\mu)$ is a finitary semigroup with registers. We have for example in $\mathcal{S}[(\mathbb{N},+)]$
+  \[ (1,(X\mapsto42\mid Y\mapsto218)) \cdot (0,(X\mapsto1\mid Y\mapsto100)) = (0,(X\mapsto43\mid Y\mapsto142)) \]
+\end{example}
 
-\begin{definition}
+\begin{definition}\label{def:reg-trans-semigroup}
     A \emph{register transducer semigroup} consists of a finitary semigroup with registers $\mathcal{S} = (S,R,\mu)$ together with a family of strings $\omega_s \in (R_s)^+$ for $s\in S$.
 
     A function $f\colon A \to B$ between semigroups is said to be \emph{recognized} by $(\mathcal{S}, \omega)$ if it admits a decomposition $f = \outfun_B \circ h$ where $h \colon A \to \mathcal{S}[B]$ is some semigroup homomorphism and
     \[ \outfun_B(s,(b_X)_{X \in R_s}) = \mathrm{flatten}(\text{replace each}\ X\in R_s\ \text{in}\ \omega_s\ \text{by}\ b_X) \]
     $f$ is called \emph{regular} when there exists a register transducer semigroup that recognizes it.
 \end{definition}
-\tito{todo}
-\begin{theorem}
-    When $A$ and $B$ are free monoids, this coincides with the usual notion.
-\end{theorem}
-\begin{proof}[Proof idea]
-    Easy direction: take the substitution transition monoid~\cite{AperiodicSST} of a bounded-copy SST. (This requires some care to handle the output letters produced not by a transition but by the final output function; they can be stored in specific constant registers that are initialized in the image of all words, including the empty word -- for this, it is important that we can use a morphism of semigroups that is not necessarily a morphism of monoids.)
-    
-    Conversely, from a register transducer semigroup one can define an SST, and thanks to associativity(!) turns out that it's automatically bounded-copy.
-\end{proof}
+\begin{example}\label{ex:rts-simple}
+  Let $\mathcal{S}$ be the finitary semigroup with registers from \Cref{ex:fsr-simple}. Reusing the notations from that example, let us choose $\omega_0 = \omega_1 = Y$; this makes $(\mathcal{S},\omega)$ is a register transducer semigroup. It can recognize the function $f\colon \{a,b,c\}^* \to \{a,b\}^*$ such that
+  \[ \forall u \in \{a,b,c\}^*,\;\forall v \in \{a,b\}^*,\quad f(ucv) = a^{|u|}bv \quad\text{and}\quad f(v) = v \]
+  (inspired by~\cite[Theorem~5.6]{MacroMSO}). Indeed, to do so, we pick the semigroup homomorphism
+  \[ h\colon w \in \{a,b,c\}^* \mapsto ((1\ \text{if}\ w\in\{a,b\}^*,\;\text{else}\ 0),\; (X\mapsto a^{|w|} \mid Y \mapsto f(w)) \in \mathcal{S}[\{a,b\}^*]\]
+\end{example}
 
+\begin{theorem}
+  A function between free monoids is regular in the sense of \Cref{def:reg-trans-semigroup} (i.e.\ recognized by some register transducer semigroup) if and only if it is a regular string function in the conventional sense (i.e.\ computed by some bounded-copy SST).
+\end{theorem}
+\begin{proof}
+  We first treat \enquote{only if}, then \enquote{if}.
+
+  \proofsubparagraph{From a register transducer semigroup to a bounded-copy SST.}
+  Let $(\mathcal{S}=(S,R,\mu),\,\omega)$ be a register transducer semigroup and $h\colon \Sigma^* \to \mathcal{S}[\Gamma^*]$ be a semigroup homomorphism. We want a bounded-copy SST that computes $\outfun_{\Gamma^*}\circ h$. Our solution will be to take an \enquote{obvious choice} of SST, which clearly computes this function -- the idea is that the configuration (state + register contents) of the SST, after reading an input prefix $w\in\Sigma^*$, represents $h(w)$ -- and then check that it is bounded-copy.
+  \begin{itemize}
+    \item The set of states is $Q = S$ and the initial state is the first component of $h(\varepsilon)$. (Note that while $\mathcal{S}[\Gamma^*]$ is not necessarily a monoid, $h(\Sigma^*)$ always is, with $h(\varepsilon)$ as its unit element.)
+    \item The registers are $R = \displaystyle\bigcup_{s\in S} R_s$ (without loss of generality, we take the $R_s$ pairwise disjoint).
+    \item For $c\in\Sigma$ and $q\in Q=S$, we define $\delta(c)(q) = (qs,\sigma)$ where $(s, (v_X)_{X\in R_s}) = h(c)$ and
+    \[ \sigma\colon Y \in R ~~\mapsto~~ \begin{cases}
+      \text{replace each}\ X \in R_s\ \text{by}\ v_X\ \text{in}\ \mu_{q,s}(Y) & \text{when}\ Y \in R_{qs}\\
+      \varepsilon & \text{otherwise}
+    \end{cases} \]
+    \item The initial register values are $X:=u_{0,X}$ for any $X\in R_{q_0}$ where $(q_0,(u_{0,X})_{X\in R_{q_0}}) = h(\varepsilon)$, and $X := \varepsilon$ for other registers.
+    \item The final output function is $q \mapsto \omega_q$.
+  \end{itemize}
+  One can verify that $\tterase_\Gamma(\delta^*(w))(q) = (s,\; \text{something fully determined by}\ \mu_{q,s})$ where $s$ is the 1st component of $h(w)$ for any $w\in\Sigma^*$ and $q\in Q$. Since $s$ lives in the finite semigroup~$S$, the monoid $\tterase_\Gamma(\delta^*(\Sigma^*))$ is finite. By \Cref{prop:bounded-copy-finiteness}, our SST is bounded-copy.
+
+  \proofsubparagraph{From a bounded-copy SST to a register transducer semigroup.}
+
+  Let $\mathcal{T} = (Q, q_0, R, \delta, \vec{u}_I, F)$ be a bounded-copy SST. The core of the construction (which does not entirely finish the job on its own) is the following:
+  \begin{claim}
+    
+  \end{claim}
+  \begin{claimproof}
+  \end{claimproof}
+
+  \tito{todo}
+  Idea: take the substitution transition monoid~\cite{AperiodicSST} of a bounded-copy SST. (This requires some care to handle the output letters produced not by a transition but by the final output function; they can be stored in specific constant registers that are initialized in the image of all words, including the empty word -- for this, it is important that we can use a morphism of semigroups that is not necessarily a morphism of monoids.)
+\end{proof}
 
 \tito{Probably in the final paper it would be nice to introduce these things without invoking categories at first, to make the paper more welcoming}
 
