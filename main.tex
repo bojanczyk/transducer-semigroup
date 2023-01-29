@@ -388,29 +388,39 @@ We now introduce our first definition of regular semigroup-to-semigroup function
     \end{align*}
     We also write $\alpha = \alpha[\varepsilon,\varepsilon]$ and $\beta_i = \beta_i[\varepsilon,\dots,\varepsilon]$.
     Note that $M = \{\alpha,\beta_0,\beta_1\}$ (equipped with composition of substransitions), while every element of $\delta^*(\Sigma^*)$ is of the form $\alpha[\dots]$ or $\beta_i[\dots]$. The set $\mathfrak{M}$ of all $\alpha[\dots]$ and $\beta_i[\dots]$ is a submonoid of $\SubsTrans(\{0,1\},\{X,Y\},\Gamma)$, since $\alpha$ is the unit element and we have composition equations such as
-    \[ \alpha[u,v] \cdot \beta_1[u_1,\dots,v_3] = \beta_1[u_1,u_2,(u \cdot u_3),v_1,(v_2 \cdot v),v_3] \]
-    The idea is then to define $\mathcal{M} = (M,R,\mu)$ in such a way that $\mathfrak{M} \cong \mathcal{M}[\Gamma^*]$. We take $R_\alpha = \{1,2\}$ and $R_{\beta_i} = \{1,2\} \times \{1,2,3\}$. This allows us to define a bijection
+    \[ \alpha[u,v] \cdot \beta_1[u_1,u_2,u_3,v_1,v_2,v_3] = \beta_1[u_1,u_2,(u \cdot u_3),v_1,(v_2 \cdot v),v_3] \]
+    The idea is then to define $\mathcal{M} = (M,R,\mu)$ in such a way that $\mathfrak{M} \cong \mathcal{M}[\Gamma^*]$. For the registers, we take $R_\alpha = \{U,V\}$ and $R_{\beta_i} = \{U,V\} \times \{1,2,3\}$. This allows us to define a bijection
     \begin{align*}
       \mathcal{M}[\Gamma^*] &\to \mathfrak{M}\\
-      (\alpha, (w_1, w_2)) &\mapsto \alpha[w_1,w_2]\\
-      (\beta_i, (w_{1,1},\dots,w_{2,3})) &\mapsto \beta_i[w_{1,1},\dots,w_{2,3}]
+      (\alpha, (w_{U}, w_{V})) &\mapsto \alpha[w_{U},w_{V}]\\
+      (\beta_i, (w_{U,1},\dots,w_{V,3})) &\mapsto \beta_i[w_{U,1},\dots,w_{V,3}]
     \end{align*}
     Observe also that for $\lambda,\gamma\in\{\alpha,\beta_0,\beta_1\}$, we have $\lambda[\dots] \cdot \gamma[\dots] = (\lambda\cdot\gamma)[\dots]$, which brings us halfway to having the above bijection be a monoid isomorphism. To get there, there remains to choose a definition of $\mu$ reflecting the composition equations; for example the above one concerning $\alpha$ and $\beta_1$ leads us to define $\mu_{\alpha,\beta_1}$ as
-    \[ (1,1)\mapsto(1,1) \mid \dots \mid (1,3) \mapsto 1 \cdot (1,3) \mid \dots \mid (2,2) \mapsto (2,2) \cdot 2 \mid (2,3) \mapsto (2,3) \]
+    \[ (U,1)\mapsto(U,1) \mid \dots \mid (U,3) \mapsto U \cdot (U,3) \mid \dots \mid (V,2) \mapsto (V,2) \cdot V \mid (V,3) \mapsto (V,3) \]
     We set the output strings of our register transducer semigroup according to the initial state and final output function of \Cref{ex:cecilia}, as follows:
     \begin{itemize}
-      \item $\omega_\alpha = 1$ because after applying $\alpha[u,v]$ to the initial configuration of the SST, we are in state 0, $X = u$ \& $Y = \varepsilon$, and the final output function tells us to output $YX = u$;
-      \item $\omega_{\beta_0} = (1,2)\cdot(1,3)\cdot(1,1)$ because after applying $\beta_0[u_1,\dots,v_3]$ to the initial configuration, we are in state 0 and $X$ contains $u_1$ while $Y$ contains $u_2 u_3$;
+      \item $\omega_\alpha = U$ because after applying $\alpha[u,v]$ to the initial configuration of the SST, we are in state 0, $X = u$ \& $Y = \varepsilon$, and the final output function tells us to output $YX = u$;
+      \item $\omega_{\beta_0} = (U,2)\cdot(U,3)\cdot(U,1)$ because after applying $\beta_0[u_1,\dots,v_3]$ to the initial configuration, we are in state 0 and $X$ contains $u_1$ while $Y$ contains $u_2 u_3$;
       \item $\omega_{\beta_1} = \varepsilon$ because applying $\beta_1[\dots]$ to the initial configuration brings us in state 1, in which the final output function tells us to output $\varepsilon$.
     \end{itemize}
-    Finally, to recognize the function of \Cref{ex:cecilia}, we use the semigroup homomorphism $(\text{inverse of above isomorphism}\ \mathcal{M}[\Gamma^*] \to \mathfrak{M}) \circ \delta^* : \Sigma^* \to \mathcal{M}[\Gamma^*]$.
+    Finally, to recognize the function of \Cref{ex:cecilia}, we use the semigroup homomorphism $(\text{inverse of above isomorphism}\ \mathcal{M}[\Gamma^*] \to \mathfrak{M}) \circ \delta^* : \Sigma^* \to \mathcal{M}[\Gamma^*]$ -- indeed $\delta^*(\Sigma^*) \subset \mathfrak{M}$.
   \end{claimproof}
 
-  \tito{todo}
+  \tito{todo when $f(\varepsilon) \neq \varepsilon$}
 \end{proof}
 
-\tito{Probably in the final paper it would be nice to introduce these things without invoking categories at first, to make the paper more welcoming}
 
+
+\section{Functorial transducer semigroups and warm-up theorems}
+
+\tito{Exactly like \Cref{sec:warm-up}}
+
+\section{Finiteness-preserving functors define regular functions}
+
+
+\subsection{From registers to functors}
+
+\tito{todo}
 
 \begin{remark}
   This data induces the finite polynomial functor from semigroups to sets BLAH  
@@ -436,10 +446,7 @@ Another possible variation on the definition is to have a choice of output regis
 \end{remark}
 
 
-
-\section{Equivalence with functorial transducer semigroups}
-
-It is immediate that every regular function is recognized by a finiteness-preserving functorial transducer semigroup, because finite polynomial functors are finiteness-preserving. We shall therefore focus on the converse.
+\subsection{From functors to registers}
 
 \begin{theorem}
   For every finiteness-preserving functorial transducer semigroup $(\functor, \outfun)$, there is another one $(\functor',\outfun')$
@@ -571,5 +578,8 @@ It is immediate that every regular function is recognized by a finiteness-preser
     The upper right trapeze commutes because $\functor$ applied to the co-projection of $B$ into $A\oplus B\oplus C$ is a homomorphism. The lower triangle commutes because $h$ is a homomorphism. Finally, the small upper left triangle can be shown to commute using the functoriality of $\functor$ followed by properties of the coproduct.
 \end{proof}
 
+\section{Conclusion}
+
+\tito{Extension to forest algebra, etc.}
 
 \end{document}
