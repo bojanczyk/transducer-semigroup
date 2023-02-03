@@ -1,195 +1,156 @@
 
+\input{abstract-sst}
 
-\subsection{Term operations and natural transformations}
-We now turn to proving the implication $(\ref{it:trans-semig-regular}) \Rightarrow (\ref{it:regular})$ in Theorem~\ref{thm:regular-functions}.
+\subsubsection{Coproducts and views}
+\label{sec:coproducts-and-views}
 
-Let us begin with some notation. We write $1$ for the singleton semigroup; it is a \emph{terminal object}, that is, it admits a unique homomorphism from every other semigroup $A$, which will be denoted by $! : A \to 1$ (the notation has no connection with the factorial function on numbers). Another construction that will be used heavily in the proof is the \emph{coproduct} of two semigroups $A$ and $B$, which is denoted by $A \oplus B$. This is a semigroup which consists of words over an alphabet that is the disjoint union of $A$ and $B$, restricted to words which are nonempty and alternating in the sense that two consecutive elements cannot belong to the same semigroup. The semigroup operation is defined in the expected way. The coproduct deserves its name due to the following universal property: for every pair of semigroup homomorphisms
+Apart from the more abstract transducer model from Definition~\ref{def:functorial-sst}, the other ingredient used  in the proof of the hard implication in Theorem~\ref{thm:regular-functions} will be coproducts of semigroups, and some basic operations on them, as described in this section.
+
+We write $1$ for the semigroup that has one element. This semigroup is unique up to isomorphism and it is a \emph{terminal object} in the category of semigroups, which means that it admits a unique homomorphism from every other semigroup $A$. This unique homomorphism will be denoted by $! : A \to 1$. It has no connection with the factorial function on numbers. 
+
+The \emph{coproduct}  of two semigroups $A$ and $B$, which is denoted by $A \oplus B$, is the semigroup that is defined as follows. Elements of this semigroup are nonempty words over an alphabet that is the disjoint union of $A$ and $B$, restricted to words that are \emph{alternating} in the sense that two consecutive letters cannot belong to the same semigroup. The semigroup operation is defined in the expected way. We draw elements of a coproduct using coloured boxes:
 \begin{align*}
-f : A \to C \qquad \text{and} \qquad g : B \to C
+    \red{\boxed{aba}} \cdot 
+    \blue{\boxed{b}} \cdot 
+    \red{\boxed{b}} \cdot 
+    \blue{\boxed{aa}} \cdot 
+    \red{\boxed{abba}} \cdot 
 \end{align*}
-there is a unique homomorphism with domain $A\oplus B$ that coincides with $f$ (resp.~$g$) on the subsemigroup of $A \oplus B$ consisting of words with a single letter from $A$ (resp.~$B$):
-\[
-\begin{tikzcd}
-f \text{ or } g : A \oplus B \to C
-\end{tikzcd}
-\]
-Next, we introduce some terminology that will be used in the proof, concerning  polynomial functors, and copyless operations between them. They will be used as the register structure for an \sst in our proof. 
+The picture above shows an element of the coproduct of two copies of the semigroup $\set{a,b}^+$, with the copies distinguished using the colours \red{red} and \blue{blue}. One can also have a coproduct of more than two semigroups; in the pictures this would correspond to more colours for the boxes, subject to the condition that every two consecutive boxes have different colours.
 
-\subsubsection{Polynomial functors}
-%The kinds of polynomial functors that we use in the proof are functors from semigroups to sets.
-Define a \emph{polynomial functor} to be a functor from the category of semigroups to the category of sets, which is of the form
-\begin{align*}
-A \quad \mapsto \quad \coprod_{q \in Q} A^{\text{dimension of } q},
-\end{align*}
-where $Q$ is some possibly infinite set, called the \emph{components}, with each  component having an associated \emph{dimension} in $\set{0,1,\ldots}$. On morphisms, the functor works in the expected way, i.e.~coordinate-wise.  A \emph{finite polynomial functor} is one that has finitely many components. 
+% The name \emph{coproduct} is used because of the following universal property: if
+% \begin{align*}
+% f : A \to C \qquad \text{and} \qquad g : B \to C
+% \end{align*}
+% are two semigroup homomorphisms, then
+% there is a unique homomorphism 
+% \[
+% \begin{tikzcd}
+% f \text{ or } g : A \oplus B \to C
+% \end{tikzcd}
+% \]
+% that coincides with $f$ (resp.~$g$) on the subsemigroup of $A \oplus B$ consisting of words with a single letter from $A$ (resp.~$B$).
 
-\begin{example}\label{ex:coproduct-as-polynomial-functor}
-    A crucial property that will be used in our proof is that the functor
-    \begin{align*}
-    A \mapsto \text{underlying set of}\ \myunderbrace{A \oplus 1}{\text{coproduct with the singleton semigroup}}
-    \end{align*}
-    is in fact a polynomial functor (but not a finite polynomial functor). Noting that $\oplus$ makes sense as an operation on sets without a semigroup structure (it builds a set of nonempty alternating sequences), we have more generally that, if $\functor$ is a polynomial functor, then so is $A \mapsto \functor A \oplus 1$. This is because for every semigroup $A$ there is a bijective correspondence 
+
+
+
+
+
+% \begin{example}\label{ex:coproduct-as-polynomial-functor}
+    The polynomial functors that we  use in our proof will arise using coproducts with the singleton semigroup $1$. Consider  the semigroup-to-set functor $A \mapsto A \oplus 1$, which maps a semigroup to the underlying set of its coproduct with the singleton semigroup. Although not defined as a polynomial functor, this functor is isomorphic to a polynomial functor. This is because for every semigroup $A$ there is a bijective correspondence between the sets
     \begin{align}\label{eq:polynomial-representation-of-coproduct}
-    A \oplus 1 \quad \simeq \quad \coprod_{q \in 1 \oplus 1} A^{\text{dimension of $q$}},
+    A \oplus 1 \quad \text{and} \quad \coprod_{q \in 1 \oplus 1} A^{\text{dimension of $q$}},
     \end{align}
-    where the dimension of $q$ is defined to be the number of times that the first copy of $1$ appears in $q$. Furthermore, the bijection in~\eqref{eq:polynomial-representation-of-coproduct} is natural in $A$, and therefore there is a natural bijection between the functor $(-) \oplus 1$ and some polynomial functor. Also, if two polynomial functors are connected by a natural bijection, then they are the same, up to renaming of the components, and therefore the representation in~\eqref{eq:polynomial-representation-of-coproduct} is unique up to renaming of components. By uniqueness, we will simply speak of $A \oplus 1$ as being a polynomial functor. 
-\end{example}
+    where the dimension of $q$ is defined to be the number of times that the first copy of $1$ appears in $q$. Furthermore, the bijection in~\eqref{eq:polynomial-representation-of-coproduct} is natural, and therefore there is a natural bijection between the functor $(-) \oplus 1$ and some polynomial functor. Also, if two polynomial functors are connected by a natural bijection, then they are the same, up to renaming of the components, and therefore the representation in~\eqref{eq:polynomial-representation-of-coproduct} is unique up to renaming of components. By uniqueness, we will simply speak of $A \oplus 1$ as being a polynomial functor.  In a similar way, functors such as $A \mapsto A \oplus 1 \oplus A$ are also polynomial.
+    % Noting that $\oplus$ makes sense as an operation on sets without a semigroup structure (it builds a set of nonempty alternating sequences), we have more generally that, if $\functor$ is a polynomial functor, then so is $A \mapsto \functor A \oplus 1$. 
+% \end{example}
 
 
 
 
-\subsubsection{Copyless natural transformations}  Among all natural  transformations between polynomial functors, we will be interested mainly in those that are  \emph{copyless}. To define this notion, we will first observe that  every natural transformation between polynomial functors  arises from some syntactic description, and within this syntactic description, the copyless restriction can easily be phrased. 
-
-We begin with \emph{monomial functors}, i.e.~polynomial functors with one component. 
-Consider two monomial functors 
-\begin{align*}
-\functor A = A^k \qquad 
-\functorg A = A^\ell \qquad \text{where $k,\ell \in \mathbb{N} = \set{0,1,\ldots}$.}
-\end{align*}
-What is the possible form of a natural transformation between these functors? Given a \emph{syntactic description} by a map of type
-$\set{1,\ldots,\ell} \to \set{1,\ldots,k}^+$,
-we can define a natural transformation as follows: for a semigroup $A$, it gives the function  that inputs $\bar a \in A^k$ and outputs the tuple in $A^\ell$ defined by
-\[
-\begin{tikzcd}
-    [column sep=2.8cm]
-\set{1,\ldots,\ell}
-\arrow[r, "\text{syntactic description}"]
-&
-\set{1,\ldots,k}^+ 
-\ar[r,"\text{substitute $\bar a$}"]
-& 
-A^+
-\ar[r,"\text{semigroup operation}"]
-&
-A.
-\end{tikzcd}
-\]
-Every natural transformation between monomial functors arises this way. To see this, the syntactic description is recovered by using the natural transformation for the free semigroup $A=\set{1,\ldots,k}^+$, and applying it for the identity valuation 
-\begin{align*}
-x \in \set{1,\ldots,k} \quad \mapsto \quad [x] \in \set{1,\ldots,k}^+.
-\end{align*}
-The advantage of the syntactic description, which is unique, is that it allows us to define the  \emph{copyless restriction}:  (*)   we say that a  syntactic description
-\begin{align*}
-    \alpha: \set{1,\ldots,\ell} \to \set{1,\ldots,k}^+
-    \end{align*}
-is copyless if  every letter  from $\set{1,\ldots,k}$ appears in at most one word $\alpha(x)$, and in that word it appears at most once. An equivalent condition can be phrased semantically: (**) if we use the natural transformation in the semigroup $A = \Nat$, then the corresponding function $\Nat^k \to \Nat^\ell$ is non-expansive, i.e.\ the norm of its output is at most the norm of its input, where the norm of a vector is the sum of its coordinates. 
-
-We now define what it means to be copyless for a natural transformation between arbitrary polynomial functors 
-\begin{align*}
-\functor A = \coprod_{q \in Q} A^{\dim q} \qquad 
-\functorg A = \coprod_{p \in P} A^{\dim p},
-\end{align*}
-which are not necessarily monomial. Such natural transformations also admit syntactic descriptions: for every input component $q$, there is some designated output component $p$, and a natural transformation $A^{\dim q} \to A^{\dim p}$.  The set of possible syntactic descriptions is
-\begin{align*}
-\prod_{q \in Q} \coprod_{p \in P} \dim p \to (\dim q)^+.
-\end{align*}
-Again, one can show that all natural transformations arise this way. The natural transformation is called copyless if for every $q$, the corresponding natural transformation between monomial functors is copyless. 
 
 
-\begin{example}\label{ex:copyless-on-coproducts}
-    Consider the functor \enquote{$A\mapsto$ underlying set of $A \oplus 1$} from Example~\ref{ex:coproduct-as-polynomial-functor}, which was shown to be a polynomial functor. The natural transformation in $A$
+
+% \begin{example}\label{ex:copyless-on-coproducts}
+%     Consider the functor \enquote{$A\mapsto$ underlying set of $A \oplus 1$} from Example~\ref{ex:coproduct-as-polynomial-functor}, which was shown to be a polynomial functor. The natural transformation in $A$
+%     \begin{align*}
+%     (A \oplus 1)\times (A \oplus 1) \longrightarrow A \oplus 1
+%     \end{align*}
+%     which describes the semigroup operation in the coproduct $A \oplus 1$ is copyless.
+% \end{example}
+
+
+% \subsubsection{Views}
+% \label{sec:views}
+
+The crucial property of semigroups that will be used in our proof is described in Lemma~\ref{lem:views} below, which says that a coproduct can be reconstructed based on certain partial information. This partial information is described  using the following operations on coproducts.
+
+\begin{enumerate}
+    \item \textbf{Merging}. Consider a coproduct $A_1 \oplus \cdots \oplus A_n$, such that the same semigroup $A$ appears on all coordinates from a subset $I \subseteq \set{1,\ldots,n}$, and possibly on other coordinates as well. Define \emph{merging the parts from $I$} to be the function of type 
     \begin{align*}
-    (A \oplus 1)\times (A \oplus 1) \longrightarrow A \oplus 1
-    \end{align*}
-    which describes the semigroup operation in the coproduct $A \oplus 1$ is copyless.
-\end{example}
+        A_1 \oplus \cdots \oplus A_n \to  A \oplus \bigoplus_{i \not \in I} A_i
+        \end{align*}
+    that is defined in the expected way, and explaine in the following picture. In the picture, merging is applied to  a coproduct of three copies of the semigroup $\set{a,b}^+$, indicated using colours \red{red}, black and \blue{blue}, and the merged coordinates are \red{red} and \blue{blue}:
+        \begin{align*}
+        \blue{\boxed{aba}} \cdot 
+        \red{\boxed{b}} \cdot 
+        \boxed{aa} \cdot 
+        \red{\boxed{b}} \cdot 
+        \blue{\boxed{aa}} \cdot 
+        \red{\boxed{abba}} \cdot 
+        \boxed{b}
+        \quad \mapsto \quad  
+        \myunderbrace{
+            \violet{\boxed{abab}} \cdot 
+        \boxed{aa} \cdot 
+        \violet{\boxed{baaabba}} \cdot 
+        \boxed{b}
+        }{the merge of \red{red} and \blue{blue} is drawn in \violet{violet}}.\end{align*}    
+        \item \textbf {Shape.}  Define the \emph{shape operation} to be the function of type 
+        \begin{align*}
+        A_1 \oplus \cdots \oplus A_n \to 1 \oplus \cdots \oplus 1
+        \end{align*}
+        obtained by applying $!$ on every coordinate. The shape says how many alternating blocks there are, and which semigroups they come from, as explained in the following picture:
+        \begin{align*}
+            \blue{\boxed{aba}} \cdot 
+            \red{\boxed{b}} \cdot 
+            \boxed{aa} \cdot 
+            \red{\boxed{b}} \cdot 
+            \blue{\boxed{aa}} \cdot 
+            \red{\boxed{abba}} \cdot 
+            \boxed{b}
+            \quad \mapsto \quad  
+            \blue{\boxed{1}} \cdot 
+            \red{\boxed{1}} \cdot 
+            \boxed{1} \cdot 
+            \red{\boxed{1}} \cdot 
+            \blue{\boxed{1}} \cdot 
+            \red{\boxed{1}} \cdot 
+            \boxed{1}.
+        \end{align*}
+        \item \textbf{Views.} The final operation is the $i$-th view 
+        \begin{align*}
+        A_1 \oplus \cdots \oplus A_n \to 1 \oplus A_i.
+        \end{align*}
+        This operation applies $!$ to all coordinates other than $i$, and then it merges all those coordinates. Here is a picture, in which we take the view of the \blue{blue} coordinate:
+        \begin{align*}
+            \blue{\boxed{aba}} \cdot 
+            \red{\boxed{b}} \cdot 
+            \boxed{aa} \cdot 
+            \red{\boxed{b}} \cdot 
+            \blue{\boxed{aa}} \cdot 
+            \red{\boxed{abba}} \cdot 
+            \boxed{b}
+            \quad \mapsto \quad  
+            \blue{\boxed{aba}} \cdot 
+            {\boxed{1}} \cdot 
+            \blue{\boxed{aa}} \cdot 
+            \boxed{1}.
+        \end{align*}
+        
+\end{enumerate}
 
 
-\subsubsection{Views}
-\label{sec:views}
+% Another crucial property of the coproduct of semigroups is that a coproduct can be reconstructed from certain partial information, as described below. 
+% Consider a coproduct $A_1 \cdots A_n$.
 
-\newcommand{\combine}{\mathrm{combine}}
-\newcommand{\view}{\mathrm{view}}
 
-We now describe a crucial property of the coproduct of semigroups, which is behind the proof of Theorem~\ref{thm:regular-functions}. The idea is that an element of a binary coproduct can be uniquely defined from its views onto the individual coordinates, as defined below. 
-For two semigroups $A$ and $B$, define the \emph{$A$-view} and \emph{$B$-view} to be the homomorphisms
-\[
-    \view_A = \id_A \oplus ~!~ : A \oplus B \to A \oplus 1 \qquad 
-    \view_B = ~!~ \oplus \id_B : A \oplus B \to 1 \oplus B
-\]
-These are natural transformations in $A$ and $B$. The important property of views is that they give complete information about the coproduct, i.e.~if we have all views then we can reconstruct an element of the coproduct.
-%furthermore this reconstruction almost corresponds to an isomorphism of polynomial functors, so in particular it is copyless.
-This is stated in the following lemma. 
+The key observation is that an element of a coproduct can be reconstructed from its shape and views, as stated in the following lemma. 
 
 \begin{lemma}
-\label{lem:views}
-The map $A \oplus B \to (A \oplus 1) \times (1 \oplus B)$ obtained by pairing $\view_A$ and $\view_B$ is \emph{injective} and natural in $A$ and $B$.
+\label{lem:views} Let $A_1,\ldots,A_n$ be semigroups. The function of type
+\begin{align*}
+A_1 \oplus \cdots \oplus A_n \to (1 \oplus A_1) \times \cdots \times (1 \oplus A_n) \times (1 \oplus \cdots \oplus 1),
+\end{align*}
+which is obtained by combining the views for all $i \in \set{1,\ldots,n}$ and the shape, is injective. 
 \end{lemma}
 \begin{proof}
-    Straightforward.
+    The input can be reconstructed from the output as follows.
+    Start with the shape, and replace the entries from $1$ with the semigroup elements used in the views.
 \end{proof}
-\tito{Fixed. The correct generalization to $n=3$ is certainly something like $(A \oplus 1 \oplus 1) \times (1 \oplus B \oplus 1) \times (1 \oplus 1 \oplus C)$. The statement doesn't include a copyless partial inverse something to avoid having to talk about polynomial functors in several variables.}
 
-This lemma seems to contain the essential property of semigroups that makes the construction work. Our theorem will also be true for other algebraic structures in the lemma is true, such as forest algebras. However, the lemma seems to fail for certain algebraic structures, such as groups, even if we allow $1$ to be replaced by some fixed finite group. Another example where the lemma seems to fail is the monad of weighted sums of words (i.e.~this monad corresponds to weighted automata).
+
+This lemma seems to contain the essential property of semigroups that makes the construction work. Our theorem will also be true for other algebraic structures for which the lemma is true, such as forest algebras. However, the lemma seems to fail for certain algebraic structures, such as groups, even if we allow $1$ to be replaced by some fixed finite group. Another example where the lemma seems to fail is the monad of weighted sums of words (i.e.~this monad corresponds to weighted automata).
 \tito{I wonder if the important thing is not more simply that $A \oplus B$ is a polynomial bifunctor}
+\santa{Interesting!}
 
-\subsubsection{Functorial streaming string transducers}
-\label{sec:functorial-sst}
-We now describe the last ingredient in our proof, which is a more abstract variant  of streaming string transducers (\sst) that is described in Definition~\ref{def:functorial-sst}. 
-
-Before presenting the abstract definition, we discuss how it differs  from the usual of \sst. The first difference, which is least important, there is some abstract output semigroup $A$ instead of a free semigroup $\Gamma^+$; this generalization is only meant to have cleaner notation. The second, and more important, difference is that, instead of having a fixed number of registers, we allow the register structure to be a finite polynomial functor such as 
-\begin{align*}
-\functorr A = A^3 + A^2 + A^2 + A + 1.
-\end{align*}
-The idea is that the register structure already contains the states; with the states corresponding to components in the disjoint union, and with  different states using different numbers of registers. The final difference is that the transducer is allowed to have a look at regular properties of the string on both sides of the head:  when the head is over some position in the input string, then the way in which the registers are is decided based on  some recognizable property of 
-\begin{align*}
-\myunderbrace{\Sigma^*}{before \\ head } \times 
-\myunderbrace{\Sigma}{under \\ head } \times 
-\myunderbrace{\Sigma^*}{after \\ head }.
-\end{align*}
-(As usual, the register update must be copyless.)
-By a recognizable property of the above we mean a function that inputs elements of the above set of triples  and outputs elements of some set $X$, which can be be decomposed as 
-\[
-\begin{tikzcd}
-    \Sigma^* \times \Sigma \times \Sigma^* 
-    \ar[r,"h \times \id \times h"] 
-    &
-    M \times \Sigma \times M
-\ar[r,"f"]
-& 
-X
-\end{tikzcd}
-\] 
-for some homomorphism $h$ into a finite monoid and some function $f$. In a sense, this model has two features that replace states: the disjoint unions in the register structure, and the recognizable property. Each of these features alone would be enough, but for our intended application having both features will give a cleaner construction.
-
-Here is the formal definition of our \sst model.
-
-\begin{definition}\label{def:functorial-sst}
-    A functorial \sst is defined by:
-    \begin{itemize}
-    \item a finite  input alphabet $\Sigma$;
-    \item a (not necessarily finite) output semigroup $A$;
-    \item two finite polynomial functors $\functorr, \functors$ , called the \emph{register functor} and the \emph{update functors}, along with  three copyless natural transformations \begin{align*}
-    \vdash\;: 1 \to \functorr A \qquad \delta : \functorr A \times \functors A \to \functorr A \qquad \myunderbrace{\dashv\;: \functorr A \to A}{can be partial}
-    \end{align*}
-    \tito{why make it partial?}
-    \item an \emph{oracle}, which is a recognizable function 
-    \begin{align*}
-    o : \Sigma^* \times \Sigma \times \Sigma^* \to \functors A.
-    \end{align*}
-    
-    \end{itemize}
-\end{definition}
-
-The function computed by a functorial \sst is the partial function of type 
-\begin{align*}
-\Sigma^+ \to A
-\end{align*}
-that is defined as follows. Consider some input string in $\Sigma^+$. The machine moves its head along all input positions, and computes for each one a register valuation in $\functorr A$. In the initial register valuation corresponding to $i=0$, when no positions were processed yet, the register valuation  is obtained by applying $\vdash$ to the unique element $1$. For $i > 0$, the $i$-th register valuation is obtained by applying $\delta$ to the pair which consists of the $(i-1)$-st register valuation and the result of applying the oracle to input string with the $i$-th position distinguished. Finally, the output of the \sst is obtained by applying the output term operation $\dashv$ to the last  register valuation.
-
-\begin{lemma}\label{lem:functorial-sst-complete}
-    A function of type $\Sigma^* \to A$ is regular, in the standard sense, if and only if it is computed by a functorial \sst. 
-\end{lemma}
-\begin{proof}
-    A normal \sst with states $Q$ and $k$ registers can be seen as a functorial \sst with a register functor of the form 
-    \begin{align*}
-    \functorr A = \coprod_{q \in Q} (A + 1)^k.
-    \end{align*}
-    The oracle function does not look at any properties of the input string (all appropriate information is remembered in the implicit state from the register functor), and it simply outputs all elements of the output semigroup that might potentially be used in an update, with sufficient copies 
-    \begin{align*}
-    \functors A = A^\ell
-    \end{align*}
-    to make the function $\delta$ copyless. 
-
-    Consider now the other implication in the lemma, which is the one that we use in this proof. In the case when the register functor is $A^k$ for some $k$,  a functorial \sst is a special case of an \sst with regular lookahead; and regular lookahead can be eliminated~\cite[Lemma 13.6]{bojanczyk_automata_2018}. To accommodate more general polynomial functors as register functors, we observe that the component in a polynomial functor can be stored in the state of an \sst, and the register values can be stored in $A^k$ for sufficiently large $k$. 
-\end{proof}

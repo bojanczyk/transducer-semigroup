@@ -1,0 +1,37 @@
+\section{Syntactic description of copyless natural transformations}
+We begin with \emph{monomial functors}, i.e.~polynomial functors with one component. 
+Consider two monomial functors, say $A^k$ and $A^\ell$, for some  $k,\ell \in \mathbb{N} = \set{0,1,\ldots}$.
+One way of specifying a natural transformation between these two functors is to start with a function 
+\begin{equation}
+\label{eq:syntactic-description}    \alpha : \set{1,\ldots,\ell} \to \set{1,\ldots,k}^+,
+\end{equation}
+which we call a \emph{syntactic description}, and to then  define the  natural transformation as follows. For a semigroup $A$, the corresponding function of type $A^k \to A^\ell$  maps a tuple $\bar a \in A^k$ to the tuple in $A^\ell$ defined by
+\[
+\begin{tikzcd}
+    [column sep=2.8cm]
+\set{1,\ldots,\ell}
+\arrow[r, "\text{syntactic description}"]
+&
+\set{1,\ldots,k}^+ 
+\ar[r,"\text{substitute $\bar a$}"]
+& 
+A^+
+\ar[r,"\text{semigroup operation}"]
+&
+A.
+\end{tikzcd}
+\]
+It turns out that all  natural transformation between monomial functors arise this way, i.e.~they are in one-to-one correspondence with syntactic descriptions. To see this, the syntactic description is recovered by using the natural transformation for the free semigroup $A=\set{1,\ldots,k}^+$, and applying it to the tuple $(1,\ldots,k) \in A^k$.
+The advantage of the syntactic description, which is unique, is that it allows us to define the  \emph{copyless restriction}:  (*)   we say that a  syntactic description $\alpha$
+is \emph{copyless} if concatenating all $\ell$ output strings gives a string where each letter from $\set{1,\ldots,k}$ appears at most once. An equivalent condition can be phrased semantically: (**) if we use the natural transformation in the semigroup $A = \Nat$, then the corresponding function $\Nat^k \to \Nat^\ell$ is non-expansive, i.e.\ the norm of its output is at most the norm of its input, where the norm of a vector is the sum of its coordinates. 
+
+We now define what it means to be copyless for a natural transformation between two  polynomial functors 
+\begin{align*}
+\functor A = \coprod_{q \in Q} A^{\dim q} \qquad 
+\functorg A = \coprod_{p \in P} A^{\dim p},
+\end{align*}
+which are not necessarily monomial. Such natural transformations also admit syntactic descriptions: for every input component $q$, there is some designated output component $p$, and a natural transformation $A^{\dim q} \to A^{\dim p}$.  The set of possible syntactic descriptions is
+\begin{align*}
+\prod_{q \in Q} \coprod_{p \in P} \dim p \to (\dim q)^+.
+\end{align*}
+Again, one can show that all natural transformations arise this way. The natural transformation is called copyless if for every $q$, the corresponding natural transformation between monomial functors is copyless. 
