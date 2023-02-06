@@ -22,18 +22,18 @@
 
 %\titlerunning{Dummy short title} %TODO optional, please use if title is longer than one line
 
-\author{Mikołaj Bojańczyk}{Institute of Informatics, University of Warsaw, Poland \and \url{https://www.mimuw.edu.pl/~bojan/}}{bojan@mimuw.edu.pl}{}{{\color{red}(Optional) author-specific funding acknowledgements}}%TODO mandatory, please use full name; only 1 author per \author macro; first two parameters are mandatory, other parameters can be empty. Please provide at least the name of the affiliation and the country. The full address is optional. Use additional curly braces to indicate the correct name splitting when the last name consists of multiple name parts.
+% \author{Mikołaj Bojańczyk}{Institute of Informatics, University of Warsaw, Poland \and \url{https://www.mimuw.edu.pl/~bojan/}}{bojan@mimuw.edu.pl}{}{{\color{red}(Optional) author-specific funding acknowledgements}}%TODO mandatory, please use full name; only 1 author per \author macro; first two parameters are mandatory, other parameters can be empty. Please provide at least the name of the affiliation and the country. The full address is optional. Use additional curly braces to indicate the correct name splitting when the last name consists of multiple name parts.
 
-\author{Lê Thành Dũng (Tito) Nguy\~{\^e}n}{Laboratoire de l'informatique du parallélisme (LIP), École normale supérieure de Lyon, France \and \url{https://nguyentito.eu/}}{nltd@nguyentito.eu}{https://orcid.org/0000-0002-6900-5577}{Supported by the LABEX MILYON (ANR-10-LABX-0070) of Université de Lyon, within the program \enquote{Investissements d'Avenir} (ANR-11-IDEX-0007) operated by the French National Research Agency (ANR).}
+% \author{Lê Thành Dũng (Tito) Nguy\~{\^e}n}{Laboratoire de l'informatique du parallélisme (LIP), École normale supérieure de Lyon, France \and \url{https://nguyentito.eu/}}{nltd@nguyentito.eu}{https://orcid.org/0000-0002-6900-5577}{Supported by the LABEX MILYON (ANR-10-LABX-0070) of Université de Lyon, within the program \enquote{Investissements d'Avenir} (ANR-11-IDEX-0007) operated by the French National Research Agency (ANR).}
 
-\authorrunning{M.~Bojańczyk and L.~T.~D.~Nguy\~{\^e}n} %TODO mandatory. First: Use abbreviated first/middle names. Second (only in severe cases): Use first author plus 'et al.'
+% \authorrunning{M.~Bojańczyk and L.~T.~D.~Nguy\~{\^e}n} %TODO mandatory. First: Use abbreviated first/middle names. Second (only in severe cases): Use first author plus 'et al.'
 
-\Copyright{Mikołaj Bojańczyk and Lê Thành Dũng Nguy\~{\^e}n} %TODO mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
+% \Copyright{Mikołaj Bojańczyk and Lê Thành Dũng Nguy\~{\^e}n} %TODO mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
 
 \ccsdesc[500]{Theory of computation~Transducers} %TODO mandatory: Please choose ACM 2012 classifications from https://dl.acm.org/ccs/ccs_flat.cfm 
 
 
-\keywords{Dummy keyword} %TODO mandatory; please add comma-separated list of keywords
+\keywords{String-to-string transducers, semigroups, natural transformations} %TODO mandatory; please add comma-separated list of keywords
 
 \category{} %optional, e.g. invited paper
 
@@ -106,6 +106,7 @@
 \input{intro}
 \input{transducer-semigroup}
 \input{output-monoid}
+\input{conclusions}
 
 
 
@@ -122,7 +123,9 @@
 
 \input{ap-reco-reflecting}
 \input{ap-synt-copyless}
+\input{ap-sst-endgame}
 
+\end{document}
 \tito{Regular functions over arbitrary semigroups!\\
   Instead of just \enquote{transducer semigroups} we're going to prepend the adjective \enquote{functorial}, to distinguish them from the new \enquote{register transducer semigroups}. The notion of regular semigroup-to-semigroup function that we consider is closed under composition (\Cref{rem:composition}) and when the codomain is finite, it coincides with recognizable functions.}
 

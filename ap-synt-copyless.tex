@@ -1,4 +1,19 @@
-\section{Syntactic description of copyless natural transformations}
+\section{Proof of Lemma~\ref{lem:functorial-sst-complete}}
+In this part of the appendix, we prove~\Cref{lem:functorial-sst-complete}, which says that the models defined in Definitions~\ref{def:usual-sst} and~\ref{def:functorial-sst} define the same (total) string-to-semigroup functions.
+
+The easy implication is left-to-right. 
+    A streaming streaming transducer as in Definition~\ref{def:usual-sst} can be seen as a special case of an \sst as in Definition~\ref{def:functorial-sst}, because the sets of register valuations and register updates are constructed using finite polynomial functors, and the application operation is natural and copyless. 
+
+The rest of this section is devoted to the harder right-to-left implication. 
+
+\subparagraph*{A syntactic description.} The main step in the proof of the right-to-left implication is a syntactic description of what can be done by copyless natural functions between finite polynomial functors.
+%     (TODO complete)
+%     % For the converse implication, we observe that the component in an abstract finite polynomial functor $\functor A$ can be stored in the state of an \sst, and the register values can be stored in $A^k$ for sufficiently large $k$.
+%     % Consider now the other implication in the lemma, which is the one that we use in this proof. In the case when the register functor is $A^k$ for some $k$,  a functorial \sst is a special case of an \sst with regular lookahead; and regular lookahead can be eliminated~\cite[Lemma 13.6]{bojanczyk_automata_2018}. To accommodate more general polynomial functors as register functors,  
+% \end{proof}
+
+
+
 We begin with \emph{monomial functors}, i.e.~polynomial functors with one component. 
 Consider two monomial functors, say $A^k$ and $A^\ell$, for some  $k,\ell \in \mathbb{N} = \set{0,1,\ldots}$.
 One way of specifying a natural transformation between these two functors is to start with a function 
@@ -22,10 +37,9 @@ A.
 \end{tikzcd}
 \]
 It turns out that all  natural transformation between monomial functors arise this way, i.e.~they are in one-to-one correspondence with syntactic descriptions. To see this, the syntactic description is recovered by using the natural transformation for the free semigroup $A=\set{1,\ldots,k}^+$, and applying it to the tuple $(1,\ldots,k) \in A^k$.
-The advantage of the syntactic description, which is unique, is that it allows us to define the  \emph{copyless restriction}:  (*)   we say that a  syntactic description $\alpha$
-is \emph{copyless} if concatenating all $\ell$ output strings gives a string where each letter from $\set{1,\ldots,k}$ appears at most once. An equivalent condition can be phrased semantically: (**) if we use the natural transformation in the semigroup $A = \Nat$, then the corresponding function $\Nat^k \to \Nat^\ell$ is non-expansive, i.e.\ the norm of its output is at most the norm of its input, where the norm of a vector is the sum of its coordinates. 
+The advantage of the syntactic description, which is unique, is that it allows us to define the  {copyless restriction} in a more syntactic way, reminiscent of the definition used in Definition~\ref{def:usual-sst}:  a natural function between two monomial functors is copyless if and only if its syntactic description has the following property: (*) after concatenating all $\ell$ output strings gives a string where each letter from $\set{1,\ldots,k}$ appears at most once. 
 
-We now define what it means to be copyless for a natural transformation between two  polynomial functors 
+We now extend this syntactic description to copyless natural functions between general finite polynomial  functors 
 \begin{align*}
 \functor A = \coprod_{q \in Q} A^{\dim q} \qquad 
 \functorg A = \coprod_{p \in P} A^{\dim p},
@@ -35,3 +49,17 @@ which are not necessarily monomial. Such natural transformations also admit synt
 \prod_{q \in Q} \coprod_{p \in P} \dim p \to (\dim q)^+.
 \end{align*}
 Again, one can show that all natural transformations arise this way. The natural transformation is called copyless if for every $q$, the corresponding natural transformation between monomial functors is copyless. 
+
+\subparagraph*{Proof of the left-to-right implication in Lemma~\ref{lem:functorial-sst-complete}.} Using the above syntactic descriptions, we cna complete the proof of the harder left-to-right implication in Lemma~\ref{lem:functorial-sst-complete}. Consider a functorial streaming string transducer as in Definition~\ref{def:functorial-sst}, which uses a register and update functors 
+\begin{align*} 
+\functorr A = \coprod_{q \in Q} A^{\dim q} \qquad 
+\functors A = \coprod_{p \in P} A^{\dim p}.
+\end{align*}
+For an input string $a_1 \cdots a_n$, consider the sequence of register valuations 
+\begin{align*}
+v_1,\ldots,v_n \in \functorr A,
+\end{align*}
+such that $v_i$ arises by applying the first $i$ register updates produced by the update oracle. Let $k$ be the maximal dimension of the components in $Q$. Define a register valuation $w_i \in A^{k+1}$ as follows: take the register valuation used by $v_i$, and pad it to a tuple of length  $k+1$ using some distinguished element $a_0 \in A$. In particular, since $k$ is the maximal dimension of $Q$, we are guaranteed that the last coordinate with index $k+1$ stores the distinguished element $a_0$. We will show a streaming string transducer, as in Definition~\ref{def:usual-sst}, in which the set of register names is $\set{1,\ldots,k}$. 
+
+We begin by looking at the components.  Let $q_i \in Q$ be the component of the register valuation $v_i$. The first observation is that $q_i$ depends only on $q_{i-1}$ and the $i$-th register update. Therefore, the sequence $q_1 \cdots q_n$ can be produced by a rational function. The next observation is that, one we know the components $q_{i-1}$ and $q_{i}$, and the register update $u_i \in \functoru A$ that would be applied in the original transducer to from $v_{i-1}$ to $v_i$, then we can create a copyless register update that transforms $w_{i-1}$ into $w_i$. This is done by using the syntactic descriptions of natural functions that were described above. Once we have the register valuations $w_1,\ldots,w_n$, the output of the transducer can be easily obtained.
+

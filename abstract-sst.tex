@@ -2,11 +2,10 @@
 \label{sec:hard}
 We now turn to the difficult implication $(\ref{it:trans-semig-regular}) \Rightarrow (\ref{it:regular})$ in Theorem~\ref{thm:regular-functions}. 
 % The proof is presented in a way which, if sometimes slightly verbose, makes it easier to see how it can be adapted to other algebraic structures instead of semigroups (such as forest algebras).
-The assumption of the implication uses an abstract model (transducer semigroups), while the conclusion uses a concrete operational model (streaming string transducers). To bridge the gap, we will use an intermediate model, which is similar to streaming string transducers, but a bit more abstract. The abstraction will be obtained by using polynomial functors instead of registers, as described in Section~\ref{sec:abstract-sst}.
-\subsubsection{Functorial streaming string transducers}
-\label{sec:abstract-sst}
 
-
+\subparagraph*{Functorial streaming string transducers.}
+\label{sec:abstract-sst} 
+The assumption of the implication uses an abstract model (transducer semigroups), while the conclusion uses a concrete operational model (streaming string transducers). To bridge the gap, we use an intermediate model, similar to streaming string transducers, but a bit more abstract. The abstraction arises by using polynomial functors instead of registers, as described below. 
 
 Define a \emph{polynomial functor} to be a semigroup-to-set functor of the form
 \begin{align*}
@@ -15,18 +14,18 @@ A \quad \mapsto \quad \coprod_{q \in Q} A^{\text{dimension of } q},
 where $Q$ is some possibly infinite set, called the \emph{components}, with each  component having an associated \emph{dimension} in $\set{0,1,\ldots}$. The symbol $\coprod$ stands for disjoint union of sets. This functor does not take into account the semigroup structure of the input semigroup, since the output is seen only as a set.
 On morphisms, the functor works in the expected way, i.e.~coordinate-wise.  
 
-A \emph{finite polynomial functor} is one that has finitely many components. 
+A \emph{finite polynomial functor} is one with finitely many components. For example, $A \mapsto A^2 + A^2 + A$ is a finite polynomial functor. 
 A finite polynomial functor can be seen as a mild generalization of the construction which maps a semigroup $A$ to the set $A^R$ of register valuations for some fixed set $R$ of register names.  In the generalization, we allow a variable number of registers, depending on some finite information (the component). 
 
-Having defined a more abstract notion of ``register valuations'', we now define a more abstract notion of ``register updates''.  The first condition for such updates is that they do not look inside the register contents; this condition is captured by naturality as described in the following definition. 
+Having defined a more abstract notion of ``register valuations'', namely finite polynomial functors, we now define a more abstract notion of ``register updates''.  The first condition for such updates is that they do not look inside the register contents; this condition is captured by naturality as described in the following definition. 
 
 
 
 \begin{definition}[Natural functions]\label{def:natural-functions}
     Let $\functor$  and $\functorg$ be polynomial functors, let $A$ be a semigroup. A function\footnote{This function is not necessarily a semigroup homomorphism. In fact, it would not even make sense call it a homomorphism, since the functors $\functor$ and $\functorg$ produce sets and not semigroups.}  $f : \functor A \to \functorg A$ is called \emph{natural} if it can be extended to natural transformation of type $\functor \Rightarrow \functorg$. This means that there is a family of functions, with one function
-    \begin{align*}
+    $
     f_A : \functor A \to \functorg A
-    \end{align*}
+    $
     for each semigroup $A$, such  that $f=f_A$, and the the  diagram
     \[
     \begin{tikzcd}
@@ -51,9 +50,9 @@ Having defined a more abstract notion of ``register valuations'', we now define 
 \begin{example}
     Consider the polynomial functors 
     \begin{align*}
-    \functor A = A^* = \coprod_{q \in \Nat} A^q \qquad \functorg A = A + 1,     \end{align*} 
+    \functor A = A^* = 1 + A^1 + A^2 + \cdots  \qquad \functorg A = A + 1,     \end{align*} 
     where $1$ represents the singleton set $A^0$.
-An example of a natural transformation between these two functors is the function which maps a nonempty list in $A^*$ to the product of its elements, and which maps the empty list to the unique element of $1$. A non-example is the function that returns the leftmost element in the input list that is an idempotent in the semigroup, and returns $1$ if such an element does not exist. The reason why the non-example is not natural is that a semigroup homomorphism can map a non-idempotent to an idempotent.
+An example of a natural transformation between these two functors is the function which maps a nonempty list in $A^*$ to the product of its elements, and which maps the empty list to the unique element of $1$. A non-example is the function that maps a list $[a_1,\ldots,a_n] \in A^*$ to the leftmost element $a_i$ that is an idempotent in the semigroup, and returns $1$ if such an element does not exist. The reason why the non-example is not natural is that a semigroup homomorphism can map a non-idempotent to an idempotent.
 \end{example}
 % The naturality condition is an abstraction of the condition (a) that was mentioned before, namely that register contents are not inspected. For example, as we will see below, a natural transformations from the functor $\functor A = A^2$ to itself is $(a,b) \mapsto (abbaa,bbba)$, while 
 % \begin{align*}
@@ -65,7 +64,7 @@ An example of a natural transformation between these two functors is the functio
 % is not a natural transformation.
 
 
-Apart from naturality, we will want our register updates to be copyless. This can be formalized in several ways; we choose to use the following semantic definition.
+Apart from naturality, we will want our register updates to be copyless. 
 
 \begin{definition}[Copyless natural function] \label{def:copyless} A natural function $f : \functor A \to \functorg A$ is  called \emph{copyless} if it arises from some natural transformation with the following property:  when instantiated to the semigroup\footnote{The choice of the semigroup $(\Nat,+)$ in the \Cref{def:copyless} is not particularly important. For example, the same notion of copylessness would arise if instead of $(\Nat,+)$, we used the semigroup $\set{0,1}$ with addition up to threshold $1$ (i.e.~the only way to get zero is to add two zeros). In the appendix, we present a more syntactic characterization of copyless natural transformations, which will be used later on when proving equivalence with streaming string transducers. 
     } $(\Nat,+)$, the corresponding function of type $\functor \Nat \to \functorg \Nat$ 
@@ -76,32 +75,24 @@ Apart from naturality, we will want our register updates to be copyless. This ca
 
 
 
-Having defined functions that are natural and copyless, we now describe the more abstract model of  streaming string transducers that will be used in our proof. The main difference is that instead of register valuations and updates that are given by some finite set of register names, we have two abstract polynomial functors, together with an explicitly given application function. Another minor difference is that we allow the model to define partial functions; this will be useful in the proof.
+Having defined functions that are natural and copyless, we now describe the more abstract model of streaming string transducers that is be used in our proof. The main difference is that instead of register valuations and updates given by some finite set of register names, we have two abstract finite polynomial functors, together with an explicitly given application function. Another minor difference is that we allow the model to define partial functions; this will be useful in the proof.
 
 
 \begin{definition}\label{def:functorial-sst}
     The syntax of a functorial streaming string transducer is given by:
     \begin{itemize}
         \item A finite \emph{input alphabet} $\Sigma$ and an \emph{output semigroup $A$}.
-    \item Two finite polynomial functor $\functorr$ and $\functoru$, called the \emph{register} and \emph{update} functors, together with an \emph{application function} of type $\functorr A \times \functoru A \to \functorr A$, which is natural and copyless.
+    \item Two finite polynomial functors $\functorr$ and $\functoru$, called the \emph{register} and \emph{update} functors, together with a function of type $\functorr A \times \functoru A \to \functorr A$, called \emph{appliction}, which is natural and copyless.
     \item A distinguished \emph{initial register valuation}  in $\functorr A$.
     \item A \emph{final function} of type $\functorr A \to A + 1$, which is natural and copyless.
-    \item An \emph{update oracle}, which is a rational function of type $\Sigma^* \to (\functorr A)^*$.
+    \item An \emph{update oracle}, which is a rational function of type $\Sigma^* \to (\functoru A)^*$.
     \end{itemize}
 \end{definition}
 
 The semantics of the transducer is a partial function of type 
-$\Sigma^* \to A$
-that is defined as follows. As in Definition~\ref{def:usual-sst}, for every input string we use  the initial register valuation, the application function and the update oracle to define a sequence of register valuations in $\functor A$. We then apply the final function to the last register valuation, yielding a result in $A+1$.  If this result is in the $1$ part, then the output of the transducer is undefined, otherwise the output of the transducer is the semigroup element stored in the $A$ part. We will care about transducers that compute total functions, which corresponds to the property  that for every input string, the last register valuation is in the $A$ part of $A+1$.
+$\Sigma^* \to A$ defined as follows. As in Definition~\ref{def:usual-sst}, for every input string we use  the initial register valuation, the application function and the update oracle to define a sequence of register valuations in $\functor A$. We then apply the final function to the last register valuation, yielding a result in $A+1$.  If this result is in the $1$ part, then the output of the transducer is undefined, otherwise the output of the transducer is the semigroup element stored in the $A$ part. We will care about transducers that compute total functions, which corresponds to the property  that for every input string, the last register valuation is in the $A$ part of $A+1$.
 
 \begin{lemma}\label{lem:functorial-sst-complete}
-    The models defined in Definition~\ref{def:usual-sst} and~\ref{def:functorial-sst} define the same (total) string-to-semigroup functions.
+    The models defined in Definitions~\ref{def:usual-sst} and~\ref{def:functorial-sst} define the same (total) string-to-semigroup functions.
 \end{lemma}
-\begin{proof}
-    An \sst as in Definition~\ref{def:usual-sst} can be seen as a special case of an \sst as in Definition~\ref{def:functorial-sst}, because the sets of register valuations and register updates are constructed using finite polynomial functors, and the application operation is natural and copyless. 
-
-    (TODO complete)
-    % For the converse implication, we observe that the component in an abstract finite polynomial functor $\functor A$ can be stored in the state of an \sst, and the register values can be stored in $A^k$ for sufficiently large $k$.
-    % Consider now the other implication in the lemma, which is the one that we use in this proof. In the case when the register functor is $A^k$ for some $k$,  a functorial \sst is a special case of an \sst with regular lookahead; and regular lookahead can be eliminated~\cite[Lemma 13.6]{bojanczyk_automata_2018}. To accommodate more general polynomial functors as register functors,  
-\end{proof}
 

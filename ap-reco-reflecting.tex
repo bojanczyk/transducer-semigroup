@@ -1,4 +1,4 @@
-\section{Proof of Theore~\ref{thm:reco-reflecting-functions}}
+\section{Proof of~\Cref{thm:reco-reflecting-functions}}
     We prove a slight strenghening of the theorem, which concerns not only string-to-string functions, but also functions $f : A \to B$ between semigroups, not necessarily homomorphisms, such that the target semigroup $B$ is finitely generated.
 
     \proofsubparagraph{(\ref{it:reco-refl}) $\Rightarrow$ (\ref{it:trans-semig-reco}).}  We  use a similar construction as in the proof of Theorem~\ref{thm:all-functions}. Let  $f :A \to B$  be recognizability reflecting.  Define  a functor as follows: 
@@ -15,8 +15,7 @@
     Each of these sets is recognizable, by the assumption that $f$ is recognizability reflecting.     By the assumption that $B$ is finitely generated and $C$ IS finite, there are finitely many choices for $g$, and therefore the union is finite. This implies that the inverse image of $c$ is recognizable, as a finite union of recognizable subsets of  $\functor C$.
     
     The transducer semigroup defined above recognizes the function $f$ via the homomorphism $a \in A  \mapsto  (a,\id)$.
-    \tito{not sure $\outfun_C$ recognizable holds when $B$ isn't finitely generated?}
-    \santa{I believe that it does not hold. Take $C$ to be the two element group, and $B= C^\omega$. For this reason, I made all theorems into string-to-string functions, so that there are no annoying subtle changes in their statements.}
+    
     
     
 \proofsubparagraph{

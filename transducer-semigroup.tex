@@ -1,234 +1,243 @@
 \section{Transducer semigroups and warm-up theorems}\label{sec:warm-up}
 
-In this section, we define the model that is studied in this paper, namely transducer semigroups. The purpose of this model is to recognize \emph{string-to-string} functions, which are defined to be functions of type $\Sigma^* \to \Gamma^*$, for some finite alphabets.  Some results will work in the slightly more general case where the input or output is a semigroup that is not necessarily a finitely generated free monoid, but we focus on the string-to-string case for the sake of concreteness.
-% More generally, the model can recognize \emph{semigroup-to-semigroup} functions, which are defined to be functions of type $A \to B$ for some semigroups. For the sake of concreteness, we focus on string-to-string functions.
+In this section, we define the model that is introduced in this paper, namely transducer semigroups. The purpose of this model is to recognize \emph{string-to-string} functions, which are defined to be functions of type $\Sigma^* \to \Gamma^*$, for some finite alphabets. Some results will work in the slightly more general case where the input or output is a semigroup that is not necessarily a finitely generated free monoid, but we focus on the string-to-string case for the sake of concreteness.
 
-% We use some basic notions from category theory, such as functors or natural transformations. 
-The model is defined using terminology based in category theory. However,  we do not assume that the reader has a background in category theory, beyond the two most basic notions of category and functor. Recall that a \emph{category} consists of objects with morphisms between them, such that the morphisms can be composed and each object has an identity morphism to itself. In this paper, we will be working mainly with two categories:
+The model is defined using terminology based on category theory. However, we do not assume that the reader has a background in category theory, beyond the two most basic notions of category and functor. Recall that a \emph{category} consists of objects with morphisms between them, such that the morphisms can be composed and each object has an identity morphism to itself. In this paper, we will be working mainly with two categories:
 \begin{description}
-    \item[Sets.] Objects are sets,  morphisms are functions between them.
-    \item[Semigroups.] Objects are semigroups,  morphisms are semigroup homomorphisms.
+ \item[Sets.] The objects are sets, the morphisms are functions between them.
+ \item[Semigroups.] The objects are semigroups, the morphisms are semigroup homomorphisms.
 \end{description}
-Recall that a functor between to categories consists of two maps: one map assigns to each object $A$ in the source category a new object in the target category, and another map assigns to each morphism $f : A \to B$ a morhpism $\functor f : \functor A \to \functor B$. These maps need to be consistent with composition of morphisms, and the identity must go to the identity. An example of a functor is the \emph{forgetful functor} from the category of semigroups to the category of sets, which maps a semigroup to its underlying set, and a semigroup homomorphism to the corresponding function on sets. The forgetful functor is an example of a semigroup-to-set functor, which goes from the category of semigroups to the category of sets. 
+To transform categories, we use {functors}.
+Recall that a \emph{functor} between two categories consists of two maps: one that assigns to each object $A$ in the source category an object in the target category, and another one that assigns to each morphism $f : A \to B$ a morphism $\functor f : \functor A \to \functor B$. These maps need to be consistent with composition of morphisms, and the identity must go to the identity. An example of a functor is the \emph{forgetful functor} from the category of semigroups to the category of sets, which maps a semigroup to its underlying set, and a semigroup homomorphism to the corresponding function on sets. The forgetful functor is an example of a semigroup-to-set functor, which goes from the category of semigroups to the category of sets. The following example discusses semigroup-to-semigroup functors.
 
  \begin{example}\label{ex:functors}
-    Here are some examples of semigroup-to-semigroup functors, which  can be seen as semigroup constructions.   
-    \begin{description}
-        \item[Tuples.] This functor maps a semigroup $A$ to its square $A^2$, with the semigroup operation  defined coordinate-wise. The functor extends to morphisms in the expected way. This functor also makes sense for higher powers, including infinite powers, such as $A^\omega$.
-        \item[Reverse.] This functor maps a semigroup $A$ to the semigroup where the underlying set is the same, but multiplication is reversed, i.e.~the product of $a$ and $b$ in the new semigroup is the product $b$ and $a$ in the old semigroup. Morphisms are not changed by the functor: they retain the homomorphism property despite the change in the multiplication operation.
-        \item[Non-empty lists.] This functor maps a semigroup $A$ to the free semigroup $A^+$ which consists of non-empty lists (or strings) over the alphabet $A$ equipped with concatenation. On morphisms, the functor is defined element-wise (or letter-wise). 
-        \item[Powerset.] This (covariant) powerset functor maps $A$ to the powerset semigroup $\powerset A$, whose underlying set is the family of all subsets of $A$, endowed with the operation
-        \begin{align*}
-        (A_1,A_2) \quad \mapsto \quad \left\{a_1 a_2 \mid a_1 \in A_1\ \text{and}\ a_2 \in A_2\right\}.
-        \end{align*}
-        Variants of the powerset   functor  require the subsets to be nonempty, or finite, or both.
-        % \item Fix some semigroup $C$, and consider the functor which maps a semigroup $A$ to the sub-semigroup of the semigroup $A^C$, as in the first item, which consists only of those tuples $A^C$ that describe semigroup homomorphisms $C \to A$. For morphisms, the functor is defined coordinate-wise, as in the first item.
-    \end{description}
+ A semigroup-to-semigroup can be seen as a semigroup construction. Here are sompe examples.
+ \begin{description}
+ \item[Tuples.] This functor maps a semigroup $A$ to its square $A \times A$, with the semigroup operation defined coordinate-wise. The functor extends to morphisms in the expected way. This functor also makes sense for higher powers, including infinite powers, such as $A^\omega$.
+ \item[Reverse.] This functor maps a semigroup $A$ to the semigroup where the underlying set is the same, but multiplication is reversed, i.e.~the product of $a$ and $b$ in the new semigroup is the product $b$ and $a$ in the old semigroup. Morphisms are not changed by the functor: they retain the homomorphism property despite the change in the multiplication operation.
+ \item[Non-empty lists.] This functor maps a semigroup $A$ to the free semigroup $A^+$ that consists of non-empty lists (or strings) over the alphabet $A$ equipped with concatenation. On morphisms, the functor is defined element-wise (or letter-wise). A similar construction would make sense as a set-to-semigroup functor.
+ \item[Powerset.] This (covariant) powerset functor maps a semigroup $A$ to the powerset semigroup $\powerset A$, whose underlying set is the family of all subsets of $A$, endowed with the operation
+ \begin{align*}
+ (A_1,A_2) \quad \mapsto \quad \left\{a_1 a_2 \mid a_1 \in A_1\ \text{and}\ a_2 \in A_2\right\}.
+ \end{align*}
+ Variants of the powerset functor require the subsets to be nonempty, or finite, or both.
+ % \item Fix some semigroup $C$, and consider the functor which maps a semigroup $A$ to the sub-semigroup of the semigroup $A^C$, as in the first item, which consists only of those tuples $A^C$ that describe semigroup homomorphisms $C \to A$. For morphisms, the functor is defined coordinate-wise, as in the first item.
+ \end{description}
  \end{example}
 
-%  \begin{myexample}
-%     Here is a non-example of a functor from the category of semigroups to itself. Suppose that, on objects,  we want to map each semigroup $A$ to the set of all functions $A \to A$, with the semigroup operation being function composition. The problem with this construction is that it is not clear how to extend it to morphisms, i.e.~how to map a semigroup homomorphism $f : A \to B$ to some semigroup homomorphism
-%     \[
-%     \begin{tikzcd}
-%     (A \to A)
-%     \ar[r,"\functor f"]
-%     &
-%     (B \to B).
-%     \end{tikzcd}
-%     \]
-%     There are artificial ways to do this. For example, we could choose for each semigroup $B$ some distinguished element $b_0 \in B$, and map a semigroup homomorphism $f : A \to B$ to the semigroup homomorphism which maps all functions $A \to A$ to the constant function $b \mapsto b_0$. 
-%  \end{myexample}
+% \begin{myexample}
+% Here is a non-example of a functor from the category of semigroups to itself. Suppose that, on objects, we want to map each semigroup $A$ to the set of all functions $A \to A$, with the semigroup operation being function composition. The problem with this construction is that it is not clear how to extend it to morphisms, i.e.~how to map a semigroup homomorphism $f : A \to B$ to some semigroup homomorphism
+% \[
+% \begin{tikzcd}
+% (A \to A)
+% \ar[r,"\functor f"]
+% &
+% (B \to B).
+% \end{tikzcd}
+% \]
+% There are artificial ways to do this. For example, we could choose for each semigroup $B$ some distinguished element $b_0 \in B$, and map a semigroup homomorphism $f : A \to B$ to the semigroup homomorphism which maps all functions $A \to A$ to the constant function $b \mapsto b_0$. 
+% \end{myexample}
  
 \noindent
  We now present the central definition of this paper. 
 
 \newcommand{\emptytester}{2}
-\begin{definition}
-    A \emph{transducer semigroup} consists of  a semigroup-to-semigroup functor $\functor$, together with an \emph{output mechanism}, which associates to each semigroup $A$ a function of type $\functor A \to A$, called the \emph{output function for $A$}. The output function does not need to be a semigroup homomorphism. The output mechanism is required to be \emph{natural}, which means that the diagram
-    \[
-    \begin{tikzcd}
-    \functor A 
-    \ar[r,"\functor h"]
-    \ar[d,"\text{output function for $A$}"']
-    &
-    \functor B
-    \ar[d,"\text{output function for $B$}"]
-    \\
-    A
-    \ar[r,"h"']
-    &
-    B
-    \end{tikzcd}
-    \]
-    commutes for every semigroup homomorphism $h : A \to B$. 
-    
-    We say that a function   $f : A \to B$ between semigroups, not necessarily a homomorphism, is    \emph{recognized} by a transducer semigroup if it can be decomposed as
-    \[
-        \begin{tikzcd}
-        [column sep=1.7cm]
-        A 
-        \ar[r,"h"]
-        &
-        \functor B
-        \ar[rr,"\text{output function for $B$}"]
-        &&
-        B
-        \end{tikzcd}
-        \quad
-        \text{for some semigroup homomorphism}\ h.
-        \]
+\begin{definition}[Transducer semigroup]\label{def:transducer-semigroup}
+ A \emph{transducer semigroup} consists of a semigroup-to-semigroup functor $\functor$, together with an \emph{output mechanism}, which associates to each semigroup $A$ a function of type $\functor A \to A$, called the \emph{output function for $A$}. The output function does not need to be a semigroup homomorphism. The output mechanism is required to be \emph{natural}, which means that the diagram
+ \[
+ \begin{tikzcd}
+ \functor A 
+ \ar[r,"\functor h"]
+ \ar[d,"\text{output function for $A$}"']
+ &
+ \functor B
+ \ar[d,"\text{output function for $B$}"]
+ \\
+ A
+ \ar[r,"h"']
+ &
+ B
+ \end{tikzcd}
+ \]
+ commutes for every semigroup homomorphism $h : A \to B$. 
 \end{definition}
+
 In the language of category theory, the naturality condition from the above definition says that the output mechanism is a natural transformation of type 
 \[\begin{tikzcd}
-    [column sep=1cm]
-    {\text{Semigroups}} && {\text{Sets}}
-    \arrow[""{name=0, anchor=center}, "\text{apply $\functor$ and return underlying set}", curve={height=-18pt}, from=1-1, to=1-3]
-    \arrow[""{name=1, anchor=center, inner sep=0}, "\text{return underlying set}"', curve={height=18pt}, from=1-1, to=1-3]
-    \arrow[ shorten <=5pt, shorten >=5pt, Rightarrow, from=0, to=1].
+ [column sep=1cm]
+ {\text{Semigroups}} && {\text{Sets}}
+ \arrow[""{name=0, anchor=center}, "\text{apply $\functor$ and return underlying set}", curve={height=-18pt}, from=1-1, to=1-3]
+ \arrow[""{name=1, anchor=center, inner sep=0}, "\text{return underlying set}"', curve={height=18pt}, from=1-1, to=1-3]
+ \arrow[ shorten <=5pt, shorten >=5pt, Rightarrow, from=0, to=1].
 \end{tikzcd}\]
 
+We are mainly interested in the special case of transducer semigroups where the functor $\functor$ is \emph{finiteness-preserving}, i.e.~it maps finite semigroups to finite semigroups. This special case will correspond to the regular string-to-string functions. Some minor results about the general case, when $\functor$ is not necessarily finiteness-preserving, are presented in Section~\ref{sec:two-simple}.
+
+The purpose of transducer semigroups is to define functions between semigroups, as explained in the following definition. 
+\begin{definition}
+ We say that a function $f : A \to B$ between semigroups, not necessarily a homomorphism, is \emph{recognized} by a transducer semigroup if it can be decomposed as
+ \[
+ \begin{tikzcd}
+ [column sep=1.7cm]
+ A 
+ \ar[r,"h"]
+ &
+ \functor B
+ \ar[rr,"\text{output function for $B$}"]
+ &&
+ B
+ \end{tikzcd}
+ \quad
+ \text{for some semigroup homomorphism}\ h.
+ \]
+\end{definition}
+
+
+The definition discusses functions between arbitrary semigroups, but we will mainly care about string-to-string functions $f : \Sigma^* \to \Gamma^*$, i.e.~the special case when both the input and output semigroups are finitely generated free monoids. Although the case that we care about involves monoids, which are a special case of semigroups, it will be useful in the proofs to define the model in terms of semigroups.
+
+
 \begin{example}
-    Consider the transducer semigroup in which the functor is the identity, and the output mechanism is also the identity. The functions of type $A \to B$ that are recognized by this transducer semigroup are exactly the semigroup homomorphisms from $A$ to $B$.
+ Consider the transducer semigroup in which the functor is the identity, and the output mechanism is also the identity. The functions of type $A \to B$ that are recognized by this transducer semigroup are exactly the semigroup homomorphisms from $A$ to $B$.
 \end{example}
 
 \begin{example}\label{ex:duplicator}
-    Consider the transducer semigroup in which the functor is the identity, and the output function for $A$ is  $a \in A \mapsto aa \in A$. (This output function is not a semigroup homomorphism.)
-    The functions of type $A \to B$ that are recognized by this transducer semigroup are exactly those of the form $a \mapsto h(a)h(a)$ where $h$ is some homomorphism. In particular, if $h$ is the identity on the monoid $\Sigma^*$, which is also a semigroup, then we get the duplicating function on strings over the alphabet $\Sigma$.
+ Consider the transducer semigroup in which the functor is the identity, and the output function for $A$ is $a \in A \mapsto aa \in A$. (This output function is not a semigroup homomorphism.)
+ The functions of type $A \to B$ that are recognized by this transducer semigroup are exactly those of the form $a \mapsto h(a)h(a)$ where $h$ is some homomorphism. In particular, if $h$ is the identity on the monoid $\Sigma^*$, which is also a semigroup, then we get the duplicating function on strings over the alphabet $\Sigma$.
 \end{example}
 
 
 
 \begin{example}
-    Consider the reversing functor from \Cref{ex:functors}. Define the output mechanism to be the identity. Using this transducer semigroup, we can recognize the string reversal  function.
-    %  $f : \Sigma^* \to \Sigma^*$. 
-    % More generally, a function $f : A \to B$ is recognized by this transducer semigroup if and only if it is an ``anti-homomorphism'', i.e.~$f(ab) = f(b)f(a)$.
+ Consider the reversing functor from \Cref{ex:functors}. Define the output mechanism to be the identity. Using this transducer semigroup, we can recognize the string reversal function.
+ % $f : \Sigma^* \to \Sigma^*$. 
+ % More generally, a function $f : A \to B$ is recognized by this transducer semigroup if and only if it is an ``anti-homomorphism'', i.e.~$f(ab) = f(b)f(a)$.
 \end{example}
 
 \begin{example}\label{ex:squaring}
-    Consider the functor $A \mapsto A^*$, which is similar to the nonempty list functor from Example~\ref{ex:functors}, except that it allows empty lists, and consider an output function 
-    \begin{align*}
-    [a_1,\ldots,a_n] \in A^+ & \mapsto \myunderbrace{(a_1 \cdots a_n) \cdots (a_1 \cdots a_n)}{$n$ times} \in A.
-    \end{align*}
-    This transducer semigroup recognizes the squaring function $w \in \Sigma^* \mapsto w^{|w|} \in \Sigma^*$  that is illustrated in the following example: $\mathtt{123 \mapsto 123123123}$.
+ Consider the functor $A \mapsto A^+$, as in Example~\ref{ex:functors}, and an output function 
+ \begin{align*}
+ [a_1,\ldots,a_n] \in A^+ & \mapsto \myunderbrace{(a_1 \cdots a_n) \cdots (a_1 \cdots a_n)}{$n$ times} \in A.
+ \end{align*}
+ This transducer semigroup recognizes the squaring function $w \in \Sigma^+ \mapsto w^{|w|} \in \Sigma^*$ for nonempty strings, which is illustrated in the following example: $\mathtt{123 \mapsto 123123123}$.
 \end{example}
 
 % \begin{example}\label{ex:squaring-empty}
-%     We refine the above example in order to recognize the squaring function defined on possibly empty strings: $w \in \Sigma^* \mapsto w^{|w|} \in \Sigma^*$.
-    
-%     Let $\functor A = A^+ + A$ with the following semigroup operation: when both arguments are in~$A$ (resp.~$A^+$), we use the semigroup structure of $A$ (resp.~$A^+$); in the remaining cases, $a \cdot \ell = \ell \cdot a = \ell$ for $a \in A$ and $\ell \in A^+$. This construction on semigroups can be turned into a functor, by making the morphisms act coordinate-wise. To make it into a transducer semigroup, we define $\outfun_A : A^+ + A \to A$ by combining the output mechanism $A^+ \to A$ of the previous example with the identity $A \to A$.
-    
-%     Let $h : \Sigma^* \to \functor(\Sigma^*)$ be the unique semigroup homomorphism such that $h(\varepsilon) = \varepsilon \in \Sigma^*$ and $h(c) = c \in (\Sigma^*)^+$ for $c\in\Sigma$. Then $\outfun_{\Sigma^*} \circ h$ is the squaring function on $\Sigma^*$, as we wanted.
+% We refine the above example in order to recognize the squaring function defined on possibly empty strings: $w \in \Sigma^* \mapsto w^{|w|} \in \Sigma^*$.
+ 
+% Let $\functor A = A^+ + A$ with the following semigroup operation: when both arguments are in~$A$ (resp.~$A^+$), we use the semigroup structure of $A$ (resp.~$A^+$); in the remaining cases, $a \cdot \ell = \ell \cdot a = \ell$ for $a \in A$ and $\ell \in A^+$. This construction on semigroups can be turned into a functor, by making the morphisms act coordinate-wise. To make it into a transducer semigroup, we define $\outfun_A : A^+ + A \to A$ by combining the output mechanism $A^+ \to A$ of the previous example with the identity $A \to A$.
+ 
+% Let $h : \Sigma^* \to \functor(\Sigma^*)$ be the unique semigroup homomorphism such that $h(\varepsilon) = \varepsilon \in \Sigma^*$ and $h(c) = c \in (\Sigma^*)^+$ for $c\in\Sigma$. Then $\outfun_{\Sigma^*} \circ h$ is the squaring function on $\Sigma^*$, as we wanted.
 % \end{example}
 
 %\begin{example}\label{ex:squaring-generalized}
-%     Here is a generalization of the previous example. The functor continues to be $A^+$. The output mechanism $A^+ \to A$ is given by a sequence of strings 
-%     \begin{align*}
-%     w_1 \in \set{1}^+, \quad w_2 \in \set{1,2}^+, \quad w_3 \in \set{1,2,3}^+, \quad \ldots.
-%     \end{align*}
-%     When applied to lists of  length $n$, the output mechanism is
-%     \[
-%         \begin{tikzcd}
-%             [column  sep=3cm]
-%         A^n
-%         \ar[r,"f \mapsto \text{$f$ applied to $w_n$}"]
-%         &
-%         A^+ 
-%         \ar[r,"\text{semigroup operation}"]
-%         & 
-%         A.
-%         \end{tikzcd}
-%         \]
+% Here is a generalization of the previous example. The functor continues to be $A^+$. The output mechanism $A^+ \to A$ is given by a sequence of strings 
+% \begin{align*}
+% w_1 \in \set{1}^+, \quad w_2 \in \set{1,2}^+, \quad w_3 \in \set{1,2,3}^+, \quad \ldots.
+% \end{align*}
+% When applied to lists of length $n$, the output mechanism is
+% \[
+% \begin{tikzcd}
+% [column sep=3cm]
+% A^n
+% \ar[r,"f \mapsto \text{$f$ applied to $w_n$}"]
+% &
+% A^+ 
+% \ar[r,"\text{semigroup operation}"]
+% & 
+% A.
+% \end{tikzcd}
+% \]
 % \end{example}
 
 % \begin{myexample} This example is more challenging than the previous ones, and it is meant to describe copyful \sst.
-%     In this example, we use a slightly different setup: we assume that the output mechanism is a partial function, but still natural. For some finite set $R$ of \emph{register names} with a designated \emph{output register}. Define a functor where  
-%     \begin{align*}
-%     \functor A = R \to (R^+ \oplus A),
-%     \end{align*}
-%     where $\oplus$ is the co-product of semigroups, and the  semigroup structure of $\functor A$ is defined as follows. The product of two elements $f,g, \in \functor A$ is the composition of the functions described below
-%     \[
-%     \begin{tikzcd}
-%     R
-%     \ar[r,"f"]
-%     &
-%     R^+ \oplus A
-%     \ar[r, "g^+ \oplus \id"]
-%     &
-%     (R^+ \oplus A)^+ \oplus A
-%     \ar[r,"\text{mult} \oplus \id"]
-%     &
-%     R^+ \oplus A \oplus A
-%     \ar[r,"\text{merge}"]
-%     &
-%     R^+ \oplus A.
-%     \end{tikzcd}
-%     \]
-%     Unlike the functors in the previous examples, this functor does outputs an infinite semigroup even if the input semigroup $A$ is finite. 
+% In this example, we use a slightly different setup: we assume that the output mechanism is a partial function, but still natural. For some finite set $R$ of \emph{register names} with a designated \emph{output register}. Define a functor where 
+% \begin{align*}
+% \functor A = R \to (R^+ \oplus A),
+% \end{align*}
+% where $\oplus$ is the co-product of semigroups, and the semigroup structure of $\functor A$ is defined as follows. The product of two elements $f,g, \in \functor A$ is the composition of the functions described below
+% \[
+% \begin{tikzcd}
+% R
+% \ar[r,"f"]
+% &
+% R^+ \oplus A
+% \ar[r, "g^+ \oplus \id"]
+% &
+% (R^+ \oplus A)^+ \oplus A
+% \ar[r,"\text{mult} \oplus \id"]
+% &
+% R^+ \oplus A \oplus A
+% \ar[r,"\text{merge}"]
+% &
+% R^+ \oplus A.
+% \end{tikzcd}
+% \]
+% Unlike the functors in the previous examples, this functor does outputs an infinite semigroup even if the input semigroup $A$ is finite. 
 
-%     The output mechanism is a partial function, which is obtained by selecting some fixed register. Once we have fixed the initial register, we get an output map as follows: given an element of $\functor A$, we apply it to the initial register, getting an element of $R^+ \oplus A$. If the element is in $A$, then we send it to the output; otherwise the output is undefined.
+% The output mechanism is a partial function, which is obtained by selecting some fixed register. Once we have fixed the initial register, we get an output map as follows: given an element of $\functor A$, we apply it to the initial register, getting an element of $R^+ \oplus A$. If the element is in $A$, then we send it to the output; otherwise the output is undefined.
 
-%     The functions recognized by this transducer semigroup are exactly those that can be recognized by copyful \sst with one state. 
+% The functions recognized by this transducer semigroup are exactly those that can be recognized by copyful \sst with one state. 
 % \end{myexample}
 
 
 
 \subsection{Two simple characterizations}
-We begin with two simple theorems, which  use transducer semigroups to describe two classes of string-to-string functions:  all functions (Theorem~\ref{thm:all-functions}) and functions that reflect recognizability (Theorem~\ref{thm:reco-reflecting-functions}).
+\label{sec:two-simple}
+We begin with two simple theorems, which are about transducer semigroups where the functor is not necessarily finiteness-preserving. These results describe two classes of string-to-string functions: all functions (Theorem~\ref{thm:all-functions}) and functions that reflect recognizability (Theorem~\ref{thm:reco-reflecting-functions}).
 %These two theorems have simple proofs.
-In  Section~\ref{sec:reg-char}, we present a third, more  interesting, theorem about  regular functions.
+The main contribution of this paper, presented in Section~\ref{sec:reg-char}, characterizes the regular functions using  finiteness-preserving functors.
 
-\subparagraph{All functions.} The first theorem shows that every function between two semigroups is recognized by some transducer semigroup.
+\subparagraph{All functions.} The first theorem shows that, without any further restrictions, transducer semigropus can recognize all functions.
 
 \begin{theorem}\label{thm:all-functions} 
-     Every string-to-string function is recognized  by some transducer semigroup.
+ Every string-to-string function is recognized by a transducer semigroup.
 \end{theorem}
 \begin{proof}
-    We prove a slightly stronger result, namely that every function between two semigroups $A$ and $B$ is recognized by some transducer semigroup.
-    Consider some semigroup $A$. We define a transducer semigroup that recognizes all functions from $A$ to every other semigroup. The functor is defined by 
-    \begin{align*}
-        \functor B = A \times \text{(set of all functions of type $A \to B$, not necessarily recognizable)}.
-    \end{align*}
-    The semigroup operation in $\functor B$ is defined as follows: on the first coordinate, we inherit the operation from $A$, while on the second coordinate, we use the trivial \emph{left zero} semigroup structure, which means that the multiplication of two functions is simply the first one (this is a trivial way of equipping every set with a semigroup structure).   The functor is defined on morphisms
-as in the tuple construction from Example~\ref{ex:functors}: the first coordinate, corresponding to~$A$, is not changed, and the second coordinate, corresponding to the set of functions, is transformed   coordinate-wise, when viewed as a tuple indexed by~$A$.   This is easily seen to be a functor. The output mechanism, which is easily seen to be natural, is function application i.e.~$(a,f) \mapsto f(a)$.
-Every function $f : A \to B$ is recognized by this transducer semigroup.  The appropriate homomorphism  is~$a \in A  \mapsto  (a,f)$.
+ We prove a slightly stronger result, namely that every function between two semigroups $A$ and $B$ is recognized by a transducer semigroup.
+ For a semigroup $A$, we define a transducer semigroup that recognizes all functions from $A$ to other semigroups. The functor is 
+ \begin{align*}
+ \functor B = A \times \text{(set of all functions of type $A \to B$, not necessarily recognizable)}.
+ \end{align*}
+ The semigroup operation in $\functor B$ is defined as follows: on the first coordinate, we inherit the semigroup operation from $A$, while on the second coordinate, we use the trivial \emph{left zero} semigroup structure, in which  the product of two functions is simply the first one (this is a trivial way of equipping every set with a semigroup structure). The functor is defined on morphisms
+as in the tuple construction from Example~\ref{ex:functors}: the first coordinate, corresponding to~$A$, is not changed, and the second coordinate, corresponding to the set of functions, is transformed coordinate-wise, when viewed as a tuple indexed by~$A$. This is easily seen to be a functor. The output mechanism, which is easily seen to be natural, is function application i.e.~$(a,f) \mapsto f(a)$.
+Every function $f : A \to B$ is recognized by this transducer semigroup, with the appropriate homomorphism is~$a \in A \mapsto (a,f)$.
 \end{proof}
 
-\subparagraph{Recognizability reflecting functions.} We now characterize functions which have the property that inverse images of recognizable languages are also recognizable. We  use a slightly more general setup, where instead of languages we use functions into finite sets (languages can be seen as the special case of functions into a two-element set).  We say that a function  from a possibly infinite  semigroup $A$ to some finite set $X$ is \emph{recognizable} if it factors through some semigroup homomorphism from $A$ to some finite semigroup. 
-%  More generally, recognizable functions from the semigroup $A$ to some set, not necessarily with two elements, are those that factor through some homomorphism into a finite semigroup. 
- A function $f : B \to A$ between semigroups, not necessarily a semigroup homomorphism, is  called \emph{recognizability reflecting} if for every recognizable function $g : A \to X$, the composition $g \circ f$  is  recognizable.  
-%  as in~\eqref{eq:rec-language}, the composition 
+\subparagraph{Recognizability reflecting functions.} We now characterize functions with the property that inverse images of recognizable languages are also recognizable. We use a slightly more general setup, where instead of languages we use functions into finite sets (languages can be seen as the special case of functions into a set with two elements ``yes'' and ``no''). We say that a function from a possibly infinite semigroup $A$ to some finite set $X$ is \emph{recognizable} if it factors through some semigroup homomorphism from $A$ to some finite semigroup. 
+% More generally, recognizable functions from the semigroup $A$ to some set, not necessarily with two elements, are those that factor through some homomorphism into a finite semigroup. 
+ A function $f : B \to A$ between semigroups, not necessarily a semigroup homomorphism, is called \emph{recognizability reflecting} if for every recognizable function $g : A \to X$, the composition $g \circ f$ is recognizable. 
+% as in~\eqref{eq:rec-language}, the composition 
 % \begin{equation*}
-%     \begin{tikzcd}
-%         B 
-%         \ar[r,"f"]
-%         &
-%         A 
-%         \ar[r,"L"]
-%         &
-%         \set{\text{yes, no}}
-%         \end{tikzcd}
-%             \end{equation*}
-% is also recognizable. In other words, inverse images of  recognizable languages are also recognizable. 
+% \begin{tikzcd}
+% B 
+% \ar[r,"f"]
+% &
+% A 
+% \ar[r,"L"]
+% &
+% \set{\text{yes, no}}
+% \end{tikzcd}
+% \end{equation*}
+% is also recognizable. In other words, inverse images of recognizable languages are also recognizable. 
 
-The following example shows that there are  many recognizability reflecting functions.
 
 % \begin{definition}
-%     A function is called \emph{recognizability reflecting} when
-%     inverse images of recognizable languages are also recognizable.
+% A function is called \emph{recognizability reflecting} when
+% inverse images of recognizable languages are also recognizable.
 % \end{definition}
 %There are a lot of recognizability reflecting functions:
 \begin{example}[Factorials]
-    Consider the semigroup $(\Nat, +)$ of natural numbers with addition. In this semigroup, the recognizable languages are ultimately periodic subsets. A corollary is that every recognizable language gives the same answer to all factorials $\set{1!,2!,\ldots}$, with finitely many exceptions. Take any function $f : \Nat \to \Nat$ such that (a) every output number arises from at most finitely many input numbers; (b) every output number is a factorial.  The composition of $f$ with any recognizable language will be a language that gives the same answer to all numbers with finitely many exceptions; such languages are necessarily recognizable. A function with condition (a) and (b) can be chosen in uncountably many ways, even if we require that it has linear growth.
+ Consider the semigroup $(\Nat, +)$ of natural numbers with addition, which is isomorphic to the free monoid $a^*$. In this semigroup, the recognizable functions are ultimately periodic colourings of numbers. A corollary is that every recognizable function gives the same answer to all factorials $\set{1!,2!,\ldots}$, with finitely many exceptions. Take any function $f : \Nat \to \Nat$ such that (a) every output number arises from at most finitely many input numbers; (b) every output number is a factorial. The composition of $f$ with any recognizable function will give the same answer to all numbers with finitely many exceptions, thus being also recognizable. A function with conditions (a) and (b) can be chosen in uncountably many ways, even if we require that it has linear growth.
 \end{example}
 
 In light of the above example, there are too many recognizability reflecting functions to allow a machin model, or some other effective syntax. A (non-effective) syntax is given in the following theorem, which is proved the same way as Theorem~\ref{thm:all-functions}.
 % We now present a second characterization, which concerns functions between semigroups that are recognizability reflecting.
 
 \begin{theorem}\label{thm:reco-reflecting-functions} The following conditions are equivalent for a string-to-string function:
-    \begin{enumerate}
-        \item \label{it:reco-refl} it is recognizability reflecting.
-        %, which means for every recognizable language 
-        %\[
+ \begin{enumerate}
+ \item \label{it:reco-refl} it is recognizability reflecting.
+ %, which means for every recognizable language 
+ %\[
 %\begin{tikzcd}
 %B 
 %\ar[r,"L"]
@@ -236,9 +245,9 @@ In light of the above example, there are too many recognizability reflecting fun
 %\set{\text{yes, no}}
 %\end{tikzcd}
 %\]
-        %the language $f;L$ is also recognizable.
-        \item \label{it:trans-semig-reco}it is recognized by a transducer semigroup  such that for every finite semigroup $C$, the corresponding output function of type  
-        $\functor C \to C$
-        is recognizable.
-    \end{enumerate}
+ %the language $f;L$ is also recognizable.
+ \item \label{it:trans-semig-reco}it is recognized by a transducer semigroup such that for every finite semigroup $C$, the corresponding output function of type 
+ $\functor A \to A$
+ is recognizable.
+ \end{enumerate}
 \end{theorem}

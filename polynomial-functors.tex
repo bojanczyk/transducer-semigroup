@@ -1,22 +1,33 @@
 
 \input{abstract-sst}
 
-\subsubsection{Coproducts and views}
+\subparagraph*{Coproducts and views.}
 \label{sec:coproducts-and-views}
 
 Apart from the more abstract transducer model from Definition~\ref{def:functorial-sst}, the other ingredient used  in the proof of the hard implication in Theorem~\ref{thm:regular-functions} will be coproducts of semigroups, and some basic operations on them, as described in this section.
 
 We write $1$ for the semigroup that has one element. This semigroup is unique up to isomorphism and it is a \emph{terminal object} in the category of semigroups, which means that it admits a unique homomorphism from every other semigroup $A$. This unique homomorphism will be denoted by $! : A \to 1$. It has no connection with the factorial function on numbers. 
 
-The \emph{coproduct}  of two semigroups $A$ and $B$, which is denoted by $A \oplus B$, is the semigroup that is defined as follows. Elements of this semigroup are nonempty words over an alphabet that is the disjoint union of $A$ and $B$, restricted to words that are \emph{alternating} in the sense that two consecutive letters cannot belong to the same semigroup. The semigroup operation is defined in the expected way. We draw elements of a coproduct using coloured boxes:
+The \emph{coproduct}  of two semigroups $A$ and $B$, denoted by $A \oplus B$, is the semigroup whose elements are nonempty words over an alphabet that is the disjoint union of $A$ and $B$, restricted to words that are \emph{alternating} in the sense that two consecutive letters cannot belong to the same semigroup. The semigroup operation is defined in the expected way. We draw elements of a coproduct using coloured boxes, with the following picture showing the product operation in the coproduct of two copies, \red{red} and \blue{blue}, of the semigroup $\set{a,b}^+$:
 \begin{align*}
-    \red{\boxed{aba}} \cdot 
+    (\red{\boxed{aba}} \cdot 
     \blue{\boxed{b}} \cdot 
     \red{\boxed{b}} \cdot 
-    \blue{\boxed{aa}} \cdot 
-    \red{\boxed{abba}} \cdot 
+    \blue{\boxed{aa}}) \cdot 
+    (
+        \blue{\boxed{abba}} \cdot 
+        \red{\boxed{aa}} \cdot 
+        \red{\boxed{bb}}
+    )
+    = 
+\red{\boxed{aba}} \cdot 
+    \blue{\boxed{b}} \cdot 
+    \red{\boxed{b}} \cdot 
+    \blue{\boxed{aaabba}} \cdot 
+        \red{\boxed{aa}} \cdot 
+        \red{\boxed{bb}}.
 \end{align*}
-The picture above shows an element of the coproduct of two copies of the semigroup $\set{a,b}^+$, with the copies distinguished using the colours \red{red} and \blue{blue}. One can also have a coproduct of more than two semigroups; in the pictures this would correspond to more colours for the boxes, subject to the condition that every two consecutive boxes have different colours.
+A coproduct can involve more than two semigroups; in the pictures this would correspond to more colours, subject to the condition that  consecutive boxes have different colours.
 
 % The name \emph{coproduct} is used because of the following universal property: if
 % \begin{align*}
@@ -41,7 +52,10 @@ The picture above shows an element of the coproduct of two copies of the semigro
     \begin{align}\label{eq:polynomial-representation-of-coproduct}
     A \oplus 1 \quad \text{and} \quad \coprod_{q \in 1 \oplus 1} A^{\text{dimension of $q$}},
     \end{align}
-    where the dimension of $q$ is defined to be the number of times that the first copy of $1$ appears in $q$. Furthermore, the bijection in~\eqref{eq:polynomial-representation-of-coproduct} is natural, and therefore there is a natural bijection between the functor $(-) \oplus 1$ and some polynomial functor. Also, if two polynomial functors are connected by a natural bijection, then they are the same, up to renaming of the components, and therefore the representation in~\eqref{eq:polynomial-representation-of-coproduct} is unique up to renaming of components. By uniqueness, we will simply speak of $A \oplus 1$ as being a polynomial functor.  In a similar way, functors such as $A \mapsto A \oplus 1 \oplus A$ are also polynomial.
+    where the dimension of $q$ is defined to be the number of times that the first copy of $1$ appears in $q$. Furthermore, this bijection is natural, and thus we can speak of $A \oplus 1$ as being a polynomial functor. This remark applies to similar constructions, which involve a coproduct of several copies of $A$ with several copies of $1$, such as $A \oplus A \oplus A \oplus 1 \oplus 1$.
+    
+    %Mikolaj: I eliminated parts of this discussion, since they can be inserted (in the reader's head) at the places where they are used
+    % bijection in~\eqref{eq:polynomial-representation-of-coproduct} is natural, and therefore there is a natural bijection between the functor $(-) \oplus 1$ and some polynomial functor. Also, if two polynomial functors are connected by a natural bijection, then they are the same, up to renaming of the components, and therefore the representation in~\eqref{eq:polynomial-representation-of-coproduct} is unique up to renaming of components. By uniqueness, we will simply speak of $A \oplus 1$ as being a polynomial functor.  In a similar way, functors such as $A \mapsto A \oplus 1 \oplus A$ are also polynomial.
     % Noting that $\oplus$ makes sense as an operation on sets without a semigroup structure (it builds a set of nonempty alternating sequences), we have more generally that, if $\functor$ is a polynomial functor, then so is $A \mapsto \functor A \oplus 1$. 
 % \end{example}
 
@@ -70,7 +84,7 @@ The crucial property of semigroups that will be used in our proof is described i
     \begin{align*}
         A_1 \oplus \cdots \oplus A_n \to  A \oplus \bigoplus_{i \not \in I} A_i
         \end{align*}
-    that is defined in the expected way, and explaine in the following picture. In the picture, merging is applied to  a coproduct of three copies of the semigroup $\set{a,b}^+$, indicated using colours \red{red}, black and \blue{blue}, and the merged coordinates are \red{red} and \blue{blue}:
+    that is defined in the expected way, and explained in the following picture. In the picture, merging is applied to  a coproduct of three copies of the semigroup $\set{a,b}^+$, indicated using colours \red{red}, black and \blue{blue}, and the merged coordinates are \red{red} and \blue{blue}:
         \begin{align*}
         \blue{\boxed{aba}} \cdot 
         \red{\boxed{b}} \cdot 
@@ -151,6 +165,4 @@ which is obtained by combining the views for all $i \in \set{1,\ldots,n}$ and th
 
 
 This lemma seems to contain the essential property of semigroups that makes the construction work. Our theorem will also be true for other algebraic structures for which the lemma is true, such as forest algebras. However, the lemma seems to fail for certain algebraic structures, such as groups, even if we allow $1$ to be replaced by some fixed finite group. Another example where the lemma seems to fail is the monad of weighted sums of words (i.e.~this monad corresponds to weighted automata).
-\tito{I wonder if the important thing is not more simply that $A \oplus B$ is a polynomial bifunctor}
-\santa{Interesting!}
 

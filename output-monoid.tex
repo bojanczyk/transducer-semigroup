@@ -2,17 +2,15 @@
 
 \section{The regular functions}
 \label{sec:reg-char}
-The two straightforward constructions in Theorems~\ref{thm:all-functions} and~\ref{thm:reco-reflecting-functions}  amount to little more than symbol pushing. In this section, we present a more advanced  characterization, which is the main result of this paper.
+The two straightforward constructions in Theorems~\ref{thm:all-functions} and~\ref{thm:reco-reflecting-functions}  amount to little more than symbol pushing. In this section, we present a more substantial characterization, which is the main result of this paper. In this characterization, we use functors that are finiteness-preserving. This is a strengthening of the condition from Theorem~\ref{thm:reco-reflecting-functions}: if $\functor$ is finiteness-preserving, then for every finite semigroup $C$, the output function $\functor A \to A$ will be recognizable, since all functions from a finite semigroup are trivially recognizable.  However, the condition is strictly stronger, as witnessed by Example~\ref{ex:squaring}, which is recognizability reflecting but not finiteness preserving. As we will see, the stronger condition will characterize exactly the regular string-to-string functions.
 
-In Theorem~\ref{thm:reco-reflecting-functions}, the condition on the output mechanism is that if a semigroup $A$ is finite, then the output function $\outfun_A : \functor A \to A$ is recognizable. In this section, we strengthen the conclusion to saying that functor is \emph{finiteness preserving}, which means that if $A$ is finite, then the same is true for $\functor A$. This implies that the output mechanism $\functor A \to A$ is recognizable, since every function from a finite semigroup is recognizable. However, the condition is strictly stronger, as witnessed by Example~\ref{ex:squaring}, which is recognizability reflecting but not finiteness preserving. As  we will see, the stronger condition will  characterize exactly the regular string-to-string functions.
-
-The following example shows that naturality of the output mechanism interacts with the condition that 
-the functor is finiteness preserving in a non-trivial way.
+The following example illustrates the non-trivial interaction between naturality of the output mechanism interacts and the requirement that 
+the functor is finiteness preserving.
 
 \begin{example}
-    Consider the powerset functor $\powerset A$ from Example~\ref{ex:functors}. This is a finiteness preserving functor, since the powerset of a finite semigroup is also finite. One could imagine that using  powersets, we  could construct a transducer semigroup that recognizes  functions that are not regular, e.g.~because they have exponential growth (unlike regular functions, which have linear growth). It turns out that this is impossible, because there is no possible output mechanism, i.e.~no natural transformation of type $\powerset A \to A$, as we explain below.
+    Consider the powerset functor $\powerset A$ from Example~\ref{ex:functors}. This is a finiteness-preserving functor, since the powerset of a finite semigroup is also finite. One could imagine that using  powersets, one could construct a transducer semigroup that recognizes functions that are not regular, e.g.~because they have exponential growth (unlike regular functions, which have linear growth). It turns out that this is impossible, because there is no possible output mechanism, i.e.~no natural transformation of type $\powerset A \to A$, as we explain below.
 
-    The issue is that the naturality condition disallows choosing elements from a subset.  To see why, consider a semigroup $A$ with two elements, with the left zero semigroup operation defined by $ab=a$. For this semigroup, the output mechanism of type $\powerset A \to A$ would need to choose some element $a \in A$ when given as input  the full set $A \in \powerset A$. However, none of the two choices is right, because swapping the two elements of $A$ is an automorphism of the semigroup $A$, which maps the full set to itself, but does not map any element to itself.
+    The issue is that the naturality condition disallows choosing elements from a subset.  To see why, consider a semigroup $A$ with two elements, with the trivial left zero semigroup structure. For this semigroup, the output mechanism of type $\powerset A \to A$ would need to choose some element $a \in A$ when given as input the full set $A \in \powerset A$. However, none of the two choices is right, because swapping the two elements of $A$ is an automorphism of the semigroup $A$, which maps the full set to itself, but does not map any element to itself.
 \end{example}
 
 We now state the main theorem of this paper. 
@@ -23,7 +21,7 @@ We now state the main theorem of this paper.
 \begin{theorem}\label{thm:regular-functions}
     The following conditions are equivalent for every string-to-string function:
     \begin{enumerate}
-        \item \label{it:regular} it regular, i.e.~recognized by a streaming string transducer;
+        \item \label{it:regular} it is a regular string-to-string function;
         \item \label{it:trans-semig-regular}it is recognized by a transducer semigroup  in which the functor is finiteness preserving. 
     \end{enumerate}
 \end{theorem}
@@ -35,30 +33,30 @@ We now state the main theorem of this paper.
     \item[Section~\ref{sec:hard}] proves the hard  implication in the theorem, namely  $(\ref{it:regular}) \Leftarrow (\ref{it:trans-semig-regular})$
 \end{description}
 
-Before continuing, we remark on one  advantage of the characterization, namely a straightforward proof of closure under composition. This is in contrast with some other models, where closure under composition is a non-trivial construction, such as two-way transducers~\cite[Theorem 2]{ChytilJ77} or copyless \sst~\cite[Theorem 1]{composingSST}. (For other models, such as \mso transductions, closure under composition is straightforward.)
- 
-To see why the functions from item~(\ref{it:trans-semig-regular}) in Theorem~\ref{thm:regular-functions} are closed under composition,  consider the following diagram, where the upper path describes the composition of two functions recognized transducer semigroups $(\functor,\outfun)$ and $(\functor',\outfun')$, respectively:
-    \[
-    \begin{tikzcd}
-        [column sep=2cm]
-        \Sigma^* 
-        \ar[r,"h"]
-        & 
-        \functor(\Gamma^*)
-        \ar[r,"\outfun_{\Gamma^*}"]
-        \ar[d,"\functor h'"]
-        &
-        \Gamma^* \ar[d,"h'"]\\
-        &
-        \functor\functor'(\Pi^*) \ar[r,"\outfun_{\functor'(\Pi^*)}"]
-        & 
-        \functor'(\Pi^*)
-        \ar[r,"\outfun'_{(\Pi^*)}"]
-        &
-        \Pi^*
-    \end{tikzcd}
-    \]
-    The rectangle in the middle commutes by naturality, and therefore the upper path is equal to the lower path. The lower path corresponds to a transducer semigroup that is obtained by composing the two functors $\functor$ and $\functor'$, and the two corresponding output mechanisms.
+Before continuing, we remark on one advantage of the characterization, namely a straightforward proof of closure under composition. It is easy to see that functions recognized by finiteness-preserving transducer semigroups are closed under composition.  This is because finiteness-preserving functors are closed under composition, natural output functions are also closed under composition, and natural output functions commute with functors. In contrast, for some (but not all)  models defining regular string-to-string functions, closure under composition requires a non-trivial construction, examples of such models include two-way transducers~\cite[Theorem 2]{ChytilJ77} or copyless \sst~\cite[Theorem 1]{composingSST}. 
+
+% To see why the functions from item~(\ref{it:trans-semig-regular}) in Theorem~\ref{thm:regular-functions} are closed under composition,  consider the following diagram, where the upper path describes the composition of two functions recognized transducer semigroups $(\functor,\outfun)$ and $(\functor',\outfun')$, respectively:
+%     \[
+%     \begin{tikzcd}
+%         [column sep=2cm]
+%         \Sigma^* 
+%         \ar[r,"h"]
+%         & 
+%         \functor(\Gamma^*)
+%         \ar[r,"\outfun_{\Gamma^*}"]
+%         \ar[d,"\functor h'"]
+%         &
+%         \Gamma^* \ar[d,"h'"]\\
+%         &
+%         \functor\functor'(\Pi^*) \ar[r,"\outfun_{\functor'(\Pi^*)}"]
+%         & 
+%         \functor'(\Pi^*)
+%         \ar[r,"\outfun'_{(\Pi^*)}"]
+%         &
+%         \Pi^*
+%     \end{tikzcd}
+%     \]
+%     The rectangle in the middle commutes by naturality, and therefore the upper path is equal to the lower path. The lower path corresponds to a transducer semigroup that is obtained by composing the two functors $\functor$ and $\functor'$, and the two corresponding output mechanisms.
 
 
  
@@ -66,16 +64,14 @@ To see why the functions from item~(\ref{it:trans-semig-regular}) in Theorem~\re
 
 \input{polynomial-functors}
 
-\subsection{Proof of \Cref{thm:regular-functions}}
+\subparagraph*{Proof of $(\ref{it:trans-semig-regular}) \Rightarrow (\ref{it:regular})$ in \Cref{thm:regular-functions}.}
+We have now collected all necessary ingredients to prove the hard implication  Theorem~\ref{thm:regular-functions}. Consider some transducer semigroup, with the functor being $\functor$, and fix a string-to-semigroup function $f : \Sigma^* \to A$ that decomposes as some homomorphism $h : \Sigma^* \to \functor A$ followed by the output function of type $\functor A \to A$. 
+We will show that this function  is computed by some functorial streaming string transducer as in Definition~\ref{def:functorial-sst}.
 
-We have now collected all necessary ingredients to prove  the implication $(\ref{it:trans-semig-regular}) \Rightarrow (\ref{it:regular})$ in Theorem~\ref{thm:regular-functions}. Consider some transducer semigroup, with the functor being $\functor$, and fix a string-to-semigroup function that is recognized by this transducer semigroup, i.e.~a function $f : \Sigma^* \to A$ which is a composition  of some semigroup homomorphism $h : \Sigma^* \to \functor A$ followed by the output mechanism of the transducer semigroup.
-%  Since $\Sigma^*$ is a monoid, it will follow that its image under $h$ is a sub-semigroup of $\functor A$ that is a monoid; however, we will not use this fact.
-We will show that the function $f$ is computed by some functorial \sst as in Definition~\ref{def:functorial-sst}.
-
-The main idea behind the proof is that, using coproducts, we will be able to identify the origin semantics of the function $f$, which means that we will now which parts of the input string are responsible for which parts of the output semigroup. This will be done using coproducts, as described below.
+The main idea behind the proof is that, using coproducts, we will be able to identify the origin semantics~\cite{bojanczykTransducersOriginInformation2014} of the function $f$ which means that we will now which parts of the input string are responsible for which parts of the output semigroup. This will be done using coproducts, as described below.
 
 
-For semigroups $A_1,\ldots,A_n$, define the \emph{vectorial output mechanism} to be the 
+For semigroups $A_1,\ldots,A_n$, define the \emph{vectorial output function} to be the 
 function% of type 
 \begin{align*}
 \qquad\functor A_1 \times \cdots \times \functor A_n \longrightarrow A_1 \oplus \cdots \oplus A_n
@@ -99,38 +95,34 @@ A_1 \oplus \cdots \oplus A_n.
 \end{tikzcd}
 \]
 
-\begin{example}
-    To illustrate the definitions in this section, we use the transducer semigroup  from \Cref{ex:duplicator} for the duplicating functions. In this transducer semigroup, the functor is the identity $\functor A = A$, and the output mechanism is $a \mapsto aa$. The duplicating function on $\set{a,b}^*$ is obtained by composing the identity homomorphism 
-    \begin{align*}
-        h : \set{a,b}^* \to \set{a,b}^* = \functor \set{a,b}^*
-    \end{align*}
-    with the output mechanism.
-    Here is an example of  the vectorial output mechanism, with the two semigroups being $1$ and $\set{a,b}^*$:
+    To illustrate the definitions in this section, we use a running example with the transducer semigroup  from \Cref{ex:duplicator} for the duplicating functions. In this transducer semigroup, the functor is the identity $\functor A = A$, and the output mechanism is $a \mapsto aa$. The duplicating function on $\set{a,b}^*$ is obtained by composing the identity homomorphism on $\set{a,b}^* = 
+\functor \set{a,b}^*$
+    with the output function.
+    Here is an example of  the vectorial output function, applied to the semigroups $A_1=1$ and $A_2=\set{a,b}^*$:
 \begin{align*}
     (1,abbb) \in \functor 1 \times \functor \set{a,b}^* \qquad \mapsto \qquad 
 \red{\boxed{1}}\  \boxed{abbb} \ \red{\boxed{1}} \  \boxed{abbb} \in 1 \oplus \set{a,b}^*.
 \end{align*}
-\end{example}
 
-The  vectorial output mechanism is natural, in the  sense that  the diagram 
+The  vectorial output function is natural in all of its arguments, which means that  
 \[
 \begin{tikzcd}
-    [column sep=2cm]
+    [column sep=4cm]
 \functor A_1 \times \cdots \times \functor A_n
-\ar[r,"\text{factorized output}"]
+\ar[r,"\text{vectorial output function}"]
 \ar[d,"\functor h_1 \times \cdots \times \functor h_n"']
 &
 A_1 \oplus \cdots \oplus A_n
 \ar[d,"h_1 \oplus \cdots \oplus h_n"]
 \\
 \functor B_1 \times \cdots \times \functor B_n
-\ar[r,"\text{factorized output}"']
+\ar[r,"\text{vectorial output function}"]
 &
 B_1 \oplus \cdots \oplus B_n
 \end{tikzcd}
 \]
 commutes
-for every semigroup homomorphisms $h_1,\ldots,h_n$. This is because each of the three steps in the definition of the vectorial output mechanism is itself a natural transformation, and natural transformations compose.  Naturality of the first two steps is easy to check, while for the last step we use the assumption that the (non-vectorial) output mechanism is natural.
+for every semigroup homomorphisms $h_1,\ldots,h_n$. This is because each of the three steps in the definition of the vectorial output function is itself a natural transformation, and natural transformations compose.  Naturality of the first two steps is easy to check, while for the last step we use the assumption that the (non-vectorial) output function is natural.
 % In other words, the factorized output function is a natural 
 % transformation of type 
 % \[\begin{tikzcd}
@@ -151,28 +143,24 @@ for every semigroup homomorphisms $h_1,\ldots,h_n$. This is because each of the 
 % \begin{align*}
 % 1 1     \in 1 \oplus \set{a,b}^+.
 % \end{align*}
-    
+
+Let us return to our string-to-semigroup function $f : \Sigma^* \to A$ in the assumption of the hard implication from Theorem~\ref{thm:regular-functions}.
 Using the vectorial output mechanism, we will be able to track the origins in the output of the function $f$, with respect to some partition of the input string into several nonempty parts.
 For  strings $w_1,\ldots,w_n \in \Sigma^*$, define the corresponding \emph{factorized output}, denoted by 
 \begin{align*}
 \tuple{w_1| \cdots | w_n} \in \myunderbrace{A \oplus \cdots \oplus A}{$n$ times},
 \end{align*}
-to be the result of first applying $h$ to all the strings, then applying the factorized output function, and finally removing the elements of the output co-product that correspond to input coordinates $i \in \set{1,\ldots,n}$ in which the string $w_i$ was the empty string $\varepsilon$. 
-
-\begin{example}
-    In our running example, we have
-    \begin{align*}
+to be the result of first applying the semigroup homomorphism $h : \Sigma^* \to \functor A$ to all the strings, then applying the factorized output function, and finally removing the elements of the output co-product that correspond to input coordinates $i \in \set{1,\ldots,n}$ in which the string $w_i$ was the empty string $\varepsilon$. Here is the factorized output illustrated in our running example:\begin{align*}
         \tuple{\red{abbbbb} | \varepsilon | \blue{bbabaaa}} =  
         \red{\boxed{abbbbb}} \ 
         \blue{\boxed{bbabaaa}} \ 
         \red{\boxed{abbbbb}} \ 
         \blue{\boxed{bbabaaa}} \in \red{\set{a,b}^+} \oplus \set{a,b}^*  \oplus \blue{\set{a,b}^*}.
         \end{align*}
-    Here, we use colours to distinguish which of the three parts of the input is used; the empty middle part has black colour which is not used in the output.
-\end{example}
+    Here, we use colours to distinguish which of the three parts of the input is used; the empty middle part has black colour which is not used in the output. As the above example shows, the factorized output tells us which parts of the output string come from which of the three parts in the input string.
 
 
-We also use a similar notation but with some strings underlined. In the underlined case, before applying the vectorial output mechanism, we use $h$ for the non-underlined strings we apply $h$, and
+We also use a similar notation but with some input strings underlined, e.g.~the input could be $\tuple{\red{\underline{abbbbb}} | \varepsilon | \blue{bbabaaa}}$ with an underline for the first red part. In the underlined case, before applying the vectorial output function, we use $h$ for the non-underlined strings we apply $h$, and
 \[
 \begin{tikzcd}
 \Sigma^+ 
@@ -184,9 +172,7 @@ We also use a similar notation but with some strings underlined. In the underlin
 \functor 1.
 \end{tikzcd}
 \]
-for the underlined strings. (As before, the empty input strings are removed from the output.)
-\begin{example}
-    In our running example, we have
+for the underlined strings. (As before, the empty input strings are removed from the output.)    In our running example, we have
     \begin{align*}
         \tuple{\red{\underline{abbbbb}} | \varepsilon | \blue{bbabaaa}} =  
         \red{\boxed{1}} \ 
@@ -194,11 +180,10 @@ for the underlined strings. (As before, the empty input strings are removed from
         \red{\boxed{1}} \ 
         \blue{\boxed{bbabaaa}}.
         \end{align*}
-\end{example}
 
 
 
-The following lemma is the key part of our construction. As discussed in Section~\ref{sec:coproducts-and-views}, we consider $A \mapsto A \oplus 1$ and $A \mapsto 1 \oplus A \oplus 1$ as a polynomial semigroup-to-set functors, which enables us to talk about natural and copyless functions that operate on them.
+The following lemma uses the ingredients described in this section to define what is essentially the register update function in a streaming string transducer recognizing our function $f$.  As discussed earlier in this section, we consider functors such as $A \oplus 1$ and $1 \oplus A \oplus 1$ as polynomial semigroup-to-set functors, which enables us to talk about natural and copyless functions that operate on them.
 \begin{lemma}\label{lem:compute-next-configuration}
     There is  a {copyless} natural function
     \begin{align*}
@@ -206,7 +191,10 @@ The following lemma is the key part of our construction. As discussed in Section
     \end{align*} 
     such  that every strings $w,v \in \Sigma^*$ and letter $a \in \Sigma$, one obtains $\tuple{wa|\underline v}$ by applying $\delta$ to the pair  consisting of  $\tuple{w|\underline {av}}$ and $\tuple{\underline w | a|\underline v}$.
     \end{lemma}
-\begin{proof} 
+
+    Using the above lemma, one can easily define a functorial streaming string transducer that computes function $f$, thus completing the proof of Theorem~\ref{thm:regular-functions}.  The idea is that the transducer maintains the following invariant: after processing the first $i$ letters in an input string $a_1 \cdots a_n$, the configuration of the transducer is the factorized output $\tuple{a_1 \cdots a_i | \underline{a_{i+1} \cdots a_n}}$. After processing all input letters, the configuration stores the output string. The details are in the appendix. It remains to prove the lemma, which is done using the operations on coproducts described earlier in this section. 
+
+    \begin{proof}[Proof of \Cref{lem:compute-next-configuration}]
     We use the following claim, which is proved using naturality of the output mechanism. 
     \begin{claim}\label{claim:merge-factorized-output}
         $\tuple{wa|\underline v}$ is obtained from $\tuple{w|a|\underline v}$ by merging the first two parts.
@@ -279,45 +267,3 @@ The following lemma is the key part of our construction. As discussed in Section
 % \end{align*}
 % Since the target of this homomorphism is a finite semigroup, by the assumption that the functor is finiteness preserving, it follows that the 
 % \end{proof}
-Using the above lemma, we can design a device that  recognizes our desired function $w \mapsto \tuple{w}=f(w)$, and which is almost a functorial \sst as in Definition~\ref{def:functorial-sst}. We say ``almost'', because the device will use register and update functors that are  infinite polynomial functors; this construction will be later improved so that it becomes finite.  The register and update functors are the (infinite) polynomial functors
-\begin{align*}
-\functorr A  = 1 \oplus A \qquad \functors A = 1 \oplus A \oplus 1.
-\end{align*}
-As mentioned above, these are  not a finite polynomial functors; we will resolve this problem shortly.  
-Beyond that, the construction is immediate. Consider an input string 
-$a_1 \cdots a_n$. The device begins its computatin with the  initial register value 
-\begin{align*}
-    \tuple{\varepsilon | \underline{a_1 \cdots a_n}} \in A \oplus 1.
-\end{align*}
-This value does not depend on the input string, since it is always equal to the unique element of $1 \oplus A$ that does not use $A$. The rational function  in the transducer is defined so that the $i$-th lettter of its output string is 
-\begin{align*}
-\tuple{\underline{a_1 \cdots a_{i-1}}|a_i| \underline{a_{i+1} \cdots a_n}} \in 1 \oplus A \oplus 1
-\end{align*}
-We will explain shortly how these letters  can be computed by a rational function.
-Thanks to Lemma~\ref{lem:compute-next-configuration}, after applying all the register updates produced by this rational function to the initial register valuation, the register valuation at the end is 
-\begin{align*}
-    \tuple{a_1 \cdots a_n | \varepsilon} \in A \oplus 1,
-\end{align*}
-which is the same as the output when viewed as an element of $A \oplus 1$, as required in Definition~\ref{def:functorial-sst}  for representing the output of a partial function.
-
-We are left with proving that the update oracle is a rational letter-to-letter function, and resolving the issue that  the two functors $\functorr$ and $\functors$ are not finite polynomial functors.
-
-To see why the update oracle is a rational letter-to-letter function, we observe that 
-\begin{align*}
-    \tuple{\underline{a_1 \cdots a_{i-1}}|a_i| \underline{a_{i+1} \cdots a_n}} \in 1 \oplus A \oplus 1
-    \end{align*}
-depends only the letter $a_i$, as well as the images of the words  $a_1 \cdots a_{i-1}$ and $a_{i+1} \cdots a_n$ under the semigroup homomorphism obtained by composing $h$ with 
-$
-\functor ! : \functor A \to \functor 1.
-$
-Since the target semigroup $\functor 1$  of this homomorphism is a finite, by the assumption that the functor is finiteness preserving, it follows that the  update oracle is a rational letter-to-letter function.
-
-We now explain how to turn $\functorr$ and $\functors$ into finite polynomial functors. The key observation is  that not all of $1 \oplus A$ need be used for the register values, only a small part of it, and likewise for the update functor. More formally, 
-consider the natural bijection
-\begin{align*}
-A \oplus 1  \quad \cong \quad 
-\coprod_{q \in 1 \oplus 1}  A^{\dim q}
-\end{align*}
-that was discussed in Section~\ref{sec:coproducts-and-views}. If we apply this bijection to a factorized output $
-\tuple{w|\underline {v}} \in A \oplus 1$, 
-then the corresponding component will be $\tuple {\underline w | \underline v}$. Since the latter depends only  on $\underline w$ and $\underline v$, and these take values in the finite semigroup $\functor 1$, it follows that there are only finitely many components of $A \oplus 1$ that will be used to represent values from of the form $\tuple {w | \underline v}$. Therefore, instead of using $\functorr A$ to be all of $A \oplus 1$, we can restrict it to those finitely many components, giving thus a finite polynomial functor. The same argument applies to the update functor $\functors A$.
