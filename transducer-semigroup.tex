@@ -20,7 +20,7 @@ Recall that a \emph{functor} between two categories consists of two maps: one th
  \begin{align*}
  (A_1,A_2) \quad \mapsto \quad \left\{a_1 a_2 \mid a_1 \in A_1\ \text{and}\ a_2 \in A_2\right\}.
  \end{align*}
- Variants of the powerset functor require the subsets to be nonempty, or finite, or both.
+ One could also consider variants of the powerset functor that require the subsets to be nonempty, or finite, or both.
  % \item Fix some semigroup $C$, and consider the functor which maps a semigroup $A$ to the sub-semigroup of the semigroup $A^C$, as in the first item, which consists only of those tuples $A^C$ that describe semigroup homomorphisms $C \to A$. For morphisms, the functor is defined coordinate-wise, as in the first item.
  \end{description}
  \end{example}
@@ -44,6 +44,7 @@ Recall that a \emph{functor} between two categories consists of two maps: one th
 \newcommand{\emptytester}{2}
 \begin{definition}[Transducer semigroup]\label{def:transducer-semigroup}
  A \emph{transducer semigroup} consists of a semigroup-to-semigroup functor $\functor$, together with an \emph{output mechanism}, which associates to each semigroup $A$ a function of type $\functor A \to A$, called the \emph{output function for $A$}. The output function does not need to be a semigroup homomorphism. The output mechanism is required to be \emph{natural}, which means that the diagram
+below commutes for every homomorphism $h : A \to B$. 
  \[
  \begin{tikzcd}
  \functor A 
@@ -59,12 +60,12 @@ Recall that a \emph{functor} between two categories consists of two maps: one th
  B
  \end{tikzcd}
  \]
- commutes for every semigroup homomorphism $h : A \to B$. 
+
 \end{definition}
 
 In the language of category theory, the naturality condition from the above definition says that the output mechanism is a natural transformation of type 
 \[\begin{tikzcd}
- [column sep=1cm]
+ [column sep=2cm]
  {\text{Semigroups}} && {\text{Sets}}
  \arrow[""{name=0, anchor=center}, "\text{apply $\functor$ and return underlying set}", curve={height=-18pt}, from=1-1, to=1-3]
  \arrow[""{name=1, anchor=center, inner sep=0}, "\text{return underlying set}"', curve={height=18pt}, from=1-1, to=1-3]
@@ -94,7 +95,7 @@ The purpose of transducer semigroups is to define functions between semigroups, 
 
 
 The definition discusses functions between arbitrary semigroups, but we will mainly care about string-to-string functions $f : \Sigma^* \to \Gamma^*$, i.e.~the special case when both the input and output semigroups are finitely generated free monoids. Although the case that we care about involves monoids, which are a special case of semigroups, it will be useful in the proofs to define the model in terms of semigroups.
-
+\tito{also in the result (to handle $f(\varepsilon)\neq\varepsilon$)}
 
 \begin{example}
  Consider the transducer semigroup in which the functor is the identity, and the output mechanism is also the identity. The functions of type $A \to B$ that are recognized by this transducer semigroup are exactly the semigroup homomorphisms from $A$ to $B$.
@@ -193,7 +194,7 @@ The main contribution of this paper, presented in Section~\ref{sec:reg-char}, ch
  Every string-to-string function is recognized by a transducer semigroup.
 \end{theorem}
 \begin{proof}
- We prove a slightly stronger result, namely that every function between two semigroups $A$ and $B$ is recognized by a transducer semigroup.
+ We prove a slightly stronger result: every function between two semigroups $A$ and $B$ is recognized by a transducer semigroup.
  For a semigroup $A$, we define a transducer semigroup that recognizes all functions from $A$ to other semigroups. The functor is 
  \begin{align*}
  \functor B = A \times \text{(set of all functions of type $A \to B$, not necessarily recognizable)}.
