@@ -1,8 +1,9 @@
 \subsection{Defininition of streaming string transducers}
 \label{sec:sst-definition}
-In this section, we formally describe the regular functions, using a model based on streaming string transducers.  This model, like our proof of Theorem~\ref{thm:regular-functions}, covers a slightly more general case, namely string-to-semigroup functions instead of only string-to-string functions. These are functions of type $\Sigma^* \to A$ where $\Sigma$ is a finite alphabet and $A$ is an arbitrary semigroup.  The purpose of this generalization is to make notation more transparent, since the fact that the output semigroup consists of strings will not play any role in our proof.
+In this section, we formally describe the regular functions, using a model based on streaming string transducers (\sst).  This model, like our proof of Theorem~\ref{thm:regular-functions}, covers a slightly more general case, namely string-to-semigroup functions instead of only string-to-string functions. These are functions of type $\Sigma^* \to A$ where $\Sigma$ is a finite alphabet and $A$ is an arbitrary semigroup.  The purpose of this generalization is to make notation more transparent, since the fact that the output semigroup consists of strings will not play any role in our proof.
 
-The model is a minor variation on streaming string transducers, which use registers to store elements of the output semigroup. We begin by describing notation for registers and their updates. Suppose that $R$ is a finite set of \emph{register names}, and $A$ is a semigroup called the \emph{output semigroup}. We consider two sets 
+% The model is a minor variation on streaming string transducers, which use registers to store elements of the output semigroup.
+The model uses registers to store elements of the output semigroup. We begin by describing notation for registers and their updates. Suppose that $R$ is a finite set of \emph{register names}, and $A$ is a semigroup called the \emph{output semigroup}. We consider two sets 
 \begin{align*}
 \hspace{2cm}
     \myunderbrace{R \to A}{the set of \emph{register valuations}} 
@@ -29,14 +30,12 @@ The crucial property is being copyless -- a register update is called copyless i
 The main operation on these sets is \emph{application}: a register update can be applied to a register valuation, giving a new register valuation. 
 
 
-In our model of streaming string tranducers, the registers will be updated by a stream of register updates that is produced by a {rational function}, defined as follows.  Intuitively speaking, a rational function corresponds to an automaton that produces one output letter for each input position, with the output letter depending on regular properties of the input position within the input string. More formally, a \emph{rational function}, is defined to be a length-preserving\footnote{ Often in the literature, rational functions are not required to be length-preserving, see e.g.~\cite[p.~525]{sakarovitch2009elements}, but in this paper, we only need the length-preserving case.} string-to-string function such that for some recognizable function 
+In our model of streaming string tranducers, the registers will be updated by a stream of register updates that is produced by a {rational function}, defined as follows.  Intuitively speaking, a rational function corresponds to an automaton that produces one output letter for each input position, with the output letter depending on regular properties of the input position within the input string. More formally, a \emph{rational function} is defined to be a length-preserving\footnote{Often in the literature, rational functions are not required to be length-preserving, see e.g.~\cite[p.~525]{sakarovitch2009elements}, but in this paper, we only need the length-preserving case.} string-to-string function such that for some recognizable function 
 \begin{align*}
- f : (\set{\text{current, not current}} \times \text{(input alphabet)})^+ \to \text{output alphabet},
+ f\colon (\set{\text{current, not current}} \times \text{(input alphabet)})^+ \to \text{output alphabet},
 \end{align*}
 for every input string the  $i$-th output letter is obtained by applying the function
 to the string that is obtained from the input string by setting the first coordinate to ``current'' for the $i$-th position, and ``not current'' for the remaining positions.  
-
-In a rational function, the output of label of the $i$-th position is allowed to depend on letters of the input string that are to the right of the $i$-th input position; this corresponds to regular lookahead in a streaming string transducer. 
 
 Having defined register updates and rational functions, we are ready to define the variant of streaming string transducers used in this paper.
 
@@ -57,14 +56,17 @@ Having defined register updates and rational functions, we are ready to define t
 
 The semantics of the transducer is a function of type $\Sigma^* \to A$ defined as follows. When given an input string, the transducer begins in the designated initial register valuation. Next, it applies all updates produced by the update oracle, in left-to-right order. Finally, the output of the transducer is obtained by returning the semigroup element stored in the designated final register. 
 
-The model described above is easily seen to be equivalent to streaming string transducers with regular lookahead, which are one of the equivalent models defining the regular string-to-string functions, see~\cite[Section 12]{bojanczyk_automata_2018}. 
+In a rational function, the label of the $i$-th output position is allowed to depend on letters of the input string that are on both sides of the $i$-th input position; this corresponds to regular lookaround in a streaming string transducer. Therefore, the model described above is easily seen to be equivalent to copyless \sst{}s with regular lookaround, which are one of the equivalent models defining the regular string-to-string functions, see~\cite[Section~IV.C]{AlurFT12}.
+\tito{Even though it's for $\omega$-words I prefer citing published papers to the Toolbox}
 
 \subsection{From a regular function to a transducer semigroup}
 \label{sec:easy}
 
 Having defined the transducer model, we prove the easy implication  in  \Cref{thm:regular-functions}. 
 
-Suppose that a string-to-semigroup function $f : \Sigma^* \to A$ is computed by some streaming string transducer. In the proof below, when referring to register valuations and register updates, we refer to those that use the registers and output semigroup of the fixed transducer. We say that a register update is in \emph{normal form} if, in every right-hand side, one cannot find two consecutive letters from the semigroup $A$. Here is an example, which uses three registers $X,Y,Z$ and the semigroup $A = (\set{0,1}, \cdot)$:
+Suppose that a string-to-semigroup function $f\colon \Sigma^* \to A$ is computed by some streaming string transducer. In the proof below, when referring to register valuations and register updates, we refer to those that use the registers and output semigroup of the fixed transducer. We say that a register update is in \emph{normal form} if, in every right-hand side, one cannot find two consecutive letters from the semigroup $A$.
+\tito{looks like the coproduct $A \oplus \bigoplus_{X\in R} \{X\}^+$ --- should we mention that?}
+Here is an example, which uses three registers $X,Y,Z$ and the semigroup $A = (\set{0,1}, \cdot)$:
 \begin{align*}
 \myunderbrace{
 \begin{array}{l}
@@ -96,6 +98,7 @@ into a finite semigroup such that the $i$-th letter produced by the update oracl
      B \quad \times \quad \myunderbrace{(B \times B) \to \functors A}{functions of this kind\\ are  called \emph{conditional} \\\emph{register updates}} 
 \quad \blue{\times \quad \myunderbrace{R \to A}{register\\ valuations}.}
 \end{align*}
+\tito{This is clearly a composition construction. Since we can already compose by abstract nonsense it might look less complex to decompose into: (1) \sst{}s whose update depends only on the current input letter can be translated to $\functors A \times (R \to A)$; (2) rational functions can be translated to $B \times ((B\times B) \to A)$}
 The semigroup operation is defined as follows. On the third coordinate (in \blue{blue}), we use the trivial left zero semigroup structure. On the first two coordinates (in black), the semigroup structure is defined\footnote{This definition coincides with the two-sided semidirect product of monoids from~\cite[Section 6]{rhodes1989kernel}, when applied to the monoids $B$ and $\functors A$.} so that the product of two pairs $(b_1,\varphi_1)$ and $(b_2,\varphi_2)$ is  the pair consisting of $b_1 b_2$ and the function  
 \begin{align*}
 (c_1,c_2)  \mapsto   \varphi_1(b_1,c_2b_2) \cdot \varphi_2(b_1c_1,b_2).

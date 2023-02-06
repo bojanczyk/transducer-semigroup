@@ -1,0 +1,101 @@
+\section{Proof of \Cref{claim:merge-factorized-output}}
+
+\tito{TODO: adapt this}
+
+\begin{lemma}\label{lem:merge-middle}
+    Let $A,B,C$ be semigroups. The following diagram commutes:
+    \[\begin{tikzcd}
+        [column sep=3cm]
+        \functor A \times \functor B\times \functor B \times \functor C
+        \ar[r,"\text{factorized output}"]
+        \ar[d,"\functor A \times (\text{semigroup operation}) \times \functor C"']
+        &
+        A \oplus B \oplus B \oplus C
+        \ar[d,"A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C"]
+        \\
+        \functor A \times \functor B \times \functor C
+        \ar[r,"\text{factorized output}"]
+        &
+        A \oplus B \oplus C
+    \end{tikzcd}\]
+\end{lemma}
+\begin{proof}
+    By rotating the above diagram, we see that it corresponds to the outer rectangle in the following diagram (where we have expanded the definition of the factorized output functions, and used the associativity of 4-fold multiplication):
+    \[\begin{tikzcd}
+        [column sep=4cm]
+        \functor A \times \functor B\times \functor B \times \functor C
+        \ar[d,"\functor(\text{co-projection})^4"']
+        \ar[r,"\functor A \times (\text{semigroup op}) \times \functor C"]
+        &
+        \functor A \times \functor B \times \functor C
+        \ar[d,"\functor(\text{co-projection})^3"]
+        \\
+        \functor(A \oplus B \oplus B \oplus C)^4
+        \ar[d,"\text{multiply middle two together}"']
+        &
+        \functor(A \oplus B \oplus C)^3
+        \ar[dd,""]
+        \\
+        \functor(A \oplus B \oplus B \oplus C)^3
+        \ar[d,"\text{semigroup operation}"']
+        \ar[ru,"F(A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C)^3"']
+        \\
+        \functor(A \oplus B \oplus B \oplus C)
+        \ar[d, "\outfun_{A \oplus B \oplus B \oplus C}"']
+        \ar[r,"F(A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C)"]
+        &
+        \functor(A \oplus B \oplus C)
+        \ar[d, ""]
+        \\ 
+        A \oplus B \oplus B \oplus C
+        \ar[r,"A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C"]
+        &
+        A \oplus B \oplus C
+    \end{tikzcd}\]
+    The lower rectangle commutes by naturality of the output function. The middle trapeze commutes because of the homomorphism property of $F(A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C)$. Concerning the upper trapeze, it can be decomposed as the functor $(\cdots \times \cdots \times \cdots)$ applied to three diagrams that we can analyze independently. The first of those is
+    \[\begin{tikzcd}
+        [column sep=4cm]
+        \functor A
+        \ar[d,"\functor(\text{co-projection})"']
+        \ar[r,"\mathrm{id}_A"]
+        &
+        \functor A
+        \ar[d,"\functor(\text{co-projection})"]
+        \\
+        \functor(A \oplus B \oplus B \oplus C)
+        \ar[d,"\mathrm{id}"']
+        &
+        \functor(A \oplus B \oplus C)
+        \\
+        \functor(A \oplus B \oplus B \oplus C)
+            \ar[ru,"F(A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C)"']
+    \end{tikzcd}\]
+    By functoriality of $\functor$, the commutativity of this diagram reduces to
+    \[ (\mathrm{id}_A \oplus \dots) \circ (\text{co-projection of}\ A\ \text{into}\ A\oplus(B\oplus B\oplus C)) = \text{co-projection of}\ A\ \text{into}\ A\oplus(B\oplus C) \]
+    which is an elementary property of the coproduct $\oplus$ in any category (indeed the bifunctor structure of $\oplus$ is built using a coparing, which \enquote{cancels out} with the coprojection).
+    Among the 3 diagrams that were combined by a 3-fold cartesian product, another one is identical to the above, with $C$ replacing $A$. There remains this one, in which we have added some parts in the middle:
+    \[\begin{tikzcd}
+        [column sep=2.5cm]
+        \functor B\times \functor B
+        \ar[d,"\functor(\text{co-proj})^2"']
+        \ar[dr,"\functor(\text{co-proj})^2"]
+        \ar[rr,"\text{semigroup operation}"]
+        &
+        &
+        \functor B
+        \ar[d,"\functor(\text{co-proj})"]
+        \\
+        \functor(A \oplus B \oplus B \oplus C)^2
+        \ar[d,"\text{semigroup op}"']
+        \ar[r,"h\times h"']
+        &
+        \functor(A \oplus B \oplus C)^2
+        \ar[r,"\text{semigroup op}"]
+        &
+        \functor(A \oplus B \oplus C)
+        \\
+        \functor(A \oplus B \oplus B \oplus C)
+            \ar[rru,"h = F(A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C)"']
+    \end{tikzcd}\]
+    The upper right trapeze commutes because $\functor$ applied to the co-projection of $B$ into $A\oplus B\oplus C$ is a homomorphism. The lower triangle commutes because $h$ is a homomorphism. Finally, the small upper left triangle can be shown to commute using the functoriality of $\functor$ followed by properties of the coproduct.
+\end{proof}

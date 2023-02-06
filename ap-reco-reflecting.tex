@@ -1,27 +1,26 @@
 \section{Proof of~\Cref{thm:reco-reflecting-functions}}
     We prove a slight strenghening of the theorem, which concerns not only string-to-string functions, but also functions $f : A \to B$ between semigroups, not necessarily homomorphisms, such that the target semigroup $B$ is finitely generated.
 
-    \proofsubparagraph{(\ref{it:reco-refl}) $\Rightarrow$ (\ref{it:trans-semig-reco}).}  We  use a similar construction as in the proof of Theorem~\ref{thm:all-functions}. Let  $f :A \to B$  be recognizability reflecting.  Define  a functor as follows: 
+    \subparagraph{(\ref{it:reco-refl}) $\Rightarrow$ (\ref{it:trans-semig-reco}).}  We  use a similar construction as in the proof of Theorem~\ref{thm:all-functions}. Let  $f :A \to B$  be recognizability reflecting.  Define  a functor as follows: 
     \begin{align*}
         \functor C = A \times \text{(all semigroup homomorphisms of type $B \to C$)}.
     \end{align*}
     Similarly to Theorem~\ref{thm:all-functions}, the semigroup operation on the first coordinate of $\functor C$ is inherited from $A$, and on the second coordinate we use the left zero semigroup structure,  where the product of $g$ and $h$ is $g$.     On morphisms, the functor is defined as in the proof of Theorem~\ref{thm:all-functions}. 
 
-    The output mechanism  is function application with $f$ inserted as an interface i.e.~$(a,g) \mapsto g(f(a))$. We now argue that the output mechanism is a recognizable function. Suppose that $C$ is finite. 
-     To prove that the output mechanism is recognizable, we show that the inverse image of every $c \in C$ is a  recognizable subset of $\functor C$. This inverse image is the union, ranging over the finitely many semigroup homomorphisms $g : B \to C$, of sets
+    The output mechanism  is $(a,g) \mapsto g(f(a))$ -- think of it as function application with $f$ inserted as an interface. The transducer semigroup thus defined recognizes the function $f$ via the homomorphism $a \in A  \mapsto  (a,\id)$.
+    
+    We now argue that the output mechanism for a finite semigroup $C$ is a recognizable function.
+     To do show, we show that the inverse image of every $c \in C$ is a  recognizable subset of $\functor C$. This inverse image is
     \begin{align*}
-    \setbuild {(a,g)}{$g(f(a))=c$}.
+    \qquad\qquad\qquad\qquad \bigcup_{\mathclap{g\colon B \to C\ \text{is a semigroup homomorphism}}} \; \{(a,g) \mid g(f(a))=c \}.
     \end{align*}
-    Each of these sets is recognizable, by the assumption that $f$ is recognizability reflecting.     By the assumption that $B$ is finitely generated and $C$ IS finite, there are finitely many choices for $g$, and therefore the union is finite. This implies that the inverse image of $c$ is recognizable, as a finite union of recognizable subsets of  $\functor C$.
-    
-    The transducer semigroup defined above recognizes the function $f$ via the homomorphism $a \in A  \mapsto  (a,\id)$.
+    Each of the sets in this union is recognizable, by the assumption that $f$ is recognizability reflecting.     By the assumptions that $B$ is finitely generated and that $C$ is finite, there are finitely semigroup homomorphisms $B \to C$, and therefore the union is finite. This implies that the inverse image of $c$ is recognizable, as a finite union of recognizable subsets of  $\functor C$.
     
     
-    
-\proofsubparagraph{
+\subparagraph{
      (\ref{it:reco-refl}) $\Leftarrow$ (\ref{it:trans-semig-reco}).} Take a function $f : A \to B$ that satisfies~(\ref{it:trans-semig-reco}), i.e.~it is a composition 
 \begin{align*}
-    A \xrightarrow[\;h\;]{} \functor B \xrightarrow[\;\outfun_B\;]{} B
+    A \xrightarrow{\;h\;} \functor B \xrightarrow{\;\outfun_B\;} B
 \end{align*}
 %\[\begin{tikzcd}
 %    [column sep=2cm]
@@ -32,7 +31,7 @@
 where $h$ is some homomorphism.
 We want to show that $f$ is recognizability reflecting. To prove this, let us consider some recognizable language over the output semigroup 
 \begin{align*}
-    B \xrightarrow[\;g\;]{} C \xrightarrow[\;\text{accepting set}\;]{} \set{\text{yes, no}}
+    B \xrightarrow{\;g\;} C \xrightarrow{\;\text{accepting set}\;} \set{\text{yes, no}}
 \end{align*}
 where $C$ is a finite semigroup.
 %~a composition of some homomorphism from $B$ into a finite semigroup, followed by an arbitrary boolean-valued function
