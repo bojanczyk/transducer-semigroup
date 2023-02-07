@@ -4,7 +4,7 @@ The two straightforward constructions in Theorems~\ref{thm:all-functions} and~\r
 % In this characterization, we use functors that are finiteness-preserving.
 This characterization concerns finiteness-preserving functors.
 % (above rephrased mainly to avoid vertical alignment of two occurrences of "finiteness-preserving")
-This is a strengthening of the condition from Theorem~\ref{thm:reco-reflecting-functions}: if the functor $\functor$ in a transducer semigroup is finiteness-preserving, then for every finite semigroup $A$, the output function $\functor A \to A$ will be recognizable, since all functions from a finite semigroup are trivially recognizable.  However, the condition is strictly stronger, as witnessed by Example~\ref{ex:squaring}, which is recognizability reflecting but not finiteness preserving. As we will see, the stronger condition will characterize exactly the regular string-to-string functions.
+This is a strengthening of the condition from Theorem~\ref{thm:reco-reflecting-functions}: if the functor $\functor$ in a transducer semigroup is finiteness-preserving, then for every finite semigroup $A$, the output function $\functor A \to A$ will be recognizable, since all functions from a finite semigroup are trivially recognizable.  However, the condition is strictly stronger, as witnessed by Example~\ref{ex:squaring}, which is recognizability reflecting (cf.~\Cref{ex:squaring-reco-refl}) but not finiteness preserving. As we will see, the stronger condition will characterize exactly the regular string-to-string functions.
 
 The following counterexample illustrates the non-trivial interaction between naturality of the output mechanism interacts and the requirement that 
 the functor is finiteness preserving.
@@ -83,8 +83,8 @@ transducers~\cite[Theorem 2]{ChytilJ77} or copyless \sst~\cite[Theorem
 \input{polynomial-functors}
 
 \subparagraph*{Proof of $(\ref{it:trans-semig-regular}) \Rightarrow (\ref{it:regular})$ in \Cref{thm:regular-functions}.}
-We have now collected all necessary ingredients to prove the hard implication  Theorem~\ref{thm:regular-functions}. Consider some transducer semigroup, with the functor being $\functor$, and fix a string-to-semigroup function $f : \Sigma^* \to A$ that decomposes as some homomorphism $h : \Sigma^* \to \functor A$ followed by the output function of type $\functor A \to A$. 
-We will show that this function  is computed by some functorial streaming string transducer as in Definition~\ref{def:functorial-sst}.
+We have now collected all necessary ingredients to prove this hard direction of the equivalence. Consider some transducer semigroup, with the functor being $\functor$, and fix a string-to-semigroup function $f : \Sigma^* \to A$ that decomposes as some homomorphism $h : \Sigma^* \to \functor A$ followed by the output function of type $\functor A \to A$. 
+We will show that this function  is computed by some functorial \sst as in Definition~\ref{def:functorial-sst}.
 
 For semigroups $A_1,\ldots,A_n$, define the \emph{vectorial output function} to be the 
 function% of type 

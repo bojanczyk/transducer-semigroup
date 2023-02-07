@@ -163,7 +163,7 @@ as in the tuple construction from Example~\ref{ex:functors}: the first coordinat
 Every function $f\colon A \to B$ is recognized by this transducer semigroup, with the appropriate homomorphism is~$a \in A \mapsto (a,f)$.
 \end{proof}
 
-\subparagraph{Recognizability reflecting functions.} We now characterize functions with the property that inverse images of recognizable languages are also recognizable. We use a slightly more general setup, where instead of languages we use functions into finite sets (languages can be seen as the special case of functions into a set with two elements ``yes'' and ``no''). We say that a function from a possibly infinite semigroup $A$ to some finite set $X$ is \emph{recognizable} if it factors through some semigroup homomorphism from $A$ to some finite semigroup. 
+\subparagraph{Recognizability reflecting functions.} We now characterize functions with the property that inverse images of recognizable languages are also recognizable. We use a slightly more general setup, where instead of languages we use functions into finite sets (languages can be seen as the case of functions into $\set{\text{yes},\text{no}}$). We say that a function from a possibly infinite semigroup $A$ to some finite set $X$ is \emph{recognizable} if it factors through some semigroup homomorphism from $A$ to some finite semigroup. 
 % More generally, recognizable functions from the semigroup $A$ to some set, not necessarily with two elements, are those that factor through some homomorphism into a finite semigroup. 
  A function $f\colon B \to A$ between semigroups, not necessarily a semigroup homomorphism, is called \emph{recognizability reflecting} if for every recognizable function $g\colon A \to X$, the composition $g \circ f$ is recognizable. 
 % as in~\eqref{eq:rec-language}, the composition 
@@ -186,11 +186,8 @@ Every function $f\colon A \to B$ is recognized by this transducer semigroup, wit
 % inverse images of recognizable languages are also recognizable.
 % \end{definition}
 %There are a lot of recognizability reflecting functions:
-\begin{example}[Factorials]
- Consider the semigroup $(\Nat, +)$ of natural numbers with addition, which is isomorphic to the free monoid $a^*$. In this semigroup, the recognizable functions are ultimately periodic colourings of numbers. A corollary is that every recognizable function gives the same answer to all factorials $\set{1!,2!,\ldots}$, with finitely many exceptions. Take any function $f\colon \Nat \to \Nat$ such that (a) every output number arises from at most finitely many input numbers; (b) every output number is a factorial. The composition of $f$ with any recognizable function will give the same answer to all numbers with finitely many exceptions, thus being also recognizable. A function with conditions (a) and (b) can be chosen in uncountably many ways, even if we require that it has linear growth.
-\end{example}
 
-In light of the above example, there are too many recognizability reflecting functions to allow a machine model, or some other effective syntax. A (non-effective) syntax is given in the following theorem, which is proved the same way as Theorem~\ref{thm:all-functions}.
+As we explain in the appendix, there are too many recognizability reflecting functions -- in fact, uncountably many from $\{a\}^*$ to itself -- to allow a machine model, or some other effective syntax. A (non-effective) syntax is given in the following theorem, which is proved the same way as Theorem~\ref{thm:all-functions}.
 % We now present a second characterization, which concerns functions between semigroups that are recognizability reflecting.
 
 \begin{theorem}\label{thm:reco-reflecting-functions} The following conditions are equivalent for a string-to-string function:
@@ -211,3 +208,6 @@ In light of the above example, there are too many recognizability reflecting fun
  is recognizable.
  \end{enumerate}
 \end{theorem}
+\begin{example}\label{ex:squaring-reco-refl}
+  For any finite semigroup $A$, the map $(a,n) \in A \times (\mathbb{N}\setminus\{0\}) \mapsto a^n \in A$ is recognizable, because it factors through a homomorphism into the semigroup $A \times (\mathbb{Z}/(|A|!))$, which is finite. Extending this idea slightly, one can show that the output mechanism $\outfun_A$ of \Cref{ex:squaring} is recognizable whenever $A$ is finite.
+\end{example}

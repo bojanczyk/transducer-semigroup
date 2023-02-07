@@ -10,19 +10,19 @@ The model uses registers to store elements of the output semigroup. We begin by 
     \hspace{4cm}
     \myunderbrace{R \to (A+R)^+.}{the set of \emph{register updates}}
 \end{align*}
-Below we show two examples of register updates, using two registers $X,Y$ and the semigroup $A = a^*$.  The updates are presented as assignments, with the right-hand sides being the values in $(A+R)^+$.
+Below we show two examples of register updates, presented as assignments, using two registers $X,Y$ and the semigroup $A = a^*$. (The right-hand sides are the values in $(A+R)^+$.)
 \begin{align*}
     \myunderbrace{
-    \begin{array}{l}
-        X:= aYaXaaa\\
-    Y:= XaaXaa
+    \begin{array}{rcl}
+        X &:=& aYaXaaa\\
+    Y &:=& XaaXaa
     \end{array}
     }{copyful}
     \qquad 
     \myunderbrace{
-    \begin{array}{l}
-        X:= aaYaaXaaa\\
-    Y:= aaa
+    \begin{array}{rcl}
+        X &:=& aaYaaXaaa\\
+    Y &:=& aaa
     \end{array}
     }{copyless}
     \end{align*}
@@ -90,24 +90,25 @@ string transducers.
 
 So, suppose now that a string-to-semigroup function $f\colon \Sigma^* \to A$ is
 computed by some local \sst. In the proof below, when referring to register valuations and register updates, we refer to those that use the registers and output semigroup of the fixed transducer. We say that a register update is in \emph{normal form} if, in every right-hand side, one cannot find two consecutive letters from the semigroup $A$.
+Every register update can be \emph{normalized}, i.e.~converted into one that is in normal form, by using the semigroup operation to merge consecutive elements of the output semigroup in the right-hand sides.
 Here is an example, which uses three registers $X,Y,Z$ and the semigroup $A = (\set{0,1}, \cdot)$:
 \begin{align*}
 \myunderbrace{
-\begin{array}{l}
-    X:= 01Y1111X111\\
-Y:= 01011
+\begin{array}{rcl}
+    X &:=& 01Y1111X111\\
+Y &:=& 01011
 \end{array}
 }{not in normal form}
-\qquad 
+\qquad \xrightarrow{\;\text{normalization}\;} \qquad
 \myunderbrace{
-\begin{array}{l}
-    X:= 0Y1X1\\
-Y:= 0
+\begin{array}{rcl}
+    X &:=& 0Y1X1\\
+Y &:=& 0
 \end{array}
 }{in normal form}
 \end{align*}
 
-Every register update can be \emph{normalized}, i.e.~converted into one that is in normal form, by using the semigroup operation to merge consecutive elements of the output semigroup in the right-hand sides. The  register updates before and after normalization act in the same way on register valuations.   If an update is copyless and in normal form, then the combined length of all right hand sides is at most three times the number of registers. Therefore, if a semigroup is finite, then the set of copyless register updates in normal form, call it $\functors A$,  is also finite. (This would not be true for copyful register updates.) The set $\functors A$ of register updates in normal form can be equipped with a composition operation 
+ The  register updates before and after normalization act in the same way on register valuations.   If an update is copyless and in normal form, then the combined length of all right hand sides is at most three times the number of registers. Therefore, if a semigroup is finite, then the set of copyless register updates in normal form, call it $\functors A$,  is also finite. (This would not be true for copyful register updates.) The set $\functors A$ of register updates in normal form can be equipped with a composition operation 
 \begin{align*}
     u_1,u_2 \in \functors A  \quad \mapsto \quad u_1u_2 \in \functors A,
 \end{align*}

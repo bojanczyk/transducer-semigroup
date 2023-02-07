@@ -14,8 +14,8 @@ A \quad \mapsto \quad \coprod_{q \in Q} A^{\text{dimension of } q},
 where $Q$ is some possibly infinite set, called the \emph{components}, with each  component having an associated \emph{dimension} in $\set{0,1,\ldots}$. The symbol $\coprod$ stands for disjoint union of sets. This functor does not take into account the semigroup structure of the input semigroup, since the output is seen only as a set.
 On morphisms, the functor works in the expected way, i.e.~coordinate-wise.  
 
-A \emph{finite polynomial functor} is one with finitely many components. For example, $A \mapsto A^2 + A^2 + A$ is a finite polynomial functor. 
-A finite polynomial functor can be seen as a mild generalization of the construction which maps a semigroup $A$ to the set $A^R$ of register valuations for some fixed set $R$ of register names.  In the generalization, we allow a variable number of registers, depending on some finite information (the component). 
+A \emph{finite polynomial functor} is a polynomial functor with finitely many components -- for example, $A \mapsto A^2 + A^2 + A$. 
+The notion of finite polynomial functor can be seen as a mild generalization of the construction which maps a semigroup $A$ to the set $A^R$ of register valuations for some fixed set $R$ of register names.  In the generalization, we allow a variable number of registers, depending on some finite information (the component). 
 
 Having defined a more abstract notion of ``register valuations'', namely finite polynomial functors, we now define a more abstract notion of ``register updates''.  The first condition for such updates is that they do not look inside the register contents; this condition is captured by naturality as described in the following definition. 
 
@@ -48,10 +48,9 @@ Having defined a more abstract notion of ``register valuations'', namely finite 
 % Intuitively speaking, naturality says that the function is not allowed to look inside the semigroup elements that are stored in a polynomial functor $\functor A$, but it is allowed to manipulate them using the semigroup operation.
 
 \begin{example}
-    Consider the polynomial functors 
+    Consider the polynomial functors (where $1$ represents the singleton set $A^0$)
     \begin{align*}
-    \functor A = A^* = 1 + A^1 + A^2 + \cdots  \qquad \functorg A = A + 1,     \end{align*} 
-    where $1$ represents the singleton set $A^0$.
+    \functor A = A^* = 1 + A^1 + A^2 + \cdots  \qquad \functorg A = A + 1.     \end{align*} 
 An example of a natural transformation between these two functors is the function which maps a nonempty list in $A^*$ to the product of its elements, and which maps the empty list to the unique element of $1$. A non-example is the function that maps a list $[a_1,\ldots,a_n] \in A^*$ to the leftmost element $a_i$ that is an idempotent in the semigroup, and returns $1$ if such an element does not exist. The reason why the non-example is not natural is that a semigroup homomorphism can map a non-idempotent to an idempotent.
 \end{example}
 % The naturality condition is an abstraction of the condition (a) that was mentioned before, namely that register contents are not inspected. For example, as we will see below, a natural transformations from the functor $\functor A = A^2$ to itself is $(a,b) \mapsto (abbaa,bbba)$, while 
@@ -75,7 +74,7 @@ Apart from naturality, we will want our register updates to be copyless.
 
 
 
-Having defined functions that are natural and copyless, we now describe the more abstract model of streaming string transducers that is be used in our proof. The main difference is that instead of register valuations and updates given by some finite set of register names, we have two abstract finite polynomial functors, together with an explicitly given application function. Another minor difference is that we allow the model to define partial functions; this will be useful in the proof.
+Having defined functions that are natural and copyless, we now describe the more abstract model of \sst{}s used in our proof. The main difference is that instead of register valuations and updates given by some finite set of register names, we have two abstract finite polynomial functors, together with an explicitly given application function. Another minor difference is that we allow the model to define partial functions; this will be useful in the proof.
 
 
 \begin{definition}\label{def:functorial-sst}

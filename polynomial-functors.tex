@@ -6,9 +6,7 @@
 
 Apart from the more abstract transducer model from Definition~\ref{def:functorial-sst}, the other ingredient used  in the proof of the hard implication in Theorem~\ref{thm:regular-functions} will be coproducts of semigroups, and some basic operations on them, as described in this section.
 
-We write $1$ for the semigroup that has one element. This semigroup is unique up to isomorphism and it is a \emph{terminal object} in the category of semigroups, which means that it admits a unique homomorphism from every other semigroup $A$. This unique homomorphism will be denoted by $! : A \to 1$. It has no connection with the factorial function on numbers. 
-
-\tito{update normalization looks like the coproduct $A \oplus \bigoplus_{X\in R} \{X\}^+$ --- should we mention that?}
+We write $1$ for the semigroup that has one element. This semigroup is unique up to isomorphism and it is a \emph{terminal object} in the category of semigroups, which means that it admits a unique homomorphism from every other semigroup $A$. This unique homomorphism will be denoted by $!\colon A \to 1$. It has no connection with the factorial function on numbers. 
 
 The \emph{coproduct}  of two semigroups $A$ and $B$, denoted by $A \oplus B$, is the semigroup whose elements are nonempty words over an alphabet that is the disjoint union of $A$ and $B$, restricted to words that are \emph{alternating} in the sense that two consecutive letters cannot belong to the same semigroup. The semigroup operation is defined in the expected way. We draw elements of a coproduct using coloured boxes, with the following picture showing the product operation in the coproduct of two copies, \red{red} and \blue{blue}, of the semigroup $\set{a,b}^+$:
 \begin{align*}
@@ -30,7 +28,10 @@ The \emph{coproduct}  of two semigroups $A$ and $B$, denoted by $A \oplus B$, is
         \red{\boxed{bb}}.
 \end{align*}
 A coproduct can involve more than two semigroups; in the pictures this would correspond to more colours, subject to the condition that  consecutive boxes have different colours.
-
+\begin{remark}
+  The copyless register updates $u : R \to (A + R)^+$ of ordinary \sst{}s that are in normal form according to the definition of \Cref{sec:easy} can be seen as maps
+  \[ R \to A \oplus \bigoplus_{X\in R} \{X\}^+ \]
+\end{remark}
 % The name \emph{coproduct} is used because of the following universal property: if
 % \begin{align*}
 % f : A \to C \qquad \text{and} \qquad g : B \to C
@@ -79,7 +80,7 @@ A coproduct can involve more than two semigroups; in the pictures this would cor
 % \subsubsection{Views}
 % \label{sec:views}
 
-The crucial property of semigroups that will be used in our proof is described in Lemma~\ref{lem:views} below, which says that a coproduct can be reconstructed based on certain partial information. This partial information is described  using the following operations on coproducts.
+The crucial property of semigroups that will be used in our proof is described in Lemma~\ref{lem:views} below, which says that an element of a coproduct can be reconstructed based on certain partial information. This information is described  using the following operations.
 
 \begin{enumerate}
     \item \textbf{Merging}. Consider a coproduct $A_1 \oplus \cdots \oplus A_n$, such that the same semigroup $A$ appears on all coordinates from a subset $I \subseteq \set{1,\ldots,n}$, and possibly on other coordinates as well. Define \emph{merging the parts from $I$} to be the function of type 
@@ -165,6 +166,4 @@ which is obtained by combining the views for all $i \in \set{1,\ldots,n}$ and th
     Start with the shape, and replace the entries from $1$ with the semigroup elements used in the views.
 \end{proof}
 
-
-This lemma seems to contain the essential property of semigroups that makes the construction work. Our theorem will also be true for other algebraic structures for which the lemma is true, such as forest algebras. However, the lemma seems to fail for certain algebraic structures, such as groups, even if we allow $1$ to be replaced by some fixed finite group. Another example where the lemma seems to fail is the monad of weighted sums of words (i.e.~this monad corresponds to weighted automata).
-\tito{Cut all sentences but the first one and refer to the conclusion for discussion instead?}
+This lemma seems to contain the essential property of semigroups that makes the construction work. We expect our theorem to also be true for other algebraic structures for which the lemma is true; however, the lemma seems to fail for certain algebraic structures. Concrete examples will be discussed in the conclusion (\Cref{sec:conclusion}).
