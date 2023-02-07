@@ -73,12 +73,11 @@ functions:
   By definition, a rational function comes from a recognizable function from
   words labeled with \enquote{(not) current} to the output alphabet.
   Recognizability means that the latter function factors through a homomorphism
-  to some finite semigroup $B$. Without loss of generality, assume that $B$ is a
-  monoid. To recognize the rational function, we then consider a functor that
-  maps a semigroup $A$ to its \emph{two-sided semidirect product} with $B$,
-  whose underlying set is $B \times \big((B \times B) \to A\big)$ (a classical
-  construction, see~\cite[Section 6]{rhodes1989kernel}). Details can be found in
-  the appendix.
+  to some finite semigroup $B$. To recognize the rational function, we then
+  consider a functor that maps a semigroup $A$ to its \emph{two-sided semidirect
+    product} with $B$, whose underlying set is $B \times \big((B \times B) \to
+  A\big)$ (a classical construction, see~\cite[Section 6]{rhodes1989kernel}).
+  Details can be found in the appendix.
 \end{proof}
 
 For the general case, it is apparent from \Cref{def:usual-sst} that every
@@ -111,7 +110,7 @@ Y:= 0
 Every register update can be \emph{normalized}, i.e.~converted into one that is in normal form, by using the semigroup operation to merge consecutive elements of the output semigroup in the right-hand sides. The  register updates before and after normalization act in the same way on register valuations.   If an update is copyless and in normal form, then the combined length of all right hand sides is at most three times the number of registers. Therefore, if a semigroup is finite, then the set of copyless register updates in normal form, call it $\functors A$,  is also finite. (This would not be true for copyful register updates.) The set $\functors A$ of register updates in normal form can be equipped with a composition operation 
 \begin{align*}
     u_1,u_2 \in \functors A  \quad \mapsto \quad u_1u_2 \in \functors A,
-    \end{align*}
+\end{align*}
 which is defined in the same way as applying a register update to a register
 valuation, except that we normalize at the end. This composition operation is
 associative, and  compatible with applying register updates to register
@@ -122,15 +121,15 @@ The functor $\functors$ described above is almost but not quite the functor that
 will be used in the transducer semigroup that we will define to prove the easy
 implication in Theorem~\ref{thm:regular-functions}. That functor $\functor$ will
 also take into account the initial register valuation: if the input semigroup is~$A$, then the underlying set of the output semigroup is
-\[ \functor A =  \functors A \times \myunderbrace{(R \to A)}{\qquad\qquad\qquad\qquad\qquad equipped with
-    trivial left zero semigroup structure} \]
+\[ \functor A =  \functors A \times \myunderbrace{(R \to A)}{\qquad\qquad\qquad\qquad\qquad endowed with the trivial left zero semigroup structure} \]
 The semigroup operation on $\functor A$, and the action of $\functor$ on
 morphisms, are defined componentwise.
 
-The output mechanism in the transducer semigroup applies the register update to
-the register valuation: $(v,u) \mapsto vu$. Using this, we can recognize the
-function computed by our local streaming string transducer, via the homomorphism
-that sends each input letter to:
+Given $(u,v) \in \functor A$, the output mechanism in the transducer semigroup
+applies the register update $u$ to the register valuation $v$, and then from the
+resulting valuation $vu$ extracts the value of the designated final register.
+Using this, we can recognize the function computed by our local streaming string
+transducer, via the homomorphism that sends each input letter to:
 \begin{itemize}
 \item the register update that this letter determines in the first component;
 \item the designated initial register valuation in the second component.

@@ -1,0 +1,24 @@
+\section{Details for the proof of \Cref{lem:rational-to-functor}}
+
+Our construction requires, in fact, that $B$ is a monoid; this can be assumed
+without loss of generality (by freely adjoining a neutral element if necessary).
+
+For any semigroup $A$, the semigroup operation on the two-sided semidirect
+product $\functor A = B \times \big((B\times B)\to A\big)$ is defined so that
+the product of two pairs $(b_1,\varphi_1)$ and $(b_2,\varphi_2)$ is
+\begin{align*}
+\Big(b_1b_2, \big((c_1,c_2)  \mapsto   \varphi_1(c_1,b_2c_2) \cdot \varphi_2(c_1b_1,c_2)\big)\Big).
+\end{align*}
+The construction $\functor$ is extended to morphisms by considering $(B\times
+B)\to A$ as the set of $(B\times B)$-indexed tuples (cf.~\Cref{ex:functors}) of
+elements of $A$. To get a transducer semigroup, we take the output mechanism to
+be $(b,\varphi) \mapsto \varphi(e,e)$ where $e \in B$ is the neutral element.
+
+Let $h\colon (\set{\text{current, not current}} \times \Sigma)^+ \to B$ be the
+semigroup homomorphism that serves to recognize the function to the output
+alphabet $\Gamma$ which, in turn, gives rise to our given rational function
+$\Sigma^* \to \Gamma^*$. This rational function is then recognized by the monoid
+homomorphism $\Sigma^* \to \functor(\Gamma^*)$ (indeed, $\functor$ preserves
+monoids) which maps $a \in \Sigma$ to
+\[ \big(h(\text{not current}, a), \big) \]
+\tito{TODO finish by introducing the second element in our factorization}
