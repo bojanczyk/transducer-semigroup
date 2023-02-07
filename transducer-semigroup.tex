@@ -19,12 +19,15 @@ Recall that a \emph{functor} between two categories consists of two maps: one th
  \begin{description}
  \item[Tuples.] This functor maps a semigroup $A$ to its square $A \times A$, with the semigroup operation defined coordinate-wise. The functor extends to morphisms in the expected way. This functor also makes sense for higher powers, including infinite powers, such as $A^\omega$.
  \item[Opposite.] This functor maps a semigroup $A$ to the semigroup where the underlying set is the same, but multiplication is reversed, i.e.~the product of $a$ and $b$ in the new semigroup is the product $b$ and $a$ in the old semigroup. Morphisms are not changed by the functor: they retain the homomorphism property despite the change in the multiplication operation.
- \item[Non-empty lists.] This functor maps a semigroup $A$ to the free semigroup $A^+$ that consists of non-empty lists (or strings) over the alphabet $A$ equipped with concatenation. On morphisms, the functor is defined element-wise (or letter-wise). A similar construction would make sense as a set-to-semigroup functor.
+ \item[Lists.] This functor maps a semigroup $A$ to the free monoid $A^*$ that consists of lists (or strings) over the alphabet $A$ equipped with concatenation. On morphisms, the functor is defined element-wise (or letter-wise). A similar construction would make sense as a set-to-semigroup functor.
+ \item[Non-empty lists.] A variant of the previous example, which sends a
+   semigroup $A$ to the free semigroup $A^+$ that consists of non-empty lists of
+   elements in $A$.
  \item[Powerset.] This (covariant) powerset functor maps a semigroup $A$ to the powerset semigroup $\powerset A$, whose underlying set is the family of all subsets of $A$, endowed with the operation
  \begin{align*}
  (A_1,A_2) \quad \mapsto \quad \left\{a_1 a_2 \mid a_1 \in A_1\ \text{and}\ a_2 \in A_2\right\}.
  \end{align*}
- One could also consider variants of the powerset functor that require the subsets to be nonempty, or finite, or both.
+% One could also consider variants of the powerset functor that require the subsets to be nonempty, or finite, or both.
  % \item Fix some semigroup $C$, and consider the functor which maps a semigroup $A$ to the sub-semigroup of the semigroup $A^C$, as in the first item, which consists only of those tuples $A^C$ that describe semigroup homomorphisms $C \to A$. For morphisms, the functor is defined coordinate-wise, as in the first item.
  \end{description}
  \end{example}
@@ -117,71 +120,16 @@ The definition discusses functions between arbitrary semigroups, but we will mai
 \end{example}
 
 \begin{example}\label{ex:squaring}
- Consider the functor $A \mapsto A^+$, as in Example~\ref{ex:functors}, and an output function 
- \begin{align*}
- [a_1,\ldots,a_n] \in A^+ & \mapsto \myunderbrace{(a_1 \cdots a_n) \cdots (a_1 \cdots a_n)}{$n$ times} \in A.
- \end{align*}
- This transducer semigroup recognizes the squaring function $w \in \Sigma^+ \mapsto w^{|w|} \in \Sigma^*$ for nonempty strings, which is illustrated in the following example: $\mathtt{123 \mapsto 123123123}$.
- \tito{Defining the squaring function on possibly empty words (i.e.\ of type $\Sigma^*\to\Sigma^*$) requires a slightly more complicated construction.}
+  Consider the functor $A \mapsto A \times \mathbb{N}$, with the semigroup
+  structure defined componentwise ($\mathbb{N} = \{0,1,\dots\}$ is equipped with
+  addition), and making the morphisms act on the left component. To this
+  functor, add the following output mechanism $A\times\mathbb{N} \to A$:
+  \begin{align*}
+    \text{for}\ n \geq 1,\; (a,n) \mapsto a^n \qquad\qquad \myunderbrace{(a,0) \mapsto a}{\qquad\qquad\qquad we handle this case separately because $a^0$ does not make sense in an arbitrary semigroup}
+  \end{align*}
+  This transducer semigroup recognizes the squaring function $w \in \Sigma^*
+  \mapsto w^{|w|} \in \Sigma^*$ for any alphabet $\Sigma$, which is illustrated in the following example: $\mathtt{123 \mapsto 123123123}$.
 \end{example}
-% \begin{example}\label{ex:squaring-empty}
-% We refine the above example in order to recognize the squaring function defined on possibly empty strings: $w \in \Sigma^* \mapsto w^{|w|} \in \Sigma^*$.
- 
-% Let $\functor A = A^+ + A$ with the following semigroup operation: when both arguments are in~$A$ (resp.~$A^+$), we use the semigroup structure of $A$ (resp.~$A^+$); in the remaining cases, $a \cdot \ell = \ell \cdot a = \ell$ for $a \in A$ and $\ell \in A^+$. This construction on semigroups can be turned into a functor, by making the morphisms act coordinate-wise. To make it into a transducer semigroup, we define $\outfun_A : A^+ + A \to A$ by combining the output mechanism $A^+ \to A$ of the previous example with the identity $A \to A$.
- 
-% Let $h : \Sigma^* \to \functor(\Sigma^*)$ be the unique semigroup homomorphism such that $h(\varepsilon) = \varepsilon \in \Sigma^*$ and $h(c) = c \in (\Sigma^*)^+$ for $c\in\Sigma$. Then $\outfun_{\Sigma^*} \circ h$ is the squaring function on $\Sigma^*$, as we wanted.
-% \end{example}
-
-%\begin{example}\label{ex:squaring-generalized}
-% Here is a generalization of the previous example. The functor continues to be $A^+$. The output mechanism $A^+ \to A$ is given by a sequence of strings 
-% \begin{align*}
-% w_1 \in \set{1}^+, \quad w_2 \in \set{1,2}^+, \quad w_3 \in \set{1,2,3}^+, \quad \ldots.
-% \end{align*}
-% When applied to lists of length $n$, the output mechanism is
-% \[
-% \begin{tikzcd}
-% [column sep=3cm]
-% A^n
-% \ar[r,"f \mapsto \text{$f$ applied to $w_n$}"]
-% &
-% A^+ 
-% \ar[r,"\text{semigroup operation}"]
-% & 
-% A.
-% \end{tikzcd}
-% \]
-% \end{example}
-
-% \begin{myexample} This example is more challenging than the previous ones, and it is meant to describe copyful \sst.
-% In this example, we use a slightly different setup: we assume that the output mechanism is a partial function, but still natural. For some finite set $R$ of \emph{register names} with a designated \emph{output register}. Define a functor where 
-% \begin{align*}
-% \functor A = R \to (R^+ \oplus A),
-% \end{align*}
-% where $\oplus$ is the co-product of semigroups, and the semigroup structure of $\functor A$ is defined as follows. The product of two elements $f,g, \in \functor A$ is the composition of the functions described below
-% \[
-% \begin{tikzcd}
-% R
-% \ar[r,"f"]
-% &
-% R^+ \oplus A
-% \ar[r, "g^+ \oplus \id"]
-% &
-% (R^+ \oplus A)^+ \oplus A
-% \ar[r,"\text{mult} \oplus \id"]
-% &
-% R^+ \oplus A \oplus A
-% \ar[r,"\text{merge}"]
-% &
-% R^+ \oplus A.
-% \end{tikzcd}
-% \]
-% Unlike the functors in the previous examples, this functor does outputs an infinite semigroup even if the input semigroup $A$ is finite. 
-
-% The output mechanism is a partial function, which is obtained by selecting some fixed register. Once we have fixed the initial register, we get an output map as follows: given an element of $\functor A$, we apply it to the initial register, getting an element of $R^+ \oplus A$. If the element is in $A$, then we send it to the output; otherwise the output is undefined.
-
-% The functions recognized by this transducer semigroup are exactly those that can be recognized by copyful \sst with one state. 
-% \end{myexample}
-
 
 
 \subsection{Two simple characterizations}

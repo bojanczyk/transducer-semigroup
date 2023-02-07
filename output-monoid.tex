@@ -5,7 +5,6 @@ The two straightforward constructions in Theorems~\ref{thm:all-functions} and~\r
 This characterization concerns finiteness-preserving functors.
 % (above rephrased mainly to avoid vertical alignment of two occurrences of "finiteness-preserving")
 This is a strengthening of the condition from Theorem~\ref{thm:reco-reflecting-functions}: if the functor $\functor$ in a transducer semigroup is finiteness-preserving, then for every finite semigroup $A$, the output function $\functor A \to A$ will be recognizable, since all functions from a finite semigroup are trivially recognizable.  However, the condition is strictly stronger, as witnessed by Example~\ref{ex:squaring}, which is recognizability reflecting but not finiteness preserving. As we will see, the stronger condition will characterize exactly the regular string-to-string functions.
-\tito{strictly speaking \Cref{ex:squaring} is not of type $\Sigma^*\to\Gamma^*$}
 
 The following counterexample illustrates the non-trivial interaction between naturality of the output mechanism interacts and the requirement that 
 the functor is finiteness preserving.
@@ -69,10 +68,6 @@ Before continuing, we remark on one advantage of the characterization, namely a 
 \subparagraph*{Proof of $(\ref{it:trans-semig-regular}) \Rightarrow (\ref{it:regular})$ in \Cref{thm:regular-functions}.}
 We have now collected all necessary ingredients to prove the hard implication  Theorem~\ref{thm:regular-functions}. Consider some transducer semigroup, with the functor being $\functor$, and fix a string-to-semigroup function $f : \Sigma^* \to A$ that decomposes as some homomorphism $h : \Sigma^* \to \functor A$ followed by the output function of type $\functor A \to A$. 
 We will show that this function  is computed by some functorial streaming string transducer as in Definition~\ref{def:functorial-sst}.
-
-The main idea behind the proof is that, using coproducts, we will be able to identify the origin semantics~\cite{bojanczykTransducersOriginInformation2014} of the function $f$ which means that we will know which parts of the input string are responsible for which parts of the output value. This will be done using coproducts, as described below.
-\tito{The concept of \enquote{part} of a value in a semigroup might be unclear}
-
 
 For semigroups $A_1,\ldots,A_n$, define the \emph{vectorial output function} to be the 
 function% of type 
@@ -154,6 +149,8 @@ For  strings $w_1,\ldots,w_n \in \Sigma^*$, define the corresponding \emph{facto
 \end{align*}
 to be the result of first applying the semigroup homomorphism $h : \Sigma^* \to \functor A$ to all the strings, then applying the factorized output function, and finally removing the elements of the output co-product that correspond to input coordinates $i \in \set{1,\ldots,n}$ in which the string $w_i$ was the empty string $\varepsilon$.
 \tito{wait, why perform this removal}
+\tito{mention origin semantics~\cite{bojanczykTransducersOriginInformation2014}
+  as inspiration}
 Here is the factorized output illustrated in our running example:\begin{align*}
         \tuple{\red{abbbbb} | \varepsilon | \blue{bbabaaa}} =  
         \red{\boxed{abbbbb}} \ 
@@ -196,7 +193,7 @@ The following lemma uses the ingredients described in this section to define wha
     \end{align*} 
     such that for every pair of strings $w,v \in \Sigma^*$ and every letter $a \in \Sigma$, one obtains $\tuple{wa|\underline v}$ by applying $\delta$ to the pair  consisting of  $\tuple{w|\underline {av}}$ and $\tuple{\underline w | a|\underline v}$.
     \end{lemma}
-
+\tito{mention computability by rat fun -> use finiteness}
     Using the above lemma, one can define a functorial streaming string transducer, using finite polynomial functors $\functorr A \subset A \oplus 1$ (note that $A \mapsto A \oplus 1$ is not finite!) and $\functors A \subset 1 \oplus A \oplus 1$, that computes the function $f$ -- thus completing the proof of Theorem~\ref{thm:regular-functions}. The idea is that the transducer maintains the following invariant: after processing the first $i$ letters in an input string $a_1 \cdots a_n$, the configuration of the transducer is the factorized output $\tuple{a_1 \cdots a_i | \underline{a_{i+1} \cdots a_n}}$. After processing all input letters, the configuration stores the output string. The details are in the appendix. It remains to prove the lemma, which is done using the operations on coproducts described earlier in this section. 
     \tito{I'm a bit bothered by the fact that the single place where the finiteness-preserving hypothesis is used does not appear in the main text}
 
