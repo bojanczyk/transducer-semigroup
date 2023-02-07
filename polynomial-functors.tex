@@ -8,6 +8,8 @@ Apart from the more abstract transducer model from Definition~\ref{def:functoria
 
 We write $1$ for the semigroup that has one element. This semigroup is unique up to isomorphism and it is a \emph{terminal object} in the category of semigroups, which means that it admits a unique homomorphism from every other semigroup $A$. This unique homomorphism will be denoted by $! : A \to 1$. It has no connection with the factorial function on numbers. 
 
+\tito{update normalization looks like the coproduct $A \oplus \bigoplus_{X\in R} \{X\}^+$ --- should we mention that?}
+
 The \emph{coproduct}  of two semigroups $A$ and $B$, denoted by $A \oplus B$, is the semigroup whose elements are nonempty words over an alphabet that is the disjoint union of $A$ and $B$, restricted to words that are \emph{alternating} in the sense that two consecutive letters cannot belong to the same semigroup. The semigroup operation is defined in the expected way. We draw elements of a coproduct using coloured boxes, with the following picture showing the product operation in the coproduct of two copies, \red{red} and \blue{blue}, of the semigroup $\set{a,b}^+$:
 \begin{align*}
     (\red{\boxed{aba}} \cdot 

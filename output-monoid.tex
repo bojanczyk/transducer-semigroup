@@ -35,11 +35,26 @@ We now state the main theorem of this paper.
     \item[Section~\ref{sec:hard}] proves the hard  implication in the theorem, namely  $(\ref{it:regular}) \Leftarrow (\ref{it:trans-semig-regular})$
 \end{description}
 
-Before continuing, we remark on one advantage of the characterization, namely a straightforward proof of closure under composition. It is easy to see that functions recognized by finiteness-preserving transducer semigroups are closed under composition.  This is because finiteness-preserving functors are closed under composition, natural output functions are also closed under composition, and natural output functions commute with functors.\footnotemark{} In contrast, for some (but not all)  models defining regular string-to-string functions, closure under composition requires a non-trivial construction -- examples of such models include two-way transducers~\cite[Theorem 2]{ChytilJ77} or copyless \sst~\cite[Theorem 1]{composingSST}. 
-
-\footnotetext{More precisely, consider the following diagram, where the upper path describes the composition of two functions recognized transducer semigroups $(\functor,\outfun)$ and $(\functor',\outfun')$, respectively:
+Before continuing, we remark on one advantage of the characterization, namely a
+straightforward proof of closure under composition. In contrast, for some (but
+not all) existing models defining regular string-to-string functions,
+composition requires a non-trivial construction -- examples include two-way
+transducers~\cite[Theorem 2]{ChytilJ77} or copyless \sst~\cite[Theorem
+1]{composingSST}.
+\begin{proposition}\label{prop:composition}
+  Functions recognized by finiteness-preserving transducer semigroups are closed
+  under composition.
+\end{proposition}
+\begin{proof}
+  This is because finiteness-preserving functors are closed under composition,
+  natural output functions are also closed under composition, and naturality
+  means by definition that the output functions \enquote{commute} in a suitable
+  sense with functors.\footnote{More precisely, consider the following diagram,
+    where the upper path describes the composition of two functions recognized
+    transducer semigroups $(\functor,\outfun)$ and $(\functor',\outfun')$,
+    respectively:
     \[
-    \begin{tikzcd}[ampersand replacement=\&, column sep=2cm]
+      \begin{tikzcd}[ampersand replacement=\&, column sep=2cm]
         \Sigma^* 
         \ar[r,"h"]
         \& 
@@ -55,9 +70,11 @@ Before continuing, we remark on one advantage of the characterization, namely a 
         \ar[r,"\outfun'_{(\Pi^*)}"]
         \&
         \Pi^*
-    \end{tikzcd}
+      \end{tikzcd}
     \]
     The rectangle in the middle commutes by naturality, and therefore the upper path is equal to the lower path. The latter describes a function recognized by $(\functor\functor', \outfun_{\functor'(-)} \circ \outfun')$.}
+\end{proof}
+
 
 
  
@@ -150,6 +167,7 @@ For  strings $w_1,\ldots,w_n \in \Sigma^*$, define the corresponding \emph{facto
 to be the result of first applying the semigroup homomorphism $h : \Sigma^* \to \functor A$ to all the strings, then applying the factorized output function, and finally removing the elements of the output co-product that correspond to input coordinates $i \in \set{1,\ldots,n}$ in which the string $w_i$ was the empty string $\varepsilon$.
 \tito{wait, why perform this removal}
 \tito{mention origin semantics~\cite{bojanczykTransducersOriginInformation2014}
+  (see also~\cite[Section~5]{MuschollPuppis})
   as inspiration}
 Here is the factorized output illustrated in our running example:\begin{align*}
         \tuple{\red{abbbbb} | \varepsilon | \blue{bbabaaa}} =  

@@ -99,8 +99,14 @@ The purpose of transducer semigroups is to define functions between semigroups, 
  \text{for some semigroup homomorphism}\ h.
  \]
 \end{definition}
-The definition discusses functions between arbitrary semigroups, but we will mainly care about string-to-string functions $f\colon \Sigma^* \to \Gamma^*$, i.e.~the special case when both the input and output semigroups are finitely generated free monoids. Although the case that we care about involves monoids, which are a special case of semigroups, it will be useful in the proofs to define the model in terms of semigroups.
-\tito{also in the result (to handle $f(\varepsilon)\neq\varepsilon$)}
+The definition discusses functions between arbitrary semigroups, but we will
+mainly care about string-to-string functions $f\colon \Sigma^* \to \Gamma^*$,
+i.e.~the special case when both the input and output semigroups are finitely
+generated free monoids. Although the case that we care about involves monoids,
+which are a special case of semigroups, the use of a semigroup homomorphism that
+is not necessarily a monoid homomorphism is required to recognize functions such
+that $f(\varepsilon)\neq\varepsilon$. Furthermore, it will be useful in the
+proofs to work in the category of semigroups, rather than the category of monoids.
 
 \begin{example}
  Consider the transducer semigroup in which the functor is the identity, and the output mechanism is also the identity. The functions of type $A \to B$ that are recognized by this transducer semigroup are exactly the semigroup homomorphisms from $A$ to $B$.
@@ -134,11 +140,14 @@ The definition discusses functions between arbitrary semigroups, but we will mai
 
 \subsection{Two simple characterizations}
 \label{sec:two-simple}
-We begin with two simple theorems, which are about transducer semigroups where the functor is not necessarily finiteness-preserving. These results describe two classes of string-to-string functions: all functions (Theorem~\ref{thm:all-functions}) and functions that reflect recognizability (Theorem~\ref{thm:reco-reflecting-functions}).
+% We begin with two simple theorems, which are about transducer semigroups where the functor is not necessarily finiteness-preserving. These results describe two classes of string-to-string functions: all functions (Theorem~\ref{thm:all-functions}) and functions that reflect recognizability (Theorem~\ref{thm:reco-reflecting-functions}).
+We begin with two simple theorems, which use transducer semigroups to capture two classes of string-to-string functions: all functions (Theorem~\ref{thm:all-functions}) and functions that reflect recognizability (Theorem~\ref{thm:reco-reflecting-functions}).
 %These two theorems have simple proofs.
-The main contribution of this paper, presented in Section~\ref{sec:reg-char}, characterizes the regular functions using  finiteness-preserving functors.
+The main contribution of this paper, presented in Section~\ref{sec:reg-char},
+characterizes the regular functions using a stronger restriction than those
+considered here.
 
-\subparagraph{All functions.} The first theorem shows that, without any further restrictions, transducer semigropus can recognize all functions.
+\subparagraph{All functions.} The first theorem concerns transducer semigroups without any restrictions.
 
 \begin{theorem}\label{thm:all-functions} 
  Every string-to-string function is recognized by a transducer semigroup.
