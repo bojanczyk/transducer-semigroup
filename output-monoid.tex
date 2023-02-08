@@ -173,8 +173,9 @@ Here is the factorized output illustrated in our running example (we use colours
         \boxed{\varepsilon} \
         \blue{\boxed{bbaba}} \in \red{\set{a,b}^*} \oplus \set{a,b}^*  \oplus \blue{\set{a,b}^*}.
 \end{align*}
+As we can see above, when the output semigroup is a free monoid, the factorized output morally tells us \enquote{which part of the output string comes from which part in the input string}.
 \begin{remark}
-As the above example shows, when the output semigroup is a free monoid, the factorized output morally tells us \enquote{which part of the output string comes from which part in the input string}. This is similar to the idea of \emph{origin semantics}~\cite{bojanczykTransducersOriginInformation2014} of regular functions (see also~\cite[Section~5]{MuschollPuppis}). Indeed, our definition of factorized output is inspired by a similar tool of the same name that appears in the study of origin semantics~\cite[Section~2]{bojanczykTransducersOriginInformation2014}.
+This is similar to the idea of \emph{origin semantics}~\cite{bojanczykTransducersOriginInformation2014} of regular functions (see also~\cite[Section~5]{MuschollPuppis}). Indeed, our definition of factorized output is inspired by a similar tool of the same name that appears in the study of origin semantics~\cite[Section~2]{bojanczykTransducersOriginInformation2014}.
 \end{remark}
 
 We also use a similar notation but with some input strings underlined, e.g.~the input could be $\tuple{\red{\underline{abb}} | \varepsilon | \blue{bbaba}}$ with an underline for the first red part. In the underlined case, before applying the vectorial output function, we apply $h$ to the non-underlined strings and
