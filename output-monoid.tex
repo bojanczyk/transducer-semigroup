@@ -82,9 +82,8 @@ transducers~\cite[Theorem 2]{ChytilJ77} or copyless \sst~\cite[Theorem
 
 \input{polynomial-functors}
 
-\subparagraph*{Proof of $(\ref{it:trans-semig-regular}) \Rightarrow (\ref{it:regular})$ in \Cref{thm:regular-functions}.}
-We have now collected all necessary ingredients to prove this hard direction of the equivalence. Consider some transducer semigroup, with the functor being $\functor$, and fix a string-to-semigroup function $f : \Sigma^* \to A$ that decomposes as some homomorphism $h : \Sigma^* \to \functor A$ followed by the output function of type $\functor A \to A$. 
-We will show that this function  is computed by some functorial \sst as in Definition~\ref{def:functorial-sst}.
+\subparagraph{Factorized output.}
+Now, consider some transducer semigroup, with the functor being $\functor$, and fix a string-to-semigroup function $f\colon \Sigma^* \to A$ that decomposes as some homomorphism $h\colon \Sigma^* \to \functor A$ followed by the output function of type $\functor A \to A$. 
 
 For semigroups $A_1,\ldots,A_n$, define the \emph{vectorial output function} to be the 
 function% of type 
@@ -158,28 +157,27 @@ for all semigroup homomorphisms $h_1,\ldots,h_n$. This is because each of the th
 % 1 1     \in 1 \oplus \set{a,b}^+.
 % \end{align*}
 
-Let us return to our string-to-semigroup function $f : \Sigma^* \to A$ in the assumption of the hard implication from Theorem~\ref{thm:regular-functions}.
-Using the vectorial output mechanism, we will be able to track the origins in the output of the function $f$, with respect to some partition of the input string into several nonempty parts.
-For  strings $w_1,\ldots,w_n \in \Sigma^*$, define the corresponding \emph{factorized output}, denoted by 
+Let us return to our function $f = \outfun_A \circ h$ recognized by our transducer semigroup $(\functor,\outfun)$.
+%Using the vectorial output mechanism, we will be able to track the origins in the output of the function $f$, with respect to some partition of the input string into several nonempty parts.
+For strings $w_1,\ldots,w_n \in \Sigma^*$, define the corresponding \emph{factorized output} to be the result of first applying the semigroup homomorphism $h : \Sigma^* \to \functor A$ to all the strings, and then applying the vectorial output function; we denote it by 
 \begin{align*}
 \tuple{w_1| \cdots | w_n} \in \myunderbrace{A \oplus \cdots \oplus A}{$n$ times},
 \end{align*}
-to be the result of first applying the semigroup homomorphism $h : \Sigma^* \to \functor A$ to all the strings, then applying the factorized output function, and finally removing the elements of the output co-product that correspond to input coordinates $i \in \set{1,\ldots,n}$ in which the string $w_i$ was the empty string $\varepsilon$.
-\tito{wait, why perform this removal}
-\tito{mention origin semantics~\cite{bojanczykTransducersOriginInformation2014}
-  (see also~\cite[Section~5]{MuschollPuppis})
-  as inspiration}
-Here is the factorized output illustrated in our running example:\begin{align*}
-        \tuple{\red{abbbbb} | \varepsilon | \blue{bbabaaa}} =  
-        \red{\boxed{abbbbb}} \ 
-        \blue{\boxed{bbabaaa}} \ 
-        \red{\boxed{abbbbb}} \ 
-        \blue{\boxed{bbabaaa}} \in \red{\set{a,b}^*} \oplus \set{a,b}^*  \oplus \blue{\set{a,b}^*}.
-        \end{align*}
-    Here, we use colours to distinguish which of the three parts of the input is used; the empty middle part has black colour which is not used in the output. As the above example shows, the factorized output tells us which parts of the output string come from which of the three parts in the input string.
+Here is the factorized output illustrated in our running example (we use colours to distinguish which of the three parts of the input is used):
+\begin{align*}
+        \tuple{\red{abb} | \varepsilon | \blue{bbaba}} =  
+        \red{\boxed{abb}} \ 
+        \boxed{\varepsilon} \ 
+        \blue{\boxed{bbaba}} \ 
+        \red{\boxed{abb}} \ 
+        \boxed{\varepsilon} \
+        \blue{\boxed{bbaba}} \in \red{\set{a,b}^*} \oplus \set{a,b}^*  \oplus \blue{\set{a,b}^*}.
+\end{align*}
+\begin{remark}
+As the above example shows, when the output semigroup is a free monoid, the factorized output morally tells us \enquote{which part of the output string comes from which part in the input string}. This is similar to the idea of \emph{origin semantics}~\cite{bojanczykTransducersOriginInformation2014} of regular functions (see also~\cite[Section~5]{MuschollPuppis}). Indeed, our definition of factorized output is inspired by a similar tool of the same name that appears in the study of origin semantics~\cite[Section~2]{bojanczykTransducersOriginInformation2014}.
+\end{remark}
 
-
-We also use a similar notation but with some input strings underlined, e.g.~the input could be $\tuple{\red{\underline{abbbbb}} | \varepsilon | \blue{bbabaaa}}$ with an underline for the first red part. In the underlined case, before applying the vectorial output function, we apply $h$ to the non-underlined strings and
+We also use a similar notation but with some input strings underlined, e.g.~the input could be $\tuple{\red{\underline{abb}} | \varepsilon | \blue{bbaba}}$ with an underline for the first red part. In the underlined case, before applying the vectorial output function, we apply $h$ to the non-underlined strings and
 % \[
 % \begin{tikzcd}
 % \Sigma^*
@@ -192,27 +190,33 @@ We also use a similar notation but with some input strings underlined, e.g.~the 
 % \end{tikzcd}
 % \]
 $(\functor! \circ h) \colon \Sigma^* \to \functor1$
-to the underlined strings. (As before, the empty input strings are removed from the output.)    In our running example, we have
+to the underlined strings. In our running example, we have
     \begin{align*}
-        \tuple{\red{\underline{abbbbb}} | \varepsilon | \blue{bbabaaa}} =  
+        \tuple{\red{\underline{abb}} | \varepsilon | \blue{bbaba}} =  
         \red{\boxed{1}} \ 
-        \blue{\boxed{bbabaaa}} \ 
+        \boxed{\varepsilon} \
+        \blue{\boxed{bbaba}} \ 
         \red{\boxed{1}} \ 
-        \blue{\boxed{bbabaaa}}.
+        \boxed{\varepsilon} \
+        \blue{\boxed{bbaba}}.
         \end{align*}
 
+\subparagraph*{Proof of $(\ref{it:trans-semig-regular}) \Rightarrow (\ref{it:regular})$ in \Cref{thm:regular-functions}.}
+We have now collected all necessary ingredients to prove this hard direction of the equivalence. Therefore, our goal is now to show that the function $f\colon \Sigma^* \to A$ that we have previously fixed is computed by some functorial streaming string transducer as in Definition~\ref{def:functorial-sst}.
+\tito{todo: start building sst here before introducing the lemmata}
 
-
-The following lemma uses the ingredients described in this section to define what is essentially the register update function in a streaming string transducer recognizing our function $f$.  As discussed earlier in this section, we consider functors such as $A \oplus 1$ and $1 \oplus A \oplus 1$ as polynomial semigroup-to-set functors, which enables us to talk about natural and copyless functions that operate on them.
+The following lemma uses the ingredients described in this section to define what is essentially the application of updates to registers in a functorial streaming string transducer recognizing our function $f$. Following \Cref{rem:coproduct-as-polynomial-functor}, we consider functors such as $A \mapsto A \oplus 1$ and $A\mapsto 1 \oplus A \oplus 1$ as polynomial semigroup-to-set functors, which enables us to talk about natural and copyless functions that operate on them.
 \begin{lemma}\label{lem:compute-next-configuration}
     There is a {copyless} natural function
-    \begin{align*}
+    \[
     \delta\colon (A \oplus 1) \times (1 \oplus A \oplus 1) \to A \oplus 1
-    \end{align*} 
-    such that for every pair of strings $w,v \in \Sigma^*$ and every letter $a \in \Sigma$, one obtains $\tuple{wa|\underline v}$ by applying $\delta$ to the pair  consisting of  $\tuple{w|\underline {av}}$ and $\tuple{\underline w | a|\underline v}$.
+    \qquad\text{such that}\qquad
+    \tuple{wa|\underline v} = \delta(\tuple{w|\underline {av}},\tuple{\underline w | a|\underline v})
+    \]
+    for every pair of strings $w,v \in \Sigma^*$ and every letter $a \in \Sigma$.
     \end{lemma}
 \tito{mention computability by rat fun -> use finiteness}
-    Using the above lemma, one can define a functorial streaming string transducer, using finite polynomial functors $\functorr A \subset A \oplus 1$ (note that $A \mapsto A \oplus 1$ is not finite!) and $\functors A \subset 1 \oplus A \oplus 1$, that computes the function $f$ -- thus completing the proof of Theorem~\ref{thm:regular-functions}. The idea is that the transducer maintains the following invariant: after processing the first $i$ letters in an input string $a_1 \cdots a_n$, the configuration of the transducer is the factorized output $\tuple{a_1 \cdots a_i | \underline{a_{i+1} \cdots a_n}}$. After processing all input letters, the configuration stores the output string. The details are in the appendix. It remains to prove the lemma, which is done using the operations on coproducts described earlier in this section. 
+    Using the above lemma, one can define a functorial streaming string transducer, using a register functor $\functorr A \subset A \oplus 1$ which is finite polynomial (note that $A \mapsto A \oplus 1$ is not finite!) and the update functor $\functoru : A \mapsto 1 \oplus A \oplus 1$, that computes the function $f$ -- thus completing the proof of Theorem~\ref{thm:regular-functions}. The idea is that the transducer maintains the following invariant: after processing the first $i$ letters in an input string $a_1 \cdots a_n$, the configuration of the transducer is the factorized output $\tuple{a_1 \cdots a_i | \underline{a_{i+1} \cdots a_n}}$. After processing all input letters, the configuration stores the output string. The details are in the appendix. It remains to prove the lemma, which is done using the operations on coproducts described earlier in this section. 
     \tito{I'm a bit bothered by the fact that the single place where the finiteness-preserving hypothesis is used does not appear in the main text}
 
     \begin{proof}[Proof of \Cref{lem:compute-next-configuration}]

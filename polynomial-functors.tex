@@ -50,17 +50,18 @@ A coproduct can involve more than two semigroups; in the pictures this would cor
 
 
 
-% \begin{example}\label{ex:coproduct-as-polynomial-functor}
-    The polynomial functors that we  use in our proof will arise using coproducts with the singleton semigroup $1$. Consider  the semigroup-to-set functor $A \mapsto A \oplus 1$, which maps a semigroup to the underlying set of its coproduct with the singleton semigroup. Although not defined as a polynomial functor, this functor is isomorphic to a polynomial functor. This is because for every semigroup $A$ there is a bijective correspondence between the sets
-    \begin{align}\label{eq:polynomial-representation-of-coproduct}
+\begin{remark}[used in our proof]
+    \label{rem:coproduct-as-polynomial-functor}
+    %The polynomial functors that we  use in our proof will arise using coproducts with the singleton semigroup $1$. 
+    Consider the semigroup-to-set functor $A \mapsto A \oplus 1$, which maps a semigroup to the underlying set of its coproduct with the singleton semigroup. Although not defined as a polynomial functor, this functor is isomorphic to one. This is because for every semigroup $A$ there is a bijective correspondence between the sets
+    \begin{align*}%\label{eq:polynomial-representation-of-coproduct}
     A \oplus 1 \quad \text{and} \quad \coprod_{q \in 1 \oplus 1} A^{\text{dimension of $q$}},
-    \end{align}
+    \end{align*}
     where the dimension of $q$ is defined to be the number of times that the first copy of $1$ appears in $q$. Furthermore, this bijection is natural, and thus we can speak of $A \oplus 1$ as being a polynomial functor. This remark applies to similar constructions, which involve a coproduct of several copies of $A$ with several copies of $1$, such as $A \oplus A \oplus A \oplus 1 \oplus 1$.
-    
     %Mikolaj: I eliminated parts of this discussion, since they can be inserted (in the reader's head) at the places where they are used
     % bijection in~\eqref{eq:polynomial-representation-of-coproduct} is natural, and therefore there is a natural bijection between the functor $(-) \oplus 1$ and some polynomial functor. Also, if two polynomial functors are connected by a natural bijection, then they are the same, up to renaming of the components, and therefore the representation in~\eqref{eq:polynomial-representation-of-coproduct} is unique up to renaming of components. By uniqueness, we will simply speak of $A \oplus 1$ as being a polynomial functor.  In a similar way, functors such as $A \mapsto A \oplus 1 \oplus A$ are also polynomial.
     % Noting that $\oplus$ makes sense as an operation on sets without a semigroup structure (it builds a set of nonempty alternating sequences), we have more generally that, if $\functor$ is a polynomial functor, then so is $A \mapsto \functor A \oplus 1$. 
-% \end{example}
+\end{remark}
 
 
 

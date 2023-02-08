@@ -1,5 +1,6 @@
 \section{Last step in the proof of Theorem~\ref{thm:regular-functions}}
 In this part of the appendix, we finish the proof of \Cref{thm:regular-functions}, by using \Cref{lem:compute-next-configuration} to define a functorial streaming string transducer to define the function $f : \Sigma^* \to A$ that is recognized by a transducer semigroup with a finiteness-preserving functor. 
+\tito{no need to make $\functors$ finite anymore (rename it to $\functoru$?)}
 
 Using \Cref{lem:compute-next-configuration}, we can design a device that  recognizes our desired function $w \mapsto \tuple{w}=f(w)$, and which is almost a functorial \sst as in Definition~\ref{def:functorial-sst}. We say ``almost'', because the device will use register and update functors that are  infinite polynomial functors; this construction will be later improved so that it becomes finite.  The register and update functors are the (infinite) polynomial functors
 \begin{align*}
@@ -11,7 +12,9 @@ $a_1 \cdots a_n$. The device begins its computation with the  initial register v
 \begin{align*}
     \tuple{\varepsilon | \underline{a_1 \cdots a_n}} \in A \oplus 1.
 \end{align*}
-This value does not depend on the input string, since it is always equal to the unique element of $1 \oplus A$ that does not use $A$. The rational function  in the transducer is defined so that the $i$-th lettter of its output string is 
+This value does not depend on the input string, since it is always equal to the unique element of $1 \oplus A$ that does not use $A$.
+\tito{eeeh not really}
+The rational function  in the transducer is defined so that the $i$-th letter of its output string is 
 \begin{align*}
 \tuple{\underline{a_1 \cdots a_{i-1}}|a_i| \underline{a_{i+1} \cdots a_n}} \in 1 \oplus A \oplus 1
 \end{align*}
