@@ -5,10 +5,9 @@ In this section, we formally describe the regular functions, using a model based
 % The model is a minor variation on streaming string transducers, which use registers to store elements of the output semigroup.
 The model uses registers to store elements of the output semigroup. We begin by describing notation for registers and their updates. Suppose that $R$ is a finite set of \emph{register names}, and $A$ is a semigroup called the \emph{output semigroup}. We consider two sets 
 \begin{align*}
-\hspace{2cm}
-    \myunderbrace{R \to A}{the set of \emph{register valuations}} 
-    \hspace{4cm}
-    \myunderbrace{R \to (A+R)^+.}{the set of \emph{register updates}}
+    \text{register valuations:}\ (R \to A)
+  \qquad
+    \text{register updates:}\ (R \to (A+R)^+)
 \end{align*}
 Below we show two examples of register updates, presented as assignments, using two registers $X,Y$ and the semigroup $A = a^*$. (The right-hand sides are the values in $(A+R)^+$.)
 \begin{align*}
@@ -31,12 +30,23 @@ The main operation on these sets is \emph{application}: a register update $u$
 can be applied to a register valuation $v$, giving a new register valuation $vu$. 
 
 
-In our model of streaming string tranducers, the registers will be updated by a stream of register updates that is produced by a {rational function}, defined as follows.  Intuitively speaking, a rational function corresponds to an automaton that produces one output letter for each input position, with the output letter depending on regular properties of the input position within the input string. More formally, a \emph{rational function} is defined to be a length-preserving\footnote{Often in the literature, rational functions are not required to be length-preserving, see e.g.~\cite[p.~525]{sakarovitch2009elements}, but in this paper, we only need the length-preserving case.} string-to-string function such that for some recognizable function 
+In our model of streaming string tranducers, the registers will be updated by a
+stream of register updates that is produced by a {rational function}, defined as
+follows. Intuitively speaking, a rational function corresponds to an automaton
+that produces one output letter for each input position, with the output letter
+depending on regular properties of the input position within the input string.
+More formally, a \emph{rational function} of type $\Sigma^* \to \Gamma^*$ is
+defined to be a length-preserving\footnote{Often in the literature, rational
+  functions are not required to be length-preserving, see
+  e.g.~\cite[p.~525]{sakarovitch2009elements}, but in this paper, we only need
+  the length-preserving case.} function such that for some family of
+\emph{recognizable} functions\footnote{The family $(f_a)_{a\in\Sigma}$ is very
+  close to what is called an \emph{(Eilenberg) bimachine} in the literature.}
 \begin{align*}
- f\colon (\set{\text{current, not current}} \times \text{(input alphabet)})^+ \to \text{output alphabet},
+ f_a \colon \Sigma^* \times \Sigma^* \to \Gamma^* \qquad\text{for}\ a \in \Sigma,
 \end{align*}
-for every input string the  $i$-th output letter is obtained by applying the function
-to the string that is obtained from the input string by setting the first coordinate to ``current'' for the $i$-th position, and ``not current'' for the remaining positions.  
+for every input string $a_1 \dots a_n$ the $i$-th output letter is $f_{a_i}(a_1
+\dots a_{i-1},\; a_{i+1} \dots a_n)$.
 
 Having defined register updates and rational functions, we are ready to define the variant of streaming string transducers used in this paper.
 
@@ -47,15 +57,17 @@ Having defined register updates and rational functions, we are ready to define t
 \begin{itemize}
     \item A finite \emph{input alphabet} $\Sigma$ and an \emph{output semigroup $A$}.
     \item A finite set $R$ of \emph{register names}. All register valuations and updates below use $R$ and $A$.
-    \item A designated \emph{initial register valuation}, and a designated \emph{final register}.
+    \item A designated \emph{initial register valuation}.
+    \item A \emph{final output pattern} in $(A+R)^+$.
     \item An update oracle, which is a rational function of type 
-    \begin{align*}
-    \Sigma^* \to (\text{copyless register updates})^*.
-    \end{align*}
+        $\Sigma^* \to (\text{copyless register updates})^*$.
 \end{itemize}
 \end{definition}
-
-The semantics of the \sst{} is a function of type $\Sigma^* \to A$ defined as follows. When given an input string, the \sst{} begins in the designated initial register valuation. Next, it applies all updates produced by the update oracle, in left-to-right order. Finally, the output of the \sst{} is obtained by returning the semigroup element stored in the designated final register. 
+The semantics of the \sst{} is a function of type $\Sigma^* \to A$ defined as
+follows. When given an input string, the \sst{} begins in the designated initial
+register valuation. Next, it applies all updates produced by the update oracle,
+in left-to-right order. At the end, the output is obtained by combining the
+final values of the registers according to the final output pattern.
 
 In a rational function, the label of the $i$-th output position is allowed to depend on letters of the input string that are on both sides of the $i$-th input position; this corresponds to regular lookaround in a streaming string transducer. Therefore, the model described above is easily seen to be equivalent to copyless \sst{}s with regular lookaround, which are one of the equivalent models defining the regular string-to-string functions, see~\cite[Section~IV.C]{AlurFT12}.
 
@@ -66,18 +78,17 @@ Having defined the transducer model, we prove the easy implication in
 \Cref{thm:regular-functions}. First, we treat the special case of rational
 functions:
 \begin{lemma}\label{lem:rational-to-functor}
-  Every rational function can be recognized by a finiteness-preserving
-  transducer semigroup.
+  Finiteness-preserving transducer semigroups recognize all rational functions.
 \end{lemma}
 \begin{proof}
-  By definition, a rational function comes from a recognizable function from
-  words labeled with \enquote{(not) current} to the output alphabet.
-  Recognizability means that the latter function factors through a homomorphism
-  to some finite semigroup $B$. To recognize the rational function, we then
-  consider a functor that maps a semigroup $A$ to its \emph{two-sided semidirect
-    product} with $B$, whose underlying set is $B \times \big((B \times B) \to
-  A\big)$ (a classical construction, see~\cite[Section 6]{rhodes1989kernel}).
-  Details can be found in the appendix.
+  By definition, a rational function comes from a finite family of recognizable
+  functions. Recognizability means that they factor through homomorphisms to
+  some finite semigroups -- without loss of generality, we may consider that
+  they use a common finite semigroup $B$. To recognize the rational function, we
+  then consider a functor that maps a semigroup $A$ to its \emph{two-sided
+    semidirect product} with $B$, whose underlying set is $B \times \big((B
+  \times B) \to A\big)$ (a classical construction, see~\cite[Section
+  6]{rhodes1989kernel}). Details can be found in the appendix.
 \end{proof}
 
 For the general case, it is apparent from \Cref{def:usual-sst} that every
@@ -90,48 +101,65 @@ string transducers.
 
 So, suppose now that a string-to-semigroup function $f\colon \Sigma^* \to A$ is
 computed by some local \sst. In the proof below, when referring to register valuations and register updates, we refer to those that use the registers and output semigroup of the fixed transducer. We say that a register update is in \emph{normal form} if, in every right-hand side, one cannot find two consecutive letters from the semigroup $A$.
-Every register update can be \emph{normalized}, i.e.~converted into one that is in normal form, by using the semigroup operation to merge consecutive elements of the output semigroup in the right-hand sides.
+Any register update can be \emph{normalized}, i.e.~converted into one that is in normal form, by using the semigroup operation to merge consecutive elements of the output semigroup in the right-hand sides.
 Here is an example, which uses three registers $X,Y,Z$ and the semigroup $A = (\set{0,1}, \cdot)$:
 \begin{align*}
-\myunderbrace{
-\begin{array}{rcl}
+  \myunderbrace{
+  \begin{array}{rcl}
     X &:=& 01Y1111X111\\
-Y &:=& 01011
-\end{array}
-}{not in normal form}
-\qquad \xrightarrow{\;\text{normalization}\;} \qquad
-\myunderbrace{
-\begin{array}{rcl}
+    Y &:=& 01011
+  \end{array}
+  }{not in normal form}
+  \qquad \xrightarrow{\;\text{normalization}\;} \qquad
+  \myunderbrace{
+  \begin{array}{rcl}
     X &:=& 0Y1X1\\
-Y &:=& 0
-\end{array}
-}{in normal form}
+    Y &:=& 0
+  \end{array}
+  }{in normal form}
 \end{align*}
-
- The  register updates before and after normalization act in the same way on register valuations.   If an update is copyless and in normal form, then the combined length of all right hand sides is at most three times the number of registers. Therefore, if a semigroup is finite, then the set of copyless register updates in normal form, call it $\functors A$,  is also finite. (This would not be true for copyful register updates.) The set $\functors A$ of register updates in normal form can be equipped with a composition operation 
+The register updates before and after normalization act in the same way on
+register valuations. If an update is copyless and in normal form, then the
+combined length of all right-hand sides is at most three times the number of
+registers. Therefore, if a semigroup $B$ is finite, then the set of copyless
+register updates in normal form, call it $\functors B$, is also finite.
+(However, there are infinitely many copyful register updates even when $B$ is
+finite.) This set $\functors B$ can be equipped with a composition operation
 \begin{align*}
-    u_1,u_2 \in \functors A  \quad \mapsto \quad u_1u_2 \in \functors A,
+    u_1,u_2 \in \functors B  \quad \mapsto \quad u_1u_2 \in \functors B,
 \end{align*}
 which is defined in the same way as applying a register update to a register
 valuation, except that we normalize at the end. This composition operation is
 associative, and  compatible with applying register updates to register
 valuations, in the sense that $(vu_1)u_2 = v(u_1u_2)$ holds for every valuation
-$v$ and all updates $u_1$ and $u_2$. Therefore, $A \mapsto \functors A$ is a finiteness-preserving semigroup functor (with the natural extension to morphisms, where the homomorphism is applied to every semigroup element in a right-hand side). 
+$v$ and all updates $u_1$ and $u_2$. Therefore, $B \mapsto \functors B$ is a finiteness-preserving semigroup functor (with the natural extension to morphisms, where the homomorphism is applied to every semigroup element in a right-hand side). 
 
 The functor $\functors$ described above is almost but not quite the functor that
 will be used in the transducer semigroup that we will define to prove the easy
 implication in Theorem~\ref{thm:regular-functions}. That functor $\functor$ will
-also take into account the initial register valuation: if the input semigroup is~$A$, then the underlying set of the output semigroup is
-\[ \functor A =  \functors A \times \myunderbrace{(R \to A)}{\qquad\qquad\qquad\qquad\qquad endowed with the trivial left zero semigroup structure} \]
-The semigroup operation on $\functor A$, and the action of $\functor$ on
-morphisms, are defined componentwise.
+also take into account the initial register valuation and final output pattern:
+for a semigroup~$B$, the underlying set of $\functor B$ is
+\[ \functor B =  \functors B \times \myunderbrace{(R \to B) \times
+    B^{\text{number of elements of $A$ in the final output pattern}}}{endowed
+    with the trivial left zero semigroup structure} \]
+(recall that $A$ is the output semigroup of the function $f$ that we wish to
+recognize). The semigroup operation on $\functor B$, and the action of
+$\functor$ on morphisms, are defined componentwise.
 
-Given $(u,v) \in \functor A$, the output mechanism in the transducer semigroup
-applies the register update $u$ to the register valuation $v$, and then from the
-resulting valuation $vu$ extracts the value of the designated final register.
-Using this, we can recognize the function computed by our local streaming string
-transducer, via the homomorphism that sends each input letter to:
+Given $(u,v,(b_1,\dots,b_n)) \in \functor B$, the output mechanism in the
+transducer semigroup first replaces, in the final output pattern (which belongs
+in $(A+R)^+$):
 \begin{itemize}
-\item the register update that this letter determines in the first component;
-\item the designated initial register valuation in the second component.
+\item the $i$-th occurrence of an element of $A$ by $b_i$;
+\item each $r \in R$ by the value of $r$ given by the register valuation $uv$,
+  that results from applying the register update $u$ to the valuation $v$.
+\end{itemize}
+Then it multiplies together the elements of the resulting list in $B^+$ to
+produce the output. Using this, we can recognize $f$ via the homomorphism that
+sends each input letter to:
+\begin{itemize}
+\item the register update that this letter determines (our \sst being local) in
+  the first component;
+\item the designated initial register valuation in the second component;
+\item the elements in $A$ in the final output pattern in the third component.
 \end{itemize}

@@ -9,7 +9,7 @@ The assumption of the implication uses an abstract model (transducer semigroups)
 
 Define a \emph{polynomial functor} to be a semigroup-to-set functor of the form
 \begin{align*}
-A \quad \mapsto \quad \coprod_{q \in Q} A^{\text{dimension of } q},
+\qquad A \quad \mapsto \quad \coprod_{q \in Q} A^{\text{dimension of } q},
 \end{align*}
 where $Q$ is some possibly infinite set, called the \emph{components}, with each  component having an associated \emph{dimension} in $\set{0,1,\ldots}$. The symbol $\coprod$ stands for disjoint union of sets. This functor does not take into account the semigroup structure of the input semigroup, since the output is seen only as a set.
 On morphisms, the functor works in the expected way, i.e.~coordinate-wise.  
@@ -70,12 +70,13 @@ Apart from naturality, we will want our register updates to be copyless.
     does not increase the norm. Here, the norm of an element in a polynomial functor $\functor \Nat$ or $\functorg \Nat$ is defined to be the sum of numbers that appear in it.
 \end{definition}
 
-
-
-
-
-Having defined functions that are natural and copyless, we now describe the more abstract model of \sst{}s used in our proof. The main difference is that instead of register valuations and updates given by some finite set of register names, we have two abstract finite polynomial functors, together with an explicitly given application function. Another minor difference is that we allow the model to define partial functions; this will be useful in the proof.
-
+Having defined functions that are natural and copyless, we now describe the more
+abstract model of \sst{}s used in our proof. The main difference is that instead
+of register valuations and updates given by some finite set of register names,
+we have two abstract polynomial functors, one of them finite polynomial,
+together with an explicitly given application function. We also allow the
+computation to be initialized in a more liberal way, that may depend on a
+regular property of the input.
 
 \begin{definition}\label{def:functorial-sst}
     The syntax of a functorial streaming string transducer is given by:
@@ -83,16 +84,26 @@ Having defined functions that are natural and copyless, we now describe the more
         \item A finite \emph{input alphabet} $\Sigma$ and an \emph{output semigroup $A$}.
     \item Two polynomial functors $\functorr$ and $\functoru$, called the \emph{register} and \emph{update} functors, with $\functorr$ \emph{finite}.
     \item A function of type $\functorr A \times \functoru A \to \functorr A$, called \emph{application}, which is natural and copyless.
-    \item A distinguished \emph{initial register valuation}  in $\functorr A$.
-    \item A \emph{final function} of type $\functorr A \to A + 1$, which is natural and copyless.
+    \item An \emph{initial function} $\Sigma^* \to \functorr A$ which is
+      \emph{recognizable}.
+    \item A polynomial \emph{final functor} $\functork$, a designated
+      \emph{final value} in $\functork A$, and a \emph{final function} of type
+      $\functorr A \times \functork A \to A$, which is natural and copyless.
     \item An \emph{update oracle}, which is a rational function of type $\Sigma^* \to (\functoru A)^*$.
     \end{itemize}
 \end{definition}
+The semantics of the functorial \sst is a partial function of type 
+$\Sigma^* \to A$ defined as follows. For every input string, we feed it to the
+initial function to get an initial register valuation. As in
+Definition~\ref{def:usual-sst}, we use the application function and the update
+oracle to define inductively a sequence of register valuations in $\functor A$.
+We then apply the final function to the last register valuation and to the
+designated final value, yielding a result in $A$.
 
-The semantics of the transducer is a partial function of type 
-$\Sigma^* \to A$ defined as follows. As in Definition~\ref{def:usual-sst}, for every input string we use  the initial register valuation, the application function and the update oracle to define a sequence of register valuations in $\functor A$. We then apply the final function to the last register valuation, yielding a result in $A+1$.  If this result is in the $1$ part, then the output of the transducer is undefined, otherwise the output of the transducer is the semigroup element stored in the $A$ part. We will care about transducers that compute total functions, which corresponds to the property  that for every input string, the last register valuation is in the $A$ part of $A+1$.
+In the appendix, we prove that this model is no more expressive than usual
+copyless \sst{}s.
 
 \begin{lemma}\label{lem:functorial-sst-complete}
-    The models defined in Definitions~\ref{def:usual-sst} and~\ref{def:functorial-sst} define the same (total) string-to-semigroup functions.
+    Definitions~\ref{def:usual-sst} and~\ref{def:functorial-sst} characterize the same string-to-semigroup functions.
 \end{lemma}
 
