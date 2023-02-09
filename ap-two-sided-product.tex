@@ -1,25 +1,26 @@
-\section{Details for the proof of \Cref{lem:rational-to-functor}}
+\section{Further details for the proof of \Cref{lem:rational-to-functor}}
 
-Our construction requires, in fact, that $B$ is a monoid; this can be assumed
-without loss of generality (by freely adjoining a neutral element if necessary).
+Let $(f_a)_{a\in\Sigma}$ be the family of recognizable functions of type
+$\Sigma^* \times \Sigma^* \to \Gamma$ that generates our rational function. By
+definition of recognizability, each $f_a$ decomposes into
+\[ \Sigma^* \times \Sigma^* \xrightarrow{\;h_a\;} B_a \xrightarrow{\;g_a\;} \Gamma
+  \qquad\text{where $h_a$ is a semigroup homomorphism and $B_a$ is finite.} \]
+One can check that every $f_a$ then factors through a monoid morphism to the
+finite monoid
+\[ B = \prod_{a \in \Sigma} h_a(\Sigma^* \times \Sigma^*) \]
+Thus, without loss of generality, we may assume for the rest of the proof that
+all the semigroups $B_a$ are equal to a common finite monoid $B$ and that each
+semigroup homomorphism $h_a$ is in fact a monoid morphism.
 
-For any semigroup $A$, the semigroup operation on the two-sided semidirect
-product $\functor A = B \times \big((B\times B)\to A\big)$ is defined so that
-the product of two pairs $(b_1,\varphi_1)$ and $(b_2,\varphi_2)$ is
+For any semigroup $A$, we let $\functor A = B \times (B\to A) \times B$ (as
+explained in the main text), endowed with the following semigroup operation:
 \begin{align*}
-\Big(b_1b_2, \big((c_1,c_2)  \mapsto   \varphi_1(c_1,b_2c_2) \cdot \varphi_2(c_1b_1,c_2)\big)\Big).
+  (\ell_1,\varphi_1,r_1) \cdot (\ell_2,\varphi_2,r_2) = \Big(\ell_1\ell_2,\; \big(b  \mapsto \varphi_1(br_2) \cdot \varphi_2(\ell_1b)\big),\; r_1r_2\Big).
 \end{align*}
-The construction $\functor$ is extended to morphisms by considering $(B\times
-B)\to A$ as the set of $(B\times B)$-indexed tuples (cf.~\Cref{ex:functors}) of
+The construction $\functor$ is extended to morphisms by considering $B\to A$ as the set of $B$-indexed tuples (cf.~\Cref{ex:functors}) of
 elements of $A$. To get a transducer semigroup, we take the output mechanism to
-be $(b,\varphi) \mapsto \varphi(e,e)$ where $e \in B$ is the neutral element.
+be $(\ell,\varphi,r) \mapsto \varphi(e)$ where $e \in B$ is the neutral element.
 
-Let $h\colon (\set{\text{current, not current}} \times \Sigma)^+ \to B$ be the
-semigroup homomorphism that serves to recognize the function to the output
-alphabet $\Gamma$ which, in turn, gives rise to our given rational function
-$\Sigma^* \to \Gamma^*$. This rational function is then recognized by the monoid
-homomorphism $\Sigma^* \to \functor(\Gamma^*)$ (indeed, $\functor$ preserves
-monoids) which maps $a \in \Sigma$ to
-\[ \big(h(\text{not current}, a), \big) \]
-\tito{TODO finish by introducing the second element in our factorization, also
-  the definition changed a bit}
+Our rational function is then recognized by the monoid homomorphism $\Sigma^*
+\to \functor(\Gamma^*)$ (indeed, $\functor$ preserves monoids) which maps $a \in
+\Sigma$ to $\big(h_a(a,\varepsilon),g_a,h_a(\varepsilon,a)\big)$.

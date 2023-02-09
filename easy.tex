@@ -84,11 +84,12 @@ functions:
   By definition, a rational function comes from a finite family of recognizable
   functions. Recognizability means that they factor through homomorphisms to
   some finite semigroups -- without loss of generality, we may consider that
-  they use a common finite semigroup $B$. To recognize the rational function, we
-  then consider a functor that maps a semigroup $A$ to its \emph{two-sided
-    semidirect product} with $B$, whose underlying set is $B \times \big((B
-  \times B) \to A\big)$ (a classical construction, see~\cite[Section
-  6]{rhodes1989kernel}). Details can be found in the appendix.
+  they all use the same semigroup $B$. To recognize the rational function, we
+  then consider a functor that maps a semigroup $A$ to a semigroup whose
+  underlying set is $B \times (B \to A) \times B$ (a construction similar in
+  spirit to the classical \emph{two-sided semidirect
+    product}~\cite[\S6]{rhodes1989kernel}). Details can be found in the
+  appendix.
 \end{proof}
 
 For the general case, it is apparent from \Cref{def:usual-sst} that every
