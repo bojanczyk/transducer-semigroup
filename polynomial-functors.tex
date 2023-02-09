@@ -81,7 +81,7 @@ A coproduct can involve more than two semigroups; in the pictures this would cor
 % \subsubsection{Views}
 % \label{sec:views}
 
-The crucial property of semigroups that will be used in our proof is described in Lemma~\ref{lem:views} below, which says that an element of a coproduct can be reconstructed based on certain partial information. This information is described  using the following operations.
+The crucial property of semigroups that will be used in our proof is \Cref{prop:views} below, which says that an element of a coproduct can be reconstructed based on certain partial information. This information is described  using the following operations.
 
 \begin{enumerate}
     \item \textbf{Merging}. Consider a coproduct $A_1 \oplus \cdots \oplus A_n$, such that the same semigroup $A$ appears on all coordinates from a subset $I \subseteq \set{1,\ldots,n}$, and possibly on other coordinates as well. Define \emph{merging the parts from $I$} to be the function of type 
@@ -149,11 +149,7 @@ The crucial property of semigroups that will be used in our proof is described i
 \end{enumerate}
 
 
-% Another crucial property of the coproduct of semigroups is that a coproduct can be reconstructed from certain partial information, as described below. 
-% Consider a coproduct $A_1 \cdots A_n$.
-
-
-The key observation is that an element of a coproduct can be reconstructed from its shape and views, as stated in the following lemma. 
+The key observation is that an element of a coproduct is fully determined from its shape and views, as stated in the following lemma. 
 
 \begin{proposition}
 \label{prop:views} Let $A_1,\ldots,A_n$ be semigroups. The \emph{deconstruction} function of type
