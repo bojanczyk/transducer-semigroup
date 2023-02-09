@@ -236,16 +236,9 @@ As an immediate consequence of the lemma, the desired invariant holds if we use
 \end{itemize}
 To fit \Cref{def:functorial-sst}, we have to check that the initial function is recognizable and that the update oracle is a rational function; by definition, the latter amounts to saying that for any $a\in\Sigma$, the function $(w,v) \in (\Sigma^*)^2 \mapsto \tuple{\underline{w}|a|\underline{v}}$ is recognizable. According to the definition of factorized output, the initial function factors through the semigroup homomorphism $\functor! \circ h$, \emph{whose codomain $\functor1$ is finite,} therefore the initial function is recognizable. The other recognizability condition holds for a similar reason.
 
-What remains is to define a way to turn the last register valuation
-$\tuple{w|\underline\varepsilon}$ into the output $\tuple{w} = f(w)$ for any input string
-$w$, and to prove \Cref{lem:compute-next-configuration}. For both of these
-goals, it is useful to consider a sort of left inverse to the \emph{deconstruction} into views and shape of \Cref{lem:views} -- that is, a \emph{reconstruction} function of type
-\[ (1 \oplus A_1) \times \cdots \times (1 \oplus A_n) \times (1 \oplus \cdots
-  \oplus 1) \longrightarrow (A_1 \oplus \cdots \oplus A_n) + \myunderbrace{1}{default value when the input is not in the image of the deconstruction\qquad\qquad\qquad\qquad\qquad\qquad} \]
-such that deconstruction followed by reconstruction maps every element of $A_1 \oplus \cdots \oplus A_n$ to itself. The injectivity proof in \Cref{lem:views} actually provides such a reconstruction function.
-And in the case of a binary coproduct $A \oplus A$, any of the two views determines the shape, so we have a binary reconstruction of type $(A\oplus1)\times(1\oplus A) \to (A\oplus A)+1$.
+To finish building our functorial \sst, we use the reconstruction of a coproduct from the views and shape (\Cref{prop:views} / \Cref{lem:reconstruction}). In the case of a binary coproduct $A \oplus A$, any of the two views determines the shape, so we have a simplified binary reconstruction function of type $(A\oplus1)\times(1\oplus A) \to (A\oplus A)+1$, which is copyless natural.
 
-To finish building our functorial \sst, let our final functor be $\functork : A \mapsto (1 \oplus A)\times A$, our final value function be $w\in\Sigma^* \mapsto (\tuple{\underline{w}|\varepsilon},\;\text{some arbitrary fixed value in}\ A)$ -- it is recognizable because $\functor1$ is finite, again -- and our final output function $\functorr A \times \functork A \to A$ be defined as follows: apply binary reconstruction to get some value in $((A\oplus A)+1)\times A$; if the left component is in $A\oplus A$, merge it to produce an output in $A$; otherwise, return the right component. One can check that this output function applied to $\tuple{w|\underline\varepsilon}$ and $(\tuple{\underline{w}|\varepsilon},\;\text{anything})$ returns $\tuple{w}$ -- this is similar to \Cref{claim:merge-factorized-output} below -- so that our functorial \sst indeed computes $f$.
+We now take our final functor to be $\functork : A \mapsto (1 \oplus A)\times A$, and our final value function to be $w\in\Sigma^* \mapsto (\tuple{\underline{w}|\varepsilon},\;\text{some arbitrary fixed value in $A$})$ -- it is recognizable because $\functor1$ is finite, again. Define our final output function $\functorr A \times \functork A \to A$ as follows: apply binary reconstruction to get some value in $((A\oplus A)+1)\times A$; if the left component is in $A\oplus A$, merge it to produce an output in $A$; otherwise, return the right component. One can check that this output function applied to $\tuple{w|\underline\varepsilon}$ and $(\tuple{\underline{w}|\varepsilon},\;\text{anything})$ returns $\tuple{w}$ -- this is similar to \Cref{claim:merge-factorized-output} below -- so that our functorial \sst indeed computes $f$.
 
 This being done, let us discharge our only remaining subgoal.
 
@@ -278,16 +271,16 @@ This being done, let us discharge our only remaining subgoal.
     Since merging the first two parts is a copyless natural function,  the above
     claim shows that  the factorized output $\tuple{wa|\underline v}$ is
     obtained from $\tuple{w|a|\underline v}$ by a copyless natural function.
-    In turn, $\tuple{w|a|\underline v}$ can be obtained by applying the reconstruction function to the following four items (the equalities below are proved analogously to Claim~\ref{claim:merge-factorized-output}):
+    In turn, $\tuple{w|a|\underline v}$ can be obtained by applying the reconstruction function (\Cref{lem:reconstruction}) to the following four items (the equalities below are proved analogously to Claim~\ref{claim:merge-factorized-output}):
      \begin{enumerate}
-        \item \label{it:first-view}First view of $\tuple{w|a|\underline v}$, which is equal to $\tuple{w|\underline {av}}$ -- this is the first argument of the function $\delta$ that we want to define.
+        \item \label{it:first-view}First view of $\tuple{w|a|\underline v}$, which is equal to $\tuple{w|\underline {av}}$ -- this is the first argument which is passed, in the lemma statement, to the function $\delta$ that we want to define.
         \item  \label{it:second-view} Second view of $\tuple{w|a|\underline v}$, which is obtained by merging the first and third parts in $\tuple{\underline w|a|\underline v}$.
         \item \label{it:third-view}   Third view of $\tuple{w|a|\underline v}$, which is equal to $\tuple{\underline {wa}|\underline{v}}$.
         \item   \label{it:shape} Shape of~$\tuple{w|a|\underline v}$, which is equal to $\tuple{\underline w|\underline a| \underline v}$.
      \end{enumerate}
-     (Strictly speaking, this reconstruction returns an element of $(1 \oplus A \oplus 1)+1$, and we should postcompose it by a map $(1 \oplus A \oplus 1)+1 \to 1 \oplus A \oplus 1$ that sends the right summand $1$ to some default value that does not use $A$.)
+     (Strictly speaking, this reconstruction returns an element of $(1 \oplus A \oplus 1)+1$, and we should postcompose it by a map $(1 \oplus A \oplus 1)+1 \to 1 \oplus A \oplus 1$ that sends the right summand $1$ to some default value that does not use $A$, in order to define $\delta$.)
      
-     To complete the proof of the lemma, it remains to justify that the last three items in the above enumeration can be collectively obtained from the second argument of $\delta$, namely $\tuple{\underline w|a|\underline v}$, by applying some copyless natural function. Each item is obtained separately by applying a natural function. Furthermore, the second item is obtained in a copyless way, while the last two items do not use $A$ at all, and therefore they are obtained in a copyless way for trivial reasons, even when combined with the second item.
+     To complete the proof of the lemma, it remains to justify that the last three items in the above enumeration can be collectively obtained from the second argument given to $\delta$, namely $\tuple{\underline w|a|\underline v}$, by applying some copyless natural function. Each item is obtained separately by applying a natural function. Furthermore, the second item is obtained in a copyless way, while the last two items do not use $A$ at all, and therefore they are obtained in a copyless way for trivial reasons, even when combined with the second item.
 \end{proof}
 
 
