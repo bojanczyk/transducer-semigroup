@@ -75,7 +75,7 @@ abstract model of \sst{}s used in our proof. The main difference is that instead
 of register valuations and updates given by some finite set of register names,
 we have two abstract polynomial functors, one of them finite polynomial,
 together with an explicitly given application function. We also allow the
-computation to be initialized in a more liberal way, that may depend on a
+computation to be initialized and concluded in a more liberal way, that may depend on a
 regular property of the input.
 
 \begin{definition}\label{def:functorial-sst}
@@ -85,20 +85,18 @@ regular property of the input.
     \item Two polynomial functors $\functorr$ and $\functoru$, called the \emph{register} and \emph{update} functors, with $\functorr$ \emph{finite}.
     \item A function of type $\functorr A \times \functoru A \to \functorr A$, called \emph{application}, which is natural and copyless.
     \item An \emph{initial function} $\Sigma^* \to \functorr A$ which is
-      \emph{recognizable}.
-    \item A polynomial \emph{final functor} $\functork$, a designated
-      \emph{final value} in $\functork A$, and a \emph{final function} of type
-      $\functorr A \times \functork A \to A$, which is natural and copyless.
+      \emph{recognizable} (and therefore has finite range).
+    \item A polynomial \emph{final functor} $\functork$, a \emph{final value function} $\Sigma^* \to \functork A$ which is recognizable, and a \emph{final output function} of type $\functorr A \times \functork A \to A$ which is natural and copyless.
     \item An \emph{update oracle}, which is a rational function of type $\Sigma^* \to (\functoru A)^*$.
     \end{itemize}
 \end{definition}
-The semantics of the functorial \sst is a partial function of type 
-$\Sigma^* \to A$ defined as follows. For every input string, we feed it to the
+The semantics of the functorial \sst is a function 
+$\Sigma^* \to A$ defined as follows. Given an input string, we feed it to the
 initial function to get an initial register valuation. As in
 Definition~\ref{def:usual-sst}, we use the application function and the update
 oracle to define inductively a sequence of register valuations in $\functor A$.
-We then apply the final function to the last register valuation and to the
-designated final value, yielding a result in $A$.
+We then apply the final output function to the last register valuation and to the
+final value (determined by the input), yielding a result in $A$.
 
 In the appendix, we prove that this model is no more expressive than usual
 copyless \sst{}s.

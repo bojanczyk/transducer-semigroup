@@ -207,22 +207,17 @@ We have now collected all necessary ingredients to prove this hard direction of
 the equivalence. Therefore, our goal is now to show that the function $f\colon
 \Sigma^* \to A$ that we have previously fixed is computed by some functorial
 streaming string transducer as in Definition~\ref{def:functorial-sst}.
+We will see that this can be done merely assuming that \emph{$\functor 1$ is finite} -- a particular instance of the assumption in (\ref{it:trans-semig-regular}) that $\functor$ is finiteness-preserving.
 
-We first present the construction using $\functorr' : A \mapsto A \oplus 1$,
-seen as a polynomial semigroup-to-set functor
-(cf.~\Cref{rem:coproduct-as-polynomial-functor}), as the register functor.
-Beware: $\functorr'$ is not \emph{finite} polynomial, but we will later see that
-it can be replaced by a finite polynomial subfunctor $\functorr A \subset
-\functorr' A$. The idea is that the \sst maintains the following
-invariant: after processing the first $i$ letters in an input string $a_1 \cdots
-a_n$, the register valuation in $\functorr' A$ is equal to the factorized output
-$\tuple{a_1 \cdots a_i | \underline{a_{i+1} \cdots a_n}}$. After processing all
-input letters, the last valuation $\tuple{a_1 \cdots a_n | \underline{\varepsilon}}$ is very close to the output $f(a_1\dots a_n)$.
+The idea is that we want the \sst to maintain the following invariant: \emph{after processing the first $i$ letters in an input string $a_1 \cdots a_n$, the register valuation is equal to the factorized output $\tuple{a_1 \cdots a_i | \underline{a_{i+1} \cdots a_n}}$}. This way, after processing all input letters, the last valuation $\tuple{a_1 \cdots a_n | \underline{\varepsilon}}$ is very close to the output $f(a_1\dots a_n) = \tuple{a_1 \dots a_n} \in A = \text{1-ary coproduct}$.
 
-To design an \sst with this behavior, we use the update functor $\functoru : A
-\mapsto 1 \oplus A \oplus 1$ and the application of updates to registers given
-by the following lemma. It shall be proved later using the machinery of views on
-coproducts that we have introduced for this purpose.
+The naive choice for the register functor is then $\functorr' : A \mapsto A \oplus 1$, since $\tuple{w|\underline{v}} \in A\oplus1$ for all $w,v\in\Sigma^*$ by definition. However, while $\functorr'$ can be seen as a polynomial semigroup-to-set functor, whose components are indexed by $1 \oplus 1$ (cf.~\Cref{rem:coproduct-as-polynomial-functor}), it is not \emph{finite} polynomial (the set $1\oplus1$ is infinite). That said, we have by naturality (cf.~appendix) that:
+\begin{claim}
+  The component index for $\tuple{w|\underline{v}} \in \functorr'A$ is $\tuple{\underline{w}|\underline{v}} \in 1 \oplus 1$.
+\end{claim}
+This index is determined by definition by the values of $(\functor! \circ h) \colon \Sigma^* \to \functor1$ on $w$ and $v$. \emph{Since $\functor1$ is finite,} the $\tuple{w|\underline{v}}$ for $w,v$ ranging over $\Sigma^*$ live in finitely many components. We take our register functor  $\functorr A \subset \functorr' A$ to be the finite polynomial functor consisting of these \enquote{useful} components, plus the unique component that does not use $A$ (it will serve as a \enquote{null value}).
+
+To design the register updates, the key is the following lemma. It shall be proved later using the machinery of views on coproducts that we have introduced for this very purpose.
 \begin{lemma}\label{lem:compute-next-configuration}
   There is a {copyless} natural function
   \[
@@ -232,44 +227,29 @@ coproducts that we have introduced for this purpose.
   \]
   for every pair of strings $w,v \in \Sigma^*$ and every letter $a \in \Sigma$.
 \end{lemma}
-As an immediate consequence, the desired invariant holds if we use the update oracle
-\[ a_1 \dots a_n \mapsto \tuple{\underline\varepsilon|a_1|\underline{a_2 \dots a_n}} \dots
-  \tuple{\underline{a_1 \dots a_{n-1}}|a_n|\underline\varepsilon} \]
-To fit \Cref{def:functorial-sst}, we have to check that this is a rational
-function, which by definition amounts to saying that for any $a\in\Sigma$, the
-function $(w,v) \in (\Sigma^*)^2 \mapsto \tuple{\underline{w}|a|\underline{v}}$
-is recognizable. According to the definition of factorized output, the latter
-function factors through the semigroup homomorphism that pairs $\functor! \circ
-f$ with itself. The codomain $(\functor1)^2$ of this homomorphism is a finite
-semigroup, \emph{because $\functor$ is finiteness-preserving}; hence
-recognizability.
+This leads us to use the update functor $\functoru : A \mapsto 1 \oplus A \oplus 1$ and to define the application of updates to registers, of type $\functorr A \times (1 \oplus A \oplus 1) \to \functorr A$, to be $\delta$ followed by the map $A \oplus 1 \to \functorr A$ which sends the components in $\functorr A$ to themselves and the rest to the \enquote{null value}.
+As an immediate consequence of the lemma, the desired invariant holds if we use
+\begin{itemize}
+  \item the initial function $w \mapsto \tuple{\varepsilon|\underline{w}}$,
+  \item and the update oracle $a_1 \dots a_n \mapsto \tuple{\underline\varepsilon|a_1|\underline{a_2 \dots a_n}} \dots
+  \tuple{\underline{a_1 \dots a_{n-1}}|a_n|\underline\varepsilon}$.
+\end{itemize}
+To fit \Cref{def:functorial-sst}, we have to check that the initial function is recognizable and that the update oracle is a rational function; by definition, the latter amounts to saying that for any $a\in\Sigma$, the function $(w,v) \in (\Sigma^*)^2 \mapsto \tuple{\underline{w}|a|\underline{v}}$ is recognizable. According to the definition of factorized output, the initial function factors through the semigroup homomorphism $\functor! \circ h$, \emph{whose codomain $\functor1$ is finite,} therefore the initial function is recognizable. The other recognizability condition holds for a similar reason.
 
-Our second use of this finiteness preservation assumption is to build the
-\emph{finite} polynomial functor $\functorr A \subset \functorr' A$ that is
-going to serve as the actual register functor of our functorial \sst, as announced
-previously.
-\tito{}
-
-What remains is to define a final output function that can turn
-$\tuple{w|\underline\varepsilon}$ into $\tuple{w} = f(w)$ for any input string
+What remains is to define a way to turn the last register valuation
+$\tuple{w|\underline\varepsilon}$ into the output $\tuple{w} = f(w)$ for any input string
 $w$, and to prove \Cref{lem:compute-next-configuration}. For both of these
-goals, it is useful to consider a \emph{reconstruction} function of type
+goals, it is useful to consider a sort of left inverse to the \emph{deconstruction} into views and shape of \Cref{lem:views} -- that is, a \emph{reconstruction} function of type
 \[ (1 \oplus A_1) \times \cdots \times (1 \oplus A_n) \times (1 \oplus \cdots
-  \oplus 1) \to A_1 \oplus \cdots \oplus A_n \] such that the
-\emph{deconstruction} function of \Cref{lem:views} followed by reconstruction is
-the identity on $A_1 \oplus \cdots \oplus A_n$. The reconstruction function
-exists as soon as\footnote{This condition is only used to map the elements that
-  are not in the image of the deconstruction to the default value~1; the
-  deconstruction function alwaysadmits a \emph{partial} left inverse.} one of
-the $A_i$ is $1$; moreover, when each $A_i$ is either $A$ or $1$, it is a
-copyless natural function in $A$. (The injectivity proof in \Cref{lem:views}
-actually provides such a reconstruction function.)
+  \oplus 1) \longrightarrow (A_1 \oplus \cdots \oplus A_n) + \myunderbrace{1}{default value when the input is not in the image of the deconstruction\qquad\qquad\qquad\qquad\qquad\qquad} \]
+such that deconstruction followed by reconstruction maps every element of $A_1 \oplus \cdots \oplus A_n$ to itself. The injectivity proof in \Cref{lem:views} actually provides such a reconstruction function.
+And in the case of a binary coproduct $A \oplus A$, any of the two views determines the shape, so we have a binary reconstruction of type $(A\oplus1)\times(1\oplus A) \to (A\oplus A)+1$.
 
-\tito{thus completing the proof of Theorem~\ref{thm:regular-functions}. The
-  details are in the appendix. }
+To finish building our functorial \sst, let our final functor be $\functork : A \mapsto (1 \oplus A)\times A$, our final value function be $w\in\Sigma^* \mapsto (\tuple{\underline{w}|\varepsilon},\;\text{some arbitrary fixed value in}\ A)$ -- it is recognizable because $\functor1$ is finite, again -- and our final output function $\functorr A \times \functork A \to A$ be defined as follows: apply binary reconstruction to get some value in $((A\oplus A)+1)\times A$; if the left component is in $A\oplus A$, merge it to produce an output in $A$; otherwise, return the right component. One can check that this output function applied to $\tuple{w|\underline\varepsilon}$ and $(\tuple{\underline{w}|\varepsilon},\;\text{anything})$ returns $\tuple{w}$ -- this is similar to \Cref{claim:merge-factorized-output} below -- so that our functorial \sst indeed computes $f$.
+
+This being done, let us discharge our only remaining subgoal.
 
 \begin{proof}[Proof of \Cref{lem:compute-next-configuration}]
-  \tito{rename $w,a,v$ to $u,v,w$}
     We use the following claim, which is proved using naturality of the output mechanism (as detailed in the appendix).
     \begin{claim}\label{claim:merge-factorized-output}
         $\tuple{wa|\underline v}$ is obtained from $\tuple{w|a|\underline v}$ by merging the first two parts.
@@ -297,21 +277,17 @@ actually provides such a reconstruction function.)
 
     Since merging the first two parts is a copyless natural function,  the above
     claim shows that  the factorized output $\tuple{wa|\underline v}$ is
-    obtained from $\tuple{w|a|\underline v}$ by a copyless natural function. To
-    complete the proof of the lemma, we will show that latter value
-    $\tuple{w|a|\underline v}$  can also be obtained by applying some copyless
-    natural function to the pair consisting of  $\tuple{wa|\underline v}$  and
-    $\tuple{\underline w|a|\underline v}$.
-
-\tito{}
-    By the above observations, one can obtain the factorized output $\tuple{w|a|\underline v}$ by applying reconstruction to the  following four items (the equalities below are proved using  Claim~\ref{claim:merge-factorized-output}):
+    obtained from $\tuple{w|a|\underline v}$ by a copyless natural function.
+    In turn, $\tuple{w|a|\underline v}$ can be obtained by applying the reconstruction function to the following four items (the equalities below are proved analogously to Claim~\ref{claim:merge-factorized-output}):
      \begin{enumerate}
-        \item \label{it:first-view}First view of $\tuple{w|a|\underline v}$, which is equal to $\tuple{w|\underline {av}}$.
+        \item \label{it:first-view}First view of $\tuple{w|a|\underline v}$, which is equal to $\tuple{w|\underline {av}}$ -- this is the first argument of the function $\delta$ that we want to define.
         \item  \label{it:second-view} Second view of $\tuple{w|a|\underline v}$, which is obtained by merging the first and third parts in $\tuple{\underline w|a|\underline v}$.
         \item \label{it:third-view}   Third view of $\tuple{w|a|\underline v}$, which is equal to $\tuple{\underline {wa}|\underline{v}}$.
         \item   \label{it:shape} Shape of~$\tuple{w|a|\underline v}$, which is equal to $\tuple{\underline w|\underline a| \underline v}$.
      \end{enumerate}
-     To complete the proof of the lemma, it remains to justify that the last three items can be obtained from $\tuple{\underline w|a|\underline v}$ by applying some copyless natural function. Each item is obtained separately by applying a natural function. Furthermore, the second item is obtained in a copyless way, while the last two items do not use $A$ at all, and therefore they are obtained in a copyless way for trivial reasons, even when combined with the second item.
+     (Strictly speaking, this reconstruction returns an element of $(1 \oplus A \oplus 1)+1$, and we should postcompose it by a map $(1 \oplus A \oplus 1)+1 \to 1 \oplus A \oplus 1$ that sends the right summand $1$ to some default value that does not use $A$.)
+     
+     To complete the proof of the lemma, it remains to justify that the last three items in the above enumeration can be collectively obtained from the second argument of $\delta$, namely $\tuple{\underline w|a|\underline v}$, by applying some copyless natural function. Each item is obtained separately by applying a natural function. Furthermore, the second item is obtained in a copyless way, while the last two items do not use $A$ at all, and therefore they are obtained in a copyless way for trivial reasons, even when combined with the second item.
 \end{proof}
 
 
