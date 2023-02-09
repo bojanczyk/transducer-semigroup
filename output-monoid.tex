@@ -109,15 +109,20 @@ A_1 \oplus \cdots \oplus A_n.
 \end{tikzcd}
 \]
 
-    To illustrate the definitions in this section, we use a running example with the transducer semigroup  from \Cref{ex:duplicator} for the duplicating function. The functor is the identity $\functor A = A$, and the output mechanism is $a \mapsto aa$. The duplicating function on $\set{a,b}^*$ is obtained by composing the identity homomorphism on $\set{a,b}^* = 
-\functor(\set{a,b}^*)$
-    with the output function.
-    Here is an example of  the vectorial output function, applied to $A_1=1$ and $A_2=\set{a,b}^*$:
+To illustrate the definitions in this section, we use a running example with the
+transducer semigroup for the \enquote{reverse then duplicate} function from
+\Cref{ex:reverse-duplicate}. The functor $\functor$ sends a semigroup $A$ to the
+opposite semigroup (cf.~\Cref{ex:functors}), and the output mechanism is $a
+\mapsto aa$. Our example function on $\set{a,b}^*$ is obtained by composing the
+string reversal homomorphism $\set{a,b}^* \to \functor(\set{a,b}^*)$ with the
+output function. Here is an example of the vectorial output function (for now,
+the homomorphism plays no role):
 \begin{align*}
-    (1,abbb) \in \functor 1 \times \functor \set{a,b}^* \qquad \mapsto \qquad 
-\red{\boxed{1}}\  \boxed{abbb} \ \red{\boxed{1}} \  \boxed{abbb} \in 1 \oplus \set{a,b}^*.
+    (1,abbb) \in \functor 1 \times \functor(\set{a,b}^*) \qquad \mapsto \qquad 
+  \boxed{abbb} \ \red{\boxed{1}} \  \boxed{abbb}\ \red{\boxed{1}} \in 1 \oplus \set{a,b}^*.
 \end{align*}
-The  vectorial output function is natural in all of its arguments, which means that  
+The  vectorial output function is natural in all of its arguments, which means
+that for all semigroup homomorphisms $h_1,\ldots,h_n$, the diagram below commutes:
 \[
 \begin{tikzcd}
     [column sep=4cm]
@@ -134,8 +139,7 @@ A_1 \oplus \cdots \oplus A_n
 B_1 \oplus \cdots \oplus B_n
 \end{tikzcd}
 \]
-commutes
-for all semigroup homomorphisms $h_1,\ldots,h_n$. This is because each of the three steps in the definition of the vectorial output function is itself a natural transformation, and natural transformations compose.  Naturality of the first two steps is easy to check, while for the last step we use the assumption that the (non-vectorial) output function is natural.
+This is because each of the three steps in the definition of the vectorial output function is itself a natural transformation, and natural transformations compose.  Naturality of the first two steps is easy to check, while for the last step we use the assumption that the (non-vectorial) output function is natural.
 % In other words, the factorized output function is a natural 
 % transformation of type 
 % \[\begin{tikzcd}
@@ -163,22 +167,23 @@ For strings $w_1,\ldots,w_n \in \Sigma^*$, define the corresponding \emph{factor
 \begin{align*}
 \tuple{w_1| \cdots | w_n} \in \myunderbrace{A \oplus \cdots \oplus A}{$n$ times},
 \end{align*}
-Here is the factorized output illustrated in our running example (we use colours to distinguish which of the three parts of the input is used):
+Here is the factorized output illustrated on our running example (we use colours to distinguish which of the three parts of the input is used):
 \begin{align*}
-        \tuple{\red{abb} | \varepsilon | \blue{bbaba}} =  
-        \red{\boxed{abb}} \ 
-        \boxed{\varepsilon} \ 
-        \blue{\boxed{bbaba}} \ 
-        \red{\boxed{abb}} \ 
-        \boxed{\varepsilon} \
-        \blue{\boxed{bbaba}} \in \red{\set{a,b}^*} \oplus \set{a,b}^*  \oplus \blue{\set{a,b}^*}.
+  \tuple{\red{abb} | \varepsilon | \blue{baaba}} =  
+  \blue{\boxed{abaab}} \ 
+  \boxed{\varepsilon} \ 
+  \red{\boxed{bba}} \ 
+  \blue{\boxed{abaab}} \
+  \boxed{\varepsilon} \
+  \red{\boxed{bba}}
+  \in \red{\set{a,b}^*} \oplus \set{a,b}^*  \oplus \blue{\set{a,b}^*}.
 \end{align*}
 As we can see above, when the output semigroup is a free monoid, the factorized output morally tells us \enquote{which part of the output string comes from which part in the input string}.
 \begin{remark}
 This is similar to the idea of \emph{origin semantics}~\cite{bojanczykTransducersOriginInformation2014} of regular functions (see also~\cite[Section~5]{MuschollPuppis}). Indeed, our definition of factorized output is inspired by a similar tool of the same name that appears in the study of origin semantics~\cite[Section~2]{bojanczykTransducersOriginInformation2014}.
 \end{remark}
 
-We also use a similar notation but with some input strings underlined, e.g.~the input could be $\tuple{\red{\underline{abb}} | \varepsilon | \blue{bbaba}}$ with an underline for the first red part. In the underlined case, before applying the vectorial output function, we apply $h$ to the non-underlined strings and
+We also use a similar notation but with some input strings underlined, e.g.~the input could be $\tuple{\red{\underline{abb}} | \varepsilon | \blue{baaba}}$ with an underline for the first red part. In the underlined case, before applying the vectorial output function, we apply $h$ to the non-underlined strings and
 % \[
 % \begin{tikzcd}
 % \Sigma^*
@@ -192,15 +197,16 @@ We also use a similar notation but with some input strings underlined, e.g.~the 
 % \]
 $(\functor! \circ h) \colon \Sigma^* \to \functor1$
 to the underlined strings. In our running example, we have
-    \begin{align*}
-        \tuple{\red{\underline{abb}} | \varepsilon | \blue{bbaba}} =  
-        \red{\boxed{1}} \ 
-        \boxed{\varepsilon} \
-        \blue{\boxed{bbaba}} \ 
-        \red{\boxed{1}} \ 
-        \boxed{\varepsilon} \
-        \blue{\boxed{bbaba}}.
-        \end{align*}
+\begin{align*}
+  \tuple{\red{abb} | \varepsilon | \blue{baaba}} =  
+  \blue{\boxed{abaab}} \ 
+  \boxed{\varepsilon} \ 
+  \red{\boxed{1}} \ 
+  \blue{\boxed{abaab}} \
+  \boxed{\varepsilon} \
+  \red{\boxed{1}}
+  \in \red{\set{a,b}^*} \oplus \set{a,b}^*  \oplus \blue{\set{a,b}^*}.
+\end{align*}
 
 \subparagraph*{Proof of $(\ref{it:trans-semig-regular}) \Rightarrow (\ref{it:regular})$ in \Cref{thm:regular-functions}.}
 We have now collected all necessary ingredients to prove this hard direction of
@@ -211,24 +217,40 @@ We will see that this can be done merely assuming that \emph{$\functor 1$ is fin
 
 The idea is that we want the \sst to maintain the following invariant: \emph{after processing the first $i$ letters in an input string $a_1 \cdots a_n$, the register valuation is equal to the factorized output $\tuple{a_1 \cdots a_i | \underline{a_{i+1} \cdots a_n}}$}. This way, after processing all input letters, the last valuation $\tuple{a_1 \cdots a_n | \underline{\varepsilon}}$ is very close to the output $f(a_1\dots a_n) = \tuple{a_1 \dots a_n} \in A = \text{1-ary coproduct}$.
 
-The naive choice for the register functor is then $\functorr' : A \mapsto A \oplus 1$, since $\tuple{w|\underline{v}} \in A\oplus1$ for all $w,v\in\Sigma^*$ by definition. However, while $\functorr'$ can be seen as a polynomial semigroup-to-set functor, whose components are indexed by $1 \oplus 1$ (cf.~\Cref{rem:coproduct-as-polynomial-functor}), it is not \emph{finite} polynomial (the set $1\oplus1$ is infinite). That said, we have by naturality (cf.~appendix) that:
+The naive choice for the register functor is then $\functorr' : A \mapsto A
+\oplus 1$, since $\tuple{w|\underline{v}} \in A\oplus1$ for all $w,v\in\Sigma^*$
+by definition. However, while $\functorr'$ can be seen as a polynomial
+semigroup-to-set functor, whose set of components is $1 \oplus 1$ (cf.~\Cref{rem:coproduct-as-polynomial-functor}), it is not \emph{finite} polynomial (the set $1\oplus1$ is infinite). That said, we have by naturality (cf.~appendix) that:
 \begin{claim}\label{clm:component-index}
-  The component index for $\tuple{w|\underline{v}} \in \functorr'A$ is $\tuple{\underline{w}|\underline{v}} \in 1 \oplus 1$.
+  The component for $\tuple{w|\underline{v}} \in \functorr'A$ is $\tuple{\underline{w}|\underline{v}} \in 1 \oplus 1$.
 \end{claim}
 This index is determined by definition by the values of $(\functor! \circ h) \colon \Sigma^* \to \functor1$ on $w$ and $v$. \emph{Since $\functor1$ is finite,} the $\tuple{w|\underline{v}}$ for $w,v$ ranging over $\Sigma^*$ live in finitely many components. We take our register functor  $\functorr A \subset \functorr' A$ to be the finite polynomial functor consisting of these \enquote{useful} components, plus the unique component that does not use $A$ (it will serve as a \enquote{null value}).
 
 To design the register updates, the key is the following lemma. It shall be proved later using the machinery of views on coproducts that we have introduced for this very purpose.
 \begin{lemma}\label{lem:compute-next-configuration}
-  There is a {copyless} natural function
+  There are two {copyless} natural functions
   \[
-    \delta\colon (A \oplus 1) \times (1 \oplus A \oplus 1) \to A \oplus 1
-    \qquad\text{such that}\qquad
-    \tuple{wa|\underline v} = \delta(\tuple{w|\underline {av}},\tuple{\underline w | a|\underline v})
+    \delta\colon (A \oplus 1) \times (1 \oplus A \oplus 1) \to (A \oplus 1) + 1
+    \qquad\qquad
+    \kappa\colon (A \oplus 1) \times (1 \oplus A) \to A + 1
   \]
-  for every pair of strings $w,v \in \Sigma^*$ and every letter $a \in \Sigma$.
+  such that, for every pair of strings $w,v \in \Sigma^*$ and every letter $a
+  \in \Sigma$,
+  \[ \tuple{wa|\underline v} = \delta(\tuple{w|\underline
+      {av}},\tuple{\underline w | a|\underline v}) \qquad\qquad f(w) = \tuple{w} =
+    \kappa(\tuple{w|\underline\varepsilon},\tuple{\underline w | \varepsilon}) \]
 \end{lemma}
-This leads us to use the update functor $\functoru : A \mapsto 1 \oplus A \oplus 1$ and to define the application of updates to registers, of type $\functorr A \times (1 \oplus A \oplus 1) \to \functorr A$, to be $\delta$ followed by the map $A \oplus 1 \to \functorr A$ which sends the components in $\functorr A$ to themselves and the rest to the \enquote{null value}.
-As an immediate consequence of the lemma, the desired invariant holds if we use
+Again, to make \enquote{copyless natural} meaningful in this context, we invoke
+\Cref{rem:coproduct-as-polynomial-functor} to see $\delta$ and $\kappa$ as
+functions between polynomial functors in $A$.
+
+This leads us to use the update functor $\functoru : A \mapsto 1 \oplus A \oplus
+1$ and to define the application of updates to registers, of type $\functorr A
+\times \functoru A \to \functorr A$, to be $\delta$ followed by the map $(A
+\oplus 1) + 1 \to \functorr A$ which sends the components of $A \oplus 1$ that
+are in $\functorr A$ to themselves, and everything else to the \enquote{null
+  value}. As an direct consequence of the lemma, the desired invariant holds
+using
 \begin{itemize}
   \item the initial function $w \mapsto \tuple{\varepsilon|\underline{w}}$,
   \item and the update oracle $a_1 \dots a_n \mapsto \tuple{\underline\varepsilon|a_1|\underline{a_2 \dots a_n}} \dots
@@ -236,37 +258,29 @@ As an immediate consequence of the lemma, the desired invariant holds if we use
 \end{itemize}
 To fit \Cref{def:functorial-sst}, we have to check that the initial function is recognizable and that the update oracle is a rational function; by definition, the latter amounts to saying that for any $a\in\Sigma$, the function $(w,v) \in (\Sigma^*)^2 \mapsto \tuple{\underline{w}|a|\underline{v}}$ is recognizable. According to the definition of factorized output, the initial function factors through the semigroup homomorphism $\functor! \circ h$, \emph{whose codomain $\functor1$ is finite,} therefore the initial function is recognizable. The other recognizability condition holds for a similar reason.
 
-To finish building our functorial \sst, we use the reconstruction of a coproduct from the views and shape (\Cref{prop:views} / \Cref{lem:reconstruction}). In the case of a binary coproduct $A \oplus A$, any of the two views determines the shape, so we have a simplified binary reconstruction function of type $(A\oplus1)\times(1\oplus A) \to (A\oplus A)+1$, which is copyless natural.
-
-We now take our final functor to be $\functork : A \mapsto (1 \oplus A)\times A$, and our final value function to be $w\in\Sigma^* \mapsto (\tuple{\underline{w}|\varepsilon},\;\text{some arbitrary fixed value in $A$})$ -- it is recognizable because $\functor1$ is finite, again. Define our final output function $\functorr A \times \functork A \to A$ as follows: apply binary reconstruction to get some value in $((A\oplus A)+1)\times A$; if the left component is in $A\oplus A$, merge it to produce an output in $A$; otherwise, return the right component. One can check that this output function applied to $\tuple{w|\underline\varepsilon}$ and $(\tuple{\underline{w}|\varepsilon},\;\text{anything})$ returns $\tuple{w} = f(w)$ -- this is similar to \Cref{claim:merge-factorized-output} below -- so that our functorial \sst indeed computes $f$.
-
+To finish building our functorial streaming string transducer, we use the
+function $\kappa$ from \Cref{lem:compute-next-configuration}. Thanks to our
+invariant and to the equation concerning $\kappa$, it is immediate that the
+following choices lead to a functorial \sst that indeed computes $f$. We take:
+\begin{itemize}
+\item the final functor $\functork : A \mapsto (1 \oplus A)\times A$,
+\item the final value function $w\in\Sigma^* \mapsto
+  (\tuple{\underline{w}|\varepsilon},\;\text{some arbitrary fixed value in
+    $A$})$ -- once again, it is recognizable because $\functor1$ is finite,
+\item and the final output function $\functorr A \times \functork A \to A$ that
+  proceeds as follows: first, it applies $\kappa$ to get some value in
+  $(A+1)\times A$; if the left component of the pair is in $A$, it returns it;
+  otherwise, it returns the right component.
+\end{itemize}
 This being done, let us discharge our only remaining subgoal.
 
 \begin{proof}[Proof of \Cref{lem:compute-next-configuration}]
-    We use the following claim, which is proved using naturality of the output mechanism (as detailed in the appendix).
+  We cover here the part concerning $\delta$; for $\kappa$, the arguments are
+  similar and a bit simpler. We use the following claim, which is proved using
+  naturality of the output mechanism (as detailed in the appendix).
     \begin{claim}\label{claim:merge-factorized-output}
         $\tuple{wa|\underline v}$ is obtained from $\tuple{w|a|\underline v}$ by merging the first two parts.
     \end{claim}
-    % \begin{proof}[Proof sketch]
-    %     % The following diagram commutes 
-    %     % \[
-    %     % \begin{tikzcd}
-    %     %     [column sep=3cm]
-    %     % \Sigma^* \times \Sigma \times \Sigma^* 
-    %     % \ar[r,"{(w,a,v) \mapsto \tuple{w|a|\underline v}}"]
-    %     % \ar[d,"{(w,a,v) \mapsto (wa,v)}"']
-    %     % &
-    %     % A \oplus A \oplus 1
-    %     % \ar[d,"\text{merge first two coordinates}"]
-    %     % \\
-    %     % \Sigma^+ \times \Sigma^* 
-    %     % \ar[r,"{(wa,v) \mapsto \tuple{wa|\underline v}}"']
-    %     % &
-    %     % A  \oplus 1
-    %     % \end{tikzcd}
-    %     % \]
-    %  Using naturality of the output mechanism, and $\outfun$ and the fact that  both $h$ and merging the first two \enquote{copies of $A$} in $A \oplus A \oplus 1$ (by copairing coprojections) are homomorphisms.
-    % \end{proof}
 
     Since merging the first two parts is a copyless natural function,  the above
     claim shows that  the factorized output $\tuple{wa|\underline v}$ is
@@ -278,9 +292,9 @@ This being done, let us discharge our only remaining subgoal.
         \item \label{it:third-view}   Third view of $\tuple{w|a|\underline v}$, which is equal to $\tuple{\underline {wa}|\underline{v}}$.
         \item   \label{it:shape} Shape of~$\tuple{w|a|\underline v}$, which is equal to $\tuple{\underline w|\underline a| \underline v}$.
      \end{enumerate}
-     (Strictly speaking, this reconstruction returns an element of $(1 \oplus A \oplus 1)+1$, and we should postcompose it by a map $(1 \oplus A \oplus 1)+1 \to 1 \oplus A \oplus 1$ that sends the right summand $1$ to some default value that does not use $A$, in order to define $\delta$.)
-     
-     To complete the proof of the lemma, it remains to justify that the last three items in the above enumeration can be collectively obtained from the second argument given to $\delta$, namely $\tuple{\underline w|a|\underline v}$, by applying some copyless natural function. Each item is obtained separately by applying a natural function. Furthermore, the second item is obtained in a copyless way, while the last two items do not use $A$ at all, and therefore they are obtained in a copyless way for trivial reasons, even when combined with the second item.
+
+To complete the proof, it remains to justify that the last three items above can
+be collectively obtained from the second argument given to $\delta$, namely $\tuple{\underline w|a|\underline v}$, by applying some copyless natural function. Each item is obtained separately by applying a natural function. Furthermore, the second item is obtained in a copyless way, while the last two items do not use $A$ at all, and therefore they are obtained in a copyless way for trivial reasons, even when combined with the second item.
 \end{proof}
 
 
