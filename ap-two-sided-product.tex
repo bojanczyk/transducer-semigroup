@@ -7,10 +7,10 @@ definition of recognizability, each $f_a$ decomposes into
   \qquad\text{where $h_a$ is a semigroup homomorphism and $B_a$ is finite.} \]
 One can check that every $f_a$ then factors through a monoid morphism to the
 finite monoid
-\[ B = \prod_{a \in \Sigma} h_a(\Sigma^* \times \Sigma^*) \]
+\[ \prod_{a \in \Sigma} h_a(\Sigma^* \times \Sigma^*) \]
 Thus, without loss of generality, we may assume for the rest of the proof that
-all the semigroups $B_a$ are equal to a common finite monoid $B$ and that each
-semigroup homomorphism $h_a$ is in fact a monoid morphism.
+all of the above semigroups $B_a$ are equal to a common finite monoid $B$ and
+that each semigroup homomorphism $h_a$ is in fact a monoid morphism.
 
 For any semigroup $A$, we let $\functor A = B \times (B\to A) \times B$ (as
 explained in the main text), endowed with the following semigroup operation:
@@ -21,6 +21,7 @@ The construction $\functor$ is extended to morphisms by considering $B\to A$ as 
 elements of $A$. To get a transducer semigroup, we take the output mechanism to
 be $(\ell,\varphi,r) \mapsto \varphi(e)$ where $e \in B$ is the neutral element.
 
-Our rational function is then recognized by the monoid homomorphism $\Sigma^*
-\to \functor(\Gamma^*)$ (indeed, $\functor$ preserves monoids) which maps $a \in
-\Sigma$ to $\big(h_a(a,\varepsilon),g_a,h_a(\varepsilon,a)\big)$.
+Our rational function is then recognized by the unique monoid homomorphism of
+type $\Sigma^* \to \functor(\Gamma^*)$ (indeed, $\functor$ preserves monoids)
+which maps $a \in \Sigma$ to
+$\big(h_a(a,\varepsilon),g_a,h_a(\varepsilon,a)\big)$.

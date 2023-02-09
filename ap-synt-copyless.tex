@@ -1,21 +1,12 @@
 \section{Proof of Lemma~\ref{lem:functorial-sst-complete}}
-In this part of the appendix, we prove~\Cref{lem:functorial-sst-complete}, which says that the models defined in Definitions~\ref{def:usual-sst} and~\ref{def:functorial-sst} define the same (total) string-to-semigroup functions.
+In this part of the appendix, we prove that the models defined in Definitions~\ref{def:usual-sst} and~\ref{def:functorial-sst} define the same string-to-semigroup functions.
 
 The easy implication is left-to-right. 
     A streaming streaming transducer as in Definition~\ref{def:usual-sst} can be seen as a special case of an \sst as in Definition~\ref{def:functorial-sst}, because the sets of register valuations and register updates are constructed using finite polynomial functors, and the application operation is natural and copyless. 
 
 The rest of this section is devoted to the harder right-to-left implication. 
 
-\tito{make this work with the lookahead for initialization, plus additional
-  things for finalization, plus syntactic totality}
-
 \subparagraph*{A syntactic description.} The main step in the proof of the right-to-left implication is an analysis of what can be done by copyless natural functions between polynomial functors.
-%     (TODO complete)
-%     % For the converse implication, we observe that the component in an abstract finite polynomial functor $\functor A$ can be stored in the state of an \sst, and the register values can be stored in $A^k$ for sufficiently large $k$.
-%     % Consider now the other implication in the lemma, which is the one that we use in this proof. In the case when the register functor is $A^k$ for some $k$,  a functorial \sst is a special case of an \sst with regular lookahead; and regular lookahead can be eliminated~\cite[Lemma 13.6]{bojanczyk_automata_2018}. To accommodate more general polynomial functors as register functors,  
-% \end{proof}
-
-
 
 We begin with \emph{monomial functors}, i.e.~polynomial functors with one component. 
 Consider two monomial functors, say $A^k$ and $A^\ell$, for some  $k,\ell \in \mathbb{N} = \set{0,1,\ldots}$.
@@ -45,11 +36,15 @@ which are not necessarily monomial. These transformations also admit syntactic d
 \begin{align*}
 \prod_{q \in Q} \coprod_{p \in P} \dim p \to (\dim q)^+.
 \end{align*}
-Again, all natural transformation of polynomial functors arise this way.
+Again, all natural transformations of polynomial functors arise this way.
 We then have:
 \begin{claim}
   A natural transformation between polynomial functors is copyless in the sense of \Cref{def:copyless} if and only if for every input component, the corresponding natural transformation between monomial functors is copyless.
 \end{claim}
+
+(The proof is purely mechanical.)
+\tito{make this work with the lookahead for initialization, plus additional
+  things for finalization, plus syntactic totality}
 
 \subparagraph*{Proof of the left-to-right implication in Lemma~\ref{lem:functorial-sst-complete}.} Using the syntactic descriptions introduced above, we can complete the proof of the harder left-to-right implication in Lemma~\ref{lem:functorial-sst-complete}. Consider a functorial streaming string transducer as in Definition~\ref{def:functorial-sst}, which uses the register and update functors 
 \begin{align*} 

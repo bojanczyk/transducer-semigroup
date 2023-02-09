@@ -57,17 +57,12 @@ Having defined register updates and rational functions, we are ready to define t
 \begin{itemize}
     \item A finite \emph{input alphabet} $\Sigma$ and an \emph{output semigroup $A$}.
     \item A finite set $R$ of \emph{register names}. All register valuations and updates below use $R$ and $A$.
-    \item A designated \emph{initial register valuation}.
-    \item A \emph{final output pattern} in $(A+R)^+$.
+    \item A designated \emph{initial register valuation}, and a designated \emph{final register}.
     \item An update oracle, which is a rational function of type 
         $\Sigma^* \to (\text{copyless register updates})^*$.
 \end{itemize}
 \end{definition}
-The semantics of the \sst{} is a function of type $\Sigma^* \to A$ defined as
-follows. When given an input string, the \sst{} begins in the designated initial
-register valuation. Next, it applies all updates produced by the update oracle,
-in left-to-right order. At the end, the output is obtained by combining the
-final values of the registers according to the final output pattern.
+The semantics of the \sst{} is a function of type $\Sigma^* \to A$ defined as follows. When given an input string, the \sst{} begins in the designated initial register valuation. Next, it applies all updates produced by the update oracle, in left-to-right order. Finally, the output of the \sst{} is obtained by returning the semigroup element stored in the designated final register.
 
 In a rational function, the label of the $i$-th output position is allowed to depend on letters of the input string that are on both sides of the $i$-th input position; this corresponds to regular lookaround in a streaming string transducer. Therefore, the model described above is easily seen to be equivalent to copyless \sst{}s with regular lookaround, which are one of the equivalent models defining the regular string-to-string functions, see~\cite[Section~IV.C]{AlurFT12}.
 
@@ -122,45 +117,34 @@ Here is an example, which uses three registers $X,Y,Z$ and the semigroup $A = (\
 The register updates before and after normalization act in the same way on
 register valuations. If an update is copyless and in normal form, then the
 combined length of all right-hand sides is at most three times the number of
-registers. Therefore, if a semigroup $B$ is finite, then the set of copyless
-register updates in normal form, call it $\functors B$, is also finite.
-(However, there are infinitely many copyful register updates even when $B$ is
-finite.) This set $\functors B$ can be equipped with a composition operation
+registers. Therefore, if a semigroup $A$ is finite, then the set of copyless
+register updates in normal form, call it $\functors A$, is also finite.
+(However, there are infinitely many copyful register updates even when $A$ is
+finite.) This set $\functors A$ can be equipped with a composition operation
 \begin{align*}
-    u_1,u_2 \in \functors B  \quad \mapsto \quad u_1u_2 \in \functors B,
+    u_1,u_2 \in \functors A  \quad \mapsto \quad u_1u_2 \in \functors A,
 \end{align*}
 which is defined in the same way as applying a register update to a register
 valuation, except that we normalize at the end. This composition operation is
 associative, and  compatible with applying register updates to register
 valuations, in the sense that $(vu_1)u_2 = v(u_1u_2)$ holds for every valuation
-$v$ and all updates $u_1$ and $u_2$. Therefore, $B \mapsto \functors B$ is a finiteness-preserving semigroup functor (with the natural extension to morphisms, where the homomorphism is applied to every semigroup element in a right-hand side). 
+$v$ and all updates $u_1$ and $u_2$. Therefore, $A \mapsto \functors A$ is a finiteness-preserving semigroup functor (with the natural extension to morphisms, where the homomorphism is applied to every semigroup element in a right-hand side). 
 
 The functor $\functors$ described above is almost but not quite the functor that
 will be used in the transducer semigroup that we will define to prove the easy
 implication in Theorem~\ref{thm:regular-functions}. That functor $\functor$ will
-also take into account the initial register valuation and final output pattern:
-for a semigroup~$B$, the underlying set of $\functor B$ is
-\[ \functor B =  \functors B \times \myunderbrace{(R \to B) \times
-    B^{\text{number of elements of $A$ in the final output pattern}}}{endowed
-    with the trivial left zero semigroup structure} \]
-(recall that $A$ is the output semigroup of the function $f$ that we wish to
-recognize). The semigroup operation on $\functor B$, and the action of
-$\functor$ on morphisms, are defined componentwise.
+also take into account the initial register valuation: if the input semigroup is~$B$, then the underlying set of the output semigroup is
+\[ \functor A =  \functors A \times \myunderbrace{(R \to A)}{\qquad\qquad\qquad\qquad\qquad endowed with the trivial left zero semigroup structure} \]
+The semigroup operation on $\functor A$, and the action of $\functor$ on
+morphisms, are defined componentwise.
 
-Given $(u,v,(b_1,\dots,b_n)) \in \functor B$, the output mechanism in the
-transducer semigroup first replaces, in the final output pattern (which belongs
-in $(A+R)^+$):
-\begin{itemize}
-\item the $i$-th occurrence of an element of $A$ by $b_i$;
-\item each $r \in R$ by the value of $r$ given by the register valuation $uv$,
-  that results from applying the register update $u$ to the valuation $v$.
-\end{itemize}
-Then it multiplies together the elements of the resulting list in $B^+$ to
-produce the output. Using this, we can recognize $f$ via the homomorphism that
-sends each input letter to:
+Given $(u,v) \in \functor A$, the output mechanism in the transducer semigroup
+applies the register update $u$ to the register valuation $v$, and then from the
+resulting valuation $vu$ extracts the value of the designated final register.
+Using this, we can recognize $f$ via the homomorphism that sends each input letter to:
 \begin{itemize}
 \item the register update that this letter determines (our \sst being local) in
   the first component;
-\item the designated initial register valuation in the second component;
-\item the elements in $A$ in the final output pattern in the third component.
+\item the designated initial register valuation in the second component.
 \end{itemize}
+
