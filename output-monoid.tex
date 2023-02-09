@@ -277,7 +277,9 @@ This being done, let us discharge our only remaining subgoal.
 \begin{proof}[Proof of \Cref{lem:compute-next-configuration}]
   We cover here the part concerning $\delta$; for $\kappa$, the arguments are
   similar and a bit simpler. We use the following claim, which is proved using
-  naturality of the output mechanism (as detailed in the appendix).
+  naturality of the output mechanism (as detailed in the appendix). Recall that
+  the merging, shape and view operations were introduced just before
+  \Cref{prop:views}.
     \begin{claim}\label{claim:merge-factorized-output}
         $\tuple{wa|\underline v}$ is obtained from $\tuple{w|a|\underline v}$ by merging the first two parts.
     \end{claim}
