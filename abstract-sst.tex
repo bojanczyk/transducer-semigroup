@@ -84,9 +84,8 @@ regular property of the input.
         \item A finite \emph{input alphabet} $\Sigma$ and an \emph{output semigroup $A$}.
     \item Two polynomial functors $\functorr$ and $\functoru$, called the \emph{register} and \emph{update} functors, with $\functorr$ \emph{finite}.
     \item A function of type $\functorr A \times \functoru A \to \functorr A$, called \emph{application}, which is natural and copyless.
-    \item An \emph{initial function} $\Sigma^* \to \functorr A$ which is
-      \emph{recognizable} (and therefore has finite range).
-    \item A polynomial \emph{final functor} $\functork$, a \emph{final value function} $\Sigma^* \to \functork A$ which is recognizable, and a \emph{final output function} of type $\functorr A \times \functork A \to A$ which is natural and copyless.
+    \item An \emph{initial function} $\Sigma^* \to \functorr A$ which is recognizable (and therefore has finite range).
+    \item A polynomial \emph{final data functor} $\functork$, a \emph{final data function} $\Sigma^* \to \functork A$ which is recognizable, and a \emph{final output function} of type $\functorr A \times \functork A \to A$ which is a natural function (but not necessarily copyless).
     \item An \emph{update oracle}, which is a rational function of type $\Sigma^* \to (\functoru A)^*$.
     \end{itemize}
 \end{definition}
@@ -96,7 +95,7 @@ initial function to get an initial register valuation. As in
 Definition~\ref{def:usual-sst}, we use the application function and the update
 oracle to define inductively a sequence of register valuations in $\functor A$.
 We then apply the final output function to the last register valuation and to the
-final value (determined by the input), yielding a result in $A$.
+final data (determined by the input), yielding a result in $A$.
 
 In the appendix, we prove that this model is no more expressive than usual
 copyless \sst{}s.

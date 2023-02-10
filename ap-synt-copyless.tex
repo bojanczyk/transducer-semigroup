@@ -4,9 +4,11 @@ In this part of the appendix, we prove that the models defined in Definitions~\r
 The easy implication is left-to-right. 
     A streaming streaming transducer as in Definition~\ref{def:usual-sst} can be seen as a special case of an \sst as in Definition~\ref{def:functorial-sst}, because the sets of register valuations and register updates are constructed using finite polynomial functors, and the application operation is natural and copyless. 
 
-The rest of this section is devoted to the harder right-to-left implication. 
+The rest of this section is devoted to the harder right-to-left implication, that is, to translating functorial \sst{}s into ordinary \sst{}s.
 
-\subparagraph*{A syntactic description.} The main step in the proof of the right-to-left implication is an analysis of what can be done by copyless natural functions between polynomial functors.
+\subsection{A syntactic description.}
+
+The main step in the proof of this harder direction is an analysis of what can be done by copyless natural functions between polynomial functors.
 
 We begin with \emph{monomial functors}, i.e.~polynomial functors with one component. 
 Consider two monomial functors, say $A^k$ and $A^\ell$, for some  $k,\ell \in \mathbb{N} = \set{0,1,\ldots}$.
@@ -43,19 +45,40 @@ We then have:
 \end{claim}
 
 (The proof is purely mechanical.)
-\tito{make this work with the lookahead for initialization, plus additional
-  things for finalization, plus syntactic totality}
 
-\subparagraph*{Proof of the left-to-right implication in Lemma~\ref{lem:functorial-sst-complete}.} Using the syntactic descriptions introduced above, we can complete the proof of the harder left-to-right implication in Lemma~\ref{lem:functorial-sst-complete}. Consider a functorial streaming string transducer as in Definition~\ref{def:functorial-sst}, which uses the register and update functors 
+\subsection{Proof of the left-to-right implication in Lemma~\ref{lem:functorial-sst-complete}.}
+
+\subparagraph{Simplifying the initialization/finalization}
+
+In \Cref{def:functorial-sst}, we allow the initial register valuation to depend in a recognizable way on the input, and similarly for some \enquote{final data} that is used by the final output function. We sketch here a translation from this model to one where the initial valuation is a constant (as in \Cref{def:usual-sst}), and the output is determined by a copyless natural function without auxiliary data. The idea is that the new \sst will simulate in parallel the old \sst for all possible initial valuations, and then decide after reading the whole word which of the computations to keep.
+
+Let $\functorr$ be the register functor of our functorial \sst, $\functoru$ be the update functor and $\functork$ be the final data functor. Let $h\colon \Sigma^* \to M$ be a homomorphism from input words to a finite semigroup that recognizes both the initial valuation function and the final data function; that is, these functions can be decomposed respectively as $\mathtt{init}\circ h$ and $\mathtt{findat}\circ h$. Our simplified functorial \sst will use
+\[ \text{the register functor}\ \functorr'A = (\functorr A)^S \times (\functork A)^S \times S \quad\text{\&}\quad \text{the update functor}\ \functoru'A = (\functoru A)^S \times S \]
+The initial register valuation of our simplified device is
+\[ \big((\mathtt{init}(s))_{s\in S},\; (\mathtt{findat}(s))_{s\in S},\; h(\varepsilon)\big) \]
+For each input position, the corresponding update in $(\functoru A)^S \times S$ is a pair consisting of
+\begin{itemize}
+  \item the constant $S$-indexed tuple whose components are equal to the update for this position in the original \sst,
+  \item and of the image of the input letter by $h$.
+\end{itemize}
+The application of an update $((u_s)_{s\in S},\, \widehat{s})$ to a register valuation $\big((r_s)_{s\in S},\; (d_s)_{s\in S},\; \underline{s}\big)$ is
+\[ \big((\text{apply}\ u_s\ \text{to}\ r_s)_{s\in S},\; (d_s)_{s\in S},\; \underline{s}\widehat{s}\big) \]
+Finally, the final output function of the simplified functorial \sst is
+\[ \big((r_s)_{s\in S},\; (d_s)_{s\in S},\; \underline{s}\big) \mapsto \text{apply original final input function to}\ r_{\underline{s}}\ \text{and}\ d_{\underline{s}}  \]
+
+\subparagraph{Translating a simplified functorial \sst}
+
+Now, consider a simplified functorial streaming string transducer, which uses the register and update functors 
 \begin{align*} 
 \functorr A = \coprod_{q \in Q} A^{\dim q} \qquad 
-\functors A = \coprod_{p \in P} A^{\dim p}.
+\functoru A = \coprod_{p \in P} A^{\dim p}.
 \end{align*}
+We shall convert it to an equivalent ordinary \sst using the syntactic descriptions introduced in the previous subsection.
 For an input string $a_1 \cdots a_n$, consider the sequence of register valuations 
 \begin{align*}
 v_1,\ldots,v_n \in \functorr A,
 \end{align*}
-such that $v_i$ arises by applying the first $i$ register updates produced by the update oracle. Let $k$ be the maximal dimension of the components in $Q$ (here we use the assumption that $\functorr$ is a \emph{finite} polynomial functor). Define a register valuation $w_i \in A^{k+1}$ as follows: take the register valuation used by $v_i$, and pad it to a tuple of length  $k+1$ using some distinguished element $a_0 \in A$. In particular, since $k$ is the maximal dimension of $Q$, we are guaranteed that the last coordinate with index $k+1$ stores the distinguished element $a_0$. We will show a streaming string transducer, as in Definition~\ref{def:usual-sst}, in which the set of register names is $\set{1,\ldots,k}$. 
+such that $v_i$ arises by applying the first $i$ register updates produced by the update oracle. Let $k$ be the maximal dimension of the components in $Q$ (here we use the assumption that $\functorr$ is a \emph{finite} polynomial functor). Define a register valuation $w_i \in A^{k+1}$ as follows: take the register valuation used by $v_i$, and pad it to a tuple of length  $k+1$ using some distinguished element $a_0 \in A$. In particular, since $k$ is the maximal dimension of $Q$, we are guaranteed that the last coordinate with index $k+1$ stores the distinguished element $a_0$. We will build a streaming string transducer, as in Definition~\ref{def:usual-sst}, in which the set of register names is $\set{1,\ldots,k}$. 
 
 We begin by looking at the components.  Let $q_i \in Q$ be the component of the register valuation $v_i$. The first observation is that $q_i$ depends only on $q_{i-1}$ and the $i$-th register update. Therefore, the sequence $q_1 \cdots q_n$ can be produced by a rational function. The next observation is that, one we know the components $q_{i-1}$ and $q_{i}$, and the register update $u_i \in \functoru A$ that would be applied in the original transducer to from $v_{i-1}$ to $v_i$, then we can create a copyless register update that transforms $w_{i-1}$ into $w_i$. This is done by using the syntactic descriptions of natural functions that were described above. Once we have the register valuations $w_1,\ldots,w_n$, the output of the transducer can be easily obtained.
 

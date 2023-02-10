@@ -49,10 +49,9 @@ transducers~\cite[Theorem 2]{ChytilJ77} or copyless \sst~\cite[Theorem
   This is because finiteness-preserving functors are closed under composition,
   natural output functions are also closed under composition, and naturality
   means by definition that the output functions \enquote{commute} in a suitable
-  sense with functors.\footnote{More precisely, consider the following diagram,
-    where the upper path describes the composition of two functions recognized
-    transducer semigroups $(\functor,\outfun)$ and $(\functor',\outfun')$,
-    respectively:
+  sense with functors.\footnote{More precisely, consider the following commuting naturality diagram,
+    where the upper path describes the composition of two functions recognized by the
+    transducer semigroups $(\functor,\outfun)$ and $(\functor',\outfun')$, while the lower path describes a function recognized by $(\functor\functor', \outfun_{\functor'(-)} \circ \outfun')$:
     \[
       \begin{tikzcd}[ampersand replacement=\&, column sep=2cm]
         \Sigma^* 
@@ -71,8 +70,7 @@ transducers~\cite[Theorem 2]{ChytilJ77} or copyless \sst~\cite[Theorem
         \&
         \Pi^*
       \end{tikzcd}
-    \]
-    The rectangle in the middle commutes by naturality, and therefore the upper path is equal to the lower path. The latter describes a function recognized by $(\functor\functor', \outfun_{\functor'(-)} \circ \outfun')$.}
+  \]}
 \end{proof}
 
 
@@ -263,8 +261,8 @@ function $\kappa$ from \Cref{lem:compute-next-configuration}. Thanks to our
 invariant and to the equation concerning $\kappa$, it is immediate that the
 following choices lead to a functorial \sst that indeed computes $f$. We take:
 \begin{itemize}
-\item the final functor $\functork : A \mapsto (1 \oplus A)\times A$,
-\item the final value function $w\in\Sigma^* \mapsto
+\item the final data functor $\functork : A \mapsto (1 \oplus A)\times A$,
+\item the final data function $w\in\Sigma^* \mapsto
   (\tuple{\underline{w}|\varepsilon},\;\text{some arbitrary fixed value in
     $A$})$ -- once again, it is recognizable because $\functor1$ is finite,
 \item and the final output function $\functorr A \times \functork A \to A$ that
