@@ -1,1 +1,9 @@
 \section{Proof of \Cref{clm:component-index}}
+
+From \Cref{rem:coproduct-as-polynomial-functor}, we see that the component in $1 \oplus 1$ of an element in $A \oplus 1$ is obtained by applying $!\oplus1$. So it suffices to show that
+\[\tuple{\underline{w}|\underline{v}} = (!\oplus1)(\tuple{w|\underline{v}}) \]
+Expanding the definitions, our goal can be rewritten as
+\[ \text{vectorial output of}\ (\functor! \circ h(w),\, \functor! \circ h(v)) = (!\oplus1)\big(\text{vectorial output of}\ (h(w),\, \functor! \circ h(v))\big) \]
+This is a direct consequence of the naturality of the vectorial output function, that can be expressed as follows: for every semigroup homomorphism $g\colon A \to B$,
+\[ (\text{vectorial output for $B$}) \circ (\functor g \times \mathrm{id}_1) = (g\oplus1) \circ \text{vectorial output for $A$} \]
+(take $g=\;!$ and apply both sides of the equality to $(h(w),\, \functor! \circ h(v))$ to get the desired result).
