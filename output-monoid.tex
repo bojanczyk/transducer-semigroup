@@ -218,7 +218,7 @@ The idea is that we want the \sst to maintain the following invariant: \emph{aft
 The naive choice for the register functor is then $\functorr' : A \mapsto A
 \oplus 1$, since $\tuple{w|\underline{v}} \in A\oplus1$ for all $w,v\in\Sigma^*$
 by definition. However, while $\functorr'$ can be seen as a polynomial
-semigroup-to-set functor, whose set of components is $1 \oplus 1$ (cf.~\Cref{rem:coproduct-as-polynomial-functor}), it is not \emph{finite} polynomial (the set $1\oplus1$ is infinite). That said, we have by naturality (cf.~appendix) that:
+semigroup-to-set functor, whose set of components is $1 \oplus 1$ (cf.~\Cref{rem:coproduct-as-polynomial-functor}), it is not \emph{finite} polynomial (the set $1\oplus1$ is infinite). That said, we have by naturality of vectorial output (cf.~appendix):
 \begin{claim}\label{clm:component-index}
   The component for $\tuple{w|\underline{v}} \in \functorr'A$ is $\tuple{\underline{w}|\underline{v}} \in 1 \oplus 1$.
 \end{claim}
@@ -275,7 +275,7 @@ This being done, let us discharge our only remaining subgoal.
 \begin{proof}[Proof of \Cref{lem:compute-next-configuration}]
   We cover here the part concerning $\delta$; for $\kappa$, the arguments are
   similar and a bit simpler. We use the following claim, which is proved using
-  naturality of the output mechanism (as detailed in the appendix). Recall that
+  mindless diagram chasing (as detailed in the appendix). Recall that
   the merging, shape and view operations were introduced just before
   \Cref{prop:views}.
     \begin{claim}\label{claim:merge-factorized-output}
@@ -285,7 +285,7 @@ This being done, let us discharge our only remaining subgoal.
     Since merging the first two parts is a copyless natural function,  the above
     claim shows that  the factorized output $\tuple{wa|\underline v}$ is
     obtained from $\tuple{w|a|\underline v}$ by a copyless natural function.
-    In turn, $\tuple{w|a|\underline v}$ can be obtained by applying the reconstruction function (\Cref{lem:reconstruction}) to the following four items (the equalities below are proved analogously to Claim~\ref{claim:merge-factorized-output}):
+    In turn, $\tuple{w|a|\underline v}$ can be obtained by applying the reconstruction function (\Cref{lem:reconstruction}) to the following four items (the equalities below are proved similarly to Claims~\ref{clm:component-index} and~\ref{claim:merge-factorized-output}):
      \begin{enumerate}
         \item \label{it:first-view}First view of $\tuple{w|a|\underline v}$, which is equal to $\tuple{w|\underline {av}}$ -- this is the first argument which is passed, in the lemma statement, to the function $\delta$ that we want to define.
         \item  \label{it:second-view} Second view of $\tuple{w|a|\underline v}$, which is obtained by merging the first and third parts in $\tuple{\underline w|a|\underline v}$.

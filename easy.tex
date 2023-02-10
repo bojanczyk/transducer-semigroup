@@ -39,12 +39,11 @@ More formally, a \emph{rational function} of type $\Sigma^* \to \Gamma^*$ is
 defined to be a length-preserving\footnote{Often in the literature, rational
   functions are not required to be length-preserving, see
   e.g.~\cite[p.~525]{sakarovitch2009elements}, but in this paper, we only need
-  the length-preserving case.} function enjoying the following property:
-\begin{center}
-  there is a family\footnote{The family $(f_a)_{a\in\Sigma}$ is very close to what is called an \emph{(Eilenberg) bimachine} in the literature.} $(f_a \colon \Sigma^* \times \Sigma^* \to \Gamma)_{a \in \Sigma}$ of \emph{recognizable} functions such that\\
-  for every input string $a_1 \dots a_n$, the $i$-th output letter is $f_{a_i}(a_1 \dots a_{i-1},\; a_{i+1} \dots a_n)$.
-\end{center}
-Having defined register updates and rational functions, we are ready to define the variant of streaming string transducers used in this paper.
+  the length-preserving case.} function with the following property: for some family\footnote{The family $(f_a)_{a\in\Sigma}$ is very close to what is called an \emph{(Eilenberg) bimachine} in the literature.}
+\[ \qquad\qquad f_a \colon \myunderbrace{\Sigma^* \times \Sigma^*}{\qquad equipped with product monoid structure} \to \Gamma\quad \text{for $a \in \Sigma$ of \emph{recognizable} functions,} \]
+for every input $a_1 \dots a_n$ and $i\in\{1,\dots,n\}$, the $i$-th output letter is $f_{a_i}(a_1 \dots a_{i-1},\; a_{i+1} \dots a_n)$.
+
+  Having defined register updates and rational functions, we are ready to define the variant of streaming string transducers used in this paper.
 
 \begin{definition}\label{def:usual-sst}
     The syntax of a streaming string transducer (\sst) is given by:
@@ -127,11 +126,8 @@ $v$ and all updates $u_1$ and $u_2$. Therefore, $A \mapsto \functoru A$ is a fin
 The functor $\functoru$ described above is almost but not quite the functor that
 will be used in the transducer semigroup that we will define to prove the easy
 implication in Theorem~\ref{thm:regular-functions}. That functor $\functor$ will
-also take into account the initial register valuation: if the input semigroup is~$B$, then the underlying set of the output semigroup is
-\[ \functor A =  \functoru A \times \myunderbrace{(R \to A)}{\qquad\qquad\qquad\qquad\qquad endowed with the trivial left zero semigroup structure} \]
-The semigroup operation on $\functor A$, and the action of $\functor$ on
-morphisms, are defined componentwise.
-
+also take into account the initial register valuation:
+\[ \functor A =  \functoru A \times \myunderbrace{(R \to A)}{\qquad\qquad\qquad\qquad\qquad endowed with the trivial left zero semigroup structure} \quad\text{with componentwise multiplication \& action on morphisms} \]
 Given $(u,v) \in \functor A$, the output mechanism in the transducer semigroup
 applies the register update $u$ to the register valuation $v$, and then multiplies together the register values given by the resulting valuation $vu$ according to the final output pattern.
 Using this, we can recognize $f$ via the homomorphism that sends each input letter to:
