@@ -6,7 +6,7 @@ The easy implication is left-to-right.
 
 The rest of this section is devoted to the harder right-to-left implication, that is, to translating functorial \sst{}s into ordinary \sst{}s.
 
-\subsection{A syntactic description.}
+\subsection{A syntactic description}
 
 The main step in the proof of this harder direction is an analysis of what can be done by copyless natural functions between polynomial functors.
 
@@ -48,17 +48,17 @@ We then have:
 
 \subsection{Proof of the left-to-right implication in Lemma~\ref{lem:functorial-sst-complete}.}
 
-\subparagraph{Simplifying the initialization/finalization}
+\subparagraph{Simplifying the initialization/finalization.}
 
 In \Cref{def:functorial-sst}, we allow the initial register valuation to depend in a recognizable way on the input, and similarly for some \enquote{final data} that is used by the final output function. We sketch here a translation from this model to one where the initial valuation is a constant (as in \Cref{def:usual-sst}), and the output is determined by a copyless natural function without auxiliary data. The idea is that the new \sst will simulate in parallel the old \sst for all possible initial valuations, and then decide after reading the whole word which of the computations to keep.
 
-Let $\functorr$ be the register functor of our functorial \sst, $\functoru$ be the update functor and $\functork$ be the final data functor. Let $h\colon \Sigma^* \to M$ be a homomorphism from input words to a finite semigroup that recognizes both the initial valuation function and the final data function; that is, these functions can be decomposed respectively as $\mathtt{init}\circ h$ and $\mathtt{findat}\circ h$. Our simplified functorial \sst will use
-\[ \text{the register functor}\ \functorr'A = (\functorr A)^S \times (\functork A)^S \times S \quad\text{\&}\quad \text{the update functor}\ \functoru'A = (\functoru A)^S \times S \]
+Let $\functorr$ be the register functor of our functorial \sst, $\functoru$ be the update functor and $\functork$ be the final data functor. Let $h\colon \Sigma^* \to S$ be a homomorphism from input words to a finite semigroup that recognizes both the initial valuation function and the final data function; that is, these functions can be decomposed respectively as $\mathtt{init}\circ h$ and $\mathtt{findat}\circ h$. Our simplified functorial \sst will use
+\[ \text{the register functor}\ A \mapsto (\functorr A)^S \times (\functork A)^S \times S \quad\text{\&}\quad \text{the update functor}\ A \mapsto (\functoru A)^S \times S \]
 The initial register valuation of our simplified device is
 \[ \big((\mathtt{init}(s))_{s\in S},\; (\mathtt{findat}(s))_{s\in S},\; h(\varepsilon)\big) \]
 For each input position, the corresponding update in $(\functoru A)^S \times S$ is a pair consisting of
 \begin{itemize}
-  \item the constant $S$-indexed tuple whose components are equal to the update for this position in the original \sst,
+  \item the constant $S$-indexed tuple whose components are equal to the update for this position in the original functorial \sst,
   \item and of the image of the input letter by $h$.
 \end{itemize}
 The application of an update $((u_s)_{s\in S},\, \widehat{s})$ to a register valuation $\big((r_s)_{s\in S},\; (d_s)_{s\in S},\; \underline{s}\big)$ is
@@ -66,7 +66,7 @@ The application of an update $((u_s)_{s\in S},\, \widehat{s})$ to a register val
 Finally, the final output function of the simplified functorial \sst is
 \[ \big((r_s)_{s\in S},\; (d_s)_{s\in S},\; \underline{s}\big) \mapsto \text{apply original final input function to}\ r_{\underline{s}}\ \text{and}\ d_{\underline{s}}  \]
 
-\subparagraph{Translating a simplified functorial \sst}
+\subparagraph{Translating a simplified functorial SST.}
 
 Now, consider a simplified functorial streaming string transducer, which uses the register and update functors 
 \begin{align*} 

@@ -1,101 +1,101 @@
 \section{Proof of \Cref{claim:merge-factorized-output}}
 
-\tito{TODO: adapt this}
+The property that we want on factorized outputs reduces immediately to the following lemma on vectorial outputs, by taking $C = 1$ and precomposing everything with $(h,\, h,\, \functor1 \circ h)$.
 
 \begin{lemma}\label{lem:merge-middle}
-    Let $A,B,C$ be semigroups. The following diagram commutes:
+    Let $A$ and $C$ be semigroups. The following diagram commutes:
     \[\begin{tikzcd}
-        [column sep=3cm]
-        \functor A \times \functor B\times \functor B \times \functor C
-        \ar[r,"\text{factorized output}"]
-        \ar[d,"\functor A \times (\text{semigroup operation}) \times \functor C"']
+        [column sep=4cm]
+        \functor A\times \functor A \times \functor C
+        \ar[d,"\text{vectorial output}"']
+        \ar[r,"(\text{semigroup operation}) \times \functor C"]
         &
-        A \oplus B \oplus B \oplus C
-        \ar[d,"A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C"]
+        \functor A \times \functor C
+        \ar[d,"\text{vectorial output}"]
         \\
-        \functor A \times \functor B \times \functor C
-        \ar[r,"\text{factorized output}"]
+        A \oplus A \oplus C
+        \ar[r,"\text{merge}"]
         &
-        A \oplus B \oplus C
+        A \oplus C
     \end{tikzcd}\]
 \end{lemma}
 \begin{proof}
-    By rotating the above diagram, we see that it corresponds to the outer rectangle in the following diagram (where we have expanded the definition of the factorized output functions, and used the associativity of 4-fold multiplication):
+    By expanding the definition of the vectorial output functions, and by using the associativity of three-fold multiplication, we see that the diagram in the lemma statement corresponds to the outer rectangle below:
     \[\begin{tikzcd}
         [column sep=4cm]
-        \functor A \times \functor B\times \functor B \times \functor C
-        \ar[d,"\functor(\text{co-projection})^4"']
-        \ar[r,"\functor A \times (\text{semigroup op}) \times \functor C"]
+        \functor A\times \functor A \times \functor C
+        \ar[d,"\functor(\text{co-projection})^3"']
+        \ar[r,"(\text{semigroup op}) \times \functor C"]
         &
-        \functor A \times \functor B \times \functor C
-        \ar[d,"\functor(\text{co-projection})^3"]
+        \functor A \times \functor C
+        \ar[d,"\functor(\text{co-projection})^2"]
         \\
-        \functor(A \oplus B \oplus B \oplus C)^4
-        \ar[d,"\text{multiply middle two together}"']
+        \functor(A \oplus A \oplus C)^3
+        \ar[d,"\text{multiply first two together}"']
         &
-        \functor(A \oplus B \oplus C)^3
-        \ar[dd,""]
+        \functor(A \oplus C)^2
+        \ar[dd,"\text{semigroup op}"]
         \\
-        \functor(A \oplus B \oplus B \oplus C)^3
+        \functor(A \oplus A \oplus C)^2
         \ar[d,"\text{semigroup operation}"']
-        \ar[ru,"F(A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C)^3"']
+        \ar[ru,"F(\text{merge})^2"']
         \\
-        \functor(A \oplus B \oplus B \oplus C)
-        \ar[d, "\outfun_{A \oplus B \oplus B \oplus C}"']
-        \ar[r,"F(A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C)"]
+        \functor(A \oplus A \oplus C)
+        \ar[d, "\outfun_{A \oplus A \oplus C}"']
+        \ar[r,"F(\text{merge})"]
         &
-        \functor(A \oplus B \oplus C)
-        \ar[d, ""]
+        \functor(A \oplus C)
+        \ar[d, "\outfun_{A\oplus C}"]
         \\ 
-        A \oplus B \oplus B \oplus C
-        \ar[r,"A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C"]
+        A \oplus A \oplus C
+        \ar[r,"\text{merge}"]
         &
-        A \oplus B \oplus C
+        A \oplus C
     \end{tikzcd}\]
-    The lower rectangle commutes by naturality of the output function. The middle trapeze commutes because of the homomorphism property of $F(A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C)$. Concerning the upper trapeze, it can be decomposed as the functor $(\cdots \times \cdots \times \cdots)$ applied to three diagrams that we can analyze independently. The first of those is
+    The lower rectangle commutes by naturality of the output function. The middle trapeze commutes because merging is a semigroup homomorphism. Concerning the upper trapeze, it can be decomposed as the bifunctor $\times$ applied to two diagrams that we can analyze independently. We start by analyzing the second of those, which is simpler:
     \[\begin{tikzcd}
         [column sep=4cm]
-        \functor A
+        \functor C
         \ar[d,"\functor(\text{co-projection})"']
-        \ar[r,"\mathrm{id}_A"]
+        \ar[r,"\mathrm{id}_C"]
         &
-        \functor A
+        \functor C
         \ar[d,"\functor(\text{co-projection})"]
         \\
-        \functor(A \oplus B \oplus B \oplus C)
+        \functor(A \oplus A \oplus C)
         \ar[d,"\mathrm{id}"']
         &
-        \functor(A \oplus B \oplus C)
+        \functor(A \oplus C)
         \\
-        \functor(A \oplus B \oplus B \oplus C)
-            \ar[ru,"F(A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C)"']
+        \functor(A \oplus A \oplus C)
+            \ar[ru,"F(\text{merge})"']
     \end{tikzcd}\]
     By functoriality of $\functor$, the commutativity of this diagram reduces to
-    \[ (\mathrm{id}_A \oplus \dots) \circ (\text{co-projection of}\ A\ \text{into}\ A\oplus(B\oplus B\oplus C)) = \text{co-projection of}\ A\ \text{into}\ A\oplus(B\oplus C) \]
-    which is an elementary property of the coproduct $\oplus$ in any category (indeed the bifunctor structure of $\oplus$ is built using a coparing, which \enquote{cancels out} with the coprojection).
-    Among the 3 diagrams that were combined by a 3-fold cartesian product, another one is identical to the above, with $C$ replacing $A$. There remains this one, in which we have added some parts in the middle:
+    \[ \text{merge} \circ (\text{co-projection of}\ C\ \text{into}\ B\oplus B\oplus C) = \text{co-projection of}\ C\ \text{into}\ B\oplus C \]
+    which is an elementary property of the coproduct $\oplus$ in any category (indeed, the generic categorical definition of merging uses a coparing, which \enquote{cancels out} with the coprojection).
+    There remains to check that the first of the two diagrams combined by $\times$ is also commutative; towards this purpose, we have added some parts in the middle:
     \[\begin{tikzcd}
         [column sep=2.5cm]
-        \functor B\times \functor B
+        \functor A\times \functor A
         \ar[d,"\functor(\text{co-proj})^2"']
         \ar[dr,"\functor(\text{co-proj})^2"]
         \ar[rr,"\text{semigroup operation}"]
         &
         &
-        \functor B
+        \functor A
         \ar[d,"\functor(\text{co-proj})"]
         \\
-        \functor(A \oplus B \oplus B \oplus C)^2
+        \functor(A \oplus A \oplus C)^2
         \ar[d,"\text{semigroup op}"']
         \ar[r,"h\times h"']
         &
-        \functor(A \oplus B \oplus C)^2
+        \functor(A \oplus C)^2
         \ar[r,"\text{semigroup op}"]
         &
-        \functor(A \oplus B \oplus C)
+        \functor(A \oplus C)
         \\
-        \functor(A \oplus B \oplus B \oplus C)
-            \ar[rru,"h = F(A \oplus (\mathrm{id}_B\,\text{or}\,\mathrm{id}_B) \oplus C)"']
+        \functor(A \oplus A \oplus C)
+            \ar[rru,"h = F(\text{merge})"']
     \end{tikzcd}\]
-    The upper right trapeze commutes because $\functor$ applied to the co-projection of $B$ into $A\oplus B\oplus C$ is a homomorphism. The lower triangle commutes because $h$ is a homomorphism. Finally, the small upper left triangle can be shown to commute using the functoriality of $\functor$ followed by properties of the coproduct.
+    The upper right trapeze commutes because $\functor$ applied to the co-projection of $a$ into $A\oplus C$ is a homomorphism. The lower triangle commutes because $h$ is a homomorphism. Finally, the small upper left triangle can be shown to commute using the functoriality of $\functor$ followed by properties of the coproduct.
 \end{proof}
