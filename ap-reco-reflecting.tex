@@ -1,20 +1,20 @@
 \section{Proof of~\Cref{thm:reco-reflecting-functions}}
     We prove a slight strenghening of the theorem, which concerns not only string-to-string functions, but also functions $f\colon A \to B$ between semigroups, not necessarily homomorphisms, such that the target semigroup $B$ is finitely generated.
 
-    \subparagraph{(\ref{it:reco-refl}) $\Rightarrow$ (\ref{it:trans-semig-reco}).}  We  use a similar construction as in the proof of Theorem~\ref{thm:all-functions}. Let  $f\colon A \to B$  be recognizability reflecting.  Define  a functor as follows: 
+    \subparagraph{(\ref{it:reco-refl}) $\Rightarrow$ (\ref{it:trans-semig-reco}).}  We  use a similar construction as in the proof of Theorem~\ref{thm:all-functions}. Let  $f\colon A \to B$  be \kl{recognizability reflecting}.  Define  a functor as follows: 
     \begin{align*}
         \functor C = A \times \text{(all semigroup homomorphisms of type $B \to C$)}.
     \end{align*}
-    Similarly to Theorem~\ref{thm:all-functions}, the semigroup operation on the first coordinate of $\functor C$ is inherited from $A$, and on the second coordinate we use the left zero semigroup structure,  where the product of $g$ and $h$ is $g$.     On morphisms, the functor is defined as in the proof of Theorem~\ref{thm:all-functions}. 
+    Similarly to Theorem~\ref{thm:all-functions}, the semigroup operation on the first coordinate of $\functor C$ is inherited from $A$, and on the second coordinate we use the \kl{left zero} semigroup structure,  where the product of $g$ and $h$ is $g$.     On morphisms, the functor is defined as in the proof of Theorem~\ref{thm:all-functions}. 
 
-    The output mechanism  is $(a,g) \mapsto g(f(a))$ -- think of it as function application with $f$ inserted as an interface. The transducer semigroup thus defined recognizes the function $f$ via the homomorphism $a \in A  \mapsto  (a,\id)$.
+    The \kl{output mechanism}  is $(a,g) \mapsto g(f(a))$ -- think of it as function application with $f$ inserted as an interface. The \kl{transducer semigroup} thus defined recognizes the function $f$ via the homomorphism $a \in A  \mapsto  (a,\id)$.
     
-    We now argue that the output mechanism for a finite semigroup $C$ is a recognizable function.
+    We now argue that the \kl{output mechanism} for a finite semigroup $C$ is a \kl{recognizable function}.
      To do show, we show that the inverse image of every $c \in C$ is a  recognizable subset of $\functor C$. This inverse image is
     \begin{align*}
     \qquad\qquad\qquad\qquad \bigcup_{\mathclap{g\colon B \to C\ \text{is a semigroup homomorphism}}} \; \{(a,g) \mid g(f(a))=c \}.
     \end{align*}
-    Each of the sets in this union is recognizable, by the assumption that $f$ is recognizability reflecting.     By the assumptions that $B$ is finitely generated and that $C$ is finite, there are finitely semigroup homomorphisms $B \to C$, and therefore the union is finite. This implies that the inverse image of $c$ is recognizable, as a finite union of recognizable subsets of  $\functor C$.
+    Each of the sets in this union is \kl{recognizable}, by the assumption that $f$ is \kl{recognizability reflecting}.     By the assumptions that $B$ is finitely generated and that $C$ is finite, there are finitely semigroup homomorphisms $B \to C$, and therefore the union is finite. This implies that the inverse image of $c$ is recognizable, as a finite union of recognizable subsets of  $\functor C$.
     
     
 \subparagraph{
@@ -29,8 +29,8 @@
 %	\arrow["\outfun_{B}", from=1-2, to=1-3]
 %\end{tikzcd}\]
 where $h$ is some homomorphism.
-We want to show that $f$ is recognizability reflecting. To prove this, let us
-consider some recognizable function from the output semigroup 
+We want to show that $f$ is \kl{recognizability reflecting}. To prove this, let us
+consider some \kl{recognizable function} from the output semigroup 
 \begin{align*}
     B \xrightarrow{\;h'\;} C \xrightarrow{\;g\;} X
 \end{align*}
@@ -63,6 +63,6 @@ We want to show that its precomposition $f$ is also recognizable. Consider the f
     \arrow["\text{some homomorphism}"', from=2-2, to=3-3]
     \arrow["\text{some function}"', from=3-3, to=2-4]
 \end{tikzcd}\]
-The triangle, with $D$ \emph{finite}, describes  the assumption that the output function $\outfun_C$ is recognizable when $C$ is finite.
+The triangle, with $D$ \emph{finite}, describes  the assumption that the output function $\outfun_C$ is \kl{recognizable} when $C$ is finite.
 The upper path from $A$ to $X$ describes the precomposition by $f$. 
- The  rectangle commutes by naturality of the output mechanism, and therefore the upper path describes the same function as the lower path from $A$ to $X$. The lower path is a recognizable function, since the first three arrows are homomorphisms and $D$ is finite.
+ The  rectangle commutes by naturality of the output mechanism, and therefore the upper path describes the same function as the lower path from $A$ to $X$. The lower path is a \kl{recognizable function}, since the first three arrows are homomorphisms and $D$ is finite.

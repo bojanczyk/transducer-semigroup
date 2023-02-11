@@ -2,21 +2,21 @@
 In this part of the appendix, we prove that the models defined in Definitions~\ref{def:usual-sst} and~\ref{def:functorial-sst} define the same string-to-semigroup functions.
 
 The easy implication is left-to-right. 
-    A \kl{streaming string transducer} as in Definition~\ref{def:usual-sst} can be seen as a special case of a \functorialsst as in Definition~\ref{def:functorial-sst}, because the sets of register valuations and register updates in normal form (cf.~\Cref{sec:easy}) are constructed using finite polynomial functors, and the application operation is natural and copyless. 
+    A \kl{streaming string transducer} as in Definition~\ref{def:usual-sst} can be seen as a special case of a \functorialsst as in Definition~\ref{def:functorial-sst}, because the sets of \kl{register valuations} and \kl{register updates} in \kl{normal form} (cf.~\Cref{sec:easy}) are constructed using \kl{finite polynomial functors}, and the application operation is a \kl{copyless natural function}. 
 
 The rest of this section is devoted to the harder right-to-left implication, that is, to translating \functorialsst{}s into ordinary \sst{}s.
 
 \subsection{A syntactic description}
 
-The main step in the proof of this harder direction is an analysis of what can be done by copyless natural functions between polynomial functors.
+The main step in the proof of this harder direction is an analysis of what can be done by \kl{copyless natural functions} between \kl{polynomial functors}.
 
-We begin with \emph{monomial functors}, i.e.~polynomial functors with one component. 
-Consider two monomial functors, say $A^k$ and $A^\ell$, for some  $k,\ell \in \mathbb{N} = \set{0,1,\ldots}$.
-One way of specifying a natural transformation between these two functors is to start with a function 
+\AP We begin with \intro{monomial functors}, i.e.~\kl{polynomial functors} with one \kl{component}. 
+Consider two \kl{monomial functors}, say $A^k$ and $A^\ell$, for some  $k,\ell \in \mathbb{N} = \set{0,1,\ldots}$.
+One way of specifying a \kl{natural transformation} between these two functors is to start with a function 
 \begin{equation}
 \label{eq:syntactic-description}    \alpha : \set{1,\ldots,\ell} \to \set{1,\ldots,k}^+,
 \end{equation}
-which we call a \emph{syntactic description}, and to then  define the  natural transformation as follows. For a semigroup $A$, the corresponding function of type $A^k \to A^\ell$  maps a tuple $\bar a \in A^k$ to the tuple in $A^\ell$ defined by
+which we call a \intro{syntactic description}, and to then  define the  natural transformation as follows. For a semigroup $A$, the corresponding function of type $A^k \to A^\ell$  maps a tuple $\bar a \in A^k$ to the tuple in $A^\ell$ defined by
 \[
 \set{1,\ldots,\ell}
 \xrightarrow{\;\text{syntactic description}\;}
@@ -26,22 +26,22 @@ A^+
 \xrightarrow{\;\text{semigroup operation}\;}
 A.
 \]
-It turns out that all  natural transformations between monomial functors arise this way, i.e.~they are in one-to-one correspondence with syntactic descriptions. To see this, the syntactic description is recovered by using the natural transformation for the free semigroup $A=\set{1,\ldots,k}^+$, and applying it to the tuple $(1,\ldots,k) \in A^k$.
-The advantage of the syntactic description, which is unique, is that it allows us to define the  {copyless restriction} in a more syntactic way, reminiscent of the definition used in Definition~\ref{def:usual-sst}:  a natural function between two monomial functors is copyless if and only if its syntactic description has the following property: (*) after concatenating all $\ell$ output strings gives a string where each letter from $\set{1,\ldots,k}$ appears at most once. 
+It turns out that all \kl{natural transformations} between \kl{monomial functors} arise this way, i.e.~they are in one-to-one correspondence with \kl{syntactic descriptions}. To see this, the syntactic description is recovered by using the natural transformation for the free semigroup $A=\set{1,\ldots,k}^+$, and applying it to the tuple $(1,\ldots,k) \in A^k$.
+The advantage of the \kl{syntactic description}, which is unique, is that it allows us to define the copyless restriction in a more syntactic way, reminiscent of the definition used in Definition~\ref{def:usual-sst}:  a natural function between two monomial functors is copyless if and only if its syntactic description has the following property: (*) after concatenating all $\ell$ output strings gives a string where each letter from $\set{1,\ldots,k}$ appears at most once. 
 
-We now extend this syntactic description to natural transformations between general polynomial functors 
+We now extend this \kl{syntactic description} to \kl{natural transformations} between general \kl{polynomial functors}
 \begin{align*}
 \functor A = \coprod_{q \in Q} A^{\dim q} \qquad 
 \functorg A = \coprod_{p \in P} A^{\dim p},
 \end{align*}
-which are not necessarily monomial. These transformations also admit syntactic descriptions: for every input component $q$, there is some designated output component $p$, and a natural transformation $A^{\dim q} \to A^{\dim p}$.  The set of possible syntactic descriptions is
+which are not necessarily \kl{monomial}. For every input component $q$, there is some designated output \kl{component} $p$, and a natural transformation $A^{\dim q} \to A^{\dim p}$. Thus, the set of possible \kl{syntactic descriptions} is
 \begin{align*}
 \prod_{q \in Q} \coprod_{p \in P} \dim p \to (\dim q)^+.
 \end{align*}
 Again, all natural transformations of polynomial functors arise this way.
 We then have:
 \begin{claim}
-  A natural transformation between polynomial functors is copyless in the sense of \Cref{def:copyless} if and only if for every input component, the corresponding natural transformation between monomial functors is copyless.
+  A \kl{natural transformation} between \kl{polynomial functors} is copyless in the sense of \Cref{def:copyless} if and only if for every input \kl{component}, the corresponding natural transformation between \kl{monomial functors} is copyless.
 \end{claim}
 
 (The proof is purely mechanical.)
@@ -50,9 +50,9 @@ We then have:
 
 \subparagraph{Simplifying the initialization/finalization.}
 
-In \Cref{def:functorial-sst}, we allow the initial register valuation to depend in a recognizable way on the input, and similarly for some \enquote{final data} that is used by the final output function. We sketch here a translation from this model to one where the initial valuation is a constant (as in \Cref{def:usual-sst}), and the output is determined by a copyless natural function without auxiliary data. The idea is that the new \sst will simulate in parallel the old \sst for all possible initial valuations, and then decide after reading the whole word which of the computations to keep.
+In \Cref{def:functorial-sst}, we allow the initial register valuation to depend in a \kl{recognizable} way on the input, and similarly for some \enquote{\kl{final data}} that is used by the \kl{final output function}. We sketch here a translation from this model to one where the initial valuation is a constant (as in \Cref{def:usual-sst}), and the output is determined by a \kl{copyless natural function} without auxiliary data. The idea is that the new \functorialsst will simulate in parallel the old \functorialsst for all possible initial valuations, and then decide after reading the whole word which of the computations to keep.
 
-Let $\functorr$ be the register functor of our \functorialsst, $\functoru$ be the update functor and $\functork$ be the final data functor. Let $h\colon \Sigma^* \to S$ be a homomorphism from input words to a finite semigroup that recognizes both the initial valuation function and the final data function; that is, these functions can be decomposed respectively as $\mathtt{init}\circ h$ and $\mathtt{findat}\circ h$. Our simplified \functorialsst will use
+Let $\functorr$ be the \kl{register functor} of our \functorialsst, $\functoru$ be the \kl{update functor} and $\functork$ be the \kl{final data functor}. Let $h\colon \Sigma^* \to S$ be a homomorphism from input words to a finite semigroup that recognizes both the \kl{initial valuation function} and the \kl{final data function}; that is, these functions can be decomposed respectively as $\mathtt{init}\circ h$ and $\mathtt{findat}\circ h$. Our simplified \functorialsst will use
 \[ \text{the register functor}\ A \mapsto (\functorr A)^S \times (\functork A)^S \times S \quad\text{\&}\quad \text{the update functor}\ A \mapsto (\functoru A)^S \times S \]
 The initial register valuation of our simplified device is
 \[ \big((\mathtt{init}(s))_{s\in S},\; (\mathtt{findat}(s))_{s\in S},\; h(\varepsilon)\big) \]
@@ -63,22 +63,22 @@ For each input position, the corresponding update in $(\functoru A)^S \times S$ 
 \end{itemize}
 The application of an update $((u_s)_{s\in S},\, \widehat{s})$ to a register valuation $\big((r_s)_{s\in S},\; (d_s)_{s\in S},\; \underline{s}\big)$ is
 \[ \big((\text{apply}\ u_s\ \text{to}\ r_s)_{s\in S},\; (d_s)_{s\in S},\; \underline{s}\widehat{s}\big) \]
-Finally, the final output function of the simplified \functorialsst is
+Finally, the \kl{final output function} of the simplified \functorialsst is
 \[ \big((r_s)_{s\in S},\; (d_s)_{s\in S},\; \underline{s}\big) \mapsto \text{apply original final input function to}\ r_{\underline{s}}\ \text{and}\ d_{\underline{s}}  \]
 
 \subparagraph{Translating a simplified functorial SST.}
 
-Now, consider a simplified functorial streaming string transducer, which uses the register and update functors 
+Now, consider a simplified \kl{functorial streaming string transducer}, which uses the register and update functors 
 \begin{align*} 
 \functorr A = \coprod_{q \in Q} A^{\dim q} \qquad 
 \functoru A = \coprod_{p \in P} A^{\dim p}.
 \end{align*}
-We shall convert it to an equivalent ordinary \sst using the syntactic descriptions introduced in the previous subsection.
+We shall convert it to an equivalent ordinary \sst using the \kl{syntactic descriptions} introduced in the previous subsection.
 For an input string $a_1 \cdots a_n$, consider the sequence of register valuations 
 \begin{align*}
 v_1,\ldots,v_n \in \functorr A,
 \end{align*}
-such that $v_i$ arises by applying the first $i$ register updates produced by the update oracle. Let $k$ be the maximal dimension of the components in $Q$ (here we use the assumption that $\functorr$ is a \emph{finite} polynomial functor). Define a register valuation $w_i \in A^{k+1}$ as follows: take the register valuation used by $v_i$, and pad it to a tuple of length  $k+1$ using some distinguished element $a_0 \in A$. In particular, since $k$ is the maximal dimension of $Q$, we are guaranteed that the last coordinate with index $k+1$ stores the distinguished element $a_0$. We will build a streaming string transducer, as in Definition~\ref{def:usual-sst}, in which the set of register names is $\set{1,\ldots,k}$. 
+such that $v_i$ arises by applying the first $i$ register updates produced by the update oracle. Let $k$ be the maximal dimension of the components in $Q$ (here we use the assumption that $\functorr$ is a \emph{finite} polynomial functor). Define a \kl{register valuation} $w_i \in A^{k+1}$ as follows: take the register valuation used by $v_i$, and pad it to a tuple of length  $k+1$ using some distinguished element $a_0 \in A$. In particular, since $k$ is the maximal dimension of $Q$, we are guaranteed that the last coordinate with index $k+1$ stores the distinguished element $a_0$. We will build a \kl{streaming string transducer}, as in Definition~\ref{def:usual-sst}, in which the set of \kl{register names} is $\set{1,\ldots,k}$. 
 
-We begin by looking at the components.  Let $q_i \in Q$ be the component of the register valuation $v_i$. The first observation is that $q_i$ depends only on $q_{i-1}$ and the $i$-th register update. Therefore, the sequence $q_1 \cdots q_n$ can be produced by a rational function. The next observation is that, one we know the components $q_{i-1}$ and $q_{i}$, and the register update $u_i \in \functoru A$ that would be applied in the original transducer to from $v_{i-1}$ to $v_i$, then we can create a copyless register update that transforms $w_{i-1}$ into $w_i$. This is done by using the syntactic descriptions of natural functions that were described above. Once we have the register valuations $w_1,\ldots,w_n$, the output of the transducer can be easily obtained.
+We begin by looking at the \kl{components}.  Let $q_i \in Q$ be the \kl{component} of the register valuation $v_i$. The first observation is that $q_i$ depends only on $q_{i-1}$ and the $i$-th register update. Therefore, the sequence $q_1 \cdots q_n$ can be produced by a \kl{rational function}. The next observation is that, one we know the components $q_{i-1}$ and $q_{i}$, and the register update $u_i \in \functoru A$ that would be applied in the original transducer to from $v_{i-1}$ to $v_i$, then we can create a \kl{copyless} \kl{register update} that transforms $w_{i-1}$ into $w_i$. This is done by using the \kl{syntactic descriptions} of \kl{natural functions} that were described above. Once we have the register valuations $w_1,\ldots,w_n$, the output of the transducer can be easily obtained.
 

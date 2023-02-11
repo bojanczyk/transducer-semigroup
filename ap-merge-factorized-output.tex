@@ -1,34 +1,34 @@
 \section{Proof of \Cref{claim:merge-factorized-output}}
 
-The property that we want on factorized outputs reduces immediately to the following lemma on vectorial outputs, by taking $C = 1$.
+The property that we want on \kl{factorized outputs} reduces immediately to the following lemma on \kl{vectorial outputs}, by taking $C = 1$.
 
 \begin{lemma}\label{lem:merge-middle}
     Let $A$ and $C$ be semigroups. The following diagram commutes:
     \[\begin{tikzcd}
         [column sep=4cm]
         \functor A\times \functor A \times \functor C
-        \ar[d,"\text{vectorial output}"']
+        \ar[d,"\text{\kl{vectorial output}}"']
         \ar[r,"(\text{semigroup operation}) \times \functor C"]
         &
         \functor A \times \functor C
-        \ar[d,"\text{vectorial output}"]
+        \ar[d,"\text{\kl{vectorial output}}"]
         \\
         A \oplus A \oplus C
-        \ar[r,"\text{merge}"]
+        \ar[r,"\text{\kl{merge}}"]
         &
         A \oplus C
     \end{tikzcd}\]
 \end{lemma}
 \begin{proof}
-    By expanding the definition of the vectorial output functions, and by using the associativity of three-fold multiplication, we see that the diagram in the lemma statement corresponds to the outer rectangle below:
+    By expanding the definition of the \kl{vectorial output functions}, and by using the associativity of three-fold multiplication, we see that the diagram in the lemma statement corresponds to the outer rectangle below:
     \[\begin{tikzcd}
         [column sep=4cm]
         \functor A\times \functor A \times \functor C
-        \ar[d,"\functor(\text{co-projection})^3"']
+        \ar[d,"\functor(\text{\kl{co-projection}})^3"']
         \ar[r,"(\text{semigroup op}) \times \functor C"]
         &
         \functor A \times \functor C
-        \ar[d,"\functor(\text{co-projection})^2"]
+        \ar[d,"\functor(\text{\kl{co-projection}})^2"]
         \\
         \functor(A \oplus A \oplus C)^3
         \ar[d,"\text{multiply first two together}"']
@@ -38,29 +38,29 @@ The property that we want on factorized outputs reduces immediately to the follo
         \\
         \functor(A \oplus A \oplus C)^2
         \ar[d,"\text{semigroup operation}"']
-        \ar[ru,"F(\text{merge})^2"']
+        \ar[ru,"F(\text{\kl{merge}})^2"']
         \\
         \functor(A \oplus A \oplus C)
         \ar[d, "\outfun_{A \oplus A \oplus C}"']
-        \ar[r,"F(\text{merge})"]
+        \ar[r,"F(\text{\kl{merge}})"]
         &
         \functor(A \oplus C)
         \ar[d, "\outfun_{A\oplus C}"]
         \\ 
         A \oplus A \oplus C
-        \ar[r,"\text{merge}"]
+        \ar[r,"\text{\kl{merge}}"]
         &
         A \oplus C
     \end{tikzcd}\]
-    The lower rectangle commutes by naturality of the output function. The middle trapeze commutes because merging is a semigroup homomorphism. Concerning the upper trapeze, it can be decomposed as the bifunctor $\times$ applied to two diagrams that we can analyze independently. We start by analyzing the second of those, which is simpler:
+    The lower rectangle commutes by \kl{naturality} of the \kl{output mechanism}. The middle trapeze commutes because \kl{merging} is a semigroup homomorphism. Concerning the upper trapeze, it can be decomposed as the bifunctor $\times$ applied to two diagrams that we can analyze independently. We start by looking at the second of those, which is simpler:
     \[\begin{tikzcd}
         [column sep=4cm]
         \functor C
-        \ar[d,"\functor(\text{co-projection})"']
+        \ar[d,"\functor(\text{\kl{co-projection}})"']
         \ar[r,"\mathrm{id}_C"]
         &
         \functor C
-        \ar[d,"\functor(\text{co-projection})"]
+        \ar[d,"\functor(\text{\kl{co-projection}})"]
         \\
         \functor(A \oplus A \oplus C)
         \ar[d,"\mathrm{id}"']
@@ -68,11 +68,11 @@ The property that we want on factorized outputs reduces immediately to the follo
         \functor(A \oplus C)
         \\
         \functor(A \oplus A \oplus C)
-            \ar[ru,"F(\text{merge})"']
+            \ar[ru,"F(\text{\kl{merge}})"']
     \end{tikzcd}\]
     By functoriality of $\functor$, the commutativity of this diagram reduces to
-    \[ \text{merge} \circ (\text{co-projection of}\ C\ \text{into}\ B\oplus B\oplus C) = \text{co-projection of}\ C\ \text{into}\ B\oplus C \]
-    which is an elementary property of the coproduct $\oplus$ in any category (indeed, the generic categorical definition of merging uses a coparing, which \enquote{cancels out} with the coprojection).
+    \[ \text{\kl{merge}} \circ (\text{\kl{co-projection} of}\ C\ \text{into}\ A\oplus A\oplus C) = \text{\kl{co-projection} of}\ C\ \text{into}\ A\oplus C \]
+    which is an elementary property of the \kl{coproduct} $\oplus$ in any category (indeed, the generic categorical definition of \kl{merging} uses a co-paring, which \enquote{cancels out} with the \kl{co-projection}).
     There remains to check that the first of the two diagrams combined by $\times$ is also commutative; towards this purpose, we have added some parts in the middle:
     \[\begin{tikzcd}
         [column sep=2.5cm]
@@ -87,7 +87,7 @@ The property that we want on factorized outputs reduces immediately to the follo
         \\
         \functor(A \oplus A \oplus C)^2
         \ar[d,"\text{semigroup op}"']
-        \ar[r,"h\times h"']
+        \ar[r,"F(\text{merge})^2"']
         &
         \functor(A \oplus C)^2
         \ar[r,"\text{semigroup op}"]
@@ -95,7 +95,7 @@ The property that we want on factorized outputs reduces immediately to the follo
         \functor(A \oplus C)
         \\
         \functor(A \oplus A \oplus C)
-            \ar[rru,"h = F(\text{merge})"']
+            \ar[rru,"F(\text{merge})"']
     \end{tikzcd}\]
-    The upper right trapeze commutes because $\functor$ applied to the co-projection of $a$ into $A\oplus C$ is a homomorphism. The lower triangle commutes because $h$ is a homomorphism. Finally, the small upper left triangle can be shown to commute using the functoriality of $\functor$ followed by properties of the coproduct.
+    The upper right trapeze commutes because $\functor$ applied to the \kl{co-projection} of $a$ into $A\oplus C$ is a homomorphism. The lower triangle commutes because $\functor(\text{\kl{merge}})$ is a homomorphism. Finally, the small upper left triangle can be shown to commute using the functoriality of $\functor$ followed by properties of the \kl{coproduct}.
 \end{proof}

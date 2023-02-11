@@ -239,7 +239,7 @@ are in $\functorr A$ to themselves, and everything else to the \enquote{\kl{null
   \item and the update oracle $a_1 \dots a_n \mapsto \tuple{\underline\varepsilon|a_1|\underline{a_2 \dots a_n}} \dots
   \tuple{\underline{a_1 \dots a_{n-1}}|a_n|\underline\varepsilon}$.
 \end{itemize}
-To fit \Cref{def:functorial-sst}, we have to check that the \kl{initial function} is \kl{recognizable} and that the update oracle is a \kl{rational function}; by definition, the latter amounts to saying that for any $a\in\Sigma$, the function $(w,v) \in (\Sigma^*)^2 \mapsto \tuple{\underline{w}|a|\underline{v}}$ is recognizable. According to the definition of \kl{factorized output}, the initial function factors through the semigroup homomorphism $\functor! \circ h$, \emph{whose codomain $\functor1$ is finite,}; therefore, the initial function is recognizable. The other recognizability condition holds for a similar reason.
+To fit \Cref{def:functorial-sst}, we have to check that the \kl{initial function} is \kl{recognizable} and that the update oracle is a \kl{rational function}; by definition, the latter amounts to saying that for any $a\in\Sigma$, the function $(w,v) \in (\Sigma^*)^2 \mapsto \tuple{\underline{w}|a|\underline{v}}$ is recognizable. According to the definition of \kl{factorized output}, the initial function factors through the semigroup homomorphism $\functor! \circ h$, \emph{whose codomain $\functor1$ is finite}; therefore, the initial function is recognizable. The other recognizability condition holds for a similar reason.
 
 To finish building our \kl{functorial streaming string transducer}, we use the
 function $\kappa$ from \Cref{lem:compute-next-configuration}. Thanks to our
