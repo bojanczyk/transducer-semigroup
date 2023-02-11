@@ -1,6 +1,6 @@
 \section{Transducer semigroups and warm-up theorems}\label{sec:warm-up}
 
-In this section, we define the model that is introduced in this paper, namely transducer semigroups. The purpose of this model is to recognize \emph{string-to-string} functions, which are defined to be functions of type $\Sigma^* \to \Gamma^*$, for some finite alphabets. Some results will work in the slightly more general case where the input or output is a semigroup that is not necessarily a finitely generated free monoid, but we focus on the string-to-string case for the sake of concreteness.
+In this section, we define the model that is introduced in this paper, namely \kl{transducer semigroups}. The purpose of this model is to recognize \emph{string-to-string} functions, which are defined to be functions of type $\Sigma^* \to \Gamma^*$, for some finite alphabets $\Sigma$ and $\Gamma$. Some results will work in the slightly more general case where the domain or codomain is a more general semigroup, but we focus on the string-to-string case for the sake of concreteness.
 
 The model is defined using terminology based on category theory. However, we do not assume that the reader has a background in category theory, beyond the two most basic notions of category and functor. Recall that a \emph{category} consists of objects with morphisms between them, such that the morphisms can be composed and each object has an identity morphism to itself. In this paper, we will be working mainly with two categories:
 \begin{description}
@@ -10,7 +10,7 @@ The model is defined using terminology based on category theory. However, we do 
 To transform categories, we use {functors}.
 Recall that a \emph{functor} between two categories consists of two maps: one that assigns to each object $A$ in the source category an object in the target category, and another one that assigns to each morphism $f\colon A \to B$ a morphism $\functor f\colon \functor A \to \functor B$. These maps need to be consistent with composition of morphisms, and the identity must go to the identity.
 \begin{example}\label{ex:forgetful}
-    The \emph{forgetful functor} from the category of semigroups to the category of sets maps a semigroup to its underlying set, and a semigroup homomorphism to the corresponding function on sets. It is an example of a semigroup-to-set functor.
+    The \intro{forgetful functor} from the category of semigroups to the category of sets maps a semigroup to its underlying set, and a semigroup homomorphism to the corresponding function on sets. It is an example of a semigroup-to-set functor.
 %, which goes from the category of semigroups to the category of sets.
 \end{example}
 % A semigroup-to-semigroup functor can be seen as a semigroup construction. Here are some examples.
@@ -50,7 +50,7 @@ Recall that a \emph{functor} between two categories consists of two maps: one th
 
 \newcommand{\emptytester}{2}
 \begin{definition}[Transducer semigroup]\label{def:transducer-semigroup}
- A \emph{transducer semigroup} consists of a semigroup-to-semigroup functor $\functor$, together with an \emph{output mechanism}, which associates to each semigroup $A$ a function of type $\functor A \to A$, called the \emph{output function for $A$}. The output function does not need to be a semigroup homomorphism. The output mechanism is required to be \emph{natural}, which means that the diagram
+ A \intro{transducer semigroup} consists of a semigroup-to-semigroup functor $\functor$, together with an \intro{output mechanism}, which associates to each semigroup $A$ a function of type $\functor A \to A$, called the \emph{output function for $A$}. The output function does not need to be a semigroup homomorphism. The output mechanism is required to be \intro{natural}, which means that the diagram
 below commutes for every homomorphism $h\colon A \to B$. 
  \[
  \begin{tikzcd}
@@ -70,20 +70,20 @@ below commutes for every homomorphism $h\colon A \to B$.
 
 \end{definition}
 
-In the language of category theory, the naturality condition from the above definition says that the output mechanism is a natural transformation of type 
+In the language of category theory, the naturality condition from the above definition says that the output mechanism is a \emph{natural transformation} of type 
 \[\begin{tikzcd}
  [column sep=2.3cm]
  {\text{Semigroups}} && {\text{Sets}}
- \arrow[""{name=0, anchor=center}, "\text{[forgetful functor]} \circ \functor", curve={height=-18pt}, from=1-1, to=1-3]
- \arrow[""{name=1, anchor=center, inner sep=0}, "\text{forgetful functor (\Cref{ex:forgetful})}"', curve={height=18pt}, from=1-1, to=1-3]
+ \arrow[""{name=0, anchor=center}, "\text{[\kl{forgetful functor}]} \circ \functor", curve={height=-18pt}, from=1-1, to=1-3]
+ \arrow[""{name=1, anchor=center, inner sep=0}, "\text{\kl{forgetful functor} (\Cref{ex:forgetful})}"', curve={height=18pt}, from=1-1, to=1-3]
  \arrow[ shorten <=5pt, shorten >=5pt, Rightarrow, from=0, to=1].
 \end{tikzcd}\]
 
-We are mainly interested in the special case of transducer semigroups where the functor $\functor$ is \emph{finiteness-preserving}, i.e.~it maps finite semigroups to finite semigroups. This special case will correspond to the regular string-to-string functions. Some minor results about the general case, when $\functor$ is not necessarily finiteness-preserving, are presented in Section~\ref{sec:two-simple}.
+We are mainly interested in the special case of \kl{transducer semigroups} where the functor $\functor$ is \intro{finiteness-preserving}, i.e.~it maps finite semigroups to finite semigroups. This special case will correspond to the \kl{regular string-to-string functions}. Some minor results about the general case, when $\functor$ is not necessarily finiteness-preserving, are presented in Section~\ref{sec:two-simple}.
 
-The purpose of transducer semigroups is to define functions between semigroups, as explained in the following definition. 
+The purpose of \kl{transducer semigroups} is to define functions between semigroups, as explained in the following definition. 
 \begin{definition}
- We say that a function $f\colon A \to B$ between semigroups, not necessarily a homomorphism, is \emph{recognized} by a transducer semigroup if it can be decomposed as
+ We say that a function $f\colon A \to B$ between semigroups, not necessarily a homomorphism, is \emph{recognized} by a \kl{transducer semigroup} if it can be decomposed as
  \[
  \begin{tikzcd}
  [column sep=1.6cm]
@@ -109,19 +109,18 @@ that $f(\varepsilon)\neq\varepsilon$. Furthermore, it will be useful in the
 proofs to work in the category of semigroups, rather than the category of monoids.
 
 \begin{example}
- Consider the transducer semigroup in which the functor is the identity, and the output mechanism is also the identity. The functions of type $A \to B$ that are recognized by this transducer semigroup are exactly the semigroup homomorphisms from $A$ to $B$.
+ Consider the \kl{transducer semigroup} in which the functor is the identity, and the \kl{output mechanism} is also the identity. The functions of type $A \to B$ that are recognized by this transducer semigroup are exactly the semigroup homomorphisms from $A$ to $B$.
 \end{example}
 
 \begin{example}\label{ex:reverse-duplicate}
-  Consider the transducer semigroup in which
+  Consider the \kl{transducer semigroup} in which
   \begin{itemize}
   \item the functor is the \enquote{opposite semigroup} functor from
     \Cref{ex:functors};
   \item the output function maps $a\in\functor A$, seen as an element in $A$, to
     $aa \in A$.
   \end{itemize}
-  The functions of type $A \to B$ that are recognized by this transducer
-  semigroup are exactly those of the form $a \mapsto h(a)h(a)$ where $h\colon A
+  The functions of type $A \to B$ that are recognized by this \kl{transducer semigroup} are exactly those of the form $a \mapsto h(a)h(a)$ where $h\colon A
   \to B$ is some \enquote{anti-homomorphism}, i.e.\ satisfies
   $h(a_1a_2)=h(a_2)h(a_1)$ for all $a_1,a_2\in A$. In particular, if $h$ is the
   string reversal function $\mathtt{rev}$ on the free monoid $\Sigma^*$, which
@@ -131,7 +130,7 @@ proofs to work in the category of semigroups, rather than the category of monoid
 \end{example}
 
 \begin{example}\label{ex:squaring}
-  We present here a transducer semigroup that recognizes the squaring function
+  We present here a \kl{transducer semigroup} that recognizes the squaring function
   $w \in \Sigma^* \mapsto w^{|w|} \in \Sigma^*$ (illustrated by $\mathtt{123
     \mapsto 123123123}$) for any alphabet $\Sigma$.
   
@@ -146,8 +145,8 @@ proofs to work in the category of semigroups, rather than the category of monoid
 
 \subsection{Two simple characterizations}
 \label{sec:two-simple}
-% We begin with two simple theorems, which are about transducer semigroups where the functor is not necessarily finiteness-preserving. These results describe two classes of string-to-string functions: all functions (Theorem~\ref{thm:all-functions}) and functions that reflect recognizability (Theorem~\ref{thm:reco-reflecting-functions}).
-We begin with two simple theorems, which use transducer semigroups to capture two classes of string-to-string functions: all functions (Theorem~\ref{thm:all-functions}) and functions that reflect recognizability (Theorem~\ref{thm:reco-reflecting-functions}).
+
+We begin with two simple theorems, which use transducer semigroups to capture two classes of string-to-string functions: all functions (Theorem~\ref{thm:all-functions}) and functions that reflect \kl{recognizability} (Theorem~\ref{thm:reco-reflecting-functions}).
 %These two theorems have simple proofs.
 The main contribution of this paper, presented in Section~\ref{sec:reg-char},
 characterizes the regular functions using a stronger restriction than those
@@ -156,50 +155,48 @@ considered here.
 \subparagraph{All functions.} The first theorem concerns transducer semigroups without any restrictions.
 
 \begin{theorem}\label{thm:all-functions} 
- Every string-to-string function is recognized by a transducer semigroup.
+ Every string-to-string function is recognized by a \kl{transducer semigroup}.
 \end{theorem}
 \begin{proof}
- We prove a slightly stronger result: every function between two semigroups $A$ and $B$ is recognized by a transducer semigroup.
- For a semigroup $A$, we define a transducer semigroup that recognizes all functions from $A$ to other semigroups. The functor is 
+ We prove a slightly stronger result: a semigroup $A$, there exists a transducer semigroup that recognizes all functions from $A$ to other semigroups. The functor is 
  \begin{align*}
  \functor B = A \times \text{(set of all functions of type $A \to B$, not necessarily recognizable)}.
  \end{align*}
- The semigroup operation in $\functor B$ is defined as follows: on the first coordinate, we inherit the semigroup operation from $A$, while on the second coordinate, we use the trivial \emph{left zero} semigroup structure, in which  the product of two functions is simply the first one (this is a trivial way of equipping every set with a semigroup structure). The functor is defined on morphisms
+ The semigroup operation in $\functor B$ is defined as follows: on the first coordinate, we inherit the semigroup operation from $A$, while on the second coordinate, we use the trivial \intro{left zero} semigroup structure, in which  the product of two functions is simply the first one (this is a trivial way of equipping every set with a semigroup structure). The functor is defined on morphisms
 as in the tuple construction from Example~\ref{ex:functors}: the first coordinate, corresponding to~$A$, is not changed, and the second coordinate, corresponding to the set of functions, is transformed coordinate-wise, when viewed as a tuple indexed by~$A$. This is easily seen to be a functor. The output mechanism, which is easily seen to be natural, is function application i.e.~$(a,f) \mapsto f(a)$.
 Every function $f\colon A \to B$ is recognized by this transducer semigroup, with the appropriate homomorphism is~$a \in A \mapsto (a,f)$.
 \end{proof}
 
 \subparagraph{Recognizability reflecting functions.} We now characterize
-functions with the property that inverse images of recognizable languages are
-also recognizable. We use a slightly more general setup, where instead of
+functions with the property that inverse images of \kl{recognizable languages} are
+also \kl{recognizable}. We use a slightly more general setup, where instead of
 languages we use functions into arbitrary sets (languages can be seen as the
 case of functions into $\set{\text{yes},\text{no}}$).
 
 \begin{definition}
   We say that a function from a semigroup $A$ to some set $X$ is
-  \emph{recognizable} if it factors through some semigroup homomorphism from $A$
+  \intro{recognizable} if it factors through some semigroup homomorphism from $A$
   to a \emph{finite} semigroup.
 \end{definition}
 In the rest of the paper, we shall sometimes
-speak of recognizable functions with infinite codomain, but note that the
-range of a recognizable function is always finite.
+speak of \kl{recognizable functions} with infinite codomain, but note that the
+range of a \kl{recognizable function} is always finite.
 
 A function $f\colon B \to A$ between semigroups, not necessarily a semigroup
-homomorphism, is called \emph{recognizability reflecting} if for every
-recognizable function $g\colon A \to X$, the composition $g \circ f$ is
-recognizable. As we explain in the appendix, there are too many recognizability
-reflecting functions -- in fact, uncountably many from $\{a\}^*$ to itself -- to
+homomorphism, is called \intro{recognizability reflecting} if for every
+\kl{recognizable function} $g\colon A \to X$, the composition $g \circ f$ is
+\kl{recognizable}. As we explain in the appendix, there are too many \kl{recognizability reflecting} functions -- in fact, uncountably many from $\{a\}^*$ to itself -- to
 allow a machine model, or some other effective syntax. The following result
 gives a non-effective syntax.
 
 \begin{theorem}\label{thm:reco-reflecting-functions} The following conditions are equivalent for a string-to-string function:
  \begin{enumerate}
- \item \label{it:reco-refl} it is recognizability reflecting.
+ \item \label{it:reco-refl} it is \kl{recognizability reflecting}.
  \item \label{it:trans-semig-reco}it is recognized by a transducer semigroup such that for every finite semigroup $A$, the corresponding output function of type 
  $\functor A \to A$
- is recognizable.
+ is \kl{recognizable}.
  \end{enumerate}
 \end{theorem}
 \begin{example}\label{ex:squaring-reco-refl}
-  For any finite semigroup $A$, the map $(a,n) \in A \times (\mathbb{N}\setminus\{0\}) \mapsto a^n \in A$ is recognizable, because it factors through a homomorphism into the semigroup $A \times (\mathbb{Z}/(|A|!))$, which is finite. Extending this idea slightly, one can show that the output mechanism $\outfun_A$ of \Cref{ex:squaring} is recognizable whenever $A$ is finite.
+  For any finite semigroup $A$, the map $(a,n) \in A \times (\mathbb{N}\setminus\{0\}) \mapsto a^n \in A$ is \kl{recognizable}, because it factors through a homomorphism into the semigroup $A \times (\mathbb{Z}/(|A|!))$, which is finite. Extending this idea slightly, one can show that the output mechanism $\outfun_A$ of \Cref{ex:squaring} is \kl{recognizable} whenever $A$ is finite. Therefore, the squaring function is \kl{recognizability reflecting}.
 \end{example}

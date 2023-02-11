@@ -2,17 +2,16 @@
 \label{sec:reg-char}
 The two straightforward constructions in Theorems~\ref{thm:all-functions} and~\ref{thm:reco-reflecting-functions}  amount to little more than symbol pushing. In this section, we present a more substantial characterization, which is the main result of this paper.
 % In this characterization, we use functors that are finiteness-preserving.
-This characterization concerns finiteness-preserving functors.
+This characterization concerns \kl{finiteness-preserving} functors.
 % (above rephrased mainly to avoid vertical alignment of two occurrences of "finiteness-preserving")
-This is a strengthening of the condition from Theorem~\ref{thm:reco-reflecting-functions}: if the functor $\functor$ in a transducer semigroup is finiteness-preserving, then for every finite semigroup $A$, the output function $\functor A \to A$ will be recognizable, since all functions from a finite semigroup are trivially recognizable.  However, the condition is strictly stronger, as witnessed by Example~\ref{ex:squaring}, which is recognizability reflecting (cf.~\Cref{ex:squaring-reco-refl}) but not finiteness preserving. As we will see, the stronger condition will characterize exactly the regular string-to-string functions.
+This is a strengthening of the condition from Theorem~\ref{thm:reco-reflecting-functions}: if the functor $\functor$ in a \kl{transducer semigroup} is \kl{finiteness-preserving}, then for every finite semigroup $A$, the output function $\functor A \to A$ will be \kl{recognizable}, since all functions from a finite semigroup are trivially recognizable.  However, the condition is strictly stronger, as witnessed by Example~\ref{ex:squaring}, which is \kl{recognizability reflecting} (cf.~\Cref{ex:squaring-reco-refl}) but not \kl{finiteness preserving}. As we will see, the stronger condition will characterize exactly the \kl{regular string-to-string functions}.
 
-The following counterexample illustrates the non-trivial interaction between naturality of the output mechanism interacts and the requirement that 
-the functor is finiteness preserving.
+The following counterexample illustrates the non-trivial interaction between \kl{naturality} of the \kl{output mechanism} and the requirement that the functor is \kl{finiteness preserving}.
 
 \begin{example}
-    Consider the powerset functor $\powerset$ from Example~\ref{ex:functors}. It is finiteness-preserving, since the powerset of a finite semigroup is also finite. One could imagine that using powersets, one could construct a transducer semigroup that recognizes functions that are not regular, e.g.~because they have exponential growth (unlike regular functions, which have linear growth). It turns out that this is impossible, because there is no possible output mechanism, i.e.~no natural transformation of type $\powerset A \to A$, as we explain below.
+    Consider the powerset functor $\powerset$ from Example~\ref{ex:functors}. It is \kl{finiteness preserving}, since the powerset of a finite semigroup is also finite. One could imagine that using powersets, one could construct a \kl{transducer semigroup} that recognizes functions that are not regular, e.g.~because they have exponential growth (unlike \kl{regular functions}, which have linear growth). It turns out that this is impossible, because there is no possible \kl{output mechanism}, i.e.~no \kl{natural transformation} of type $\powerset A \to A$, as we explain below.
 
-    The issue is that the naturality condition disallows choosing elements from a subset.  To see why, consider a semigroup $A$ with two elements, with the trivial left zero semigroup structure. For this semigroup, the output mechanism of type $\powerset A \to A$ would need to choose some element $a \in A$ when given as input the full set $A \in \powerset A$. However, none of the two choices is right, because swapping the two elements of $A$ is an automorphism of the semigroup $A$, which maps the full set to itself, but does not map any element to itself.
+    The issue is that the \kl{naturality} condition disallows choosing elements from a subset.  To see why, consider a semigroup $A$ with two elements, with the trivial \kl{left zero} semigroup structure. For this semigroup, the \kl{output mechanism} of type $\powerset A \to A$ would need to choose some element $a \in A$ when given as input the full set $A \in \powerset A$. However, none of the two choices is right, because swapping the two elements of $A$ is an automorphism of the semigroup $A$, which maps the full set to itself, but does not map any element to itself.
 \end{example}
 
 We now state the main theorem of this paper. 
@@ -23,21 +22,21 @@ We now state the main theorem of this paper.
 \begin{theorem}\label{thm:regular-functions}
     The following conditions are equivalent for every string-to-string function:
     \begin{enumerate}
-        \item \label{it:regular} it is a regular string-to-string function;
-        \item \label{it:trans-semig-regular}it is recognized by a transducer semigroup  in which the functor is finiteness preserving. 
+        \item \label{it:regular} it is a \kl{regular string-to-string function};
+        \item \label{it:trans-semig-regular}it is recognized by a \kl{transducer semigroup}  in which the functor is \kl{finiteness preserving}. 
     \end{enumerate}
 \end{theorem}
 
 \noindent Here is the plan for the rest of this section:
 \begin{description}
-    \item[Section~\ref{sec:sst-definition}] gives a formal definition of regular functions
+    \item[Section~\ref{sec:sst-definition}] gives a formal definition of \kl{regular functions}
     \item[Section~\ref{sec:easy}] proves the easy  implication in the theorem, namely  $(\ref{it:regular}) \Rightarrow (\ref{it:trans-semig-regular})$
     \item[Section~\ref{sec:hard}] proves the hard  implication in the theorem, namely  $(\ref{it:regular}) \Leftarrow (\ref{it:trans-semig-regular})$
 \end{description}
 
 Before continuing, we remark on one advantage of the characterization, namely a
 straightforward proof of closure under composition. In contrast, for some (but
-not all) existing models defining regular string-to-string functions,
+not all) existing models defining \kl{regular string-to-string functions},
 composition requires a non-trivial construction -- examples include two-way
 transducers~\cite[Theorem 2]{ChytilJ77} or copyless \sst~\cite[Theorem
 1]{composingSST}.
@@ -46,12 +45,12 @@ transducers~\cite[Theorem 2]{ChytilJ77} or copyless \sst~\cite[Theorem
   under composition.
 \end{proposition}
 \begin{proof}
-  This is because finiteness-preserving functors are closed under composition,
-  natural output functions are also closed under composition, and naturality
-  means by definition that the output functions \enquote{commute} in a suitable
-  sense with functors.\footnote{More precisely, consider the following commuting naturality diagram,
+  This is because \kl{finiteness-preserving} functors are closed under composition,
+  \kl{natural} families of \kl{output functions} are also closed under composition, and \kl{naturality}
+  means by definition that the \kl{output functions} \enquote{commute} in a suitable
+  sense with functors.\footnote{More precisely, consider the following commuting \kl{naturality} diagram,
     where the upper path describes the composition of two functions recognized by the
-    transducer semigroups $(\functor,\outfun)$ and $(\functor',\outfun')$, while the lower path describes a function recognized by $(\functor\functor', \outfun_{\functor'(-)} \circ \outfun')$:
+    \kl{transducer semigroups} $(\functor,\outfun)$ and $(\functor',\outfun')$, while the lower path describes a function recognized by $(\functor\functor', \outfun_{\functor'(-)} \circ \outfun')$:
     \[
       \begin{tikzcd}[ampersand replacement=\&, column sep=2cm]
         \Sigma^* 
@@ -73,26 +72,23 @@ transducers~\cite[Theorem 2]{ChytilJ77} or copyless \sst~\cite[Theorem
   \]}
 \end{proof}
 
-
-
- 
 \input{easy}
 
 \input{polynomial-functors}
 
 \subparagraph{Factorized output.}
-Now, consider some transducer semigroup, with the functor being $\functor$, and fix a string-to-semigroup function $f\colon \Sigma^* \to A$ that decomposes as some homomorphism $h\colon \Sigma^* \to \functor A$ followed by the output function of type $\functor A \to A$. 
+Now, consider some \kl{transducer semigroup}, with the functor being $\functor$, and fix a string-to-semigroup function $f\colon \Sigma^* \to A$ that decomposes as some homomorphism $h\colon \Sigma^* \to \functor A$ followed by the \kl{output function} of type $\functor A \to A$. 
 
-For semigroups $A_1,\ldots,A_n$, define the \emph{vectorial output function} to be the 
-function% of type 
+\AP For semigroups $A_1,\ldots,A_n$, define the \intro{vectorial output function} to be the 
+function of type 
 \begin{align*}
 \qquad\functor A_1 \times \cdots \times \functor A_n \longrightarrow A_1 \oplus \cdots \oplus A_n
 \end{align*}
-that is obtained by composing the three functions described below
+that is obtained by the composition of three functions described below (where \intro{co-projection} is the function $A_i \to A_1 \oplus \dots \oplus A_n$ that outputs a singleton list containing its input):
 \[
 \begin{tikzcd}
 \functor A_1 \times \cdots \times \functor A_n
-\ar[d,"\functor(\text{co-projection}) \times \cdots \times \functor(\text{co-projection})"]
+\ar[d,"\functor(\text{\kl{co-projection}}) \times \cdots \times \functor(\text{\kl{co-projection}})"]
 \\
 \functor(A_1 \oplus \cdots \oplus A_n)
 \times
@@ -102,24 +98,24 @@ that is obtained by composing the three functions described below
 \ar[d,"\text{semigroup operation}"]
 \\
 \functor(A_1 \oplus \cdots \oplus A_n)
-\ar[d, "\text{output mechanism for $A_1 \oplus \cdots \oplus A_n$}"]\\ 
+\ar[d, "\text{\kl{output mechanism} for $A_1 \oplus \cdots \oplus A_n$}"]\\ 
 A_1 \oplus \cdots \oplus A_n.
 \end{tikzcd}
 \]
 
-To illustrate the definitions in this section, we use a running example with the
-transducer semigroup for the \enquote{reverse then duplicate} function from
+\AP To illustrate the definitions in this section, we use a \intro{running example} with the
+\kl{transducer semigroup} for the \enquote{reverse then duplicate} function from
 \Cref{ex:reverse-duplicate}. The functor $\functor$ sends a semigroup $A$ to the
-opposite semigroup (cf.~\Cref{ex:functors}), and the output mechanism is $a
+opposite semigroup (cf.~\Cref{ex:functors}), and the \kl{output mechanism} is $a
 \mapsto aa$. Our example function on $\set{a,b}^*$ is obtained by composing the
 string reversal homomorphism $\set{a,b}^* \to \functor(\set{a,b}^*)$ with the
-output function. Here is an example of the vectorial output function (for now,
+\kl{output function}. Here is an example of the \kl{vectorial output function} (for now,
 the homomorphism plays no role):
 \begin{align*}
     (1,abbb) \in \functor 1 \times \functor(\set{a,b}^*) \qquad \mapsto \qquad 
   \boxed{abbb} \ \red{\boxed{1}} \  \boxed{abbb}\ \red{\boxed{1}} \in 1 \oplus \set{a,b}^*.
 \end{align*}
-The  vectorial output function is natural in all of its arguments, which means
+The \kl{vectorial output function} is \kl{natural} in all of its arguments, which means
 that for all semigroup homomorphisms $h_1,\ldots,h_n$, the diagram below commutes:
 \[
 \begin{tikzcd}
@@ -137,7 +133,7 @@ A_1 \oplus \cdots \oplus A_n
 B_1 \oplus \cdots \oplus B_n
 \end{tikzcd}
 \]
-This is because each of the three steps in the definition of the vectorial output function is itself a natural transformation, and natural transformations compose.  Naturality of the first two steps is easy to check, while for the last step we use the assumption that the (non-vectorial) output function is natural.
+This is because each of the three steps in the definition of the \kl{vectorial output function} is itself a \kl{natural transformation}, and natural transformations compose.  Naturality of the first two steps is easy to check, while for the last step we use the assumption that the (non-vectorial) \kl{output function} is natural.
 % In other words, the factorized output function is a natural 
 % transformation of type 
 % \[\begin{tikzcd}
@@ -159,13 +155,13 @@ This is because each of the three steps in the definition of the vectorial outpu
 % 1 1     \in 1 \oplus \set{a,b}^+.
 % \end{align*}
 
-Let us return to our function $f = \outfun_A \circ h$ recognized by our transducer semigroup $(\functor,\outfun)$.
+\AP Let us return to our function $f = \outfun_A \circ h$ recognized by our \kl{transducer semigroup} $(\functor,\outfun)$.
 %Using the vectorial output mechanism, we will be able to track the origins in the output of the function $f$, with respect to some partition of the input string into several nonempty parts.
-For strings $w_1,\ldots,w_n \in \Sigma^*$, define the corresponding \emph{factorized output} to be the result of first applying the semigroup homomorphism $h : \Sigma^* \to \functor A$ to all the strings, and then applying the vectorial output function; we denote it by 
+For strings $w_1,\ldots,w_n \in \Sigma^*$, define the corresponding \intro{factorized output} to be the result of first applying the semigroup homomorphism $h : \Sigma^* \to \functor A$ to all the strings, and then applying the \kl{vectorial output function}; we denote it by 
 \begin{align*}
 \tuple{w_1| \cdots | w_n} \in \myunderbrace{A \oplus \cdots \oplus A}{$n$ times},
 \end{align*}
-Here is the factorized output illustrated on our running example (we use colours to distinguish which of the three parts of the input is used):
+Here is the \kl{factorized output} illustrated on our \kl{running example} (we use colours to distinguish which of the three parts of the input is used):
 \begin{align*}
   \tuple{\red{abb} | \varepsilon | \blue{baaba}} =  
   \blue{\boxed{abaab}} \ 
@@ -176,25 +172,14 @@ Here is the factorized output illustrated on our running example (we use colours
   \red{\boxed{bba}}
   \in \red{\set{a,b}^*} \oplus \set{a,b}^*  \oplus \blue{\set{a,b}^*}.
 \end{align*}
-As we can see above, when the output semigroup is a free monoid, the factorized output morally tells us \enquote{which part of the output string comes from which part in the input string}.
+As we can see above, when the output semigroup is a free monoid, the \kl{factorized output} morally tells us \enquote{which part of the output string comes from which part in the input string}.
 \begin{remark}
 This is similar to the idea of \emph{origin semantics}~\cite{bojanczykTransducersOriginInformation2014} of regular functions (see also~\cite[Section~5]{MuschollPuppis}). Indeed, our definition of factorized output is inspired by a similar tool of the same name that appears in the study of origin semantics~\cite[Section~2]{bojanczykTransducersOriginInformation2014}.
 \end{remark}
 
-We also use a similar notation but with some input strings underlined, e.g.~the input could be $\tuple{\red{\underline{abb}} | \varepsilon | \blue{baaba}}$ with an underline for the first red part. In the underlined case, before applying the vectorial output function, we apply $h$ to the non-underlined strings and
-% \[
-% \begin{tikzcd}
-% \Sigma^*
-% \ar[r,"h"]
-% &
-% \functor A 
-% \ar[r,"\functor !"]
-% &
-% \functor 1.
-% \end{tikzcd}
-% \]
+We also use a similar notation but with some input strings underlined, e.g.~the input could be $\tuple{\red{\underline{abb}} | \varepsilon | \blue{baaba}}$ with an underline for the first red part. In the underlined case, before applying the \kl{vectorial output function}, we apply $h$ to the non-underlined strings and
 $(\functor! \circ h) \colon \Sigma^* \to \functor1$
-to the underlined strings. In our running example, we have
+to the underlined strings. In our \kl{running example}, we have
 \begin{align*}
   \tuple{\red{abb} | \varepsilon | \blue{baaba}} =  
   \blue{\boxed{abaab}} \ 
@@ -209,24 +194,26 @@ to the underlined strings. In our running example, we have
 \subparagraph*{Proof of $(\ref{it:trans-semig-regular}) \Rightarrow (\ref{it:regular})$ in \Cref{thm:regular-functions}.}
 We have now collected all necessary ingredients to prove this hard direction of
 the equivalence. Therefore, our goal is now to show that the function $f\colon
-\Sigma^* \to A$ that we have previously fixed is computed by some functorial
-streaming string transducer as in Definition~\ref{def:functorial-sst}.
-We will see that this can be done merely assuming that \emph{$\functor 1$ is finite} -- a particular instance of the assumption in (\ref{it:trans-semig-regular}) that $\functor$ is finiteness-preserving.
+\Sigma^* \to A$ that we have previously fixed is computed by some \kl{functorial streaming string transducer} as in Definition~\ref{def:functorial-sst}.
+We will see that this can be done merely assuming that \emph{$\functor 1$ is finite} -- a particular instance of the assumption in (\ref{it:trans-semig-regular}) that $\functor$ is \kl{finiteness preserving}.
 
-The idea is that we want the \sst to maintain the following invariant: \emph{after processing the first $i$ letters in an input string $a_1 \cdots a_n$, the register valuation is equal to the factorized output $\tuple{a_1 \cdots a_i | \underline{a_{i+1} \cdots a_n}}$}. This way, after processing all input letters, the last valuation $\tuple{a_1 \cdots a_n | \underline{\varepsilon}}$ is very close to the output $f(a_1\dots a_n) = \tuple{a_1 \dots a_n} \in A = \text{1-ary coproduct}$.
+The idea is that we want the \functorialsst to maintain the following \intro{invariant}: 
+\begin{center}
+  after processing the first $i$ letters in an input string $a_1 \cdots a_n$,\\ the register valuation is equal to the \kl{factorized output} $\tuple{a_1 \cdots a_i | \underline{a_{i+1} \cdots a_n}}$.  
+\end{center}
+ This way, after processing all input letters, the last valuation $\tuple{a_1 \cdots a_n | \underline{\varepsilon}}$ is very close to the output; indeed, if we see $A$ as a 1-ary coproduct, then $f(a_1\dots a_n) = \tuple{a_1 \dots a_n} \in A$.
 
-The naive choice for the register functor is then $\functorr' : A \mapsto A
+The naive choice for the \kl{register functor} is then $\functorr' : A \mapsto A
 \oplus 1$, since $\tuple{w|\underline{v}} \in A\oplus1$ for all $w,v\in\Sigma^*$
-by definition. However, while $\functorr'$ can be seen as a polynomial
-semigroup-to-set functor, whose set of components is $1 \oplus 1$ (cf.~\Cref{rem:coproduct-as-polynomial-functor}), it is not \emph{finite} polynomial (the set $1\oplus1$ is infinite). That said, we have by naturality of vectorial output (cf.~appendix):
+by definition. However, while $\functorr'$ can be seen as a \kl{polynomial semigroup-to-set functor}, whose set of \kl{components} is $1 \oplus 1$ (cf.~\Cref{rem:coproduct-as-polynomial-functor}), it is not \kl{\emph{finite} polynomial} (the set $1\oplus1$ is infinite). That said, we have by \kl{naturality} of \kl{vectorial output} (cf.~appendix):
 \begin{claim}\label{clm:component-index}
-  The component for $\tuple{w|\underline{v}} \in \functorr'A$ is $\tuple{\underline{w}|\underline{v}} \in 1 \oplus 1$.
+  The \kl{component} for $\tuple{w|\underline{v}} \in \functorr'A$ is $\tuple{\underline{w}|\underline{v}} \in 1 \oplus 1$.
 \end{claim}
-This index is determined by definition by the values of $(\functor! \circ h) \colon \Sigma^* \to \functor1$ on $w$ and $v$. \emph{Since $\functor1$ is finite,} the $\tuple{w|\underline{v}}$ for $w,v$ ranging over $\Sigma^*$ live in finitely many components. We take our register functor  $\functorr A \subset \functorr' A$ to be the finite polynomial functor consisting of these \enquote{useful} components, plus the unique component that does not use $A$ (it will serve as a \enquote{null value}).
+This index is determined by definition by the values of $(\functor! \circ h) \colon \Sigma^* \to \functor1$ on $w$ and $v$. \emph{Since $\functor1$ is finite,} the $\tuple{w|\underline{v}}$ for $w,v$ ranging over $\Sigma^*$ live in finitely many \kl{components}. We take our \kl{register functor}  $\functorr A \subset \functorr' A$ to be the \kl{finite polynomial functor} consisting of these \enquote{useful} \kl{components}, plus the unique \kl{component} that does not use $A$ (it will serve as a \enquote{\intro{null value}}).
 
-To design the register updates, the key is the following lemma. It shall be proved later using the machinery of views on coproducts that we have introduced for this very purpose.
+To design the register updates, the key is the following lemma. It shall be proved later using the machinery of \kl{views} on \kl{coproducts} that we have introduced for this very purpose.
 \begin{lemma}\label{lem:compute-next-configuration}
-  There are two {copyless} natural functions
+  There are two \kl{copyless natural functions}
   \[
     \delta\colon (A \oplus 1) \times (1 \oplus A \oplus 1) \to (A \oplus 1) + 1
     \qquad\qquad
@@ -238,63 +225,61 @@ To design the register updates, the key is the following lemma. It shall be prov
       {av}},\tuple{\underline w | a|\underline v}) \qquad\qquad f(w) = \tuple{w} =
     \kappa(\tuple{w|\underline\varepsilon},\tuple{\underline w | \varepsilon}) \]
 \end{lemma}
-Again, to make \enquote{copyless natural} meaningful in this context, we invoke
+Again, to make \enquote{\kl{copyless natural}} meaningful in this context, we invoke
 \Cref{rem:coproduct-as-polynomial-functor} to see $\delta$ and $\kappa$ as
-functions between polynomial functors in $A$.
+functions between \kl{polynomial functors} in $A$.
 
-This leads us to use the update functor $\functoru : A \mapsto 1 \oplus A \oplus
+This leads us to use the \kl{update functor} $\functoru : A \mapsto 1 \oplus A \oplus
 1$ and to define the application of updates to registers, of type $\functorr A
 \times \functoru A \to \functorr A$, to be $\delta$ followed by the map $(A
-\oplus 1) + 1 \to \functorr A$ which sends the components of $A \oplus 1$ that
-are in $\functorr A$ to themselves, and everything else to the \enquote{null
-  value}. As an direct consequence of the lemma, the desired invariant holds
-using
+\oplus 1) + 1 \to \functorr A$ which sends the \kl{components} of $A \oplus 1$ that
+are in $\functorr A$ to themselves, and everything else to the \enquote{\kl{null value}}. As an direct consequence of the lemma, the desired \kl{invariant} holds using
 \begin{itemize}
-  \item the initial function $w \mapsto \tuple{\varepsilon|\underline{w}}$,
+  \item the \kl{initial function} $w \mapsto \tuple{\varepsilon|\underline{w}}$,
   \item and the update oracle $a_1 \dots a_n \mapsto \tuple{\underline\varepsilon|a_1|\underline{a_2 \dots a_n}} \dots
   \tuple{\underline{a_1 \dots a_{n-1}}|a_n|\underline\varepsilon}$.
 \end{itemize}
-To fit \Cref{def:functorial-sst}, we have to check that the initial function is recognizable and that the update oracle is a rational function; by definition, the latter amounts to saying that for any $a\in\Sigma$, the function $(w,v) \in (\Sigma^*)^2 \mapsto \tuple{\underline{w}|a|\underline{v}}$ is recognizable. According to the definition of factorized output, the initial function factors through the semigroup homomorphism $\functor! \circ h$, \emph{whose codomain $\functor1$ is finite,} therefore the initial function is recognizable. The other recognizability condition holds for a similar reason.
+To fit \Cref{def:functorial-sst}, we have to check that the \kl{initial function} is \kl{recognizable} and that the update oracle is a \kl{rational function}; by definition, the latter amounts to saying that for any $a\in\Sigma$, the function $(w,v) \in (\Sigma^*)^2 \mapsto \tuple{\underline{w}|a|\underline{v}}$ is recognizable. According to the definition of \kl{factorized output}, the initial function factors through the semigroup homomorphism $\functor! \circ h$, \emph{whose codomain $\functor1$ is finite,}; therefore, the initial function is recognizable. The other recognizability condition holds for a similar reason.
 
-To finish building our functorial streaming string transducer, we use the
+To finish building our \kl{functorial streaming string transducer}, we use the
 function $\kappa$ from \Cref{lem:compute-next-configuration}. Thanks to our
-invariant and to the equation concerning $\kappa$, it is immediate that the
-following choices lead to a functorial \sst that indeed computes $f$. We take:
+\kl{invariant} and to the equation concerning $\kappa$, it is immediate that the
+following choices lead to a \functorialsst that indeed computes $f$. We take:
 \begin{itemize}
-\item the final data functor $\functork : A \mapsto (1 \oplus A)\times A$,
-\item the final data function $w\in\Sigma^* \mapsto
+\item the \kl{final data functor} $\functork : A \mapsto (1 \oplus A)\times A$,
+\item the \kl{final data function} $w\in\Sigma^* \mapsto
   (\tuple{\underline{w}|\varepsilon},\;\text{some arbitrary fixed value in
-    $A$})$ -- once again, it is recognizable because $\functor1$ is finite,
-\item and the final output function $\functorr A \times \functork A \to A$ that
+    $A$})$ -- once again, it is \kl{recognizable} because $\functor1$ is finite,
+\item and the \kl{final output function} $\functorr A \times \functork A \to A$ that
   proceeds as follows: first, it applies $\kappa$ to get some value in
-  $(A+1)\times A$; if the left component of the pair is in $A$, it returns it;
-  otherwise, it returns the right component.
+  $(A+1)\times A$; if the left half of the pair is in $A$, it returns it;
+  otherwise, it returns the right half.
 \end{itemize}
 This being done, let us discharge our only remaining subgoal.
 
 \begin{proof}[Proof of \Cref{lem:compute-next-configuration}]
   We cover here the part concerning $\delta$; for $\kappa$, the arguments are
   similar and a bit simpler. We use the following claim, which is proved using
-  mindless diagram chasing (as detailed in the appendix). Recall that
-  the merging, shape and view operations were introduced just before
+  mechanical diagram chasing (as detailed in the appendix). Recall that
+  the \kl{merging}, \kl{shape} and \kl{view} operations were introduced just before
   \Cref{prop:views}.
     \begin{claim}\label{claim:merge-factorized-output}
-        $\tuple{wa|\underline v}$ is obtained from $\tuple{w|a|\underline v}$ by merging the first two parts in $A \oplus A \oplus 1$.
+        $\tuple{wa|\underline v}$ is obtained from $\tuple{w|a|\underline v}$ by \kl{merging} the first two parts in $A \oplus A \oplus 1$.
     \end{claim}
 
-    Since merging the first two parts is a copyless natural function,  the above
-    claim shows that  the factorized output $\tuple{wa|\underline v}$ is
-    obtained from $\tuple{w|a|\underline v}$ by a copyless natural function.
-    In turn, $\tuple{w|a|\underline v}$ can be obtained by applying the reconstruction function (\Cref{lem:reconstruction}) to the following four items (the equalities below are proved similarly to Claims~\ref{clm:component-index} and~\ref{claim:merge-factorized-output}):
+    Since \kl{merging} the first two parts is \kl{copyless natural},  the above
+    claim shows that the \kl{factorized output} $\tuple{wa|\underline v}$ is
+    obtained from $\tuple{w|a|\underline v}$ by a \kl{copyless natural function}.
+    In turn, $\tuple{w|a|\underline v}$ can be obtained by applying the \kl{reconstruction} function (\Cref{lem:reconstruction}) to the following four items (the equalities below are proved similarly to Claims~\ref{clm:component-index} and~\ref{claim:merge-factorized-output}):
      \begin{enumerate}
-        \item \label{it:first-view}First view of $\tuple{w|a|\underline v}$, which is equal to $\tuple{w|\underline {av}}$ -- this is the first argument which is passed, in the lemma statement, to the function $\delta$ that we want to define.
-        \item  \label{it:second-view} Second view of $\tuple{w|a|\underline v}$, which is obtained by merging the first and third parts in $\tuple{\underline w|a|\underline v}$.
-        \item \label{it:third-view}   Third view of $\tuple{w|a|\underline v}$, which is equal to $\tuple{\underline {wa}|\underline{v}}$.
-        \item   \label{it:shape} Shape of~$\tuple{w|a|\underline v}$, which is equal to $\tuple{\underline w|\underline a| \underline v}$.
+        \item \label{it:first-view}First \kl{view} of $\tuple{w|a|\underline v}$, which is equal to $\tuple{w|\underline {av}}$ -- this is the first argument which is passed, in the lemma statement, to the function $\delta$ that we want to define.
+        \item  \label{it:second-view} Second \kl{view} of $\tuple{w|a|\underline v}$, which is obtained by \kl{merging} the first and third parts in $\tuple{\underline w|a|\underline v}$.
+        \item \label{it:third-view}   Third \kl{view} of $\tuple{w|a|\underline v}$, which is equal to $\tuple{\underline {wa}|\underline{v}}$.
+        \item   \label{it:shape} \kl{Shape} of~$\tuple{w|a|\underline v}$, which is equal to $\tuple{\underline w|\underline a| \underline v}$.
      \end{enumerate}
 
 To complete the proof, it remains to justify that the last three items above can
-be collectively obtained from the second argument given to $\delta$, namely $\tuple{\underline w|a|\underline v}$, by applying some copyless natural function. Each item is obtained separately by applying a natural function. Furthermore, the second item is obtained in a copyless way, while the last two items do not use $A$ at all, and therefore they are obtained in a copyless way for trivial reasons, even when combined with the second item.
+be collectively obtained from the second argument given to $\delta$, namely $\tuple{\underline w|a|\underline v}$, by applying some \kl{copyless natural function}. Each item is obtained separately by applying a \kl{natural function}. Furthermore, the second item is obtained in a copyless way, while the last two items do not use $A$ at all, and therefore they are obtained in a copyless way for trivial reasons, even when combined with the second item.
 \end{proof}
 
 

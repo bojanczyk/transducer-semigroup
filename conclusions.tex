@@ -1,40 +1,37 @@
 \section{Conclusions}\label{sec:conclusion}
 
 In this paper, we have exhibited a concise algebraic characterization of the
-regular string-to-string functions, in the style of the definition of regular
-languages using recognition by finite semigroups. To perform this extension from
+\kl{regular string-to-string functions}, in the style of the definition of regular
+languages using \kl{recognizability} by finite semigroups. To perform this extension from
 languages to functions, we have relied on the basic concepts of category theory:
-categories, functors, natural transformations.
+categories, functors, \kl{natural transformations}.
 
-Another advantage of this characterization is that, as one would expect from an
-abstract result, it lends itself naturally to generalizations.
+Another advantage of this characterization is that, as one would expect from an abstract result, it lends itself to generalizations.
 
 \subparagraph{Semigroup-to-semigroup functions.}
 
-The notion of recognition by a finiteness-preserving transducer semigroup makes
+The notion of recognition by a \kl{finiteness-preserving} \kl{transducer semigroup} makes
 sense for functions between arbitrary semigroups. Furthermore, such functions
 are closed under composition (the proof of \Cref{prop:composition} works as it
 is). To check their robustness, it would be desirable to have a more concrete,
 machine-like model capturing the same function class; possibly a variant of
-streaming string transducers where the underlying finite automaton is morally
+\kl{streaming string transducers} where the underlying finite automaton is morally
 \enquote{replaced} by a finite semigroup.
 
 \subparagraph{More string functions.} Another direction is
-characterizing other classes of string-to-string functions, such as the rational
-functions or the polyregular functions. In this paper, we have discovered that,
+characterizing other classes of string-to-string functions, such as the \kl{rational functions} or the polyregular functions~\cite{PolyregSurvey}. In this paper, we have discovered that,
 somewhat mysteriously, combining two conditions -- naturality and preserving
-finiteness -- characterizes exactly the regular functions, which have linear
+finiteness -- characterizes exactly the \kl{regular functions}, which have linear
 growth. Perhaps there is some way of tweaking the definitions to describe, say, some class with polynomial growth. For instance, the squaring function
 (\Cref{ex:squaring}) seems to be recognized by a mixed-variance functor
 $A \mapsto (A \to A) \times A$ with a dinatural output mechanism.
 
-\subparagraph{Functions on other free algebras.} The definition of a transducer
-semigroup can applied to other algebras, and not just semigroups. This may be
+\subparagraph{Functions on other free algebras.} The definition of a \kl{transducer semigroup} can applied to other algebras, and not just semigroups. This may be
 done by taking some monad $\monad$ and considering functions that can be
 decomposed, for some endofunctor $\functor$ of the category of Eilenberg-Moore
 algebras for the monad $\monad$ and some natural transformation $\outfun$, as
 \[ \functort \Sigma \xrightarrow{\;\text{some $\functort$-algebra
       homomorphism}\;} \functor \functort \Gamma
   \xrightarrow{\;\outfun_{\functort \Gamma}\;} \functort \Gamma. \]
-An example of this approach is forest algebras~\cite[Section 5]{bojanczyk_recobook}, which are algebras for describing trees. Preliminary work shows that, in the case of forest algebras, the suitable version of Theorem~\ref{thm:regular-functions} also holds, i.e.~the finiteness-preserving functors lead to a characterization of the standard notion of regular tree-to-tree functions, namely \mso transductions (see~\cite{MacroMSO,FOTree}). We believe that these results apply even further, namely for graphs of bounded treewidth, modeled using suitable monads~\cite[Section 6]{bojanczyk_recobook}. The crucial property is that \Cref{prop:views}, about reconstructing a coproduct from its views, holds for other monads than just the list monad for semigroups. Unfortunately, this lemma fails for some monads, such as the monad of formal linear combinations of strings that corresponds to weighted automata. In the future, we intend to conduct a more systematic investigation of the extent to which the characterizations from this paper can be generalized to other algebraic structures.
+An example of this approach is forest algebras~\cite[Section 5]{bojanczyk_recobook}, which are algebras for describing trees. Preliminary work shows that, in the case of forest algebras, the suitable version of Theorem~\ref{thm:regular-functions} also holds, i.e.~the \kl{finiteness-preserving} functors lead to a characterization of the standard notion of regular tree-to-tree functions, namely \mso transductions (see~\cite{MacroMSO,FOTree}). We believe that these results apply even further, namely for graphs of bounded treewidth, modeled using suitable monads~\cite[Section 6]{bojanczyk_recobook}. The crucial property is that \Cref{prop:views}, about \kl{reconstructing} a \kl{coproduct} from its \kl{views}, holds for other monads than just the nonempty list monad for semigroups. Unfortunately, this lemma fails for some monads, such as the monad of formal linear combinations of strings that corresponds to weighted automata. In the future, we intend to conduct a more systematic investigation of the extent to which the characterizations from this paper can be generalized to other algebraic structures.
 

@@ -77,6 +77,7 @@
 \usetikzlibrary{shapes}
 \usetikzlibrary{decorations.markings}
 
+\usepackage[xcolor,hyperref,notion]{knowledge}
 \usepackage{csquotes}
 \usepackage{mathtools}
 \usepackage{quiver}
@@ -90,6 +91,8 @@
 
 % \newcommand{\Cref}[1]{\ref{#1}}
 
+\input{notions}
+
 
 \begin{document}
 
@@ -102,6 +105,7 @@
 
 \newcommand{\moncat}{\mathrm{Mon}}
 \newcommand{\semcat}{\mathrm{Sem}}
+
 
 \input{intro}
 \input{transducer-semigroup}

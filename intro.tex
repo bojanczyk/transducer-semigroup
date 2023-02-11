@@ -1,19 +1,19 @@
 \section{Introduction}
 \label{sec:intro}
 
-This paper is about the regular string-to-string functions (see e.g.~\cite{MuschollPuppis}). This is a
+This paper is about the \kl{regular string-to-string functions} (see e.g.~\cite{MuschollPuppis}). This is a
 fundamental class of functions; it is one of the standard generalizations of regular languages to produce string
 outputs (instead of merely accepting or rejecting inputs), covering examples such as
 \[ \text{string reversal}\colon \mathtt{123 \mapsto 321} \qquad \text{duplication}\colon \mathtt{123 \mapsto 123123}\]
-It has many equivalent descriptions, including deterministic two-way automata~\cite[Note~4]{shepherdson1959reduction}, copyless streaming string transducers (\sst)~\cite[Section~3]{alurExpressivenessStreamingString2010} (or the earlier and very similar single-use restricted macro tree transducers~\cite[Section~5]{MacroMSO}), \mso transductions~\cite[Theorem~13]{engelfrietMSODefinableString2001}, combinators~\cite[Section~2]{alur2014regular}, a functional programming language~\cite[Section~6]{bojanczykRegularFirstOrderList2018}, $\lambda$-calculus with linear types~\cite[Theorem~3]{LambdaTransducer} (see also~\cite[Claim~6.2]{IATLC} and~\cite[Theorem~1.2.3]{titoPhD}), decompositions \textit{à la} Krohn--Rhodes~\cite[Theorem~18, item~4]{bojanczykstefanski2020}, etc.
+It has many equivalent descriptions, including deterministic two-way automata~\cite[Note~4]{shepherdson1959reduction}, copyless \kl{streaming string transducers} (\sst)~\cite[Section~3]{alurExpressivenessStreamingString2010} (or the earlier and very similar single-use restricted macro tree transducers~\cite[Section~5]{MacroMSO}), \mso transductions~\cite[Theorem~13]{engelfrietMSODefinableString2001}, combinators~\cite[Section~2]{alur2014regular}, a functional programming language~\cite[Section~6]{bojanczykRegularFirstOrderList2018}, $\lambda$-calculus with linear types~\cite[Theorem~3]{LambdaTransducer} (see also~\cite[Claim~6.2]{IATLC} and~\cite[Theorem~1.2.3]{titoPhD}), decompositions \textit{à la} Krohn--Rhodes~\cite[Theorem~18, item~4]{bojanczykstefanski2020}, etc.
 
 The number of equivalent characterizations clearly indicates that
-the class of regular functions is important and worth studying. However, from a mathematical point of view, a disappointing phenomenon is that each of the known descriptions uses syntax that is more complicated than one could wish for.\footnote{For example, the definition of a two-way automaton requires a discussion of endmarkers and what happens when the automaton loops. In an \mso transduction, an unwiedly copying mechanism is necessary. In an \sst, one needs to be careful about bounding the copies among registers.
+the class of \kl{regular functions} is important and worth studying. However, from a mathematical point of view, a disappointing phenomenon is that each of the known descriptions uses syntax that is more complicated than one could wish for.\footnote{For example, the definition of a two-way automaton requires a discussion of endmarkers and what happens when the automaton loops. In an \mso transduction, an unwiedly copying mechanism is necessary. In an \sst, one needs to be careful about bounding the copies among registers.
 The calculi of~\cite{alur2014regular,bojanczykRegularFirstOrderList2018} both have a long list of primitives.
 Similar remarks apply to the other formalisms.}
-These complications are perhaps minor annoyances, and the corresponding models are undeniably useful. Nevertheless, it would be desirable to have a model with a short and abstract definition, similar to the definition of recognizability of regular languages by finite semigroups. %Such a model  would give further evidence in favour of the accepted notion of regularity for string-to-string functions, and answer questions for the other models such as ``why not allow this or that feature to two-way automata?'', ``why not allow copying for streaming string transducers?'' or ``why not add this or that combinator?''.
+These complications are perhaps minor annoyances, and the corresponding models are undeniably useful. Nevertheless, it would be desirable to have a model with a short and abstract definition, similar to the definition of \kl{recognizability} of regular languages by finite semigroups. %Such a model  would give further evidence in favour of the accepted notion of regularity for string-to-string functions, and answer questions for the other models such as ``why not allow this or that feature to two-way automata?'', ``why not allow copying for streaming string transducers?'' or ``why not add this or that combinator?''.
 
-This paper proposes such an abstract model.  We prove that the regular  string-to-string functions are exactly those that can be obtained by composing two functions
+This paper proposes such an abstract model.  We prove that the \kl{regular string-to-string functions} are exactly those that can be obtained by composing two functions
 \[ \Sigma^* 
   \xrightarrow{\;\text{some semigroup homomorphism}\;}
     \functor(\Gamma^*)
@@ -23,9 +23,9 @@ This paper proposes such an abstract model.  We prove that the regular  string-t
 where $\functor$ is a \emph{functor} from the category of semigroups to itself that
 maps finite semigroups to finite semigroups, and the output function
 $\outfun_{\Gamma^*}$ -- not necessarily a homomorphism -- is part of a family
-$\outfun_A : \functor A \to A$ that is \emph{natural} in the semigroup $A$.%, in the sense of natural transformations.
+$\outfun_A : \functor A \to A$ that is \kl{natural} in the semigroup $A$.
 
-We use the name \emph{transducer semigroup} for the model implicit in this description, i.e.~a semigroup-to-semigroup functor $\functor$ together with a natural transformation for producing outputs.  One of the surprising features of this model is the fact that linear growth of the output size, which is one of the salient properties of the regular string-to-string functions, is not explicitly included in the model, but it is a provable consequence of it. 
+We use the name \kl{transducer semigroup} for the model implicit in this description, i.e.~a semigroup-to-semigroup functor $\functor$ together with a natural transformation for producing outputs.  One of the surprising features of this model is the fact that linear growth of the output size, which is one of the salient properties of the \kl{regular string-to-string functions}, is not explicitly included in the model, but it is a provable consequence of it. 
 
 
 
