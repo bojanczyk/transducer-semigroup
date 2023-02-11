@@ -79,7 +79,7 @@ In the language of category theory, the naturality condition from the above defi
  \arrow[ shorten <=5pt, shorten >=5pt, Rightarrow, from=0, to=1].
 \end{tikzcd}\]
 
-We are mainly interested in the special case of \kl{transducer semigroups} where the functor $\functor$ is \intro{finiteness-preserving}, i.e.~it maps finite semigroups to finite semigroups. This special case will correspond to the \kl{regular string-to-string functions}. Some minor results about the general case, when $\functor$ is not necessarily finiteness-preserving, are presented in Section~\ref{sec:two-simple}.
+\AP We are mainly interested in the special case of \kl{transducer semigroups} where the functor $\functor$ is \intro{finiteness-preserving}, i.e.~it maps finite semigroups to finite semigroups. This special case will correspond to the \kl{regular string-to-string functions}. Some minor results about the general case, when $\functor$ is not necessarily finiteness-preserving, are presented in Section~\ref{sec:two-simple}.
 
 The purpose of \kl{transducer semigroups} is to define functions between semigroups, as explained in the following definition. 
 \begin{definition}
@@ -162,7 +162,7 @@ considered here.
  \begin{align*}
  \functor B = A \times \text{(set of all functions of type $A \to B$, not necessarily recognizable)}.
  \end{align*}
- The semigroup operation in $\functor B$ is defined as follows: on the first coordinate, we inherit the semigroup operation from $A$, while on the second coordinate, we use the trivial \intro{left zero} semigroup structure, in which  the product of two functions is simply the first one (this is a trivial way of equipping every set with a semigroup structure). The functor is defined on morphisms
+ \AP The semigroup operation in $\functor B$ is defined as follows: on the first coordinate, we inherit the semigroup operation from $A$, while on the second coordinate, we use the trivial \intro{left zero} semigroup structure, in which  the product of two functions is simply the first one (this is a trivial way of equipping every set with a semigroup structure). The functor is defined on morphisms
 as in the tuple construction from Example~\ref{ex:functors}: the first coordinate, corresponding to~$A$, is not changed, and the second coordinate, corresponding to the set of functions, is transformed coordinate-wise, when viewed as a tuple indexed by~$A$. This is easily seen to be a functor. The output mechanism, which is easily seen to be natural, is function application i.e.~$(a,f) \mapsto f(a)$.
 Every function $f\colon A \to B$ is recognized by this transducer semigroup, with the appropriate homomorphism is~$a \in A \mapsto (a,f)$.
 \end{proof}
