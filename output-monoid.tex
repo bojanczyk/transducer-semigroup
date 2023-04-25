@@ -15,15 +15,16 @@ The following counterexample illustrates the non-trivial interaction between \kl
 \end{example}
 
 We now state the main theorem of this paper. 
-% Unlike the previous characterizations, it concerns the functions from a free monoid $\Sigma^*$ over a finite alphabet to a semigroup $A$, because the models defining regular functions operate on strings, and not on abstract semigroups. Some of the models, such as streaming string transducers (\sst) or two-way automata, easily make sense when the output is an abstract semigroup, but the string structure of the input seems to be essential for all the models. 
-
-% Among the functors described in Example~\ref{ex:functors},  ``reverse'' and ``powerset''  are finiteness preserving, in the sense that if they are applied to a finite semigroup, then the result is also a finite semigroup. The ``tuple'' functor $A^n$ is finiteness preserving if and only if the exponent $n$ is finite. The ``list'' functor $A^+$ is not finiteness preserving. 
 
 \begin{theorem}\label{thm:regular-functions}
     The following conditions are equivalent for every string-to-string function:
     \begin{enumerate}
         \item \label{it:regular} it is a \kl{regular string-to-string function};
-        \item \label{it:trans-semig-regular}it is recognized by a \kl{transducer semigroup}  in which the functor is \kl{finiteness preserving}. 
+        \item \label{it:trans-semig-regular}it is recognized by a \kl{transducer
+            semigroup}  in which the functor is \kl{finiteness preserving};
+        \item \label{it:trans-semig-f1}it is recognized by a transducer
+            semigroup in which the functor $\functor$ \emph{maps the singleton
+          semigroup $1$ to a finite semigroup}: $|\functor1|<\infty$.
     \end{enumerate}
 \end{theorem}
 
@@ -31,15 +32,17 @@ We now state the main theorem of this paper.
 \begin{description}
     \item[Section~\ref{sec:sst-definition}] gives a formal definition of \kl{regular functions}
     \item[Section~\ref{sec:easy}] proves the easy  implication in the theorem, namely  $(\ref{it:regular}) \Rightarrow (\ref{it:trans-semig-regular})$
-    \item[Section~\ref{sec:hard}] proves the hard  implication in the theorem, namely  $(\ref{it:regular}) \Leftarrow (\ref{it:trans-semig-regular})$
+    \item[Section~\ref{sec:hard}] proves the hard  implication in the theorem, namely  $(\ref{it:trans-semig-f1}) \Rightarrow (\ref{it:regular})$
 \end{description}
+Since $(\ref{it:trans-semig-regular}) \Rightarrow (\ref{it:trans-semig-f1})$ is
+immediate, this proves \Cref{thm:regular-functions}.
 
-Before continuing, we remark on one advantage of the characterization, namely a
-straightforward proof of closure under composition. In contrast, for some (but
-not all) existing models defining \kl{regular string-to-string functions},
-composition requires a non-trivial construction -- examples include two-way
-transducers~\cite[Theorem 2]{ChytilJ77} or copyless \sst~\cite[Theorem
-1]{composingSST}.
+Before continuing, we remark on one advantage of the characterization in item
+(\ref{it:trans-semig-regular}), namely a straightforward proof of closure under
+composition. In contrast, for some (but not all) existing models defining
+\kl{regular string-to-string functions}, composition requires a non-trivial
+construction -- examples include two-way transducers~\cite[Theorem 2]{ChytilJ77}
+or copyless \kl{streaming string transducers}~\cite[Theorem 1]{composingSST}.
 \begin{proposition}\label{prop:composition}
   Functions recognized by finiteness-preserving transducer semigroups are closed
   under composition.
@@ -48,9 +51,9 @@ transducers~\cite[Theorem 2]{ChytilJ77} or copyless \sst~\cite[Theorem
   This is because \kl{finiteness-preserving} functors are closed under composition,
   \kl{natural} families of \kl{output functions} are also closed under composition, and \kl{naturality}
   means by definition that the \kl{output functions} \enquote{commute} in a suitable
-  sense with functors.\footnote{More precisely, consider the following commuting \kl{naturality} diagram,
-    where the upper path describes the composition of two functions recognized by the
-    \kl{transducer semigroups} $(\functor,\outfun)$ and $(\functor',\outfun')$, while the lower path describes a function recognized by $(\functor\functor', \outfun_{\functor'(-)} \circ \outfun')$:
+  sense with functors.
+
+  More precisely, consider the following commuting \kl{naturality} diagram:
     \[
       \begin{tikzcd}[ampersand replacement=\&, column sep=2cm]
         \Sigma^* 
@@ -69,7 +72,11 @@ transducers~\cite[Theorem 2]{ChytilJ77} or copyless \sst~\cite[Theorem
         \&
         \Pi^*
       \end{tikzcd}
-  \]}
+  \]
+  The upper path describes the composition of two functions recognized by the
+  \kl{transducer semigroups} $(\functor,\outfun)$ and $(\functor',\outfun')$,
+  while the lower path describes a function recognized by $(\functor\functor',
+  \outfun_{\functor'(-)} \circ \outfun')$.
 \end{proof}
 
 \input{easy}
@@ -191,11 +198,11 @@ to the underlined strings. In our \kl{running example}, we have
   \in \red{1} \oplus \set{a,b}^*  \oplus \blue{\set{a,b}^*}.
 \end{align*}
 
-\subparagraph*{Proof of $(\ref{it:trans-semig-regular}) \Rightarrow (\ref{it:regular})$ in \Cref{thm:regular-functions}.}
+\subparagraph*{Proof of $(\ref{it:trans-semig-f1}) \Rightarrow (\ref{it:regular})$ in \Cref{thm:regular-functions}.}
 We have now collected all necessary ingredients to prove this hard direction of
 the equivalence. Therefore, our goal is now to show that the function $f\colon
-\Sigma^* \to A$ that we have previously fixed is computed by some \kl{functorial streaming string transducer} as in Definition~\ref{def:functorial-sst}.
-We will see that this can be done merely assuming that \emph{$\functor 1$ is finite} -- a particular instance of the assumption in (\ref{it:trans-semig-regular}) that $\functor$ is \kl{finiteness preserving}.
+\Sigma^* \to A$ that we have previously fixed is computed by some \kl{functorial streaming string transducer} as in Definition~\ref{def:functorial-sst},
+\emph{assuming that $\functor 1$ is finite}.
 
 The idea is that we want the \functorialsst to maintain the following \intro{invariant}: 
 \begin{center}

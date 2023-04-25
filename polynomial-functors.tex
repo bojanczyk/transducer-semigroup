@@ -14,16 +14,14 @@ Apart from the more abstract transducer model from Definition~\ref{def:functoria
     \blue{\boxed{aa}}) \cdot 
     (
         \blue{\boxed{abba}} \cdot 
-        \red{\boxed{aa}} \cdot 
-        \red{\boxed{bb}}
+        \red{\boxed{aabb}}
     )
     = 
 \red{\boxed{aba}} \cdot 
     \blue{\boxed{b}} \cdot 
     \red{\boxed{b}} \cdot 
     \blue{\boxed{aaabba}} \cdot 
-        \red{\boxed{aa}} \cdot 
-        \red{\boxed{bb}}.
+        \red{\boxed{aabb}}.
 \end{align*}
 A \kl{coproduct} can involve more than two semigroups; in the pictures this would correspond to more colours, subject to the condition that  consecutive boxes have different colours.
 \begin{remark}
@@ -139,30 +137,61 @@ The crucial property of semigroups that will be used in our proof is \Cref{prop:
             \blue{\boxed{aa}} \cdot 
             \boxed{1}.
         \end{align*}
-        
 \end{enumerate}
-
-
-The key observation is that an element of a \kl{coproduct} is fully determined from its \kl{shape} and \kl{views}, as stated in the following lemma. 
-
-\begin{proposition}
-\label{prop:views} Let $A_1,\ldots,A_n$ be semigroups. The \intro{deconstruction} function of type
+The key observation is that an element of a \kl{coproduct} is fully determined
+from its \kl{shape} and \kl{views}, as stated in the following lemma.
+It seems to contain the essential property of semigroups that makes the
+construction work. We expect our theorem to also be true for other algebraic
+structures for which the lemma is true; however, the lemma seems to fail in
+certain settings. Concrete examples will be discussed in the conclusion (\Cref{sec:conclusion}).
+\begin{lemma}
+\label{lem:views} Let $A_1,\ldots,A_n$ be semigroups. The \intro{deconstruction} function of type
 \begin{align*}
 A_1 \oplus \cdots \oplus A_n \longrightarrow (1 \oplus A_1) \times \cdots \times (1 \oplus A_n) \times (1 \oplus \cdots \oplus 1),
 \end{align*}
 which is obtained by combining the \kl{views} for all $i \in \set{1,\ldots,n}$ and the \kl{shape}, is injective. 
-\end{proposition}
-\begin{proof}
-    The input can be reconstructed from the output as follows.
-    Start with the \kl{shape}, and replace the entries from $1$ with the semigroup elements used in the \kl{views}.
-\end{proof}
-This lemma seems to contain the essential property of semigroups that makes the construction work. We expect our theorem to also be true for other algebraic structures for which the lemma is true; however, the lemma seems to fail for certain algebraic structures. Concrete examples will be discussed in the conclusion (\Cref{sec:conclusion}).
-
-\AP Like any injective function, \kl{deconstruction} admits a partial left inverse: a function
-    \[ \qquad (1 \oplus A_1) \times \cdots \times (1 \oplus A_n) \times (1 \oplus \cdots
-  \oplus 1) \longrightarrow (A_1 \oplus \cdots \oplus A_n) + 1 \]
-such that deconstruction followed by this function maps every element of $A_1 \oplus \cdots \oplus A_n$ to itself.
-We call \intro{reconstruction} the unique left inverse that sends any input not in the image of deconstruction to the right component $1$. Then from the argument proving \Cref{prop:views}, one can also derive the following (which makes sense thanks to \Cref{rem:coproduct-as-polynomial-functor}).
-\begin{lemma}\label{lem:reconstruction}
-  When each $A_i$ is either $A$ or $1$, \kl{reconstruction} can be seen as a \kl{copyless natural function} between \kl{polynomial functors} in $A$.
 \end{lemma}
+\AP We prove this by exhibiting an explicit partial left inverse: a
+\intro{reconstruction} function of type
+\[ \qquad (1 \oplus A_1) \times \cdots \times (1 \oplus A_n) \times (1 \oplus \cdots
+  \oplus 1) \longrightarrow (A_1 \oplus \cdots \oplus A_n) + 1 \]
+such that deconstruction followed by reconstruction maps every element of $A_1
+\oplus \cdots \oplus A_n$ to itself. The idea is to start with the \kl{shape}
+and replace the entries from $1$ with the semigroup elements appearing in the
+\kl{views} in the right order. Rather than a formal definition, we illustrate
+this on an example (we omit the 1s in the views to avoid visual
+cluttering):
+\[\arraycolsep=1.4pt\def\arraystretch{1.2}
+  \begin{array}{ccccccc}
+    \blue{\boxed{aba}}
+    & & & &
+    \blue{\boxed{aa}}\\
+    &
+    \red{\boxed{b}} &  
+    & 
+    \red{\boxed{b}} & 
+    & 
+      \red{\boxed{abba}}\\
+     & & 
+    \boxed{aa} & &  & & 
+    \boxed{b}\\
+    \blue{\boxed{1}} &
+    \red{\boxed{1}} &
+    \boxed{1} &
+    \red{\boxed{1}} &
+    \blue{\boxed{1}} &
+    \red{\boxed{1}} &
+    \boxed{1}
+  \end{array}
+  \qquad\mapsto\qquad \blue{\boxed{aba}} \cdot 
+  \red{\boxed{b}} \cdot 
+  \boxed{aa} \cdot 
+  \red{\boxed{b}} \cdot 
+  \blue{\boxed{aa}} \cdot 
+  \red{\boxed{abba}} \cdot 
+  \boxed{b}
+\]
+Besides proving \Cref{lem:views}, this reconstruction function also enjoys the following property.
+\begin{proposition}\label{prop:reconstruction}
+  When each $A_i$ is either $A$ or $1$, \kl{reconstruction} can be seen as a \kl{copyless natural function} between \kl{polynomial functors} in $A$.
+\end{proposition}

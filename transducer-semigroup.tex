@@ -11,9 +11,7 @@ To transform categories, we use {functors}.
 Recall that a \emph{functor} between two categories consists of two maps: one that assigns to each object $A$ in the source category an object in the target category, and another one that assigns to each morphism $f\colon A \to B$ a morphism $\functor f\colon \functor A \to \functor B$. These maps need to be consistent with composition of morphisms, and the identity must go to the identity.
 \begin{example}\label{ex:forgetful}
     The \intro{forgetful functor} from the category of semigroups to the category of sets maps a semigroup to its underlying set, and a semigroup homomorphism to the corresponding function on sets. It is an example of a semigroup-to-set functor.
-%, which goes from the category of semigroups to the category of sets.
 \end{example}
-% A semigroup-to-semigroup functor can be seen as a semigroup construction. Here are some examples.
  \begin{example}\label{ex:functors}
  These constructions can be seen as semigroup-to-semigroup functors:
  \begin{description}
@@ -27,24 +25,9 @@ Recall that a \emph{functor} between two categories consists of two maps: one th
  \begin{align*}
  (A_1,A_2) \quad \mapsto \quad \left\{a_1 a_2 \mid a_1 \in A_1\ \text{and}\ a_2 \in A_2\right\}.
  \end{align*}
-% One could also consider variants of the powerset functor that require the subsets to be nonempty, or finite, or both.
- % \item Fix some semigroup $C$, and consider the functor which maps a semigroup $A$ to the sub-semigroup of the semigroup $A^C$, as in the first item, which consists only of those tuples $A^C$ that describe semigroup homomorphisms $C \to A$. For morphisms, the functor is defined coordinate-wise, as in the first item.
  \end{description}
  \end{example}
 
-% \begin{myexample}
-% Here is a non-example of a functor from the category of semigroups to itself. Suppose that, on objects, we want to map each semigroup $A$ to the set of all functions $A \to A$, with the semigroup operation being function composition. The problem with this construction is that it is not clear how to extend it to morphisms, i.e.~how to map a semigroup homomorphism $f : A \to B$ to some semigroup homomorphism
-% \[
-% \begin{tikzcd}
-% (A \to A)
-% \ar[r,"\functor f"]
-% &
-% (B \to B).
-% \end{tikzcd}
-% \]
-% There are artificial ways to do this. For example, we could choose for each semigroup $B$ some distinguished element $b_0 \in B$, and map a semigroup homomorphism $f : A \to B$ to the semigroup homomorphism which maps all functions $A \to A$ to the constant function $b \mapsto b_0$. 
-% \end{myexample}
- 
 \noindent
  We now present the central definition of this paper. 
 
@@ -69,7 +52,6 @@ below commutes for every homomorphism $h\colon A \to B$.
  \]
 
 \end{definition}
-
 In the language of category theory, the naturality condition from the above definition says that the output mechanism is a \emph{natural transformation} of type 
 \[\begin{tikzcd}
  [column sep=2.3cm]
@@ -79,10 +61,9 @@ In the language of category theory, the naturality condition from the above defi
  \arrow[ shorten <=5pt, shorten >=5pt, Rightarrow, from=0, to=1].
 \end{tikzcd}\]
 
-\AP We are mainly interested in the special case of \kl{transducer semigroups} where the functor $\functor$ is \intro{finiteness-preserving}, i.e.~it maps finite semigroups to finite semigroups. This special case will correspond to the \kl{regular string-to-string functions}. Some minor results about the general case, when $\functor$ is not necessarily finiteness-preserving, are presented in Section~\ref{sec:two-simple}.
 
 The purpose of \kl{transducer semigroups} is to define functions between semigroups, as explained in the following definition. 
-\begin{definition}
+\begin{definition}\label{def:reco-trans}
  We say that a function $f\colon A \to B$ between semigroups, not necessarily a homomorphism, is \emph{recognized} by a \kl{transducer semigroup} if it can be decomposed as
  \[
  \begin{tikzcd}
@@ -99,14 +80,9 @@ The purpose of \kl{transducer semigroups} is to define functions between semigro
  \text{for some semigroup homomorphism}\ h.
  \]
 \end{definition}
-The definition discusses functions between arbitrary semigroups, but we will
-mainly care about string-to-string functions $f\colon \Sigma^* \to \Gamma^*$,
-i.e.~the special case when both the input and output semigroups are finitely
-generated free monoids. Although the case that we care about involves monoids,
-which are a special case of semigroups, the use of a semigroup homomorphism that
-is not necessarily a monoid homomorphism is required to recognize functions such
-that $f(\varepsilon)\neq\varepsilon$. Furthermore, it will be useful in the
-proofs to work in the category of semigroups, rather than the category of monoids.
+\AP We are mainly interested in the special case of \kl{transducer semigroups} where the functor $\functor$ is \intro{finiteness-preserving}, i.e.~it maps finite semigroups to finite semigroups. This special case will correspond to the \kl{regular string-to-string functions}. Some minor results about the general case, when $\functor$ is not necessarily finiteness-preserving, are presented in Section~\ref{sec:two-simple}.
+
+After a few examples, we give some intuitions about this definition in \Cref{rem:parametricity}.
 
 \begin{example}
  Consider the \kl{transducer semigroup} in which the functor is the identity, and the \kl{output mechanism} is also the identity. The functions of type $A \to B$ that are recognized by this transducer semigroup are exactly the semigroup homomorphisms from $A$ to $B$.
@@ -142,6 +118,34 @@ proofs to work in the category of semigroups, rather than the category of monoid
     \text{for}\ n \geq 1,\; (a,n) \mapsto a^n \qquad\qquad \myunderbrace{(a,0) \mapsto a}{\qquad\qquad\qquad we handle this case separately because $a^0$ does not make sense in an arbitrary semigroup}
   \end{align*}
 \end{example}
+
+\begin{remark}\label{rem:parametricity}
+  Let $(\functor,\outfun)$ be a transducer semigroup. For a semigroup $S$, we
+  may often think of an element of $\functor S$ as a data structure that
+  contains elements of $S$ (such as a pair or a list, cf.~\Cref{ex:functors}).
+  Then naturality of the output mechanism expresses that, being defined
+  \enquote{uniformly in $S$}, it is not allowed to \enquote{look
+    inside}\footnote{This is similar to the \enquote{generic} or
+    \enquote{polymorphic} function definitions supported by many statically
+    typed programming languages. The corresponding notion in type theory is
+    \emph{parametric polymorphism}, and it is closely related to naturality, see
+    the introduction to~\cite{Parametricity}.} those elements of $S$. In other
+  words, the control flow may depend only on the part that is
+  \enquote{independent of $S$} -- and the condition that $\functor$ is
+  \kl{finiteness preserving} somehow expresses that this part of $\functor S$ is
+  finite.
+\end{remark}
+
+\begin{remark}
+  \Cref{def:reco-trans} discusses functions between arbitrary semigroups, but we will
+  mainly care about string-to-string functions $f\colon \Sigma^* \to \Gamma^*$,
+  i.e.~the special case when both the input and output semigroups are finitely
+  generated free monoids. Although the case that we care about involves monoids,
+  which are a special case of semigroups, the use of a semigroup homomorphism that
+  is not necessarily a monoid homomorphism is required to recognize functions such
+  that $f(\varepsilon)\neq\varepsilon$. Furthermore, it will be useful in the
+  proofs to work in the category of semigroups, rather than the category of monoids.
+\end{remark}
 
 \subsection{Two simple characterizations}
 \label{sec:two-simple}
@@ -185,7 +189,15 @@ range of a \kl{recognizable function} is always finite.
 \AP A function $f\colon B \to A$ between semigroups, not necessarily a semigroup
 homomorphism, is called \intro{recognizability reflecting} if for every
 \kl{recognizable function} $g\colon A \to X$, the composition $g \circ f$ is
-\kl{recognizable}. As we explain in the appendix, there are too many \kl{recognizability reflecting} functions -- in fact, uncountably many from $\{a\}^*$ to itself -- to
+\kl{recognizable}.
+
+\begin{example}
+  Consider the semigroup $(\Nat, +)$ of natural numbers with addition, which is isomorphic to the free monoid $a^*$. In this semigroup, the recognizable functions are ultimately periodic colourings of numbers. A corollary is that every recognizable function gives the same answer to all factorials $\set{1!,2!,\ldots}$, with finitely many exceptions. Take any function $f\colon \Nat \to \Nat$ such that (a) every output number arises from at most finitely many input numbers; (b) every output number is a factorial. The composition of $f$ with any recognizable function will give the same answer to all numbers with finitely many exceptions, thus being also recognizable.
+\end{example}
+
+In the above example, a function with conditions (a) and (b) can be chosen in uncountably many ways, even if we require that it has linear growth.
+Therefore, there are too many \kl{recognizability reflecting} functions (even
+just from $\{a\}^*$ to itself) to
 allow a machine model, or some other effective syntax. The following result
 gives a non-effective syntax.
 
@@ -198,5 +210,12 @@ gives a non-effective syntax.
  \end{enumerate}
 \end{theorem}
 \begin{example}\label{ex:squaring-reco-refl}
-  For any finite semigroup $A$, the map $(a,n) \in A \times (\mathbb{N}\setminus\{0\}) \mapsto a^n \in A$ is \kl{recognizable}, because it factors through a homomorphism into the semigroup $A \times (\mathbb{Z}/(|A|!))$, which is finite. Extending this idea slightly, one can show that the output mechanism $\outfun_A$ of \Cref{ex:squaring} is \kl{recognizable} whenever $A$ is finite. Therefore, the squaring function is \kl{recognizability reflecting}.
+  For any finite semigroup $A$, the map $(a,n) \in A \times
+  (\mathbb{N}\setminus\{0\}) \mapsto a^n \in A$ is \kl{recognizable}. This is
+  because, since $a^{|A|!}$ is idempotent for every $a\in A$, this map factors
+  through a homomorphism into the semigroup $A \times
+  ((\mathbb{N}\setminus\{0\})/\sim)$ where $\sim$ is the congruence of
+  finite index
+  \[ n \sim m ~~\iff~~ n = m ~~\lor~~ \big(n,m \geq |A|! ~\land~ n \equiv m \;\mathrm{mod}\; |A|!\big) \]
+  Extending this slightly to handle the case $(a,0)\mapsto a$, one can show that the output mechanism $\outfun_A$ of \Cref{ex:squaring} is \kl{recognizable} whenever $A$ is finite. Therefore, the squaring function is \kl{recognizability reflecting}.
 \end{example}
