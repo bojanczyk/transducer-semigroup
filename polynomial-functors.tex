@@ -43,7 +43,7 @@ be useful to see them as \kl{polynomial functors}, even though strictly speaking
 they are not defined as sums of products. This identification is allowed by the
 following observation (stated for $A\oplus1$ for convenience, but the same idea
 applies in general).
-\begin{proposition}
+\begin{proposition}\label{prop:coproduct-as-polynomial-functor}
   There is a family of bijections, natural in the semigroup $A$, between
   \begin{align*}
     A \oplus 1 \quad \text{and} \quad \coprod_{q \in 1 \oplus 1} A^{\text{\kl{dimension} of $q$}},
@@ -181,7 +181,8 @@ visual cluttering):
   \boxed{b}
 \]
 Besides proving \Cref{lem:views}, this reconstruction function also enjoys the
-following property, which can be seen from the definition.
+following property, which can be seen from the definition and
+\Cref{prop:coproduct-as-polynomial-functor}.
 \begin{proposition}\label{prop:reconstruction}
   When each $A_i$ is either $A$ or $1$, \kl{reconstruction} can be seen as a \kl{copyless natural function} between \kl{polynomial functors} in $A$.
 \end{proposition}

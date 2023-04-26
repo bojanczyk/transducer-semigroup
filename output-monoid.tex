@@ -206,13 +206,23 @@ the equivalence. Therefore, our goal is now to show that the function $f\colon
 
 The idea is that we want the \functorialsst to maintain the following \intro{invariant}: 
 \begin{center}
-  after processing the first $i$ letters in an input string $a_1 \cdots a_n$,\\ the register valuation is equal to the \kl{factorized output} $\tuple{a_1 \cdots a_i | \underline{a_{i+1} \cdots a_n}}$.  
+  after processing the first $i$ letters in an input string $a_1 \cdots a_n$,\\ the register valuation is equal to the \kl{factorized output} $\tuple{a_1 \cdots a_i | \underline{a_{i+1} \cdots a_n}}$.
 \end{center}
  This way, after processing all input letters, the last valuation $\tuple{a_1 \cdots a_n | \underline{\varepsilon}}$ is very close to the output; indeed, if we see $A$ as a 1-ary coproduct, then $f(a_1\dots a_n) = \tuple{a_1 \dots a_n} \in A$.
 
 The naive choice for the \kl{register functor} is then $\functorr' : A \mapsto A
 \oplus 1$, since $\tuple{w|\underline{v}} \in A\oplus1$ for all $w,v\in\Sigma^*$
-by definition. However, while $\functorr'$ can be seen as a \kl{polynomial semigroup-to-set functor}, whose set of \kl{components} is $1 \oplus 1$ (cf.~\Cref{rem:coproduct-as-polynomial-functor}), it is not \kl{\emph{finite} polynomial} (the set $1\oplus1$ is infinite). That said, we have by \kl{naturality} of \kl{vectorial output} (cf.~appendix):
+by definition. However, while $\functorr'$ can be seen as a \kl{polynomial
+  semigroup-to-set functor}, whose set of \kl{components} is $1 \oplus 1$
+(cf.~\Cref{prop:coproduct-as-polynomial-functor}), it is not \kl{\emph{finite}
+  polynomial} (the set $1\oplus1$ is infinite). That said, we have by
+\kl{naturality} of \kl{vectorial output}:\footnote{Let us give some details. From \Cref{prop:coproduct-as-polynomial-functor}, we see that the \kl{component} in $1 \oplus 1$ of an element in $A \oplus 1$ is obtained by applying $!\oplus1$. So it suffices to show that
+  \[\tuple{\underline{w}|\underline{v}} = (!\oplus1)(\tuple{w|\underline{v}}) \]
+  Expanding the definitions, our goal can be rewritten as
+  \[ \text{vectorial output of}\ (\functor! \circ h(w),\, \functor! \circ h(v)) = (!\oplus1)\big(\text{vectorial output of}\ (h(w),\, \functor! \circ h(v))\big) \]
+  This is a direct consequence of the \kl{naturality} of the \kl{vectorial output function}, that can be expressed as follows: for every semigroup homomorphism $g\colon A \to B$,
+  \[ (\text{vectorial output for $B$}) \circ (\functor g \times \mathrm{id}_1) = (g\oplus1) \circ \text{vectorial output for $A$} \]
+  (take $g=\;!$ and apply both sides of the equality to $(h(w),\, \functor! \circ h(v))$ to get the desired result).}
 \begin{claim}\label{clm:component-index}
   The \kl{component} for $\tuple{w|\underline{v}} \in \functorr'A$ is $\tuple{\underline{w}|\underline{v}} \in 1 \oplus 1$.
 \end{claim}
@@ -233,7 +243,7 @@ To design the register updates, the key is the following lemma. It shall be prov
     \kappa(\tuple{w|\underline\varepsilon},\tuple{\underline w | \varepsilon}) \]
 \end{lemma}
 Again, to make \enquote{\kl{copyless natural}} meaningful in this context, we invoke
-\Cref{rem:coproduct-as-polynomial-functor} to see $\delta$ and $\kappa$ as
+\Cref{prop:coproduct-as-polynomial-functor} to see $\delta$ and $\kappa$ as
 functions between \kl{polynomial functors} in $A$.
 
 This leads us to use the \kl{update functor} $\functoru : A \mapsto 1 \oplus A \oplus

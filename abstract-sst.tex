@@ -5,7 +5,7 @@ We now turn to the difficult implication $(\ref{it:trans-semig-f1}) \Rightarrow 
  easier to see how it can be adapted to other algebraic structures instead of
  semigroups (such as forest algebras, cf.~\Cref{sec:conclusion}).
 
-\subsubsection{\kl{Functorial streaming string transducers}}
+\subsubsection{Polynomial functors and functorial streaming string transducers}
 \label{sec:abstract-sst} 
 The assumption of the implication uses an abstract model (\kl{transducer semigroups}), while the conclusion uses a concrete operational model (\kl{streaming string transducers}). To bridge the gap, we use an intermediate model, similar to \sst{}s, but a bit more abstract. The abstraction arises by using \kl{polynomial functors} instead of registers, as described below. 
 
@@ -13,7 +13,7 @@ The assumption of the implication uses an abstract model (\kl{transducer semigro
 \begin{align*}
 \qquad A \quad \mapsto \quad \coprod_{q \in Q} A^{\text{\kl{dimension} of } q},
 \end{align*}
-where $Q$ is some possibly infinite set, whose elements are called \intro{components}, with each \kl{component} having an associated \intro{dimension} in $\set{0,1,\ldots}$. The symbol $\coprod$ stands for disjoint union of sets. This functor does not take into account the semigroup structure of the input semigroup, since the output is seen only as a set.
+where $Q$ is some possibly infinite set, whose elements are called \intro{components}, with each \kl{component} having an associated \intro{dimension} in $\Nat$. The symbol $\coprod$ stands for disjoint union of sets. This functor does not take into account the semigroup structure of the input semigroup, since the output is seen only as a set.
 On morphisms, the functor works in the expected way, i.e.~coordinate-wise.  
 
 \AP A \intro{finite polynomial functor} is a \kl{polynomial functor} with finitely many \kl{components} -- for example, $A \mapsto A^2 + A^2 + A$. 
@@ -65,11 +65,25 @@ An example of a \kl{natural transformation} between these two functors is the fu
 % is not a natural transformation.
 
 
-Apart from \kl{naturality}, we will want our register updates to be copyless. 
+Apart from \kl{naturality}, we will want our register updates to be copyless.
+For the purposes of the following definition, let us call a tuple of numbers in
+$\Nat^k$ a \enquote{sub-unit} if it belongs to $\{0,1\}^k$ and at most one
+coordinate is equal to~1 -- or, as an edge case, if $k=0$. This extends to
+define, for any polynomial functor $\functor$, the sub-units of $\functor\Nat =
+\sum_q \Nat^{\dim(q)}$.
 
-\begin{definition}[\intro{Copyless natural function}] \label{def:copyless} A natural function $f : \functor A \to \functorg A$ is  called \emph{copyless} if it arises from some natural transformation with the following property:  when instantiated to the semigroup\footnote{The choice of the semigroup $(\Nat,+)$ in the \Cref{def:copyless} is not particularly important. For example, the same notion of copylessness would arise if instead of $(\Nat,+)$, we used the semigroup $\set{0,1}$ with addition up to threshold $1$ (i.e.~the only way to get zero is to add two zeros). In the appendix, we present a more syntactic characterization of copyless natural transformations, which will be used later on when proving equivalence with streaming string transducers. 
-    } $(\Nat,+)$, the corresponding function of type $\functor \Nat \to \functorg \Nat$ 
-    does not increase the norm. Here, the norm of an element in a polynomial functor $\functor \Nat$ or $\functorg \Nat$ is defined to be the sum of numbers that appear in it.
+\begin{definition}[\intro{Copyless natural function}] \label{def:copyless} A
+  \kl{natural function} $f : \functor A \to \functorg A$ is called \emph{copyless}
+  if it arises from some natural transformation between the \kl{polynomial
+    functors} $\functor$ and~$\functorg$ with the following property:
+  when instantiated to the semigroup\footnote{The choice of the semigroup
+    $(\Nat,+)$ in the \Cref{def:copyless} is not particularly important. For
+    example, the same notion of copylessness would arise if instead of
+    $(\Nat,+)$, we used the semigroup $\set{0,1,2}$ with addition up to
+    threshold $2$. In the appendix, we present a more syntactic characterization of
+    copyless natural transformations as part of our proof of
+    \Cref{lem:functorial-sst-complete}.} $(\Nat,+)$, the corresponding function of type $\functor \Nat \to \functorg \Nat$ 
+    maps sub-units to sub-units.
 \end{definition}
 
 Having defined functions that are natural and copyless, we now describe the more

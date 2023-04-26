@@ -17,7 +17,10 @@ Recall that a \emph{functor} between two categories consists of two maps: one th
  \begin{description}
  \item[Tuples.] This functor maps a semigroup $A$ to its square $A \times A$, with the semigroup operation defined coordinate-wise. The functor extends to morphisms in the expected way. This functor also makes sense for higher powers, including infinite powers, such as $A^\omega$.
  \item[Opposite.] This functor maps a semigroup $A$ to the semigroup where the underlying set is the same, but multiplication is reversed, i.e.~the product of $a$ and $b$ in the new semigroup is the product $b$ and $a$ in the old semigroup. Morphisms are not changed by the functor: they retain the homomorphism property despite the change in the multiplication operation.
- \item[Lists.] This functor maps a semigroup $A$ to the free monoid $A^*$ that consists of lists (or strings) over the alphabet $A$ equipped with concatenation. On morphisms, the functor is defined element-wise (or letter-wise). A similar construction would make sense as a set-to-semigroup functor.
+ \item[Lists.] This functor maps a semigroup $A$ to the free monoid $A^*$ that
+   consists of lists of elements of $A$ equipped with concatenation. (When $A$
+   is finite, it can be regarded as an alphabet, in which case we shall also
+   call these lists \enquote{strings} or \enquote{words}.) On morphisms, the functor is defined element-wise (or letter-wise). A similar construction would make sense as a set-to-semigroup functor.
  \item[Non-empty lists.] A variant of the previous example, which sends a
    semigroup $A$ to the free semigroup $A^+$ that consists of non-empty lists of
    elements in $A$.
@@ -33,8 +36,8 @@ Recall that a \emph{functor} between two categories consists of two maps: one th
 
 \newcommand{\emptytester}{2}
 \begin{definition}[Transducer semigroup]\label{def:transducer-semigroup}
- A \intro{transducer semigroup} consists of a semigroup-to-semigroup functor $\functor$, together with an \intro{output mechanism}, which associates to each semigroup $A$ a function of type $\functor A \to A$, called the \emph{output function for $A$}. The output function does not need to be a semigroup homomorphism. The output mechanism is required to be \intro{natural}, which means that the diagram
-below commutes for every homomorphism $h\colon A \to B$. 
+ A \intro{transducer semigroup} consists of a semigroup-to-semigroup functor $\functor$, together with an \intro{output mechanism}, which associates to each semigroup $A$ a function of type $\functor A \to A$, called the \emph{output function for $A$}. The output mechanism is required to be \intro{natural}, which means that the diagram
+below has to commute for every homomorphism $h\colon A \to B$. 
  \[
  \begin{tikzcd}
  \functor A 
@@ -50,7 +53,6 @@ below commutes for every homomorphism $h\colon A \to B$.
  B
  \end{tikzcd}
  \]
-
 \end{definition}
 In the language of category theory, the naturality condition from the above definition says that the output mechanism is a \emph{natural transformation} of type 
 \[\begin{tikzcd}
@@ -60,9 +62,12 @@ In the language of category theory, the naturality condition from the above defi
  \arrow[""{name=1, anchor=center, inner sep=0}, "\text{\kl{forgetful functor} (\Cref{ex:forgetful})}"', curve={height=18pt}, from=1-1, to=1-3]
  \arrow[ shorten <=5pt, shorten >=5pt, Rightarrow, from=0, to=1].
 \end{tikzcd}\]
+The use of the forgetful semigroup-to-set functor here means that the
+output functions \emph{do not need to be homomorphisms} -- this is
+important to make our model expressive enough.
 
-
-The purpose of \kl{transducer semigroups} is to define functions between semigroups, as explained in the following definition. 
+The purpose of \kl{transducer semigroups} is to define functions between
+semigroups, as explained in the following definition.
 \begin{definition}\label{def:reco-trans}
  We say that a function $f\colon A \to B$ between semigroups, not necessarily a homomorphism, is \emph{recognized} by a \kl{transducer semigroup} if it can be decomposed as
  \[
@@ -110,10 +115,10 @@ After a few examples, we give some intuitions about this definition in \Cref{rem
   $w \in \Sigma^* \mapsto w^{|w|} \in \Sigma^*$ (illustrated by $\mathtt{123
     \mapsto 123123123}$) for any alphabet $\Sigma$.
   
-  The functor maps $A$ to $A \times \mathbb{N}$, with the semigroup structure
-  defined componentwise ($\mathbb{N} = \{0,1,\dots\}$ is equipped with
+  The functor maps $A$ to $A \times \Nat$, with the semigroup structure
+  defined componentwise ($\Nat = \{0,1,\dots\}$ is equipped with
   addition), and making the morphisms act on the left component. 
-  The output mechanism $A\times\mathbb{N} \to A$ is defined below:
+  The output mechanism $A\times\Nat \to A$ is defined below:
   \begin{align*}
     \text{for}\ n \geq 1,\; (a,n) \mapsto a^n \qquad\qquad \myunderbrace{(a,0) \mapsto a}{\qquad\qquad\qquad we handle this case separately because $a^0$ does not make sense in an arbitrary semigroup}
   \end{align*}
@@ -211,10 +216,10 @@ gives a non-effective syntax.
 \end{theorem}
 \begin{example}\label{ex:squaring-reco-refl}
   For any finite semigroup $A$, the map $(a,n) \in A \times
-  (\mathbb{N}\setminus\{0\}) \mapsto a^n \in A$ is \kl{recognizable}. This is
+  (\Nat\setminus\{0\}) \mapsto a^n \in A$ is \kl{recognizable}. This is
   because, since $a^{|A|!}$ is idempotent for every $a\in A$, this map factors
   through a homomorphism into the semigroup $A \times
-  ((\mathbb{N}\setminus\{0\})/\sim)$ where $\sim$ is the congruence of
+  ((\Nat\setminus\{0\})/\sim)$ where $\sim$ is the congruence of
   finite index
   \[ n \sim m ~~\iff~~ n = m ~~\lor~~ \big(n,m \geq |A|! ~\land~ n \equiv m \;\mathrm{mod}\; |A|!\big) \]
   Extending this slightly to handle the case $(a,0)\mapsto a$, one can show that the output mechanism $\outfun_A$ of \Cref{ex:squaring} is \kl{recognizable} whenever $A$ is finite. Therefore, the squaring function is \kl{recognizability reflecting}.

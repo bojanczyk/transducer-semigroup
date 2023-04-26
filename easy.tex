@@ -35,13 +35,19 @@ stream of \kl{register updates} that is produced by a \kl{rational function}, de
 follows. Intuitively speaking, a \kl{rational function} corresponds to an automaton
 that produces one output letter for each input position, with the output letter
 depending on regular properties of the input position within the input string.
-More formally, a \intro{rational function} of type $\Sigma^* \to \Gamma^*$ is
-defined to be a length-preserving\footnote{Often in the literature, rational
-  functions are not required to be length-preserving, see
-  e.g.~\cite[p.~525]{sakarovitch2009elements}, but in this paper, we only need
-  the length-preserving case.} function with the following property: for some family\footnote{The family $(f_a)_{a\in\Sigma}$ is very close to what is called an \emph{(Eilenberg) bimachine} in the literature.}
-\[ \qquad\qquad f_a \colon \myunderbrace{\Sigma^* \times \Sigma^*}{\qquad equipped with componentwise multiplication} \to \Gamma\quad \text{for $a \in \Sigma$ of \kl{recognizable} functions,} \]
-for every input $a_1 \dots a_n$ and $i\in\{1,\dots,n\}$, the $i$-th output letter is $f_{a_i}(a_1 \dots a_{i-1},\; a_{i+1} \dots a_n)$.
+More formally:
+\begin{definition}
+  A \intro{rational function} of type $\Sigma^* \to X^*$ -- where $\Sigma$ is
+  a finite alphabet but $X$ can be any set -- is a length-preserving\footnote{Often in the literature, rational
+    functions are not required to be length-preserving, see
+    e.g.~\cite[p.~525]{sakarovitch2009elements}, but in this paper, we only need
+    the length-preserving case.} function with the following property: for some~family\footnote{The family $(f_a)_{a\in\Sigma}$ is very close to what is called an \emph{(Eilenberg) bimachine} in the literature.}
+  \[ \qquad\qquad f_a \colon \myunderbrace{\Sigma^* \times \Sigma^*}{\qquad equipped with componentwise multiplication} \to \Gamma\quad \text{for $a \in \Sigma$ of \kl{recognizable} functions,} \]
+  for every input $a_1 \dots a_n$ and $i\in\{1,\dots,n\}$, the $i$-th output letter is $f_{a_i}(a_1 \dots a_{i-1},\; a_{i+1} \dots a_n)$.
+\end{definition}
+Note that the range of a rational function with codomain $X^*$ may contain only
+finitely many \enquote{letters} from $X$, so it can always be
+seen as a string function over finite alphabets.
 
 \AP Having defined \kl{register updates} and \kl{rational functions}, we are ready to introduce the machine model used in this paper as the reference definition of \intro{regular functions}.
 
@@ -57,36 +63,63 @@ for every input $a_1 \dots a_n$ and $i\in\{1,\dots,n\}$, the $i$-th output lette
 \end{definition}
 The semantics of the \sst{} is a function of type $\Sigma^* \to A$ defined as follows. When given an input string, the \sst{} begins in the designated \kl{initial register valuation}. Next, it applies all \kl{updates} produced by the \kl{update oracle}, in left-to-right order. Finally, the output of the \sst{} is obtained by combining the last register values according to the \kl{final output pattern}.
 
+\begin{example}
+  TODO
+\end{example}
+
 In a \kl{rational function}, the label of the $i$-th output position is allowed to depend on letters of the input string that are on both sides of the $i$-th input position; this corresponds to regular lookaround in a streaming string transducer. Therefore, the model described above is easily seen to be equivalent to copyless \sst{}s with regular lookaround, which are one of the equivalent models defining the regular string-to-string functions, see~\cite[Section~IV.C]{AlurFT12}.
 
 \subsection{From a regular function to a transducer semigroup}
 \label{sec:easy}
 
-Having defined the transducer model, we prove the easy implication in
-\Cref{thm:regular-functions}. First, we treat the special case of \kl{rational functions}:
-\begin{lemma}\label{lem:rational-to-functor}
-  \kl{Finiteness-preserving} \kl{transducer semigroups} recognize all \kl{rational functions}.
-\end{lemma}
-\begin{proof}
-  By definition, a \kl{rational function} comes from a finite family of \kl{recognizable functions}. Recognizability means that they factor through homomorphisms to
-  some finite semigroups -- without loss of generality, we may consider that
-  they all use the same semigroup $B$. To recognize the \kl{rational function}, we
-  then consider a functor that maps a semigroup $A$ to a semigroup whose
-  underlying set is $B \times (B \to A) \times B$ (a construction similar in
-  spirit to the classical \emph{two-sided semidirect
-    product}~\cite[\S6]{rhodes1989kernel}). Details can be found in the
-  appendix.
-\end{proof}
-
-\AP For the general case, it is apparent from \Cref{def:usual-sst} that every
+\AP Having defined the transducer model, we prove the easy implication in
+\Cref{thm:regular-functions}. It is apparent from \Cref{def:usual-sst} that every
 \kl{regular function} can be decomposed as a \kl{rational function} followed by a function
 computed by a \kl{streaming string transducer} whose $i$-th \kl{register update} depends
-only on the $i$-th input letter -- let us call that a \intro{local} \sst. Since
-\kl{rational functions} are covered by the above lemma, and composition by
-\Cref{prop:composition}, we only need to handle the case of \kl{local streaming
-string transducers}.
+only on the $i$-th input letter -- let us call that a \intro{local} \sst. Thanks
+to closure under composition (\Cref{prop:composition}), we only need to handle
+these two special cases: we show that \kl{finiteness-preserving} \kl{transducer
+  semigroups} recognize
+\begin{itemize}
+\item all \kl{rational functions} in \Cref{sec:rational};
+\item and all \kl{local} \kl{streaming string transducers} in \Cref{sec:local}.
+\end{itemize}
 
-\AP So, suppose now that a string-to-semigroup function $f\colon \Sigma^* \to A$ is computed by some \kl{local} \sst. In the proof below, when referring to \kl{register valuations} and \kl{register updates}, we refer to those that use the \kl{registers} and output semigroup of the fixed transducer. We say that a \kl{register update} is in \intro{normal form} if, in every right-hand side, one cannot find two consecutive letters from the semigroup $A$.
+\subsubsection{Recognizing rational functions by transducer semigroups}
+\label{sec:rational}
+
+Consider a \kl{rational function}, generated by the family $(f_a)_{a\in\Sigma}$ of \kl{recognizable functions} of type
+$\Sigma^* \times \Sigma^* \to \Gamma$. By
+definition of recognizability, each $f_a$ decomposes into
+\[ \Sigma^* \times \Sigma^* \xrightarrow{\;h_a\;} B_a \xrightarrow{\;g_a\;} \Gamma
+  \qquad\text{where $h_a$ is a semigroup homomorphism and $B_a$ is finite.} \]
+One can check that every $f_a$ then factors through a monoid morphism to the
+finite monoid
+\[ \prod_{a \in \Sigma} h_a(\Sigma^* \times \Sigma^*) \]
+Thus, without loss of generality, we may assume for the rest of the proof that
+all of the above semigroups $B_a$ are equal to a common finite monoid $B$ and
+that each semigroup homomorphism $h_a$ is in fact a monoid morphism.
+
+For any semigroup $A$, we let\footnote{A construction similar in
+  spirit to the classical \emph{two-sided semidirect
+    product}~\cite[\S6]{rhodes1989kernel}.} $\functor A = B \times (B\to A) \times B$, endowed with the following semigroup operation:
+\begin{align*}
+  (\ell_1,\varphi_1,r_1) \cdot (\ell_2,\varphi_2,r_2) = \Big(\ell_1\ell_2,\; \big(b  \mapsto \varphi_1(br_2) \cdot \varphi_2(\ell_1b)\big),\; r_1r_2\Big).
+\end{align*}
+The construction $\functor$ is extended to morphisms by considering $B\to A$ as the set of $B$-indexed tuples (cf.~\Cref{ex:functors}) of
+elements of $A$. To get a \kl{transducer semigroup}, we take the \kl{output mechanism} to
+be $(\ell,\varphi,r) \mapsto \varphi(e)$ where $e \in B$ is the neutral element.
+
+Our \kl{rational function} is then recognized by the unique monoid homomorphism of
+type $\Sigma^* \to \functor(\Gamma^*)$ (indeed, $\functor$ preserves monoids)
+which maps $a \in \Sigma$ to
+$\big(h_a(a,\varepsilon),g_a,h_a(\varepsilon,a)\big)$.
+
+\subsubsection{From a local SST to a transducer semigroup}
+\label{sec:local}
+
+\AP Suppose now that a string-to-semigroup function $f\colon \Sigma^* \to A$ is
+computed by some \kl{local} \kl{streaming string transducer}. In the proof below, when referring to \kl{register valuations} and \kl{register updates}, we refer to those that use the \kl{registers} and output semigroup of the fixed transducer. We say that a \kl{register update} is in \intro{normal form} if, in every right-hand side, one cannot find two consecutive letters from the semigroup $A$.
 Any \kl{register update} can be \intro{normalized}, i.e.~converted into one that is in \kl{normal form}, by using the semigroup operation to merge consecutive elements of the output semigroup in the right-hand sides.
 Here is an example, which uses three registers $X,Y,Z$ and the semigroup $A = (\set{0,1}, \cdot)$:
 \begin{align*}

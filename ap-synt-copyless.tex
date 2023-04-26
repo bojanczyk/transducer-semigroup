@@ -11,7 +11,7 @@ The rest of this section is devoted to the harder right-to-left implication, tha
 The main step in the proof of this harder direction is an analysis of what can be done by \kl{copyless natural functions} between \kl{polynomial functors}.
 
 \AP We begin with \intro{monomial functors}, i.e.~\kl{polynomial functors} with one \kl{component}. 
-Consider two \kl{monomial functors}, say $A^k$ and $A^\ell$, for some  $k,\ell \in \mathbb{N} = \set{0,1,\ldots}$.
+Consider two \kl{monomial functors}, say $A^k$ and $A^\ell$, for some  $k,\ell \in \Nat = \set{0,1,\ldots}$.
 One way of specifying a \kl{natural transformation} between these two functors is to start with a function 
 \begin{equation}
 \label{eq:syntactic-description}    \alpha : \set{1,\ldots,\ell} \to \set{1,\ldots,k}^+,
@@ -27,7 +27,7 @@ A^+
 A.
 \]
 It turns out that all \kl{natural transformations} between \kl{monomial functors} arise this way, i.e.~they are in one-to-one correspondence with \kl{syntactic descriptions}. To see this, the syntactic description is recovered by using the natural transformation for the free semigroup $A=\set{1,\ldots,k}^+$, and applying it to the tuple $(1,\ldots,k) \in A^k$.
-The advantage of the \kl{syntactic description}, which is unique, is that it allows us to define the copyless restriction in a more syntactic way, reminiscent of the definition used in Definition~\ref{def:usual-sst}:  a natural function between two monomial functors is copyless if and only if its syntactic description has the following property: (*) after concatenating all $\ell$ output strings gives a string where each letter from $\set{1,\ldots,k}$ appears at most once. 
+The advantage of the \kl{syntactic description}, which is unique, is that it allows us to define the copyless restriction in a more syntactic way, reminiscent of the definition used in Definition~\ref{def:usual-sst}:  a natural function between two monomial functors is copyless if and only if its syntactic description has the following property: (*) concatenating all $\ell$ output strings gives a string where each letter from $\set{1,\ldots,k}$ appears at most once. 
 
 We now extend this \kl{syntactic description} to \kl{natural transformations} between general \kl{polynomial functors}
 \begin{align*}
@@ -43,8 +43,10 @@ We then have:
 \begin{claim}
   A \kl{natural transformation} between \kl{polynomial functors} is copyless in the sense of \Cref{def:copyless} if and only if for every input \kl{component}, the corresponding natural transformation between \kl{monomial functors} is copyless.
 \end{claim}
+This can be proved by considering the naturality diagrams associated to the
+semigroup homomorphisms $\{1,\dots,k\}^+ \to \Nat$ whose action on $k$-tuple
+sends $(1,\dots,k)$ to some sub-unit.
 
-(The proof is purely mechanical.)
 
 \subsection{Proof of the left-to-right implication in Lemma~\ref{lem:functorial-sst-complete}.}
 
@@ -80,5 +82,5 @@ v_1,\ldots,v_n \in \functorr A,
 \end{align*}
 such that $v_i$ arises by applying the first $i$ register updates produced by the update oracle. Let $k$ be the maximal dimension of the components in $Q$ (here we use the assumption that $\functorr$ is a \emph{finite} polynomial functor). Define a \kl{register valuation} $w_i \in A^{k+1}$ as follows: take the register valuation used by $v_i$, and pad it to a tuple of length  $k+1$ using some distinguished element $a_0 \in A$. In particular, since $k$ is the maximal dimension of $Q$, we are guaranteed that the last coordinate with index $k+1$ stores the distinguished element $a_0$. We will build a \kl{streaming string transducer}, as in Definition~\ref{def:usual-sst}, in which the set of \kl{register names} is $\set{1,\ldots,k}$. 
 
-We begin by looking at the \kl{components}.  Let $q_i \in Q$ be the \kl{component} of the register valuation $v_i$. The first observation is that $q_i$ depends only on $q_{i-1}$ and the $i$-th register update. Therefore, the sequence $q_1 \cdots q_n$ can be produced by a \kl{rational function}. The next observation is that, one we know the components $q_{i-1}$ and $q_{i}$, and the register update $u_i \in \functoru A$ that would be applied in the original transducer to from $v_{i-1}$ to $v_i$, then we can create a \kl{copyless} \kl{register update} that transforms $w_{i-1}$ into $w_i$. This is done by using the \kl{syntactic descriptions} of \kl{natural functions} that were described above. Once we have the register valuations $w_1,\ldots,w_n$, the output of the transducer can be easily obtained.
+We begin by looking at the \kl{components}.  Let $q_i \in Q$ be the \kl{component} of the register valuation $v_i$. The first observation is that $q_i$ depends only on $q_{i-1}$ and the $i$-th register update. Therefore, the sequence $q_1 \cdots q_n$ can be produced by a \kl{rational function}. The next observation is that, once we know the components $q_{i-1}$ and $q_{i}$, and the register update $u_i \in \functoru A$ that would be applied in the original transducer to from $v_{i-1}$ to $v_i$, then we can create a \kl{copyless} \kl{register update} that transforms $w_{i-1}$ into $w_i$. This is done by using the \kl{syntactic descriptions} of \kl{natural functions} that were described above. Once we have the register valuations $w_1,\ldots,w_n$, the output of the transducer can be easily obtained.
 
