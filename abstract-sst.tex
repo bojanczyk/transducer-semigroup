@@ -9,45 +9,23 @@ We now turn to the difficult implication $(\ref{it:trans-semig-f1}) \Rightarrow 
 \label{sec:abstract-sst} 
 The assumption of the implication uses an abstract model (\kl{transducer semigroups}), while the conclusion uses a concrete operational model (\kl{streaming string transducers}). To bridge the gap, we use an intermediate model, similar to \sst{}s, but a bit more abstract. The abstraction arises by using \kl{polynomial functors} instead of registers, as described below. 
 
-\AP Define a \intro{polynomial functor} to be a semigroup-to-set functor of the form
+\begin{definition}
+  By \intro{polynomial functor}, we mean a semigroup-to-set functor of the form
 \begin{align*}
 \qquad A \quad \mapsto \quad \coprod_{q \in Q} A^{\text{\kl{dimension} of } q},
 \end{align*}
 where $Q$ is some possibly infinite set, whose elements are called \intro{components}, with each \kl{component} having an associated \intro{dimension} in $\Nat$. The symbol $\coprod$ stands for disjoint union of sets. This functor does not take into account the semigroup structure of the input semigroup, since the output is seen only as a set.
 On morphisms, the functor works in the expected way, i.e.~coordinate-wise.  
+\end{definition}
 
 \AP A \intro{finite polynomial functor} is a \kl{polynomial functor} with finitely many \kl{components} -- for example, $A \mapsto A^2 + A^2 + A$. 
 The notion of \kl{finite polynomial functor} can be seen as a mild generalization of the construction which maps a semigroup $A$ to the set $A^R$ of register valuations for some fixed finite set $R$ of register names.  In the generalization, we allow a variable number of registers, depending on some finite information (the component). 
 
-Having defined a more abstract notion of \enquote{register valuations}, namely \kl{finite polynomial functors}, we now define a more abstract notion of \enquote{register updates}. The first condition for such updates is that they do not look inside the register contents; this condition is captured by \kl{naturality} as described in the following definition. 
-
-
-
-\begin{definition}[\intro{Natural functions}]\label{def:natural-functions}
-    Let $\functor$  and $\functorg$ be polynomial functors, let $A$ be a semigroup. A function\footnote{This function is not necessarily a semigroup homomorphism. In fact, it would not even make sense call it a homomorphism, since the functors $\functor$ and $\functorg$ produce sets and not semigroups.}  $f : \functor A \to \functorg A$ is called \emph{natural} if it can be extended to a \kl{natural transformation} of type $\functor \Rightarrow \functorg$. This means that there is a family of functions, with one function
-    $
-    f_A : \functor A \to \functorg A
-    $
-    for each semigroup $A$, such  that $f=f_A$, and the the  diagram
-    \[
-    \begin{tikzcd}
-    \functor A 
-    \ar[r,"\functor h"]
-    \ar[d,"f_A"']
-    & 
-    \functor B 
-    \ar[d,"f_B"]
-    \\
-    \functorg A 
-    \ar[r,"h"]
-    &
-    \functorg B
-    \end{tikzcd}
-    \]
-    commutes for every semigroup homomorphism $h$.
-\end{definition}
-
-% Intuitively speaking, naturality says that the function is not allowed to look inside the semigroup elements that are stored in a polynomial functor $\functor A$, but it is allowed to manipulate them using the semigroup operation.
+Having defined a more abstract notion of \enquote{register valuations}, namely
+\kl{finite polynomial functors}, we now define a more abstract notion of
+\enquote{register updates}. The first condition for such updates is that they do
+not look inside the register contents; this condition is captured by
+\kl{naturality} (as discussed in \Cref{rem:parametricity}).
 
 \begin{example}
     Consider the \kl{polynomial functors} (where $1$ represents the singleton set $A^0$)
@@ -72,19 +50,24 @@ coordinate is equal to~1 -- or, as an edge case, if $k=0$. This extends to
 define, for any polynomial functor $\functor$, the sub-units of $\functor\Nat =
 \sum_q \Nat^{\dim(q)}$.
 
-\begin{definition}[\intro{Copyless natural function}] \label{def:copyless} A
-  \kl{natural function} $f : \functor A \to \functorg A$ is called \emph{copyless}
-  if it arises from some natural transformation between the \kl{polynomial
-    functors} $\functor$ and~$\functorg$ with the following property:
-  when instantiated to the semigroup\footnote{The choice of the semigroup
-    $(\Nat,+)$ in the \Cref{def:copyless} is not particularly important. For
-    example, the same notion of copylessness would arise if instead of
-    $(\Nat,+)$, we used the semigroup $\set{0,1,2}$ with addition up to
-    threshold $2$. In the appendix, we present a more syntactic characterization of
-    copyless natural transformations as part of our proof of
-    \Cref{lem:functorial-sst-complete}.} $(\Nat,+)$, the corresponding function of type $\functor \Nat \to \functorg \Nat$ 
-    maps sub-units to sub-units.
+\begin{definition}[Copyless natural transformation] \label{def:copyless} A
+  \kl{natural transformation} between two \kl{polynomial functors} $\functor$
+  and $\functorg$ is called \emph{copyless} if when instantiated to the
+  semigroup\footnote{The choice of the semigroup $(\Nat,+)$ in the
+    \Cref{def:copyless} is not particularly important. For example, the same
+    notion of copylessness would arise if instead of $(\Nat,+)$, we used the
+    semigroup $\set{0,1,2}$ with addition up to threshold $2$. In the appendix,
+    we present a more syntactic characterization of copyless natural
+    transformations as part of our proof of \Cref{lem:functorial-sst-complete}.}
+  $(\Nat,+)$, the corresponding function of type $\functor \Nat \to
+  \functorg \Nat$ maps sub-units to sub-units.
 \end{definition}
+
+\AP When $\functor$ and $\functorg$ are \kl{polynomial functors}, it will be
+convenient to speak of \intro{natural functions} (resp.\ \intro{copyless natural
+  functions}) to refer to functions $f\colon \functor A \to \functorg A$ that
+can be extended to \kl{natural} (resp.\ copyless natural) transformations
+$(f_B\colon \functor B \to \functorg B)_{B\ \text{semigroup}}$, with $f=f_A$.
 
 Having defined functions that are natural and copyless, we now describe the more
 abstract model of \sst{}s used in our proof. The main difference is that instead

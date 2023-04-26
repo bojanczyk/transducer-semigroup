@@ -38,7 +38,23 @@ which are not necessarily \kl{monomial}. For every input component $q$, there is
 \begin{align*}
 \prod_{q \in Q} \coprod_{p \in P} \dim p \to (\dim q)^+.
 \end{align*}
-Again, all natural transformations of polynomial functors arise this way.
+Again, all natural transformations of polynomial functors arise this way, as can
+be seen from the naturality diagram
+\[
+  \begin{tikzcd}
+    \functor A 
+    \ar[r,"\functor !"]
+    \ar[d]
+    &
+    \functor 1 \cong \{\text{input components}\}
+    \ar[d]
+    \\
+    \functorg A
+    \ar[r,"\functorg !"']
+    &
+    \functorg 1 \cong \{\text{output components}\}
+  \end{tikzcd}
+\]
 We then have:
 \begin{claim}
   A \kl{natural transformation} between \kl{polynomial functors} is copyless in the sense of \Cref{def:copyless} if and only if for every input \kl{component}, the corresponding natural transformation between \kl{monomial functors} is copyless.

@@ -36,8 +36,14 @@ Recall that a \emph{functor} between two categories consists of two maps: one th
 
 \newcommand{\emptytester}{2}
 \begin{definition}[Transducer semigroup]\label{def:transducer-semigroup}
- A \intro{transducer semigroup} consists of a semigroup-to-semigroup functor $\functor$, together with an \intro{output mechanism}, which associates to each semigroup $A$ a function of type $\functor A \to A$, called the \emph{output function for $A$}. The output mechanism is required to be \intro{natural}, which means that the diagram
-below has to commute for every homomorphism $h\colon A \to B$. 
+  A \intro{transducer semigroup} consists of
+  \begin{itemize}
+  \item a semigroup-to-semigroup functor $\functor$,
+  \item together with an \intro{output mechanism} which associates to each
+    semigroup $A$ a function of type $\functor A \to A$ called the
+    \emph{output function for $A$},
+  \end{itemize}
+  such that for every homomorphism $h\colon A \to B$, the diagram below commutes:
  \[
  \begin{tikzcd}
  \functor A 
@@ -54,22 +60,29 @@ below has to commute for every homomorphism $h\colon A \to B$.
  \end{tikzcd}
  \]
 \end{definition}
-In the language of category theory, the naturality condition from the above definition says that the output mechanism is a \emph{natural transformation} of type 
+\AP In the language of category theory, a \intro{natural transformation} between
+two semigroup-to-set functors $\functorg$ and $\functork$ is a family of
+functions $f_A\colon \functorg A \to \functork A$ such that $f_B \circ \functorg
+h = \functork h \circ f_A$ for every semigroup $A$. So in
+\Cref{def:transducer-semigroup}, the diagram says that the output mechanism is a
+\kl{natural transformation} of type
 \[\begin{tikzcd}
- [column sep=2.3cm]
- {\text{Semigroups}} && {\text{Sets}}
- \arrow[""{name=0, anchor=center}, "\text{[\kl{forgetful functor}]} \circ \functor", curve={height=-18pt}, from=1-1, to=1-3]
- \arrow[""{name=1, anchor=center, inner sep=0}, "\text{\kl{forgetful functor} (\Cref{ex:forgetful})}"', curve={height=18pt}, from=1-1, to=1-3]
- \arrow[ shorten <=5pt, shorten >=5pt, Rightarrow, from=0, to=1].
-\end{tikzcd}\]
-The use of the forgetful semigroup-to-set functor here means that the
-output functions \emph{do not need to be homomorphisms} -- this is
-important to make our model expressive enough.
-
-The purpose of \kl{transducer semigroups} is to define functions between
-semigroups, as explained in the following definition.
+    [column sep=2.3cm]
+    {\text{Semigroups}} && {\text{Sets}}
+    \arrow[""{name=0, anchor=center}, "\text{[\kl{forgetful functor}]} \circ \functor", curve={height=-18pt}, from=1-1, to=1-3]
+    \arrow[""{name=1, anchor=center, inner sep=0}, "\text{\kl{forgetful functor} (\Cref{ex:forgetful})}"', curve={height=18pt}, from=1-1, to=1-3]
+    \arrow[ shorten <=5pt, shorten >=5pt, Rightarrow, from=0, to=1].
+  \end{tikzcd}\]
+Note that in a transducer semigroup, the output functions \emph{are not
+  necessarily homomorphisms}, which is why the forgetful semigroup-to-set
+functor appears above. This is important in view of the purpose of
+\kl{transducer semigroups}, which is to define functions between semigroups, as
+explained in the following definition; asking $\outfun_B$ to be a homomorphism
+would severly restrict the functions that can be recognized.
 \begin{definition}\label{def:reco-trans}
- We say that a function $f\colon A \to B$ between semigroups, not necessarily a homomorphism, is \emph{recognized} by a \kl{transducer semigroup} if it can be decomposed as
+ We say that a function $f\colon A \to B$ between semigroups, not necessarily a
+ homomorphism, is \emph{recognized} by a \kl{transducer semigroup}
+ $(\functor,\outfun)$ if it can be decomposed as
  \[
  \begin{tikzcd}
  [column sep=1.6cm]
@@ -77,15 +90,26 @@ semigroups, as explained in the following definition.
  \ar[r,"h"]
  &
  \functor B
- \ar[rr,"\text{output function for $B$}"]
- &&
+ \ar[r,"\outfun_B"]
+ &
  B
  \end{tikzcd}
  \quad
  \text{for some semigroup homomorphism}\ h.
  \]
 \end{definition}
-\AP We are mainly interested in the special case of \kl{transducer semigroups} where the functor $\functor$ is \intro{finiteness-preserving}, i.e.~it maps finite semigroups to finite semigroups. This special case will correspond to the \kl{regular string-to-string functions}. Some minor results about the general case, when $\functor$ is not necessarily finiteness-preserving, are presented in Section~\ref{sec:two-simple}.
+\AP The definition discusses functions between arbitrary semigroups, with no
+assumption on $\functor$, but we will
+mainly care about the special case -- treated in \Cref{sec:reg-char} -- where:
+\begin{itemize}
+\item the function is string-to-string ($f\colon\Sigma^*\to\Gamma^*$), i.e.\
+  both the input and output semigroups are finitely generated free monoids;
+\item the functor $\functor$ is
+  \intro{finiteness-preserving}, i.e.~it maps finite semigroups to finite
+  semigroups.
+\end{itemize}
+This special case will correspond to the \kl{regular string functions}. Some
+minor results that do not assume $\functor$ is finiteness-preserving are presented in Section~\ref{sec:two-simple}.
 
 After a few examples, we give some intuitions about this definition in \Cref{rem:parametricity}.
 
@@ -128,13 +152,14 @@ After a few examples, we give some intuitions about this definition in \Cref{rem
   Let $(\functor,\outfun)$ be a transducer semigroup. For a semigroup $S$, we
   may often think of an element of $\functor S$ as a data structure that
   contains elements of $S$ (such as a pair or a list, cf.~\Cref{ex:functors}).
-  Then naturality of the output mechanism expresses that, being defined
-  \enquote{uniformly in $S$}, it is not allowed to \enquote{look
+  Then \kl{naturality} of the output mechanism expresses that, being defined
+  \enquote{uniformly in $S$}, it cannot \enquote{look
     inside}\footnote{This is similar to the \enquote{generic} or
     \enquote{polymorphic} function definitions supported by many statically
     typed programming languages. The corresponding notion in type theory is
     \emph{parametric polymorphism}, and it is closely related to naturality, see
-    the introduction to~\cite{Parametricity}.} those elements of $S$. In other
+    the introduction to~\cite{Parametricity}.} those elements of $S$- (but it
+  is allowed to manipulate them using the semigroup operation). In other
   words, the control flow may depend only on the part that is
   \enquote{independent of $S$} -- and the condition that $\functor$ is
   \kl{finiteness preserving} somehow expresses that this part of $\functor S$ is
@@ -142,10 +167,7 @@ After a few examples, we give some intuitions about this definition in \Cref{rem
 \end{remark}
 
 \begin{remark}
-  \Cref{def:reco-trans} discusses functions between arbitrary semigroups, but we will
-  mainly care about string-to-string functions $f\colon \Sigma^* \to \Gamma^*$,
-  i.e.~the special case when both the input and output semigroups are finitely
-  generated free monoids. Although the case that we care about involves monoids,
+  Although the case that we care about, namely strings, involves (free) monoids,
   which are a special case of semigroups, the use of a semigroup homomorphism that
   is not necessarily a monoid homomorphism is required to recognize functions such
   that $f(\varepsilon)\neq\varepsilon$. Furthermore, it will be useful in the
@@ -155,16 +177,13 @@ After a few examples, we give some intuitions about this definition in \Cref{rem
 \subsection{Two simple characterizations}
 \label{sec:two-simple}
 
-We begin with two simple theorems, which use transducer semigroups to capture two classes of string-to-string functions: all functions (Theorem~\ref{thm:all-functions}) and functions that reflect \kl{recognizability} (Theorem~\ref{thm:reco-reflecting-functions}).
-%These two theorems have simple proofs.
-The main contribution of this paper, presented in Section~\ref{sec:reg-char},
-characterizes the regular functions using a stronger restriction than those
-considered here.
+We begin with two simple theorems, which use transducer semigroups to capture
+two classes of functions: all functions (Theorem~\ref{thm:all-functions}) and string-to-string functions that reflect \kl{recognizability} (Theorem~\ref{thm:reco-reflecting-functions}).
 
 \subparagraph{All functions.} The first theorem concerns transducer semigroups without any restrictions.
 
 \begin{theorem}\label{thm:all-functions} 
- Every string-to-string function is recognized by a \kl{transducer semigroup}.
+ Every function between semigroups is recognized by a \kl{transducer semigroup}.
 \end{theorem}
 \begin{proof}
  We prove a slightly stronger result: for any semigroup $A$, there exists a transducer semigroup that recognizes all functions from $A$ to other semigroups. The functor is 
