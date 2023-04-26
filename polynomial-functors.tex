@@ -1,12 +1,14 @@
 
 \input{abstract-sst}
 
-\subparagraph*{Coproducts and views.}
+\subsubsection{Coproducts and views}
 \label{sec:coproducts-and-views}
 
 Apart from the more abstract transducer model from Definition~\ref{def:functorial-sst}, the other ingredient used  in the proof of the hard implication in Theorem~\ref{thm:regular-functions} will be \kl{coproducts} of semigroups, and some basic operations on them, as described in this section.
 
-\AP The \intro{coproduct}  of two semigroups $A$ and $B$, denoted by $A \oplus B$, is the semigroup whose elements are nonempty words over an alphabet that is the disjoint union of $A$ and $B$, restricted to words that are \emph{alternating} in the sense that two consecutive letters cannot belong to the same semigroup. The semigroup operation is defined in the expected way. We draw elements of a \kl{coproduct} using coloured boxes, with the following picture showing the product operation in the coproduct of two copies, \red{red} and \blue{blue}, of the semigroup $\set{a,b}^+$:
+\AP The \intro{coproduct}\footnote{The name \emph{coproduct} is used because of the following universal property: if $f\colon A \to C$ and $g\colon B \to C$ are two semigroup homomorphisms, then there is a unique homomorphism 
+      $A \oplus B \to C$
+  that coincides with $f$ (resp.~$g$) on the subsemigroup consisting of words with a single letter from $A$ (resp.~$B$).}  of two semigroups $A$ and $B$, denoted by $A \oplus B$, is the semigroup whose elements are nonempty words over an alphabet that is the disjoint union of $A$ and $B$, restricted to words that are \emph{alternating} in the sense that two consecutive letters cannot belong to the same semigroup. The semigroup operation is defined in the expected way. We draw elements of a \kl{coproduct} using coloured boxes, with the following picture showing the product operation in the coproduct of two copies, \red{red} and \blue{blue}, of the semigroup $\set{a,b}^+$:
 \begin{align*}
     (\red{\boxed{aba}} \cdot 
     \blue{\boxed{b}} \cdot 
@@ -27,53 +29,40 @@ A \kl{coproduct} can involve more than two semigroups; in the pictures this woul
 \begin{remark}
   The \kl{copyless} \kl{register updates} $u : R \to (A + R)^+$ of ordinary \sst{}s that are in \kl{normal form} (cf.~\Cref{sec:easy}) can be seen as maps $R \to A \oplus \displaystyle \bigoplus_{X\in R} \{X\}^+$.
 \end{remark}
-% The name \emph{coproduct} is used because of the following universal property: if
-% \begin{align*}
-% f : A \to C \qquad \text{and} \qquad g : B \to C
-% \end{align*}
-% are two semigroup homomorphisms, then
-% there is a unique homomorphism 
-% \[
-% \begin{tikzcd}
-% f \text{ or } g : A \oplus B \to C
-% \end{tikzcd}
-% \]
-% that coincides with $f$ (resp.~$g$) on the subsemigroup of $A \oplus B$ consisting of words with a single letter from $A$ (resp.~$B$).
 
-We write $1$ for the semigroup that has one element. This semigroup is unique up to isomorphism and it is a \emph{terminal object} in the category of semigroups, which means that it admits a unique homomorphism from every other semigroup $A$. This unique homomorphism will be denoted by $!\colon A \to 1$. (It has no connection with the factorial function on numbers.)
+We write $1$ for the semigroup that has one element. This semigroup is unique up
+to isomorphism and it is a \emph{terminal object} in the category of semigroups,
+which means that it admits a unique homomorphism from every other semigroup $A$.
+This unique homomorphism will be denoted by $!\colon A \to 1$. (It has no
+connection with the factorial function on numbers.)
 
-\begin{remark}[used in our proof]
-    \label{rem:coproduct-as-polynomial-functor}
-    %The polynomial functors that we  use in our proof will arise using coproducts with the singleton semigroup $1$. 
-    Consider the semigroup-to-set functor $A \mapsto A \oplus 1$, which maps a semigroup to the underlying set of its coproduct with the singleton semigroup. Although not defined as a \kl{polynomial functor}, this functor is isomorphic to one. This is because for every semigroup $A$ there is a bijective correspondence between the sets
-    \begin{align*}%\label{eq:polynomial-representation-of-coproduct}
+Consider the semigroup-to-set functors defined by (the underlying set of) a
+\kl{coproduct} of several copies of their argument with several copies of $1$,
+such as $A \mapsto A \oplus A \oplus A \oplus 1 \oplus 1$. In our proof, it will
+be useful to see them as \kl{polynomial functors}, even though strictly speaking
+they are not defined as sums of products. This identification is allowed by the
+following observation (stated for $A\oplus1$ for convenience, but the same idea
+applies in general).
+\begin{proposition}
+  There is a family of bijections, natural in the semigroup $A$, between
+  \begin{align*}
     A \oplus 1 \quad \text{and} \quad \coprod_{q \in 1 \oplus 1} A^{\text{\kl{dimension} of $q$}},
-    \end{align*}
-    where the \kl{dimension} of $q$ is defined to be the number of times that the first copy of $1$ appears in $q$. Furthermore, this bijection is \kl{natural} in $A$, and thus we can speak of $A \oplus 1$ as being a \kl{polynomial functor}. This remark applies to similar constructions, which involve a \kl{coproduct} of several copies of $A$ with several copies of $1$, such as $A \oplus A \oplus A \oplus 1 \oplus 1$.
-    %Mikolaj: I eliminated parts of this discussion, since they can be inserted (in the reader's head) at the places where they are used
-    % bijection in~\eqref{eq:polynomial-representation-of-coproduct} is natural, and therefore there is a natural bijection between the functor $(-) \oplus 1$ and some polynomial functor. Also, if two polynomial functors are connected by a natural bijection, then they are the same, up to renaming of the components, and therefore the representation in~\eqref{eq:polynomial-representation-of-coproduct} is unique up to renaming of components. By uniqueness, we will simply speak of $A \oplus 1$ as being a polynomial functor.  In a similar way, functors such as $A \mapsto A \oplus 1 \oplus A$ are also polynomial.
-    % Noting that $\oplus$ makes sense as an operation on sets without a semigroup structure (it builds a set of nonempty alternating sequences), we have more generally that, if $\functor$ is a polynomial functor, then so is $A \mapsto \functor A \oplus 1$. 
-\end{remark}
+  \end{align*}
+  where the \kl{dimension} of $q$ is the number of times that the
+  first copy of $1$ appears in $q$.
+\end{proposition}
+\begin{proof}[Idea]
+  Given $x\in A\oplus1$, we apply $!\colon A\to1$ to the elements of $A$ in $x$
+  to determine the component $q$ of the \kl{polynomial functor} that contains
+  the image of $x$ by the left-to-right bijection. This operation, a special
+  case of what is called the \kl{shape} below, forgets those elements of $A$
+  appearing in $x$, so we record them in a tuple living in $A^{\dim(q)}$. For
+  example, $\red{\boxed{aba}} \cdot {\boxed{1}} \cdot \red{\boxed{aa}} \cdot
+  \boxed{1}$ is sent to the tuple $(aba,aa)$ in the component $\red{\boxed{1}}
+  \cdot {\boxed{1}} \cdot \red{\boxed{1}} \cdot \boxed{1}$.
+\end{proof}
 
-
-
-
-
-
-
-% \begin{example}\label{ex:copyless-on-coproducts}
-%     Consider the functor \enquote{$A\mapsto$ underlying set of $A \oplus 1$} from Example~\ref{ex:coproduct-as-polynomial-functor}, which was shown to be a polynomial functor. The natural transformation in $A$
-%     \begin{align*}
-%     (A \oplus 1)\times (A \oplus 1) \longrightarrow A \oplus 1
-%     \end{align*}
-%     which describes the semigroup operation in the coproduct $A \oplus 1$ is copyless.
-% \end{example}
-
-
-% \subsubsection{Views}
-% \label{sec:views}
-
-The crucial property of semigroups that will be used in our proof is \Cref{prop:views} below, which says that an element of a \kl{coproduct} can be reconstructed based on certain partial information. This information is described  using the following operations.
+The crucial property of semigroups that will be used in our proof is \Cref{lem:views} below, which says that an element of a \kl{coproduct} can be reconstructed based on certain partial information. This information is described  using the following operations.
 
 \begin{enumerate}
     \item \AP \textbf{Merging}. Consider a coproduct $A_1 \oplus \cdots \oplus A_n$, such that the same semigroup $A$ appears on all coordinates from a subset $I \subseteq \set{1,\ldots,n}$, and possibly on other coordinates as well. Define \intro{merging the parts from $I$} to be the function of type 
@@ -153,27 +142,27 @@ which is obtained by combining the \kl{views} for all $i \in \set{1,\ldots,n}$ a
 \end{lemma}
 \AP We prove this by exhibiting an explicit partial left inverse: a
 \intro{reconstruction} function of type
-\[ \qquad (1 \oplus A_1) \times \cdots \times (1 \oplus A_n) \times (1 \oplus \cdots
-  \oplus 1) \longrightarrow (A_1 \oplus \cdots \oplus A_n) + 1 \]
-such that deconstruction followed by reconstruction maps every element of $A_1
+\[ \qquad (1 \oplus A_1) \times \cdots \times (1 \oplus A_n) \times (1 \oplus
+  \cdots \oplus 1) \longrightarrow (A_1 \oplus \cdots \oplus A_n) + 1 \]
+deconstruction followed by reconstruction maps every element of $A_1
 \oplus \cdots \oplus A_n$ to itself. The idea is to start with the \kl{shape}
-and replace the entries from $1$ with the semigroup elements appearing in the
+and replace the entries from $1$ with the elements appearing in the
 \kl{views} in the right order. Rather than a formal definition, we illustrate
-this on an example (we omit the 1s in the views to avoid visual
-cluttering):
+this on an example (in the three views, we omit the boxes around the 1s to avoid
+visual cluttering):
 \[\arraycolsep=1.4pt\def\arraystretch{1.2}
   \begin{array}{ccccccc}
     \blue{\boxed{aba}}
-    & & & &
-    \blue{\boxed{aa}}\\
-    &
+    & & 1 & &
+    \blue{\boxed{aa}} & \multicolumn{2}{c}{1} \\
+    1 &
     \red{\boxed{b}} &  
-    & 
+    1 & 
     \red{\boxed{b}} & 
-    & 
-      \red{\boxed{abba}}\\
-     & & 
-    \boxed{aa} & &  & & 
+    1 & 
+      \red{\boxed{abba}} & 1\\
+     \multicolumn{2}{c}{1} & 
+    \boxed{aa} & \multicolumn{3}{c}{1} & 
     \boxed{b}\\
     \blue{\boxed{1}} &
     \red{\boxed{1}} &
@@ -191,7 +180,8 @@ cluttering):
   \red{\boxed{abba}} \cdot 
   \boxed{b}
 \]
-Besides proving \Cref{lem:views}, this reconstruction function also enjoys the following property.
+Besides proving \Cref{lem:views}, this reconstruction function also enjoys the
+following property, which can be seen from the definition.
 \begin{proposition}\label{prop:reconstruction}
   When each $A_i$ is either $A$ or $1$, \kl{reconstruction} can be seen as a \kl{copyless natural function} between \kl{polynomial functors} in $A$.
 \end{proposition}

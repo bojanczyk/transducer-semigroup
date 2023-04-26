@@ -83,7 +83,7 @@ or copyless \kl{streaming string transducers}~\cite[Theorem 1]{composingSST}.
 
 \input{polynomial-functors}
 
-\subparagraph{Factorized output.}
+\subsubsection{Factorized output}
 Now, consider some \kl{transducer semigroup}, with the functor being $\functor$, and fix a string-to-semigroup function $f\colon \Sigma^* \to A$ that decomposes as some homomorphism $h\colon \Sigma^* \to \functor A$ followed by the \kl{output function} of type $\functor A \to A$. 
 
 \AP For semigroups $A_1,\ldots,A_n$, define the \intro{vectorial output function} to be the 
@@ -198,7 +198,7 @@ to the underlined strings. In our \kl{running example}, we have
   \in \red{1} \oplus \set{a,b}^*  \oplus \blue{\set{a,b}^*}.
 \end{align*}
 
-\subparagraph*{Proof of $(\ref{it:trans-semig-f1}) \Rightarrow (\ref{it:regular})$ in \Cref{thm:regular-functions}.}
+\subsubsection{Proof of $(\ref{it:trans-semig-f1}) \Rightarrow (\ref{it:regular})$ in \Cref{thm:regular-functions}}
 We have now collected all necessary ingredients to prove this hard direction of
 the equivalence. Therefore, our goal is now to show that the function $f\colon
 \Sigma^* \to A$ that we have previously fixed is computed by some \kl{functorial streaming string transducer} as in Definition~\ref{def:functorial-sst},
@@ -269,15 +269,17 @@ This being done, let us discharge our only remaining subgoal.
   similar and a bit simpler. We use the following claim, which is proved using
   mechanical diagram chasing (as detailed in the appendix). Recall that
   the \kl{merging}, \kl{shape} and \kl{view} operations were introduced just before
-  \Cref{prop:views}.
+  \Cref{lem:views}.
     \begin{claim}\label{claim:merge-factorized-output}
         $\tuple{wa|\underline v}$ is obtained from $\tuple{w|a|\underline v}$ by \kl{merging} the first two parts in $A \oplus A \oplus 1$.
     \end{claim}
 
-    Since \kl{merging} the first two parts is \kl{copyless natural},  the above
+    The above
     claim shows that the \kl{factorized output} $\tuple{wa|\underline v}$ is
     obtained from $\tuple{w|a|\underline v}$ by a \kl{copyless natural function}.
-    In turn, $\tuple{w|a|\underline v}$ can be obtained by applying the \kl{reconstruction} function (\Cref{lem:reconstruction}) to the following four items (the equalities below are proved similarly to Claims~\ref{clm:component-index} and~\ref{claim:merge-factorized-output}):
+    In turn, $\tuple{w|a|\underline v}$ is the image by the
+    \kl{reconstruction} function -- which is copyless natural
+    (\Cref{prop:reconstruction}) -- of the following four items (the equalities below are proved similarly to Claims~\ref{clm:component-index} and~\ref{claim:merge-factorized-output}):
      \begin{enumerate}
         \item \label{it:first-view}First \kl{view} of $\tuple{w|a|\underline v}$, which is equal to $\tuple{w|\underline {av}}$ -- this is the first argument which is passed, in the lemma statement, to the function $\delta$ that we want to define.
         \item  \label{it:second-view} Second \kl{view} of $\tuple{w|a|\underline v}$, which is obtained by \kl{merging} the first and third parts in $\tuple{\underline w|a|\underline v}$.
