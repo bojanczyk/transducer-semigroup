@@ -53,7 +53,7 @@ or copyless \kl{streaming string transducers}~\cite[Theorem 1]{composingSST}.
   means by definition that the \kl{output functions} \enquote{commute} in a suitable
   sense with functors.
 
-  More precisely, consider the following commuting \kl{naturality} diagram:
+  More precisely, consider the following diagram:
     \[
       \begin{tikzcd}[ampersand replacement=\&, column sep=2cm]
         \Sigma^* 
@@ -73,7 +73,7 @@ or copyless \kl{streaming string transducers}~\cite[Theorem 1]{composingSST}.
         \Pi^*
       \end{tikzcd}
   \]
-  The upper path describes the composition of two functions recognized by the
+  where the square commutes because the output mechanism is \kl{natural}. The upper path describes the composition of two functions recognized by the
   \kl{transducer semigroups} $(\functor,\outfun)$ and $(\functor',\outfun')$,
   while the lower path describes a function recognized by $(\functor\functor',
   \outfun_{\functor'(-)} \circ \outfun')$.
@@ -226,7 +226,9 @@ by definition. However, while $\functorr'$ can be seen as a \kl{polynomial
 \begin{claim}\label{clm:component-index}
   The \kl{component} for $\tuple{w|\underline{v}} \in \functorr'A$ is $\tuple{\underline{w}|\underline{v}} \in 1 \oplus 1$.
 \end{claim}
-This index is determined by definition by the values of $(\functor! \circ h) \colon \Sigma^* \to \functor1$ on $w$ and $v$. \emph{Since $\functor1$ is finite,} the $\tuple{w|\underline{v}}$ for $w,v$ ranging over $\Sigma^*$ live in finitely many \kl{components}. We take our \kl{register functor}  $\functorr A \subset \functorr' A$ to be the \kl{finite polynomial functor} consisting of these \enquote{useful} \kl{components}, plus the unique \kl{component} that does not use $A$ (it will serve as a \enquote{\intro{null value}}).
+This index is determined by definition by the values of $(\functor! \circ h)
+\colon \Sigma^* \to \functor1$ on $w$ and $v$, where
+$h\colon\Sigma^*\to\functor A$ is the homomorphism used to recognize $f$. \emph{Since $\functor1$ is finite,} the $\tuple{w|\underline{v}}$ for $w,v$ ranging over $\Sigma^*$ live in finitely many \kl{components}. We take our \kl{register functor}  $\functorr A \subset \functorr' A$ to be the \kl{finite polynomial functor} consisting of these \enquote{useful} \kl{components}, plus the unique \kl{component} that does not use $A$ (it will serve as a \enquote{\intro{null value}}).
 
 To design the register updates, the key is the following lemma. It shall be proved later using the machinery of \kl{views} on \kl{coproducts} that we have introduced for this very purpose.
 \begin{lemma}\label{lem:compute-next-configuration}

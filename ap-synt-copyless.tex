@@ -11,10 +11,10 @@ The rest of this section is devoted to the harder right-to-left implication, tha
 The main step in the proof of this harder direction is an analysis of what can be done by \kl{copyless natural functions} between \kl{polynomial functors}.
 
 \AP We begin with \intro{monomial functors}, i.e.~\kl{polynomial functors} with one \kl{component}. 
-Consider two \kl{monomial functors}, say $A^k$ and $A^\ell$, for some  $k,\ell \in \Nat = \set{0,1,\ldots}$.
+Consider two \kl{monomial functors}, say $A \mapsto A^k$ and $A \mapsto A^\ell$, for some  $k,\ell \in \Nat = \set{0,1,\ldots}$.
 One way of specifying a \kl{natural transformation} between these two functors is to start with a function 
 \begin{equation}
-\label{eq:syntactic-description}    \alpha : \set{1,\ldots,\ell} \to \set{1,\ldots,k}^+,
+\label{eq:syntactic-description}    \alpha\colon \set{1,\ldots,\ell} \to \set{1,\ldots,k}^+,
 \end{equation}
 which we call a \intro{syntactic description}, and to then  define the  natural transformation as follows. For a semigroup $A$, the corresponding function of type $A^k \to A^\ell$  maps a tuple $\bar a \in A^k$ to the tuple in $A^\ell$ defined by
 \[
@@ -26,28 +26,45 @@ A^+
 \xrightarrow{\;\text{semigroup operation}\;}
 A.
 \]
-It turns out that all \kl{natural transformations} between \kl{monomial functors} arise this way, i.e.~they are in one-to-one correspondence with \kl{syntactic descriptions}. To see this, the syntactic description is recovered by using the natural transformation for the free semigroup $A=\set{1,\ldots,k}^+$, and applying it to the tuple $(1,\ldots,k) \in A^k$.
+\begin{claim}\label{clm:monomial-yoneda}
+  All \kl{natural transformations} between \kl{monomial functors} arise this
+  way, i.e.~they are in one-to-one correspondence with \kl{syntactic
+    descriptions}.
+\end{claim}
+\begin{claimproof}
+  Concretely, the syntactic description may be recovered from the natural
+  transformation instantiated at the free semigroup $\set{1,\ldots,k}^+$ by applying it
+  to $(1,\ldots,k)\in(\set{1,\ldots,k}^+)^k$.
+
+  While it can be checked by hand that this works, more conceptually, it is an
+  instance of the \emph{Yoneda lemma}. Indeed, there is a natural bijection
+  \[ A^k \cong A^{\{1,\dots,k\}} \cong \{\text{semigroup homomorphisms}\
+    \{1,\dots,k\}^+ \to A\} \]
+  so monomial functors are \emph{representable}. The Yoneda lemma gives us a
+  bijection between natural transformations $A^k \to A^\ell$ and homomorphisms
+  $\{1,\dots,\ell\}^+ \to \{1,\dots,k\}^+$.
+\end{claimproof}
+
+ 
 The advantage of the \kl{syntactic description}, which is unique, is that it allows us to define the copyless restriction in a more syntactic way, reminiscent of the definition used in Definition~\ref{def:usual-sst}:  a natural function between two monomial functors is copyless if and only if its syntactic description has the following property: (*) concatenating all $\ell$ output strings gives a string where each letter from $\set{1,\ldots,k}$ appears at most once. 
 
-We now extend this \kl{syntactic description} to \kl{natural transformations} between general \kl{polynomial functors}
+To extend this definition of copylessness to a \kl{natural transformation} $\eta$ between general \kl{polynomial functors}
 \begin{align*}
 \functor A = \coprod_{q \in Q} A^{\dim q} \qquad 
 \functorg A = \coprod_{p \in P} A^{\dim p},
 \end{align*}
-which are not necessarily \kl{monomial}. For every input component $q$, there is some designated output \kl{component} $p$, and a natural transformation $A^{\dim q} \to A^{\dim p}$. Thus, the set of possible \kl{syntactic descriptions} is
-\begin{align*}
-\prod_{q \in Q} \coprod_{p \in P} \dim p \to (\dim q)^+.
-\end{align*}
-Again, all natural transformations of polynomial functors arise this way, as can
-be seen from the naturality diagram
+we note that if $x\in\functor A$ is in the input \kl{component} $q$, then its
+image $\eta_A(x) \in \functorg A$ lives in some output \kl{component} $p$
+\emph{determined by $q$ and $\eta$ independently of $A$}. This can be seen from
+the naturality diagram below for the terminal morphism $!\colon A \to 1$:
 \[
   \begin{tikzcd}
     \functor A 
     \ar[r,"\functor !"]
-    \ar[d]
+    \ar[d, "\eta_A"]
     &
     \functor 1 \cong \{\text{input components}\}
-    \ar[d]
+    \ar[d, "\eta_1"]
     \\
     \functorg A
     \ar[r,"\functorg !"']
@@ -55,14 +72,15 @@ be seen from the naturality diagram
     \functorg 1 \cong \{\text{output components}\}
   \end{tikzcd}
 \]
-We then have:
+Thus, the restriction of $\eta$ to the component $q$ of its domain is a natural
+transformation of monomial functors $A^{\dim(q)} \to A^{\dim(p)}$. We then have:
 \begin{claim}
   A \kl{natural transformation} between \kl{polynomial functors} is copyless in the sense of \Cref{def:copyless} if and only if for every input \kl{component}, the corresponding natural transformation between \kl{monomial functors} is copyless.
 \end{claim}
-This can be proved by considering the naturality diagrams associated to the
-semigroup homomorphisms $\{1,\dots,k\}^+ \to \Nat$ whose action on $k$-tuple
-sends $(1,\dots,k)$ to some sub-unit.
-
+\begin{claimproof}
+  By considering the naturality diagrams for the homomorphisms
+  $h\colon\{1,\dots,k\}^+ \to \Nat$ such that $h(1) + \dots + h(k) \leq 1$.
+\end{claimproof}
 
 \subsection{Proof of the left-to-right implication in Lemma~\ref{lem:functorial-sst-complete}.}
 

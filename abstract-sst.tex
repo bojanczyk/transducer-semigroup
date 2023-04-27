@@ -46,9 +46,9 @@ An example of a \kl{natural transformation} between these two functors is the fu
 Apart from \kl{naturality}, we will want our register updates to be copyless.
 For the purposes of the following definition, let us call a tuple of numbers in
 $\Nat^k$ a \enquote{sub-unit} if it belongs to $\{0,1\}^k$ and at most one
-coordinate is equal to~1 -- or, as an edge case, if $k=0$. This extends to
-define, for any polynomial functor $\functor$, the sub-units of $\functor\Nat =
-\sum_q \Nat^{\dim(q)}$.
+coordinate is equal to~1 -- or, as an edge case, if $k=0$. For a \kl{polynomial
+  functor} $\functor$, a sub-unit of $\functor\Nat = \sum_q \Nat^{\dim(q)}$ is a
+sub-unit of any of the $\Nat^{\dim(q)}$.
 
 \begin{definition}[Copyless natural transformation] \label{def:copyless} A
   \kl{natural transformation} between two \kl{polynomial functors} $\functor$
@@ -63,11 +63,13 @@ define, for any polynomial functor $\functor$, the sub-units of $\functor\Nat =
   \functorg \Nat$ maps sub-units to sub-units.
 \end{definition}
 
-\AP When $\functor$ and $\functorg$ are \kl{polynomial functors}, it will be
-convenient to speak of \intro{natural functions} (resp.\ \intro{copyless natural
-  functions}) to refer to functions $f\colon \functor A \to \functorg A$ that
-can be extended to \kl{natural} (resp.\ copyless natural) transformations
-$(f_B\colon \functor B \to \functorg B)_{B\ \text{semigroup}}$, with $f=f_A$.
+\AP It will be convenient to speak of \intro{natural functions} $f\colon
+\functor A \to \functorg A$, where $\functor$ and $\functorg$ are
+semigroup-to-set functors and $A$ is a fixed semigroup, to refer to functions
+that can be extended to \kl{natural transformations} $(f_B\colon \functor B \to
+\functorg B)_{B\ \text{semigroup}}$, with $f=f_A$. \intro{Copyless natural
+  functions} between instantiations of \kl{polynomial functors} are defined
+analogously.
 
 Having defined functions that are natural and copyless, we now describe the more
 abstract model of \sst{}s used in our proof. The main difference is that instead
@@ -88,16 +90,15 @@ regular property of the input.
     \item An \emph{update oracle}, which is a \kl{rational function} of type $\Sigma^* \to (\functoru A)^*$.
     \end{itemize}
 \end{definition}
-The semantics of the \functorialsst is a function 
-$\Sigma^* \to A$ defined as follows. Given an input string, we feed it to the
-\kl{initial function} to get an initial register valuation. As in
-Definition~\ref{def:usual-sst}, we use the application function and the update
-oracle to define inductively a sequence of register valuations in $\functorr A$.
-We then apply the \kl{final output function} to the last register valuation and to the
-final data (determined by the input), yielding a result in $A$.
-
+Analogously to \Cref{def:usual-sst}, the \functorialsst computes the function
+$\Sigma^* \to A$ obtained by the following composition, where the first map
+bundles together the initial function, the update oracle and the final data
+function:
+\[ \Sigma^* \to \functorr A \times (\functoru A)^* \times \functork A
+  \xrightarrow{\;(\text{\emph{apply} updates successively})\times\mathrm{id}_{\functork A}}
+  \functorr A \times \functork A \xrightarrow{\;\text{final output function}\;}
+  A \]
 In the appendix, we prove that this model is no more expressive than usual copyless \sst{}s.
-
 \begin{lemma}\label{lem:functorial-sst-complete}
     Definitions~\ref{def:usual-sst} and~\ref{def:functorial-sst} characterize the same string-to-semigroup functions.
 \end{lemma}

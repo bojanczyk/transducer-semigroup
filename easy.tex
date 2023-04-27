@@ -56,7 +56,9 @@ seen as a string function over finite alphabets.
 \begin{itemize}
     \item A finite \emph{input alphabet} $\Sigma$ and an \emph{output semigroup $A$}.
     \item A finite set $R$ of \emph{register names}. All \kl{register valuations} and \kl{updates} below use $R$ and $A$.
-    \item A designated \intro{initial register valuation}, and a \intro{final output pattern} in $R^+$.
+    \item A designated \intro{initial register valuation}, and a \intro{final
+        output pattern} in $R^+$ (that does not need to be copyless, though
+      adding this restriction would not affect the expressive power).
     \item An \intro{update oracle}, which is a \kl{rational function} of type 
         $\Sigma^* \to (\text{copyless register updates})^*$.
 \end{itemize}
