@@ -113,9 +113,9 @@ mainly care about the special case -- treated in \Cref{sec:reg-char} -- where:
   semigroups.
 \end{itemize}
 This special case will correspond to the \kl{regular string functions}. Some
-minor results that do not assume $\functor$ is finiteness-preserving are presented in Section~\ref{sec:two-simple}.
+minor results that do not assume $\functor$ is finiteness-preserving are presented in Section~\ref{sec:two-simple}: we characterize all functions (Theorem~\ref{thm:all-functions}) and \enquote{\kl{recognizability reflecting}} string-to-string functions (Theorem~\ref{thm:reco-reflecting-functions}).
 
-After a few examples, we give some intuitions about this definition in \Cref{rem:parametricity}.
+\subsection{Examples and intuitions}
 
 \begin{example}
  Consider the \kl{transducer semigroup} in which the functor is the identity, and the \kl{output mechanism} is also the identity. The functions of type $A \to B$ that are recognized by this transducer semigroup are exactly the semigroup homomorphisms from $A$ to $B$.
@@ -126,7 +126,7 @@ After a few examples, we give some intuitions about this definition in \Cref{rem
   \begin{itemize}
   \item the functor is the \enquote{opposite semigroup} functor from
     \Cref{ex:functors};
-  \item the output function maps $a\in\functor A$, seen as an element in $A$, to
+  \item the \kl{output function} maps $a\in\functor A$, seen as an element in $A$, to
     $aa \in A$.
   \end{itemize}
   The functions of type $A \to B$ that are recognized by this \kl{transducer semigroup} are exactly those of the form $a \mapsto h(a)h(a)$ where $h\colon A
@@ -146,37 +146,41 @@ After a few examples, we give some intuitions about this definition in \Cref{rem
   The functor maps $A$ to $A \times \Nat$, with the semigroup structure
   defined componentwise ($\Nat = \{0,1,\dots\}$ is equipped with
   addition), and making the morphisms act on the left component. 
-  The output mechanism $A\times\Nat \to A$ is defined below:
+  The \kl{output mechanism} $A\times\Nat \to A$ is defined below:
   \begin{align*}
     \text{for}\ n \geq 1,\; (a,n) \mapsto a^n \qquad\qquad \myunderbrace{(a,0) \mapsto a}{\qquad\qquad\qquad we handle this case separately because $a^0$ does not make sense in an arbitrary semigroup}
   \end{align*}
 \end{example}
 
+\begin{example}\label{ex:prefix-suffix}
+  Our last example function is
+  \[ w \in \{a,b,c\}^* \quad\mapsto\quad (\text{longest $c$-free suffix of}\ w) \cdot (\text{longest $c$-free prefix of}\ w) \in \{a,b\}^* \]
+  This can be recognized using the functor $\functor A = A + A^2$, equipped with a suitable semigroup operation that makes the following map $h\colon\{a,b,c\}^*\to\functor(\{a,b\}^*)$ a homomorphism:
+  \[ h(w) = w\ \text{for}\ w\in\{a,b\}^* \qquad h(uc\ldots cv) = (u,v)\ \text{for}\ u,v\in\{a,b\}^* \]
+  The \kl{output mechanism} of the \kl{transducer semigroup} sends any element $a\in A$ -- seen as belonging to the left summand of $A+A^2$ -- to $aa$, and $(b,c)$ to $cb$.
+\end{example}
+
 \begin{remark}\label{rem:parametricity}
-  Let $(\functor,\outfun)$ be a transducer semigroup. For a semigroup $S$, we
+  Consider a \kl{transducer semigroup} with functor $\functor$. For a semigroup $S$, we
   may often think of an element of $\functor S$ as a data structure that
   contains elements of $S$ (such as a pair or a list, cf.~\Cref{ex:functors}).
-  Then \kl{naturality} of the output mechanism expresses that, being defined
+  Then \kl{naturality} of the \kl{output mechanism} expresses that, being defined
   \enquote{uniformly in $S$}, it cannot \enquote{look
     inside}\footnote{This is similar to the \enquote{generic} or
     \enquote{polymorphic} function definitions supported by many statically
     typed programming languages. The corresponding notion in type theory is
     \emph{parametric polymorphism}, and it is closely related to naturality, see
-    the introduction to~\cite{Parametricity}.} those elements of $S$- (but it
-  is allowed to manipulate them using the semigroup operation). In other
+    the introduction to~\cite{Parametricity}.} those elements of $S$ (but it
+  can combine them using the semigroup operation). In other
   words, the control flow may depend only on the part that is
   \enquote{independent of $S$} -- and the condition that $\functor$ is
-  \kl{finiteness preserving} somehow expresses that this part of $\functor S$ is
-  finite.
+  \kl{finiteness preserving} (satisfied by all our examples except \Cref{ex:squaring}) somehow means that this part is finite.
 \end{remark}
 
 \subsection{Two simple characterizations}
 \label{sec:two-simple}
 
-We begin with two simple theorems, which use transducer semigroups to capture
-two classes of functions: all functions (Theorem~\ref{thm:all-functions}) and string-to-string functions that reflect \kl{recognizability} (Theorem~\ref{thm:reco-reflecting-functions}).
-
-\subparagraph{All functions.} The first theorem concerns transducer semigroups without any restrictions.
+\subparagraph{All functions.} Our first theorem concerns transducer semigroups without any restrictions.
 
 \begin{theorem}\label{thm:all-functions} 
  Every function between semigroups is recognized by a \kl{transducer semigroup}.
@@ -206,8 +210,9 @@ In the rest of the paper, we shall sometimes
 speak of \kl{recognizable functions} with infinite codomain, but note that the
 range of a \kl{recognizable function} is always finite.
 
-\AP A function $f\colon B \to A$ between semigroups, not necessarily a semigroup
-homomorphism, is called \intro{recognizability reflecting} if for every
+\AP A function $f\colon B \to A$ between semigroups
+%, not necessarily a semigroup homomorphism,
+is called \intro{recognizability reflecting} if for every
 \kl{recognizable function} $g\colon A \to X$, the composition $g \circ f$ is
 \kl{recognizable}.
 
@@ -234,8 +239,7 @@ gives a non-effective syntax.
   (\Nat\setminus\{0\}) \mapsto a^n \in A$ is \kl{recognizable}. This is
   because, since $a^{|A|!}$ is idempotent for every $a\in A$, this map factors
   through a homomorphism into the semigroup $A \times
-  ((\Nat\setminus\{0\})/\sim)$ where $\sim$ is the congruence of
-  finite index
-  \[ n \sim m ~~\iff~~ n = m ~~\lor~~ \big(n,m \geq |A|! ~\land~ n \equiv m \;\mathrm{mod}\; |A|!\big) \]
-  Extending this slightly to handle the case $(a,0)\mapsto a$, one can show that the output mechanism $\outfun_A$ of \Cref{ex:squaring} is \kl{recognizable} whenever $A$ is finite. Therefore, the squaring function is \kl{recognizability reflecting}.
+  ((\Nat\setminus\{0\})/\sim)$ where
+    \[ n \sim m ~~\iff~~ n = m ~~\lor~~ \big(n,m \geq |A|! ~\land~ n \equiv m \;\mathrm{mod}\; |A|!\big) \]
+  is a congruence of finite index. Extending this slightly to handle the case $(a,0)\mapsto a$, one can show that the output mechanism $\outfun_A$ of \Cref{ex:squaring} is \kl{recognizable} whenever $A$ is finite. Therefore, the squaring function is \kl{recognizability reflecting}.
 \end{example}

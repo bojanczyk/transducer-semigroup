@@ -28,14 +28,13 @@ We now state the main theorem of this paper.
     \end{enumerate}
 \end{theorem}
 
-\noindent Here is the plan for the rest of this section:
+\noindent (Note that $(\ref{it:trans-semig-regular}) \Rightarrow (\ref{it:trans-semig-f1})$ is
+immediate.) Here is the plan for the rest of this section:
 \begin{description}
     \item[Section~\ref{sec:sst-definition}] gives a formal definition of \kl{regular functions}
     \item[Section~\ref{sec:easy}] proves the easy  implication in the theorem, namely  $(\ref{it:regular}) \Rightarrow (\ref{it:trans-semig-regular})$
     \item[Section~\ref{sec:hard}] proves the hard  implication in the theorem, namely  $(\ref{it:trans-semig-f1}) \Rightarrow (\ref{it:regular})$
 \end{description}
-Since $(\ref{it:trans-semig-regular}) \Rightarrow (\ref{it:trans-semig-f1})$ is
-immediate, this proves \Cref{thm:regular-functions}.
 
 Before continuing, we remark on one advantage of the characterization in item
 (\ref{it:trans-semig-regular}), namely a straightforward proof of closure under
@@ -119,8 +118,8 @@ string reversal homomorphism $\set{a,b}^* \to \functor(\set{a,b}^*)$ with the
 \kl{output function}. Here is an example of the \kl{vectorial output function} (for now,
 the homomorphism plays no role):
 \begin{align*}
-    (1,abbb) \in \functor 1 \times \functor(\set{a,b}^*) \qquad \mapsto \qquad 
-  \boxed{abbb} \ \red{\boxed{1}} \  \boxed{abbb}\ \red{\boxed{1}} \in 1 \oplus \set{a,b}^*.
+    (\red{1},\blue{abbb}) \in \red{\functor 1} \times \blue{\functor(\set{a,b}^*)} \qquad \mapsto \qquad 
+  \blue{\boxed{abbb}} \ \red{\boxed{1}} \  \blue{\boxed{abbb}}\ \red{\boxed{1}} \in \red{1} \oplus \blue{\set{a,b}^*}.
 \end{align*}
 The \kl{vectorial output function} is \kl{natural} in all of its arguments, which means
 that for all semigroup homomorphisms $h_1,\ldots,h_n$, the diagram below commutes:
@@ -222,7 +221,7 @@ by definition. However, while $\functorr'$ can be seen as a \kl{polynomial
   \[ \text{vectorial output of}\ (\functor! \circ h(w),\, \functor! \circ h(v)) = (!\oplus1)\big(\text{vectorial output of}\ (h(w),\, \functor! \circ h(v))\big) \]
   This is a direct consequence of the \kl{naturality} of the \kl{vectorial output function}, that can be expressed as follows: for every semigroup homomorphism $g\colon A \to B$,
   \[ (\text{vectorial output for $B$}) \circ (\functor g \times \mathrm{id}_1) = (g\oplus1) \circ \text{vectorial output for $A$} \]
-  (take $g=\;!$ and apply both sides of the equality to $(h(w),\, \functor! \circ h(v))$ to get the desired result).}
+  (take $g=\;!$ and apply both sides of the equality to $(h(w),\, \functor! \circ h(v))$ to get the desired \Cref{clm:component-index}).}
 \begin{claim}\label{clm:component-index}
   The \kl{component} for $\tuple{w|\underline{v}} \in \functorr'A$ is $\tuple{\underline{w}|\underline{v}} \in 1 \oplus 1$.
 \end{claim}
